@@ -13,6 +13,17 @@ The small frame/CPU/GPU variation does not prove an optimization or a causal GPU
 
 GPU counters returned no valid timing for 4,104/14,015 and 3,858/14,158 frames. Zero/missing GPU samples are excluded from GPU aggregates; CPU/GPU counters have a four-frame delay. Full data and limits are in `release-comparison.json` and the corresponding raw JSONs.
 
-GC bytes were not exposed by this release player. `gcCounter=false` and `gcBytesPerFrame=null` mean unavailable, not zero. Managed allocations in warmed combat/audio calls were measured separately in Editor tests. A Development player is being used for an additional GC comparison; its instrumentation overhead must not be presented as release performance.
+GC bytes were not exposed by this release player. `gcCounter=false` and `gcBytesPerFrame=null` mean unavailable, not zero. Managed allocations in warmed combat/audio calls were measured separately in Editor tests.
+
+## Development GC comparison
+
+After the Firewall prompt was closed by the user, two clean Development runs used the same version, hardware, resolution, preset, 5-second warmup / 30-second measurement and action counts as above. Both validated the GC byte counter with a warmup allocation probe. All sampled frames were focused and unpaused.
+
+| Development condition | Frames | GC total | Nonzero GC frames | GC mean / p95 / max per frame | Main-thread CPU mean |
+| --- | --- | --- | --- | --- | --- |
+| Audio disabled | 13,492 | 61,138 B | 200 | 4.531 / 0 / 2,692 B | 1.473 ms |
+| Audio enabled | 13,174 | 61,172 B | 201 | 4.643 / 0 / 2,692 B | 1.537 ms |
+
+There are small allocations in both whole-player runs; this is not a zero-GC claim. The 34-byte total difference in single samples does not establish a per-attack audio allocation cost. Dedicated warmed-call tests remain the evidence for no recurring allocations in combat queries, pool firing and audio voice selection. Development instrumentation overhead must not be presented as release performance. Full metadata and distributions: `development-comparison.json` and raw JSONs in the corresponding directories.
 
 `initial-probe` contains a superseded RC1 instrument check. The first Development probe was interrupted by a Windows Firewall prompt; it is not the final before/after comparison. No network permission is needed for local measurements.

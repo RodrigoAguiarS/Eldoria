@@ -1,18 +1,23 @@
 # MVP.md — Plano de entregas
 
-## Estado atual — candidato RC2 (14/11/2026)
+## Estado atual — Windows 1.0.0 (14/11/2026)
 
-Candidato RC2: 93/93 EditMode e 69/69 PlayMode passaram. Áudio funcional/mixer/pool, opções gráficas reais com cópia do pipeline, migração das opções e coletores opcionais integrados. Builds release e diagnóstico geradas sem erros; release preserva 496 avisos upstream conhecidos. Comparação Windows em carga sintética equivalente concluída para CPU/GPU/frame/memória; GC em diagnóstico e medição/escuta do áudio seguem em QA. A 1.0 completa ainda não foi declarada pronta.
+**Escopo aprovado entregue e validado:** andar fixo de quatro salas + Guardião, combo de três golpes, dash, especial/estamina/defesa, progressão/loot, inventário/raridades, menus, áudio e opções persistentes. Herói, rig Generic, materiais e ambiente preservados; nenhuma imagem alterada.
 
-| Entrega | Evidência corrente | Aceite restante |
+Suítes finais: **93/93 EditMode e 69/69 PlayMode**. Build release x64 1.0.0: Succeeded, zero erros, 496 avisos conhecidos de shaders upstream. Auditoria por APIs do Editor sem referências inválidas. Usuário confirmou na RC2 derrota→reinício, vitória 5/5, controles/inventário/poções e áudio/feedback; a identificação da versão é a única alteração de código posterior. O ZIP final foi extraído, teve 208 hashes conferidos e abriu menu/andar/especial sem erros de runtime.
+
+| Entrega | Evidência corrente | Estado |
 | --- | --- | --- |
-| Fundação e reparos | Git local, referências reparadas, builders idempotentes, pool aquecido e suítes completas aprovadas | Nenhum bloqueio técnico aberto desta etapa |
-| Arena e andar | Movimento/combate/morte/reinício testados; vitória normal 5/5 confirmada em Editor e Windows antes do áudio | Conferência visual final de flash/tremor e ciclo derrota→reinício no Windows atual |
-| Inventário e especial | Dados/modelos/UI integrados; vitória com ambos observada no Editor; especial por direito observado no Windows | Percurso Windows atual, tecla física E, equipamento/poções e legibilidade |
-| Menus/opções/áudio | Persistência/resolução observadas no Windows; presets reais, mixer/eventos/pool aprovados em testes | Qualidade visual, escuta e medição da mistura Windows |
-| Distribuição | RC2 x64 gerado sem erros; medições release e empacotador preparados | GC comparável, QA do candidato, versão final e ZIP verificado |
+| M0 — Fundação | Git local, versões reais, checkers, Bootstrap e auditoria de assets | Concluído |
+| M1 — Arena | CharacterController/Input, combate, navegação, morte/reinício, builders; PlayMode visual e testes de cena | Concluído; feedback final aprovado no andar Windows |
+| M2 — Salas | Quatro salas, ranged/elite, portas/última morte/reativação; percurso normal | Concluído |
+| M3 — Boss | Duas fases/50%/3 s/telegraph, visual integrado, HUD e vitória 5/5 | Concluído; desfecho Windows confirmado pelo usuário |
+| M4 / R3 — Produto | Progressão, loot, inventário, raridades, especial, menus, áudio e opções | Concluído conforme D-001/D-002 |
+| R4 — Distribuição | CPU/GPU/frame/memória e GC comparáveis, mistura normal/sintética, ZIP/CRC/SHA256 e smoke extraído | Concluído, com limites de hardware/cobertura documentados |
 
-Cada marco deve produzir estado executável e verificável. Não avançar com erros de compilação ou referências faltantes. Não confundir análise de código com execução no Unity Editor. Planejamento: [ROADMAP.md](ROADMAP.md); execução: [BACKLOG.md](BACKLOG.md); provas e histórico detalhado: [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md).
+Pacote: `Builds/Release/DungeonCrawler-1.0.0-windows-x64.zip` (53.496.573 bytes). Relatório por requisito: [RELEASE-1.0-VALIDATION](docs/RELEASE-1.0-VALIDATION.md). Reconstrução: [BUILD-WINDOWS](docs/BUILD-WINDOWS.md). Planejamento e histórico: [ROADMAP](ROADMAP.md), [BACKLOG](BACKLOG.md), [CHANGELOG](CHANGELOG.md), [auditoria](docs/MVP-AUDIT.md).
+
+Cada marco deve produzir estado executável e verificável. Não confundir testes de componentes com partida completa nem medição sintética com garantia de FPS. Limitações conhecidas constam no relatório de entrega; não há save de campanha nem publicação em loja nesta versão.
 
 ## Histórico de validações incrementais
 

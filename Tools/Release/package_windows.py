@@ -12,7 +12,7 @@ def main():
     report = json.loads((project / 'Reports/Leadership/windows-build.json').read_text(encoding='utf-8-sig'))
     if report.get('version') != '1.0.0' or report.get('result') != 'Succeeded' or report.get('errors') or report.get('development'):
         raise SystemExit('A successful final 1.0.0 release build is required; candidate/profile builds are not packaged.')
-    for name in ('EditMode-rc2.xml', 'PlayMode-rc2.xml'):
+    for name in ('EditMode-final.xml', 'PlayMode-final.xml'):
         result = ET.parse(project / 'Reports/Leadership' / name).getroot()
         if int(result.get('failed', '1')) or result.get('result') != 'Passed':
             raise SystemExit('Required suite is not green: ' + name)

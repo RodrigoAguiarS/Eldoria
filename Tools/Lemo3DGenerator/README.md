@@ -40,8 +40,9 @@ Fonte editável = a definição em `src/characters/<id>.mjs` (não há `.blend`,
 
 O menu principal **Tools > Dungeon Crawler > Build > Floor Scene (M2)** agora executa o fluxo
 completo: reconstrói a base `Floor_01`, gera a cópia `Floor_01_GeneratedCharacters`, abre essa
-cena 3D e a coloca em primeiro lugar na lista compartilhada do build, substituindo a entrada
-de `Floor_01`. Os passos abaixo continuam disponíveis para reconstruir somente a cópia.
+cena 3D e integra o shell da versão 1.0. O build final usa `MainMenu` primeiro e
+`Floor_01_GeneratedCharacters` como destino de Jogar, preservando as cenas de teste no Editor.
+Os passos abaixo continuam disponíveis para reconstruir somente a cópia.
 Os GUIDs da cópia e dos encounters são preservados nas reconstruções.
 
 1. Rode **Build Test Assets (all)** (uma vez, ou após regenerar).

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-14 — Windows 1.0.0 entregue
+
+- Escopo D-001/D-002 concluído: andar de quatro salas + Guardião, combo/dash/especial/recurso/defesa, progressão/loot, inventário/raridades, menus/opções e áudio. Usuário confirmou explicitamente a RC2 com derrota→reinício, vitória 5/5, E/I/Tab/Q e áudio/feedback aprovados. Log final registra cinco encontros sem exceções/Missing Script; automação observou 3/5, sem capturar a vitória.
+- Build final release 1.0.0 x64: Succeeded, zero erros, 496 avisos upstream de shaders conhecidos. 93/93 EditMode e 69/69 PlayMode reexecutados e aprovados; auditoria por API sem referências inválidas. Código runtime preservado desde a RC2; somente versão no builder/PlayerSettings mudou. Não se alega identidade binária do Runtime.dll após rebuild; hashes e validação estão registrados.
+- GC Development, mesma carga/hardware: 61.138/61.172 bytes em 30 s, áudio desligado/ligado; p95 zero e picos 2.692 B, sem alegação de zero GC global. Misturas sintética e normal medidas separadamente, sem clipping; partida normal de 78,912 s com pico −8,8 dBFS/−30,2 LUFS. Preset Leve aplicado/visível e persistente no Windows; Padrão restaurado. Nenhuma imagem ou Package alterado.
+- Pacote local `Builds/Release/DungeonCrawler-1.0.0-windows-x64.zip`, 53.496.573 bytes, 208 arquivos com CRC/SHA256 verificados. Extraído e testado: menu→andar, herói/cenário/HUD, especial/custo/cooldown/regen/retorno à locomoção, sem exceções/Missing Script. Backups/debug/diagnóstico não distribuídos; sem publicação externa.
+- Matriz de aceite/limites em docs/RELEASE-1.0-VALIDATION.md, reconstrução em docs/BUILD-WINDOWS.md e baseline de balanceamento em docs/BALANCE-1.0.md. Opções persistem, campanha/inventário não; ultrawide físico e outros hardwares não foram validados.
+
 ## 2026-11-14 — Áudio funcional e candidato 1.0
 
 - Criados oito sons originais e um loop reproduzível, sem samples/imagens externos. Mixer Music/SFX e pool aquecido de oito vozes; mute em zero, prioridades, intervalo entre cues idênticos e variação sem consumir RNG de loot. Eventos de ataque/dano/morte/coleta/Boss/vitória, com injeção do pool pelo spawner e inscrições no ciclo de vida.

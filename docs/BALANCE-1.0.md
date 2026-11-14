@@ -43,6 +43,6 @@ Entradas anteriores de loot foram preservadas. Armadura tem entrada independente
 
 O usuário concluiu o andar normal no Editor e no Windows antes da integração de áudio. Com inventário e especial, a vitória normal no Editor foi observada em nível 5, XP 85/100, ouro 55 e arma do Guardião equipada (`Reports/Leadership/editor-inventory-special-victory.json`). Isso comprova um percurso concluível; não mede dificuldade média, tempo de conclusão ou distribuição de drops.
 
-Manter esta linha de base no RC2. O aceite Windows atual deve registrar derrota→reinício, vitória 5/5 e qualquer problema concreto de dificuldade, recuperação, cura, legibilidade ou som. Nenhum ajuste numérico adicional foi justificado pelos dados disponíveis. QA e parecer final de balanceamento permanecem pendentes; seguir `RELEASE-CANDIDATE-QA.md`.
+Linha de base mantida na 1.0. O usuário confirmou explicitamente esta RC2 com derrota→reinício, vitória 5/5, controles/inventário/poções e áudio/feedback aprovados; registro em `Reports/Leadership/windows-rc2-user-acceptance.json`. Nenhum ajuste numérico adicional foi justificado pelo playtest disponível. Aceite desta primeira versão concluído, sem alegar dificuldade média ou duração ideal com uma amostra. O roteiro de regressão permanece em `RELEASE-CANDIDATE-QA.md`.
 
 Fontes locais: `Prefabs/Player/Player.prefab`, `ScriptableObjects/Combat`, `ScriptableObjects/Enemies`, `ScriptableObjects/Items`, `ScriptableObjects/Loot`, `PlayerComboModel`, `ExperienceModel` e decisão D-002. Arquivos de cena/prefab foram apenas lidos nesta revisão.

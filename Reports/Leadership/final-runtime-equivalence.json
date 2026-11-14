@@ -1,0 +1,34 @@
+{
+  "rc2Version": "1.0.0-rc.2",
+  "finalVersion": "1.0.0",
+  "allGameplayAssembliesIdentical": false,
+  "assemblies": [
+    {
+      "path": "Builds/WindowsMVP/DungeonCrawler_Data/Managed/DungeonCrawler.CharacterArt.dll",
+      "rc2Sha256": "83fe778dffa66e3a9edfaf7bdc2bbd13afc7c63d50f8e7fadea71449f781ed0c",
+      "finalSha256": "83fe778dffa66e3a9edfaf7bdc2bbd13afc7c63d50f8e7fadea71449f781ed0c",
+      "identical": true
+    },
+    {
+      "path": "Builds/WindowsMVP/DungeonCrawler_Data/Managed/DungeonCrawler.CharacterArt.GameBridge.dll",
+      "rc2Sha256": "14a5ca931a7167a2a96719a7c5f6ec8809ea0cf48a2efefad9130124a1e78663",
+      "finalSha256": "14a5ca931a7167a2a96719a7c5f6ec8809ea0cf48a2efefad9130124a1e78663",
+      "identical": true
+    },
+    {
+      "path": "Builds/WindowsMVP/DungeonCrawler_Data/Managed/DungeonCrawler.Runtime.dll",
+      "rc2Sha256": "3323252fe2bb3b95fb0747f3181a8c077dedbee68cef787004d8e10f47928368",
+      "finalSha256": "37c0d15b679e78f97c8fd5480c25eb0b4cf1b137bd2a62abe319b9b4f965c6b0",
+      "identical": false
+    },
+    {
+      "path": "Builds/WindowsMVP/DungeonCrawler_Data/Managed/DungeonCrawler.SpriteLab.dll",
+      "rc2Sha256": "09dceb0f0eb97e839856ace9e363b701779f35ba36a0bf40d9a8c281dce0bc7e",
+      "finalSha256": "09dceb0f0eb97e839856ace9e363b701779f35ba36a0bf40d9a8c281dce0bc7e",
+      "identical": true
+    }
+  ],
+  "runtimeSourcesUnchangedSinceRc2": true,
+  "sourceDiff": "Only Assets/_Project/Scripts/Editor/MvpReleaseBuild.cs: ReleaseVersion changed to 1.0.0",
+  "validation": "Final 93 EditMode and 69 PlayMode passed; extracted package smoke passed. Runtime DLL hash differs after rebuild; no binary-identical claim for that assembly."
+}

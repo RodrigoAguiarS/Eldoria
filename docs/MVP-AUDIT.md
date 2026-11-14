@@ -2,7 +2,15 @@
 
 Responsável técnico/PO: Codex, conforme solicitação do usuário nesta data. As regras de `AGENTS.md`, o produto de `GAME_DESIGN.md` e a arquitetura existente continuam valendo. Este relatório substitui o diagnóstico de estado atual; `../MVP_AUDIT.md` e `../Reports/Task02/` ficam preservados como histórico.
 
-## Método e evidências
+## Estado atual — entrega 1.0.0 em 14/11/2026
+
+Os bloqueios iniciais foram reparados; o escopo D-001/D-002 foi implementado e validado. **93/93 EditMode e 69/69 PlayMode finais**, build Windows release 1.0.0 sem erros, auditoria atual de assets com `issues=[]`. Pacote local de 53.496.573 bytes, 208 arquivos com CRC/hashes verificados, extraído e aberto para smoke de menu/andar/especial. A partida completa/derrota-reinício/controles/escuta/feedback da RC2 foram explicitamente aprovados pelo usuário; o log final registra cinco ondas sem exceções/Missing Script. A automação observou partes da run, sem capturar a vitória.
+
+Matriz por requisito, evidências e limites: [RELEASE-1.0-VALIDATION](RELEASE-1.0-VALIDATION.md). Reconstrução: [BUILD-WINDOWS](BUILD-WINDOWS.md). Medições: [WindowsPerf](../Reports/Leadership/WindowsPerf/README.md); mistura [normal](../Reports/Leadership/audio-mix-normal-measurements.json) e [sintética](../Reports/Leadership/audio-mix-synthetic-measurements.json). Não houve alteração de imagens ou Packages; herói/rig/materiais/cenário foram preservados.
+
+O restante deste documento preserva a auditoria inicial e os deltas de cada entrega. Seus diagnósticos/pendências descrevem aquela etapa, não reabrem problemas já encerrados no estado atual. Permanecem como limites conhecidos os avisos upstream de shaders, ausência de assinatura/publicação, cobertura de hardware restrita e escopo sem save de campanha, detalhados no relatório da entrega.
+
+## Método e evidências da auditoria inicial
 
 - Documentos lidos: AGENTS, CLAUDE, GAME_DESIGN, ARCHITECTURE, MVP, auditoria anterior e briefs de Tasks. Nenhum resultado de Claude foi presumido.
 - Snapshot de 944 arquivos antes das alterações: [initial_files.json](../Reports/Leadership/initial_files.json). Backup externo: `G:/DungeonCrawler/LeadershipBackup_20261113_224614`. Nenhum arquivo mudou entre o snapshot e o início dos instrumentos de auditoria.
@@ -49,7 +57,7 @@ Status descreve o requisito inteiro. Uma evidência parcial não aprova o restan
 
 **MVP global: ainda não aprovado.** M0 exige histórico reproduzível; M1 tem validações visuais/builders abertas; M2/M3 exigem percurso e Boss; M4 tem assets inválidos e acabamento ausente.
 
-## Defeitos e riscos priorizados
+## Diagnóstico inicial — defeitos e riscos priorizados
 
 1. **P0 — Armas inválidas.** `ScriptableObjects/Items/Weapon_IronSword.asset` e `Weapon_WardenBlade.asset` têm m_Script nulo; Loot_Elite/Loot_Boss apontam para elas. Corrigir classe/asset pelo Editor, preservando GUID, nome, bônus 6/12 e referências; acrescentar provas com assets reais, equipamento e build.
 2. **P0 — Sem versionamento.** Criar Git local, exclusões verificadas e commits por incremento; não adicionar remoto/publicar. Backups não substituem histórico reproduzível.
@@ -61,7 +69,7 @@ Status descreve o requisito inteiro. Uma evidência parcial não aprova o restan
 8. **P2 — Aviso ao desativar player animado.** Observado `Game object with animator is inactive` na saída/reinício. Verificar guards da ponte ao cancelar; nenhum erro de compilação foi observado no runtime inicial.
 9. **P2 — Limites e ciclo de vida.** CameraOcclusionHider usa buffer fixo de 16; RoomController perde inscrições ao reativar; EnemyCombat não cancela explicitamente no OnDisable; lista estática de drops pode sofrer reentrância. São riscos de código, ainda sem reprodução de falha no percurso padrão; não chamar correção de ganho de desempenho sem medir.
 
-## Além dos marcos originais
+## Histórico — além dos marcos originais
 
 Mana/estamina, defesa, especial, menus iniciais/pause/configurações, áudio, inventário interativo, raridades e ataque ranged do jogador não estão implementados. O ranged existente é do inimigo. A prioridade é fechar M0–M4 antes de ampliar esses sistemas. [ROADMAP](../ROADMAP.md) propõe a fronteira de 1.0; [BACKLOG](../BACKLOG.md) controla execução e aprovação de produto.
 

@@ -11,7 +11,7 @@ namespace DungeonCrawler.Editor
     {
         public const string Floor = "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity";
         public const string Executable = "Builds/WindowsMVP/DungeonCrawler.exe";
-        public const string ReleaseVersion = "1.0.0-rc.2";
+        public const string ReleaseVersion = "1.0.0";
 
         [Serializable] private sealed class Result
         {
