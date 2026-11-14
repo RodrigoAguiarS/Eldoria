@@ -1,0 +1,1700 @@
+{
+  "character": "Hero",
+  "id": "hero",
+  "description": "Herói jogável (Asset 01). Protótipo de sprite 2D, NÃO substitui o modelo low-poly oficial.",
+  "generator": "Tools/LemoSpriteLab (node src/generate.mjs --character hero)",
+  "lemo": {
+    "library": "Lemo-Opuscar (MIT) — github.com/lemomo-ai/lemo-opuscar",
+    "file": "styles/hd-2d/demo/px.js",
+    "sha256": "c801b8b6dc589740a0e9c2fcf9a0af42760cc2901e06510089aa8c7decd2815f",
+    "usedExports": [
+      "PX (set/rect/ellipse/poly/line/outline)",
+      "ramp (Bayer 4x4)",
+      "hex",
+      "mixc"
+    ]
+  },
+  "frameWidth": 128,
+  "frameHeight": 128,
+  "logicalResolution": 64,
+  "pixelScale": 2,
+  "pixelsPerUnit": 56,
+  "heightMeters": 2,
+  "pivot": {
+    "x": 0.5,
+    "y": 0.0625
+  },
+  "pivotNote": "Normalizado (0,0 = canto inferior esquerdo, convenção Unity). Pivô na sola dos pés, centro horizontal.",
+  "filterMode": "Point",
+  "directions": [
+    "Front",
+    "Back",
+    "Left",
+    "Right"
+  ],
+  "handedness": "right",
+  "assumptions": [
+    "Cor do cabelo não definida na direção de arte: castanho escuro #4A2C1A (derivado do couro), sem capacete.",
+    "Olhos, sobrancelhas e boca em tinta #1E1830 (cor oficial de sombra), nunca preto puro.",
+    "Couro \"escuro\": rampa construída do #7A4B2A oficial em direção à sombra #1E1830."
+  ],
+  "palette": {
+    "cape": "#2F6BFF",
+    "rune": "#4FD8FF",
+    "leather": "#7A4B2A",
+    "metal": "#B9C4CF",
+    "brass": "#E0B040",
+    "skin": "#E3B58F",
+    "shadow": "#1E1830",
+    "moon": "#9FB8FF",
+    "torch": "#FF9A2E",
+    "hair": "#4A2C1A",
+    "highlight": "#E8EEFF"
+  },
+  "coordinateNote": "x,y = canto superior esquerdo em pixels (origem no topo). unityRect.y usa origem inferior (Unity).",
+  "animations": [
+    {
+      "name": "Idle",
+      "frameCount": 4,
+      "fps": 4,
+      "loop": true,
+      "durationSeconds": 1,
+      "sheet": "Hero/Sheets/Hero_Idle_Sheet.png",
+      "sheetWidth": 512,
+      "sheetHeight": 512,
+      "directions": {
+        "Front": {
+          "row": 0,
+          "frames": [
+            {
+              "index": 0,
+              "file": "Hero/Idle/Front/Hero_Idle_Front_00.png",
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 0,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 1,
+              "file": "Hero/Idle/Front/Hero_Idle_Front_01.png",
+              "rect": {
+                "x": 128,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 128,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 2,
+              "file": "Hero/Idle/Front/Hero_Idle_Front_02.png",
+              "rect": {
+                "x": 256,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 256,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 3,
+              "file": "Hero/Idle/Front/Hero_Idle_Front_03.png",
+              "rect": {
+                "x": 384,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 384,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              }
+            }
+          ]
+        },
+        "Back": {
+          "row": 1,
+          "frames": [
+            {
+              "index": 0,
+              "file": "Hero/Idle/Back/Hero_Idle_Back_00.png",
+              "rect": {
+                "x": 0,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 0,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 1,
+              "file": "Hero/Idle/Back/Hero_Idle_Back_01.png",
+              "rect": {
+                "x": 128,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 128,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 2,
+              "file": "Hero/Idle/Back/Hero_Idle_Back_02.png",
+              "rect": {
+                "x": 256,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 256,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 3,
+              "file": "Hero/Idle/Back/Hero_Idle_Back_03.png",
+              "rect": {
+                "x": 384,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 384,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              }
+            }
+          ]
+        },
+        "Left": {
+          "row": 2,
+          "frames": [
+            {
+              "index": 0,
+              "file": "Hero/Idle/Left/Hero_Idle_Left_00.png",
+              "rect": {
+                "x": 0,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 0,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 1,
+              "file": "Hero/Idle/Left/Hero_Idle_Left_01.png",
+              "rect": {
+                "x": 128,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 128,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 2,
+              "file": "Hero/Idle/Left/Hero_Idle_Left_02.png",
+              "rect": {
+                "x": 256,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 256,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 3,
+              "file": "Hero/Idle/Left/Hero_Idle_Left_03.png",
+              "rect": {
+                "x": 384,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 384,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              }
+            }
+          ]
+        },
+        "Right": {
+          "row": 3,
+          "frames": [
+            {
+              "index": 0,
+              "file": "Hero/Idle/Right/Hero_Idle_Right_00.png",
+              "rect": {
+                "x": 0,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 0,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 1,
+              "file": "Hero/Idle/Right/Hero_Idle_Right_01.png",
+              "rect": {
+                "x": 128,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 128,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 2,
+              "file": "Hero/Idle/Right/Hero_Idle_Right_02.png",
+              "rect": {
+                "x": 256,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 256,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 3,
+              "file": "Hero/Idle/Right/Hero_Idle_Right_03.png",
+              "rect": {
+                "x": 384,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 384,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Walk",
+      "frameCount": 6,
+      "fps": 10,
+      "loop": true,
+      "durationSeconds": 0.6,
+      "sheet": "Hero/Sheets/Hero_Walk_Sheet.png",
+      "sheetWidth": 768,
+      "sheetHeight": 512,
+      "directions": {
+        "Front": {
+          "row": 0,
+          "frames": [
+            {
+              "index": 0,
+              "file": "Hero/Walk/Front/Hero_Walk_Front_00.png",
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 0,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 1,
+              "file": "Hero/Walk/Front/Hero_Walk_Front_01.png",
+              "rect": {
+                "x": 128,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 128,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 2,
+              "file": "Hero/Walk/Front/Hero_Walk_Front_02.png",
+              "rect": {
+                "x": 256,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 256,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 3,
+              "file": "Hero/Walk/Front/Hero_Walk_Front_03.png",
+              "rect": {
+                "x": 384,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 384,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 4,
+              "file": "Hero/Walk/Front/Hero_Walk_Front_04.png",
+              "rect": {
+                "x": 512,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 512,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 5,
+              "file": "Hero/Walk/Front/Hero_Walk_Front_05.png",
+              "rect": {
+                "x": 640,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 640,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              }
+            }
+          ]
+        },
+        "Back": {
+          "row": 1,
+          "frames": [
+            {
+              "index": 0,
+              "file": "Hero/Walk/Back/Hero_Walk_Back_00.png",
+              "rect": {
+                "x": 0,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 0,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 1,
+              "file": "Hero/Walk/Back/Hero_Walk_Back_01.png",
+              "rect": {
+                "x": 128,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 128,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 2,
+              "file": "Hero/Walk/Back/Hero_Walk_Back_02.png",
+              "rect": {
+                "x": 256,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 256,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 3,
+              "file": "Hero/Walk/Back/Hero_Walk_Back_03.png",
+              "rect": {
+                "x": 384,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 384,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 4,
+              "file": "Hero/Walk/Back/Hero_Walk_Back_04.png",
+              "rect": {
+                "x": 512,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 512,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 5,
+              "file": "Hero/Walk/Back/Hero_Walk_Back_05.png",
+              "rect": {
+                "x": 640,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 640,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              }
+            }
+          ]
+        },
+        "Left": {
+          "row": 2,
+          "frames": [
+            {
+              "index": 0,
+              "file": "Hero/Walk/Left/Hero_Walk_Left_00.png",
+              "rect": {
+                "x": 0,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 0,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 1,
+              "file": "Hero/Walk/Left/Hero_Walk_Left_01.png",
+              "rect": {
+                "x": 128,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 128,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 2,
+              "file": "Hero/Walk/Left/Hero_Walk_Left_02.png",
+              "rect": {
+                "x": 256,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 256,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 3,
+              "file": "Hero/Walk/Left/Hero_Walk_Left_03.png",
+              "rect": {
+                "x": 384,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 384,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 4,
+              "file": "Hero/Walk/Left/Hero_Walk_Left_04.png",
+              "rect": {
+                "x": 512,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 512,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 5,
+              "file": "Hero/Walk/Left/Hero_Walk_Left_05.png",
+              "rect": {
+                "x": 640,
+                "y": 256,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 640,
+                "y": 128,
+                "w": 128,
+                "h": 128
+              }
+            }
+          ]
+        },
+        "Right": {
+          "row": 3,
+          "frames": [
+            {
+              "index": 0,
+              "file": "Hero/Walk/Right/Hero_Walk_Right_00.png",
+              "rect": {
+                "x": 0,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 0,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 1,
+              "file": "Hero/Walk/Right/Hero_Walk_Right_01.png",
+              "rect": {
+                "x": 128,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 128,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 2,
+              "file": "Hero/Walk/Right/Hero_Walk_Right_02.png",
+              "rect": {
+                "x": 256,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 256,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 3,
+              "file": "Hero/Walk/Right/Hero_Walk_Right_03.png",
+              "rect": {
+                "x": 384,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 384,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 4,
+              "file": "Hero/Walk/Right/Hero_Walk_Right_04.png",
+              "rect": {
+                "x": 512,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 512,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              }
+            },
+            {
+              "index": 5,
+              "file": "Hero/Walk/Right/Hero_Walk_Right_05.png",
+              "rect": {
+                "x": 640,
+                "y": 384,
+                "w": 128,
+                "h": 128
+              },
+              "unityRect": {
+                "x": 640,
+                "y": 0,
+                "w": 128,
+                "h": 128
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "combinedSheet": {
+    "file": "Hero/Sheets/Hero_Spritesheet.png",
+    "width": 768,
+    "height": 1024,
+    "layout": "linhas = animação × direção (Idle Front, Idle Back, Idle Left, Idle Right, Walk ...); colunas = frames; células vazias são transparentes",
+    "frames": [
+      {
+        "animation": "Idle",
+        "direction": "Front",
+        "index": 0,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 0,
+          "y": 896,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Front",
+        "index": 1,
+        "rect": {
+          "x": 128,
+          "y": 0,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 128,
+          "y": 896,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Front",
+        "index": 2,
+        "rect": {
+          "x": 256,
+          "y": 0,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 256,
+          "y": 896,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Front",
+        "index": 3,
+        "rect": {
+          "x": 384,
+          "y": 0,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 384,
+          "y": 896,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Back",
+        "index": 0,
+        "rect": {
+          "x": 0,
+          "y": 128,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 0,
+          "y": 768,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Back",
+        "index": 1,
+        "rect": {
+          "x": 128,
+          "y": 128,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 128,
+          "y": 768,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Back",
+        "index": 2,
+        "rect": {
+          "x": 256,
+          "y": 128,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 256,
+          "y": 768,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Back",
+        "index": 3,
+        "rect": {
+          "x": 384,
+          "y": 128,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 384,
+          "y": 768,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Left",
+        "index": 0,
+        "rect": {
+          "x": 0,
+          "y": 256,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 0,
+          "y": 640,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Left",
+        "index": 1,
+        "rect": {
+          "x": 128,
+          "y": 256,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 128,
+          "y": 640,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Left",
+        "index": 2,
+        "rect": {
+          "x": 256,
+          "y": 256,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 256,
+          "y": 640,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Left",
+        "index": 3,
+        "rect": {
+          "x": 384,
+          "y": 256,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 384,
+          "y": 640,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Right",
+        "index": 0,
+        "rect": {
+          "x": 0,
+          "y": 384,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 0,
+          "y": 512,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Right",
+        "index": 1,
+        "rect": {
+          "x": 128,
+          "y": 384,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 128,
+          "y": 512,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Right",
+        "index": 2,
+        "rect": {
+          "x": 256,
+          "y": 384,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 256,
+          "y": 512,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Idle",
+        "direction": "Right",
+        "index": 3,
+        "rect": {
+          "x": 384,
+          "y": 384,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 384,
+          "y": 512,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Front",
+        "index": 0,
+        "rect": {
+          "x": 0,
+          "y": 512,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 0,
+          "y": 384,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Front",
+        "index": 1,
+        "rect": {
+          "x": 128,
+          "y": 512,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 128,
+          "y": 384,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Front",
+        "index": 2,
+        "rect": {
+          "x": 256,
+          "y": 512,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 256,
+          "y": 384,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Front",
+        "index": 3,
+        "rect": {
+          "x": 384,
+          "y": 512,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 384,
+          "y": 384,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Front",
+        "index": 4,
+        "rect": {
+          "x": 512,
+          "y": 512,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 512,
+          "y": 384,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Front",
+        "index": 5,
+        "rect": {
+          "x": 640,
+          "y": 512,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 640,
+          "y": 384,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Back",
+        "index": 0,
+        "rect": {
+          "x": 0,
+          "y": 640,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 0,
+          "y": 256,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Back",
+        "index": 1,
+        "rect": {
+          "x": 128,
+          "y": 640,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 128,
+          "y": 256,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Back",
+        "index": 2,
+        "rect": {
+          "x": 256,
+          "y": 640,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 256,
+          "y": 256,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Back",
+        "index": 3,
+        "rect": {
+          "x": 384,
+          "y": 640,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 384,
+          "y": 256,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Back",
+        "index": 4,
+        "rect": {
+          "x": 512,
+          "y": 640,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 512,
+          "y": 256,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Back",
+        "index": 5,
+        "rect": {
+          "x": 640,
+          "y": 640,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 640,
+          "y": 256,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Left",
+        "index": 0,
+        "rect": {
+          "x": 0,
+          "y": 768,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 0,
+          "y": 128,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Left",
+        "index": 1,
+        "rect": {
+          "x": 128,
+          "y": 768,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 128,
+          "y": 128,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Left",
+        "index": 2,
+        "rect": {
+          "x": 256,
+          "y": 768,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 256,
+          "y": 128,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Left",
+        "index": 3,
+        "rect": {
+          "x": 384,
+          "y": 768,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 384,
+          "y": 128,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Left",
+        "index": 4,
+        "rect": {
+          "x": 512,
+          "y": 768,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 512,
+          "y": 128,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Left",
+        "index": 5,
+        "rect": {
+          "x": 640,
+          "y": 768,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 640,
+          "y": 128,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Right",
+        "index": 0,
+        "rect": {
+          "x": 0,
+          "y": 896,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 0,
+          "y": 0,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Right",
+        "index": 1,
+        "rect": {
+          "x": 128,
+          "y": 896,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 128,
+          "y": 0,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Right",
+        "index": 2,
+        "rect": {
+          "x": 256,
+          "y": 896,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 256,
+          "y": 0,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Right",
+        "index": 3,
+        "rect": {
+          "x": 384,
+          "y": 896,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 384,
+          "y": 0,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Right",
+        "index": 4,
+        "rect": {
+          "x": 512,
+          "y": 896,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 512,
+          "y": 0,
+          "w": 128,
+          "h": 128
+        }
+      },
+      {
+        "animation": "Walk",
+        "direction": "Right",
+        "index": 5,
+        "rect": {
+          "x": 640,
+          "y": 896,
+          "w": 128,
+          "h": 128
+        },
+        "unityRect": {
+          "x": 640,
+          "y": 0,
+          "w": 128,
+          "h": 128
+        }
+      }
+    ]
+  },
+  "frameList": [
+    {
+      "animation": "Idle",
+      "direction": "Front",
+      "index": 0,
+      "file": "Hero/Idle/Front/Hero_Idle_Front_00.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Front",
+      "index": 1,
+      "file": "Hero/Idle/Front/Hero_Idle_Front_01.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Front",
+      "index": 2,
+      "file": "Hero/Idle/Front/Hero_Idle_Front_02.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Front",
+      "index": 3,
+      "file": "Hero/Idle/Front/Hero_Idle_Front_03.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Back",
+      "index": 0,
+      "file": "Hero/Idle/Back/Hero_Idle_Back_00.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Back",
+      "index": 1,
+      "file": "Hero/Idle/Back/Hero_Idle_Back_01.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Back",
+      "index": 2,
+      "file": "Hero/Idle/Back/Hero_Idle_Back_02.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Back",
+      "index": 3,
+      "file": "Hero/Idle/Back/Hero_Idle_Back_03.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Left",
+      "index": 0,
+      "file": "Hero/Idle/Left/Hero_Idle_Left_00.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Left",
+      "index": 1,
+      "file": "Hero/Idle/Left/Hero_Idle_Left_01.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Left",
+      "index": 2,
+      "file": "Hero/Idle/Left/Hero_Idle_Left_02.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Left",
+      "index": 3,
+      "file": "Hero/Idle/Left/Hero_Idle_Left_03.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Right",
+      "index": 0,
+      "file": "Hero/Idle/Right/Hero_Idle_Right_00.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Right",
+      "index": 1,
+      "file": "Hero/Idle/Right/Hero_Idle_Right_01.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Right",
+      "index": 2,
+      "file": "Hero/Idle/Right/Hero_Idle_Right_02.png"
+    },
+    {
+      "animation": "Idle",
+      "direction": "Right",
+      "index": 3,
+      "file": "Hero/Idle/Right/Hero_Idle_Right_03.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Front",
+      "index": 0,
+      "file": "Hero/Walk/Front/Hero_Walk_Front_00.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Front",
+      "index": 1,
+      "file": "Hero/Walk/Front/Hero_Walk_Front_01.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Front",
+      "index": 2,
+      "file": "Hero/Walk/Front/Hero_Walk_Front_02.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Front",
+      "index": 3,
+      "file": "Hero/Walk/Front/Hero_Walk_Front_03.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Front",
+      "index": 4,
+      "file": "Hero/Walk/Front/Hero_Walk_Front_04.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Front",
+      "index": 5,
+      "file": "Hero/Walk/Front/Hero_Walk_Front_05.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Back",
+      "index": 0,
+      "file": "Hero/Walk/Back/Hero_Walk_Back_00.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Back",
+      "index": 1,
+      "file": "Hero/Walk/Back/Hero_Walk_Back_01.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Back",
+      "index": 2,
+      "file": "Hero/Walk/Back/Hero_Walk_Back_02.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Back",
+      "index": 3,
+      "file": "Hero/Walk/Back/Hero_Walk_Back_03.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Back",
+      "index": 4,
+      "file": "Hero/Walk/Back/Hero_Walk_Back_04.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Back",
+      "index": 5,
+      "file": "Hero/Walk/Back/Hero_Walk_Back_05.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Left",
+      "index": 0,
+      "file": "Hero/Walk/Left/Hero_Walk_Left_00.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Left",
+      "index": 1,
+      "file": "Hero/Walk/Left/Hero_Walk_Left_01.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Left",
+      "index": 2,
+      "file": "Hero/Walk/Left/Hero_Walk_Left_02.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Left",
+      "index": 3,
+      "file": "Hero/Walk/Left/Hero_Walk_Left_03.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Left",
+      "index": 4,
+      "file": "Hero/Walk/Left/Hero_Walk_Left_04.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Left",
+      "index": 5,
+      "file": "Hero/Walk/Left/Hero_Walk_Left_05.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Right",
+      "index": 0,
+      "file": "Hero/Walk/Right/Hero_Walk_Right_00.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Right",
+      "index": 1,
+      "file": "Hero/Walk/Right/Hero_Walk_Right_01.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Right",
+      "index": 2,
+      "file": "Hero/Walk/Right/Hero_Walk_Right_02.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Right",
+      "index": 3,
+      "file": "Hero/Walk/Right/Hero_Walk_Right_03.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Right",
+      "index": 4,
+      "file": "Hero/Walk/Right/Hero_Walk_Right_04.png"
+    },
+    {
+      "animation": "Walk",
+      "direction": "Right",
+      "index": 5,
+      "file": "Hero/Walk/Right/Hero_Walk_Right_05.png"
+    }
+  ],
+  "shadow": {
+    "file": "Hero/Hero_Shadow.png",
+    "width": 128,
+    "height": 32,
+    "pivot": {
+      "x": 0.5,
+      "y": 0.5
+    }
+  }
+}

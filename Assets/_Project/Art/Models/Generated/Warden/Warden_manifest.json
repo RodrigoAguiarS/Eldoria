@@ -1,0 +1,188 @@
+{
+  "id": "warden",
+  "name": "Warden",
+  "role": "Boss (Boss_Warden.prefab)",
+  "source": "Derivado do Asset 02 + placeholder Boss_Warden (chifres)",
+  "documented": false,
+  "assumptions": [
+    "Visual não documentado: esqueleto-carcereiro gigante com elmo de chifres (chifres do placeholder) e marreta (coerente com o Slam).",
+    "Fendas de runa vermelhas no peito = corrupção (#FF2A2A); a mudança visual da fase 2 pode intensificar essa emissão na Unity."
+  ],
+  "generator": "Tools/Lemo3DGenerator",
+  "lemo": {
+    "root": "G:/lemo-opuscar/lemo-opuscar",
+    "three": "0.170.0"
+  },
+  "units": "metros (1 unidade Unity = 1 m), Y para cima, frente +Z, pivô nos pés",
+  "heightMeters": 4.6,
+  "triangles": 2790,
+  "triangleBudget": [
+    4000,
+    7000
+  ],
+  "meshes": 2,
+  "bones": [
+    "Root",
+    "Hips",
+    "Spine",
+    "Chest",
+    "Neck",
+    "Head",
+    "Shoulder_L",
+    "UpperArm_L",
+    "LowerArm_L",
+    "Hand_L",
+    "UpperLeg_L",
+    "LowerLeg_L",
+    "Foot_L",
+    "Toes_L",
+    "Shoulder_R",
+    "UpperArm_R",
+    "LowerArm_R",
+    "Hand_R",
+    "UpperLeg_R",
+    "LowerLeg_R",
+    "Foot_R",
+    "Toes_R"
+  ],
+  "sockets": [
+    "Socket_Hand_L",
+    "Socket_Hand_R"
+  ],
+  "equipment": [
+    {
+      "name": "Warden_Maul",
+      "socket": "Socket_Hand_R"
+    }
+  ],
+  "materials": [
+    {
+      "name": "Warden_bone",
+      "key": "bone",
+      "color": "#CFC6A8",
+      "smoothness": 0.2
+    },
+    {
+      "name": "Warden_boneDark",
+      "key": "boneDark",
+      "color": "#8F8770",
+      "smoothness": 0.15,
+      "note": "osso sombreado (derivado do #CFC6A8)"
+    },
+    {
+      "name": "Warden_armor",
+      "key": "armor",
+      "color": "#3E4152",
+      "metallic": 0.4,
+      "smoothness": 0.35
+    },
+    {
+      "name": "Warden_rust",
+      "key": "rust",
+      "color": "#8A4A22",
+      "metallic": 0.5,
+      "smoothness": 0.3
+    },
+    {
+      "name": "Warden_socket",
+      "key": "socket",
+      "color": "#1E1830",
+      "smoothness": 0.05,
+      "note": "órbitas/cavidades na cor oficial de sombra"
+    },
+    {
+      "name": "Warden_eyes",
+      "key": "eyes",
+      "color": "#FF2A2A",
+      "emissive": "#FF2A2A",
+      "emissiveIntensity": 3,
+      "smoothness": 0.5
+    },
+    {
+      "name": "Warden_horn",
+      "key": "horn",
+      "color": "#CFC6A8",
+      "smoothness": 0.3,
+      "note": "chifre (osso oficial)"
+    },
+    {
+      "name": "Warden_rune",
+      "key": "rune",
+      "color": "#FF2A2A",
+      "emissive": "#FF2A2A",
+      "emissiveIntensity": 2.5,
+      "smoothness": 0.5
+    }
+  ],
+  "clips": [
+    {
+      "name": "Idle",
+      "duration": 2.8,
+      "loop": true,
+      "events": {},
+      "groundLift": 0.119
+    },
+    {
+      "name": "Walk",
+      "duration": 1.3,
+      "loop": true,
+      "events": {},
+      "groundLift": 0.119
+    },
+    {
+      "name": "SlamWindup",
+      "duration": 1,
+      "loop": true,
+      "events": {},
+      "groundLift": 0.235
+    },
+    {
+      "name": "Slam",
+      "duration": 0.9,
+      "loop": false,
+      "events": {
+        "impact": 0.18
+      },
+      "groundLift": 0.315
+    },
+    {
+      "name": "Volley",
+      "duration": 1.5,
+      "loop": false,
+      "events": {
+        "fire": 1.2
+      },
+      "groundLift": 0.235
+    },
+    {
+      "name": "Roar",
+      "duration": 2.4,
+      "loop": false,
+      "events": {},
+      "groundLift": 0.268
+    },
+    {
+      "name": "Hit",
+      "duration": 0.5,
+      "loop": false,
+      "events": {},
+      "groundLift": 0.254
+    },
+    {
+      "name": "Death",
+      "duration": 2.2,
+      "loop": false,
+      "events": {},
+      "groundLift": 0.441
+    }
+  ],
+  "locomotion": {
+    "Idle": 0,
+    "Walk": 3
+  },
+  "animatorNotes": "SlamWindup é loop (dura o telegraph de cada fase); disparar Slam ao fim do telegraph.",
+  "files": {
+    "glb": "Warden.glb",
+    "fbx": "Warden.fbx"
+  }
+}

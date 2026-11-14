@@ -1,0 +1,78 @@
+{
+  "checkedAt": "2026-11-13T10:50:15",
+  "unity": "6000.6.9f1",
+  "characters": [
+    {
+      "name": "Hero",
+      "bodyTriangles": 2614, "bodySubmeshes": 9, "bones": 21, "bindposes": 21,
+      "shaders": ["Universal Render Pipeline/Lit"],
+      "clips": [
+        {"name": "Idle", "length": 2.4, "loop": true, "minY": 0, "maxY": 1.967},
+        {"name": "Walk", "length": 1, "loop": true, "minY": -0.003, "maxY": 1.99},
+        {"name": "Run", "length": 0.633, "loop": true, "minY": 0.003, "maxY": 1.979},
+        {"name": "Attack", "length": 0.7, "loop": false, "minY": -0.001, "maxY": 1.98},
+        {"name": "HeavyAttack", "length": 1.2, "loop": false, "minY": -0.001, "maxY": 1.981},
+        {"name": "Dash", "length": 0.4, "loop": false, "minY": -0.014, "maxY": 1.989},
+        {"name": "Hit", "length": 0.433, "loop": false, "minY": -0.001, "maxY": 1.975},
+        {"name": "Death", "length": 1.6, "loop": false, "minY": -0.027, "maxY": 1.97},
+        {"name": "Victory", "length": 2, "loop": false, "minY": -0.002, "maxY": 1.968}
+      ],
+      "errors": []
+    },
+    {
+      "name": "SkeletonElite",
+      "bodyTriangles": 1952, "bodySubmeshes": 6, "bones": 19, "bindposes": 19,
+      "shaders": ["Universal Render Pipeline/Lit"],
+      "clips": [
+        {"name": "Idle", "length": 2, "loop": true, "minY": 0, "maxY": 2.565},
+        {"name": "Chase", "length": 0.733, "loop": true, "minY": -0.001, "maxY": 2.53},
+        {"name": "Attack", "length": 1.1, "loop": false, "minY": -0.001, "maxY": 2.604},
+        {"name": "Hit", "length": 0.4, "loop": false, "minY": -0.001, "maxY": 2.643},
+        {"name": "Death", "length": 1.4, "loop": false, "minY": -0.004, "maxY": 2.63}
+      ],
+      "errors": []
+    },
+    {
+      "name": "SkeletonMelee",
+      "bodyTriangles": 1834, "bodySubmeshes": 6, "bones": 18, "bindposes": 18,
+      "shaders": ["Universal Render Pipeline/Lit"],
+      "clips": [
+        {"name": "Idle", "length": 2, "loop": true, "minY": 0, "maxY": 1.832},
+        {"name": "Chase", "length": 0.7, "loop": true, "minY": -0.005, "maxY": 1.807},
+        {"name": "Attack", "length": 0.933, "loop": false, "minY": -0.002, "maxY": 1.859},
+        {"name": "Hit", "length": 0.4, "loop": false, "minY": -0.001, "maxY": 1.888},
+        {"name": "Death", "length": 1.4, "loop": false, "minY": -0.003, "maxY": 1.879}
+      ],
+      "errors": []
+    },
+    {
+      "name": "SkeletonRanged",
+      "bodyTriangles": 1868, "bodySubmeshes": 7, "bones": 17, "bindposes": 17,
+      "shaders": ["Universal Render Pipeline/Lit"],
+      "clips": [
+        {"name": "Idle", "length": 2.2, "loop": true, "minY": 0, "maxY": 2.012},
+        {"name": "Chase", "length": 0.8, "loop": true, "minY": -0.004, "maxY": 2.014},
+        {"name": "Attack", "length": 1, "loop": false, "minY": -0.001, "maxY": 2.016},
+        {"name": "Hit", "length": 0.4, "loop": false, "minY": -0.001, "maxY": 2.022},
+        {"name": "Death", "length": 1.4, "loop": false, "minY": -0.044, "maxY": 2.017}
+      ],
+      "errors": []
+    },
+    {
+      "name": "Warden",
+      "bodyTriangles": 2594, "bodySubmeshes": 8, "bones": 19, "bindposes": 19,
+      "shaders": ["Universal Render Pipeline/Lit"],
+      "clips": [
+        {"name": "Idle", "length": 2.8, "loop": true, "minY": 0, "maxY": 4.812},
+        {"name": "Walk", "length": 1.3, "loop": true, "minY": -0.007, "maxY": 4.829},
+        {"name": "SlamWindup", "length": 1, "loop": true, "minY": 0, "maxY": 4.818},
+        {"name": "Slam", "length": 0.9, "loop": false, "minY": -0.004, "maxY": 4.822},
+        {"name": "Volley", "length": 1.5, "loop": false, "minY": 0.001, "maxY": 4.814},
+        {"name": "Roar", "length": 2.4, "loop": false, "minY": -0.006, "maxY": 4.814},
+        {"name": "Hit", "length": 0.5, "loop": false, "minY": -0.001, "maxY": 4.831},
+        {"name": "Death", "length": 2.2, "loop": false, "minY": -0.011, "maxY": 4.816}
+      ],
+      "errors": []
+    }
+  ]
+}

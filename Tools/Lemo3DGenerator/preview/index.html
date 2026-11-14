@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generated Characters 360</title>
+<style>
+:root{--bg:#16131f;--fg:#e8eeff;--mut:#9aa3c0;--card:#221d30;--acc:#2f6bff}
+body{margin:0;background:var(--bg);color:var(--fg);font:13px/1.4 system-ui,sans-serif;overflow:hidden}
+#ui{position:fixed;left:12px;top:12px;right:12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;z-index:2}
+#ui select,#ui button{background:var(--card);color:var(--fg);border:1px solid #3a3350;border-radius:6px;padding:5px 8px}
+#ui button.on{background:var(--acc);border-color:var(--acc)}#info{color:var(--mut);margin-left:8px}
+canvas{display:block}
+</style>
+<script type="importmap">{"imports":{"three":"/lemo/node_modules/three/build/three.module.js","three/addons/":"/lemo/node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<div id="ui"><select id="char"></select><select id="clip"></select><button id="spin" class="on">Girar 360°</button><button id="iso">Câmera isométrica</button><button id="skel">Ossos</button><span id="info"></span></div>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+const q = new URLSearchParams(location.search);
+const CHARS = (q.get('models') || 'Hero,SkeletonMelee,SkeletonElite,SkeletonRanged,Warden').split(',');
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(2, devicePixelRatio)); renderer.shadowMap.enabled = true; renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.NeutralToneMapping;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color('#1e1830');
+// iluminação do documento: key fria da lua + preenchimento quente de tocha + ambiente roxo-azulado
+scene.add(new THREE.HemisphereLight('#9fb8ff', '#1e1830', 1.1));
+const moon = new THREE.DirectionalLight('#c8d6ff', 2.4); moon.position.set(-4, 8, 6); moon.castShadow = true; moon.shadow.mapSize.set(2048, 2048);
+Object.assign(moon.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6 }); scene.add(moon);
+const torch = new THREE.PointLight('#ff9a2e', 18, 12, 2); torch.position.set(3, 2.5, 3); scene.add(torch);
+const ground = new THREE.Mesh(new THREE.CircleGeometry(8, 48), new THREE.MeshStandardMaterial({ color: '#55596b', roughness: .95 }));
+ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+const persp = new THREE.PerspectiveCamera(35, 1, .05, 100), ortho = new THREE.OrthographicCamera(-1, 1, 1, -1, .05, 100);
+let cam = persp; const controls = new OrbitControls(persp, renderer.domElement); controls.target.set(0, 1, 0); persp.position.set(2.8, 2.2, 4.2);
+const loader = new GLTFLoader(), cache = {}; let cur = null, mixer = null, action = null, helper = null, spin = true, iso = false;
+async function load(name) { if (!cache[name]) cache[name] = await loader.loadAsync(`/out/${name}/${name}.glb`); return cache[name]; }
+function stats(g) { let t = 0, b = 0; g.scene.traverse(o => { if (o.isMesh) t += (o.geometry.index ? o.geometry.index.count : o.geometry.attributes.position.count) / 3; if (o.isBone) b++; }); return { t, b }; }
+async function show(name, clipName, time = null) {
+  const g = await load(name);
+  if (cur) scene.remove(cur.root);
+  const root = g.scene; root.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
+  scene.add(root); mixer = new THREE.AnimationMixer(root);
+  const clip = g.animations.find(a => a.name === clipName) || g.animations[0];
+  action = mixer.clipAction(clip); action.clampWhenFinished = true; action.setLoop(/Death|Victory/.test(clip.name) ? THREE.LoopOnce : THREE.LoopRepeat); action.play();
+  if (time !== null) { mixer.setTime(Math.min(time, clip.duration - 1e-3)); }
+  const box = new THREE.Box3().setFromObject(root), h = box.max.y;
+  controls.target.set(0, h * .5, 0); persp.position.setLength(h * 2.6 + 1.2); persp.position.y = h * .9;
+  if (helper) scene.remove(helper); helper = new THREE.SkeletonHelper(root); helper.visible = document.getElementById('skel').classList.contains('on'); scene.add(helper);
+  cur = { root, g, h }; const s = stats(g);
+  document.getElementById('info').textContent = `${name} · ${s.t} triângulos · ${s.b} ossos · ${g.animations.length} clips · altura ${h.toFixed(2)} m`;
+  return { g, clip };
+}
+function resize() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h); persp.aspect = w / h; persp.updateProjectionMatrix(); }
+addEventListener('resize', resize); resize();
+const selC = document.getElementById('char'), selA = document.getElementById('clip');
+for (const c of CHARS) selC.add(new Option(c, c));
+async function refreshClips() { const g = await load(selC.value); selA.innerHTML = ''; for (const a of g.animations) selA.add(new Option(`${a.name} (${a.duration.toFixed(2)} s)`, a.name)); await show(selC.value, selA.value); }
+selC.onchange = refreshClips; selA.onchange = () => show(selC.value, selA.value);
+document.getElementById('spin').onclick = e => { spin = !spin; e.target.classList.toggle('on', spin); };
+document.getElementById('iso').onclick = e => { iso = !iso; e.target.classList.toggle('on', iso); };
+document.getElementById('skel').onclick = e => { e.target.classList.toggle('on'); if (helper) helper.visible = e.target.classList.contains('on'); };
+const clock = new THREE.Clock(); let ang = 0;
+function isoCam(h, a) {   // câmera do jogo: offset (0,10,-10) olhando para o alvo, girando o personagem em vez da câmera
+  const s = h * .75; Object.assign(ortho, { left: -s * innerWidth / innerHeight, right: s * innerWidth / innerHeight, top: s, bottom: -s }); ortho.updateProjectionMatrix();
+  ortho.position.set(Math.sin(a) * 10, 10 + h * .5, Math.cos(a) * 10); ortho.lookAt(0, h * .5, 0); return ortho;
+}
+if (!q.has('sheet')) {
+  await refreshClips();
+  renderer.setAnimationLoop(() => {
+    const dt = clock.getDelta(); if (mixer) mixer.update(dt);
+    if (spin) ang += dt * .6;
+    if (iso) cam = isoCam(cur ? cur.h : 2, ang); else { cam = persp; if (spin) { const r = Math.hypot(persp.position.x - controls.target.x, persp.position.z - controls.target.z); persp.position.x = Math.sin(ang) * r; persp.position.z = Math.cos(ang) * r; } controls.update(); }
+    renderer.render(scene, cam);
+  });
+} else {
+  // modo prancha: ?sheet=turn (8 ângulos por personagem) | ?sheet=clips&models=Hero (6 instantes por clip)
+  document.getElementById('ui').style.display = 'none';
+  const mode = q.get('sheet'), W = 220, H = 260;
+  const off = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true }); off.setSize(W, H); off.shadowMap.enabled = true; off.outputColorSpace = THREE.SRGBColorSpace; off.toneMapping = THREE.NeutralToneMapping;
+  const rows = [];
+  if (mode === 'turn') for (const c of CHARS) rows.push({ c, clip: q.get('clip') || 'Idle', cols: [0, 45, 90, 135, 180, 225, 270, 315].map(a => ({ a, t: .3 })) , label: c });
+  else for (const c of CHARS) { const g = await load(c); for (const a of g.animations) rows.push({ c, clip: a.name, cols: [0, .2, .4, .6, .8, 1].map(u => ({ a: q.has('angle') ? +q.get('angle') : 35, t: u * a.duration })), label: `${c} ${a.name}` }); }
+  const ncol = rows[0].cols.length, sheet = document.createElement('canvas'); sheet.width = W * ncol; sheet.height = H * rows.length; const sx = sheet.getContext('2d');
+  sx.fillStyle = '#1e1830'; sx.fillRect(0, 0, sheet.width, sheet.height);
+  for (let r = 0; r < rows.length; r++) for (let k = 0; k < ncol; k++) {
+    const { g } = await show(rows[r].c, rows[r].clip, rows[r].cols[k].t); mixer.update(0);
+    const h = Math.max(2, cur.h), a = rows[r].cols[k].a * Math.PI / 180;
+    const cm = new THREE.PerspectiveCamera(30, W / H, .05, 100); const d = h * 2.4 + 1;
+    cm.position.set(Math.sin(a) * d, h * .75, Math.cos(a) * d); cm.lookAt(0, h * .45, 0);
+    off.render(scene, cm); sx.drawImage(off.domElement, k * W, r * H);
+    sx.fillStyle = '#e8eeff'; sx.font = '12px system-ui'; sx.fillText(`${rows[r].label} · ${rows[r].cols[k].a}° · ${rows[r].cols[k].t.toFixed(2)}s`, k * W + 6, r * H + 16);
+  }
+  const name = `${mode}_${CHARS.join('-')}${q.get('clip') ? '_' + q.get('clip') : ''}.png`;
+  await fetch('/save?name=' + name, { method: 'POST', body: sheet.toDataURL('image/png') });
+  document.body.innerHTML = `<p style="padding:16px">salvo preview/captures/${name}</p>`;
+}
+</script></body></html>

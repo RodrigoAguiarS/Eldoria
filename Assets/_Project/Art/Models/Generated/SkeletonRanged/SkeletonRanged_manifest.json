@@ -1,0 +1,164 @@
+{
+  "id": "skeleton_ranged",
+  "name": "SkeletonRanged",
+  "role": "Inimigo ranged (Enemy_Ranged.prefab)",
+  "source": "Derivado do Asset 02 (sem descrição própria no documento)",
+  "documented": false,
+  "assumptions": [
+    "Visual não documentado: esqueleto conjurador com capuz e cajado; aprovar com a direção de arte.",
+    "Orbe vermelho = cor de corrupção oficial (#FF2A2A), coerente com o projétil esférico do jogo."
+  ],
+  "generator": "Tools/Lemo3DGenerator",
+  "lemo": {
+    "root": "G:/lemo-opuscar/lemo-opuscar",
+    "three": "0.170.0"
+  },
+  "units": "metros (1 unidade Unity = 1 m), Y para cima, frente +Z, pivô nos pés",
+  "heightMeters": 2,
+  "triangles": 2032,
+  "triangleBudget": [
+    3000,
+    4000
+  ],
+  "meshes": 2,
+  "bones": [
+    "Root",
+    "Hips",
+    "Spine",
+    "Chest",
+    "Neck",
+    "Head",
+    "Shoulder_L",
+    "UpperArm_L",
+    "LowerArm_L",
+    "Hand_L",
+    "UpperLeg_L",
+    "LowerLeg_L",
+    "Foot_L",
+    "Toes_L",
+    "Shoulder_R",
+    "UpperArm_R",
+    "LowerArm_R",
+    "Hand_R",
+    "UpperLeg_R",
+    "LowerLeg_R",
+    "Foot_R",
+    "Toes_R"
+  ],
+  "sockets": [
+    "Socket_Hand_L",
+    "Socket_Hand_R"
+  ],
+  "equipment": [
+    {
+      "name": "SkeletonRanged_CorruptedStaff",
+      "socket": "Socket_Hand_R"
+    }
+  ],
+  "materials": [
+    {
+      "name": "SkeletonRanged_bone",
+      "key": "bone",
+      "color": "#CFC6A8",
+      "smoothness": 0.2
+    },
+    {
+      "name": "SkeletonRanged_boneDark",
+      "key": "boneDark",
+      "color": "#8F8770",
+      "smoothness": 0.15,
+      "note": "osso sombreado (derivado do #CFC6A8)"
+    },
+    {
+      "name": "SkeletonRanged_armor",
+      "key": "armor",
+      "color": "#3E4152",
+      "metallic": 0.4,
+      "smoothness": 0.35
+    },
+    {
+      "name": "SkeletonRanged_rust",
+      "key": "rust",
+      "color": "#8A4A22",
+      "metallic": 0.5,
+      "smoothness": 0.3
+    },
+    {
+      "name": "SkeletonRanged_socket",
+      "key": "socket",
+      "color": "#1E1830",
+      "smoothness": 0.05,
+      "note": "órbitas/cavidades na cor oficial de sombra"
+    },
+    {
+      "name": "SkeletonRanged_eyes",
+      "key": "eyes",
+      "color": "#FF2A2A",
+      "emissive": "#FF2A2A",
+      "emissiveIntensity": 3,
+      "smoothness": 0.5
+    },
+    {
+      "name": "SkeletonRanged_cloth",
+      "key": "cloth",
+      "color": "#4C5A44",
+      "smoothness": 0.1,
+      "note": "tecido gasto (musgo/desgaste oficial)"
+    },
+    {
+      "name": "SkeletonRanged_staff",
+      "key": "staff",
+      "color": "#5A3A22",
+      "smoothness": 0.2,
+      "note": "madeira escura (derivada do couro/ferrugem)"
+    }
+  ],
+  "clips": [
+    {
+      "name": "Idle",
+      "duration": 2.2,
+      "loop": true,
+      "events": {},
+      "groundLift": 0.054
+    },
+    {
+      "name": "Chase",
+      "duration": 0.8,
+      "loop": true,
+      "events": {},
+      "groundLift": 0.039
+    },
+    {
+      "name": "Attack",
+      "duration": 1,
+      "loop": false,
+      "events": {
+        "fire": 0.5
+      },
+      "groundLift": 0.122
+    },
+    {
+      "name": "Hit",
+      "duration": 0.4,
+      "loop": false,
+      "events": {},
+      "groundLift": 0.116
+    },
+    {
+      "name": "Death",
+      "duration": 1.4,
+      "loop": false,
+      "events": {},
+      "groundLift": 0.2
+    }
+  ],
+  "locomotion": {
+    "Idle": 0,
+    "Chase": 3
+  },
+  "animatorNotes": "",
+  "files": {
+    "glb": "SkeletonRanged.glb",
+    "fbx": "SkeletonRanged.fbx"
+  }
+}

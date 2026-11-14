@@ -1,0 +1,15 @@
+{
+  "name": "lemo-sprite-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Prova de conceito: sprites 2D animados para o Dungeon Crawler usando o motor de pixel HD-2D do Lemo-Opuscar (somente leitura).",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "generate": "node src/generate.mjs --character hero",
+    "validate": "node src/validate.mjs",
+    "check-cs": "powershell -ExecutionPolicy Bypass -File tools/check-unity-cs.ps1",
+    "install-unity": "node src/install-unity.mjs",
+    "all": "npm run check-cs && npm run install-unity && npm run generate && npm run validate"
+  }
+}

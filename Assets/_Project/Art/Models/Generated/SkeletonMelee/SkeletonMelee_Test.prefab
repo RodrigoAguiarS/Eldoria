@@ -1,0 +1,166 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1841642885370111784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3643675730737457798}
+  - component: {fileID: 5229549271022607431}
+  m_Layer: 0
+  m_Name: SkeletonMelee_Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3643675730737457798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841642885370111784}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1724835046975465147}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5229549271022607431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841642885370111784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f13c7d3d2b15624ab78e0f95fa93049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.CharacterArt::DungeonCrawler.CharacterArt.GeneratedCharacterRig
+  animator: {fileID: 4688234579157335233}
+  bodyRenderer: {fileID: 1819461059176856758}
+  rightHandSocket: {fileID: 7416071246785997055}
+  leftHandSocket: {fileID: 6520368644329956253}
+  equipment:
+  - {fileID: 1226211211173744456}
+--- !u!1001 &1181457315935584592
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3643675730737457798}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_Name
+      value: SkeletonMelee
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1b7b2d5cac7b9164e9301967d38bfdf4, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8091634226355301197}
+  m_SourcePrefab: {fileID: 100100000, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+--- !u!4 &1226211211173744456 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 99362534489607704, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+  m_PrefabInstance: {fileID: 1181457315935584592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1724835046975465147 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+  m_PrefabInstance: {fileID: 1181457315935584592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1819461059176856758 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 659046285390970342, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+  m_PrefabInstance: {fileID: 1181457315935584592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2063784402125437953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+  m_PrefabInstance: {fileID: 1181457315935584592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8091634226355301197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063784402125437953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c9289f91b080d41bf0b8b5193e40fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.CharacterArt::DungeonCrawler.CharacterArt.GeneratedCharacterAnimator
+  movingRoot: {fileID: 0}
+  speedSmoothing: 12
+--- !u!95 &4688234579157335233 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+  m_PrefabInstance: {fileID: 1181457315935584592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6520368644329956253 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5339124659419964109, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+  m_PrefabInstance: {fileID: 1181457315935584592}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7416071246785997055 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8542849838680271279, guid: 3573b996e2c9029459f60735731bd558, type: 3}
+  m_PrefabInstance: {fileID: 1181457315935584592}
+  m_PrefabAsset: {fileID: 0}

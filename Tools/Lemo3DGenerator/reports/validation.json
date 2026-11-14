@@ -1,0 +1,575 @@
+{
+  "checkedAt": "2026-11-13T13:47:44.260Z",
+  "dir": "G:\\DungeonCrawler\\My project\\Assets\\_Project\\Art\\Models\\Generated",
+  "characters": [
+    {
+      "name": "Hero",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "glb": {
+        "bytes": 735612,
+        "meshes": 12,
+        "skinned": 9,
+        "triangles": 2782,
+        "bones": 24,
+        "materials": [
+          "Hero_leather",
+          "Hero_leatherDark",
+          "Hero_brass",
+          "Hero_skin",
+          "Hero_hair",
+          "Hero_ink",
+          "Hero_metal",
+          "Hero_boot",
+          "Hero_cape"
+        ],
+        "clips": [
+          "Idle",
+          "Walk",
+          "Run",
+          "Attack",
+          "HeavyAttack",
+          "Dash",
+          "Hit",
+          "Death",
+          "Victory"
+        ],
+        "bbox": [
+          0.921,
+          1.967,
+          0.619
+        ]
+      },
+      "clips": [
+        {
+          "name": "Idle",
+          "duration": 2.4,
+          "tracks": 24,
+          "minY": 0,
+          "maxY": 1.928,
+          "maxReach": 0.52,
+          "maxStretch": 1.05,
+          "weaponMinY": 0.377
+        },
+        {
+          "name": "Walk",
+          "duration": 1,
+          "tracks": 24,
+          "minY": 0,
+          "maxY": 1.957,
+          "maxReach": 0.69,
+          "maxStretch": 1.09,
+          "weaponMinY": 0.126
+        },
+        {
+          "name": "Run",
+          "duration": 0.63,
+          "tracks": 24,
+          "minY": 0.007,
+          "maxY": 1.941,
+          "maxReach": 1.02,
+          "maxStretch": 1.21,
+          "weaponMinY": 0.589
+        },
+        {
+          "name": "Attack",
+          "duration": 0.7,
+          "tracks": 24,
+          "minY": 0,
+          "maxY": 1.941,
+          "maxReach": 0.84,
+          "maxStretch": 1.62,
+          "weaponMinY": 0.741
+        },
+        {
+          "name": "HeavyAttack",
+          "duration": 1.2,
+          "tracks": 24,
+          "minY": 0,
+          "maxY": 1.942,
+          "maxReach": 0.88,
+          "maxStretch": 1.75,
+          "weaponMinY": 0.202
+        },
+        {
+          "name": "Dash",
+          "duration": 0.4,
+          "tracks": 24,
+          "minY": -0.001,
+          "maxY": 1.95,
+          "maxReach": 0.96,
+          "maxStretch": 1.49,
+          "weaponMinY": 0.045
+        },
+        {
+          "name": "Hit",
+          "duration": 0.45,
+          "tracks": 24,
+          "minY": 0,
+          "maxY": 1.938,
+          "maxReach": 0.77,
+          "maxStretch": 1.4,
+          "weaponMinY": 0.031
+        },
+        {
+          "name": "Death",
+          "duration": 1.6,
+          "tracks": 24,
+          "minY": -0.019,
+          "maxY": 1.948,
+          "maxReach": 1.7,
+          "maxStretch": 1.41,
+          "weaponMinY": 0.033
+        },
+        {
+          "name": "Victory",
+          "duration": 2,
+          "tracks": 24,
+          "minY": 0,
+          "maxY": 1.937,
+          "maxReach": 0.72,
+          "maxStretch": 1.28,
+          "weaponMinY": 0.031
+        }
+      ],
+      "fbx": {
+        "bytes": 1122498,
+        "version7400": true,
+        "models": 29,
+        "limbNodes": 24,
+        "geometries": 2,
+        "materials": 9,
+        "clusters": 21,
+        "animStacks": 9,
+        "curves": 648,
+        "bindPose": true
+      }
+    },
+    {
+      "name": "SkeletonElite",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "glb": {
+        "bytes": 494692,
+        "meshes": 8,
+        "skinned": 6,
+        "triangles": 2116,
+        "bones": 22,
+        "materials": [
+          "SkeletonElite_bone",
+          "SkeletonElite_boneDark",
+          "SkeletonElite_armor",
+          "SkeletonElite_rust",
+          "SkeletonElite_socket",
+          "SkeletonElite_eyes"
+        ],
+        "clips": [
+          "Idle",
+          "Chase",
+          "Attack",
+          "Hit",
+          "Death"
+        ],
+        "bbox": [
+          1.35,
+          2.629,
+          1.159
+        ]
+      },
+      "clips": [
+        {
+          "name": "Idle",
+          "duration": 2,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 2.562,
+          "maxReach": 0.8,
+          "maxStretch": 1.21,
+          "weaponMinY": 0.654
+        },
+        {
+          "name": "Chase",
+          "duration": 0.73,
+          "tracks": 22,
+          "minY": -0.001,
+          "maxY": 2.53,
+          "maxReach": 0.89,
+          "maxStretch": 1.27,
+          "weaponMinY": 0.497
+        },
+        {
+          "name": "Attack",
+          "duration": 1.1,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 2.604,
+          "maxReach": 1.38,
+          "maxStretch": 1.54,
+          "weaponMinY": 0.318
+        },
+        {
+          "name": "Hit",
+          "duration": 0.4,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 2.64,
+          "maxReach": 0.95,
+          "maxStretch": 1.17,
+          "weaponMinY": 0.026
+        },
+        {
+          "name": "Death",
+          "duration": 1.4,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 2.651,
+          "maxReach": 2.22,
+          "maxStretch": 1.17,
+          "weaponMinY": 0.026
+        }
+      ],
+      "fbx": {
+        "bytes": 692336,
+        "version7400": true,
+        "models": 27,
+        "limbNodes": 22,
+        "geometries": 2,
+        "materials": 6,
+        "clusters": 19,
+        "animStacks": 5,
+        "curves": 330,
+        "bindPose": true
+      }
+    },
+    {
+      "name": "SkeletonMelee",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "glb": {
+        "bytes": 471700,
+        "meshes": 8,
+        "skinned": 6,
+        "triangles": 1998,
+        "bones": 22,
+        "materials": [
+          "SkeletonMelee_bone",
+          "SkeletonMelee_boneDark",
+          "SkeletonMelee_armor",
+          "SkeletonMelee_rust",
+          "SkeletonMelee_socket",
+          "SkeletonMelee_eyes"
+        ],
+        "clips": [
+          "Idle",
+          "Chase",
+          "Attack",
+          "Hit",
+          "Death"
+        ],
+        "bbox": [
+          0.818,
+          1.878,
+          0.774
+        ]
+      },
+      "clips": [
+        {
+          "name": "Idle",
+          "duration": 2,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 1.83,
+          "maxReach": 0.57,
+          "maxStretch": 1.21,
+          "weaponMinY": 0.487
+        },
+        {
+          "name": "Chase",
+          "duration": 0.7,
+          "tracks": 22,
+          "minY": -0.002,
+          "maxY": 1.807,
+          "maxReach": 0.64,
+          "maxStretch": 1.26,
+          "weaponMinY": 0.384
+        },
+        {
+          "name": "Attack",
+          "duration": 0.95,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 1.857,
+          "maxReach": 0.99,
+          "maxStretch": 1.54,
+          "weaponMinY": 0.269
+        },
+        {
+          "name": "Hit",
+          "duration": 0.4,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 1.886,
+          "maxReach": 0.68,
+          "maxStretch": 1.17,
+          "weaponMinY": 0.082
+        },
+        {
+          "name": "Death",
+          "duration": 1.4,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 1.893,
+          "maxReach": 1.58,
+          "maxStretch": 1.17,
+          "weaponMinY": 0.082
+        }
+      ],
+      "fbx": {
+        "bytes": 658205,
+        "version7400": true,
+        "models": 27,
+        "limbNodes": 22,
+        "geometries": 2,
+        "materials": 6,
+        "clusters": 18,
+        "animStacks": 5,
+        "curves": 330,
+        "bindPose": true
+      }
+    },
+    {
+      "name": "SkeletonRanged",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "glb": {
+        "bytes": 483360,
+        "meshes": 10,
+        "skinned": 7,
+        "triangles": 2032,
+        "bones": 22,
+        "materials": [
+          "SkeletonRanged_bone",
+          "SkeletonRanged_boneDark",
+          "SkeletonRanged_rust",
+          "SkeletonRanged_armor",
+          "SkeletonRanged_socket",
+          "SkeletonRanged_eyes",
+          "SkeletonRanged_cloth",
+          "SkeletonRanged_staff"
+        ],
+        "clips": [
+          "Idle",
+          "Chase",
+          "Attack",
+          "Hit",
+          "Death"
+        ],
+        "bbox": [
+          0.732,
+          2.025,
+          0.814
+        ]
+      },
+      "clips": [
+        {
+          "name": "Idle",
+          "duration": 2.2,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 2.012,
+          "maxReach": 0.52,
+          "maxStretch": 1.15,
+          "weaponMinY": 0.186
+        },
+        {
+          "name": "Chase",
+          "duration": 0.8,
+          "tracks": 22,
+          "minY": -0.002,
+          "maxY": 2.014,
+          "maxReach": 0.57,
+          "maxStretch": 1.16,
+          "weaponMinY": 0.2
+        },
+        {
+          "name": "Attack",
+          "duration": 1,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 2.017,
+          "maxReach": 0.89,
+          "maxStretch": 1.39,
+          "weaponMinY": 0.407
+        },
+        {
+          "name": "Hit",
+          "duration": 0.4,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 2.022,
+          "maxReach": 0.79,
+          "maxStretch": 1.17,
+          "weaponMinY": 0.176
+        },
+        {
+          "name": "Death",
+          "duration": 1.4,
+          "tracks": 22,
+          "minY": -0.036,
+          "maxY": 2.02,
+          "maxReach": 1.74,
+          "maxStretch": 1.14,
+          "weaponMinY": 0.075
+        }
+      ],
+      "fbx": {
+        "bytes": 677071,
+        "version7400": true,
+        "models": 27,
+        "limbNodes": 22,
+        "geometries": 2,
+        "materials": 8,
+        "clusters": 17,
+        "animStacks": 5,
+        "curves": 330,
+        "bindPose": true
+      }
+    },
+    {
+      "name": "Warden",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "glb": {
+        "bytes": 733628,
+        "meshes": 10,
+        "skinned": 8,
+        "triangles": 2790,
+        "bones": 22,
+        "materials": [
+          "Warden_bone",
+          "Warden_boneDark",
+          "Warden_armor",
+          "Warden_rust",
+          "Warden_socket",
+          "Warden_eyes",
+          "Warden_horn",
+          "Warden_rune"
+        ],
+        "clips": [
+          "Idle",
+          "Walk",
+          "SlamWindup",
+          "Slam",
+          "Volley",
+          "Roar",
+          "Hit",
+          "Death"
+        ],
+        "bbox": [
+          2.466,
+          4.826,
+          2.858
+        ]
+      },
+      "clips": [
+        {
+          "name": "Idle",
+          "duration": 2.8,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 4.813,
+          "maxReach": 1.35,
+          "maxStretch": 1.17,
+          "weaponMinY": 1.069
+        },
+        {
+          "name": "Walk",
+          "duration": 1.3,
+          "tracks": 22,
+          "minY": -0.002,
+          "maxY": 4.835,
+          "maxReach": 1.26,
+          "maxStretch": 1.17,
+          "weaponMinY": 0.943
+        },
+        {
+          "name": "SlamWindup",
+          "duration": 1,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 4.818,
+          "maxReach": 1.38,
+          "maxStretch": 1.08,
+          "weaponMinY": 1.446
+        },
+        {
+          "name": "Slam",
+          "duration": 0.9,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 4.845,
+          "maxReach": 2.07,
+          "maxStretch": 1.44,
+          "weaponMinY": 0.095
+        },
+        {
+          "name": "Volley",
+          "duration": 1.5,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 4.814,
+          "maxReach": 2.04,
+          "maxStretch": 1.37,
+          "weaponMinY": 0.089
+        },
+        {
+          "name": "Roar",
+          "duration": 2.4,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 4.814,
+          "maxReach": 2.54,
+          "maxStretch": 1.33,
+          "weaponMinY": 0.09
+        },
+        {
+          "name": "Hit",
+          "duration": 0.5,
+          "tracks": 22,
+          "minY": 0,
+          "maxY": 4.833,
+          "maxReach": 1.96,
+          "maxStretch": 1.11,
+          "weaponMinY": 0.093
+        },
+        {
+          "name": "Death",
+          "duration": 2.2,
+          "tracks": 22,
+          "minY": -0.011,
+          "maxY": 4.818,
+          "maxReach": 4.34,
+          "maxStretch": 1.14,
+          "weaponMinY": 0.092
+        }
+      ],
+      "fbx": {
+        "bytes": 1121624,
+        "version7400": true,
+        "models": 27,
+        "limbNodes": 22,
+        "geometries": 2,
+        "materials": 8,
+        "clusters": 19,
+        "animStacks": 8,
+        "curves": 528,
+        "bindPose": true
+      }
+    }
+  ]
+}

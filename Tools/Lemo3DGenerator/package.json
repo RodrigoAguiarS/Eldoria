@@ -1,0 +1,16 @@
+{
+  "name": "lemo-3d-generator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Gerador de personagens 3D low-poly (malha, rig, animações, GLB/FBX) para o Dungeon Crawler usando o three.js do Lemo-Opuscar (somente leitura).",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "generate": "node src/generate.mjs",
+    "validate": "node src/validate.mjs",
+    "preview": "node preview/server.mjs",
+    "check-cs": "powershell -ExecutionPolicy Bypass -File tools/check-unity-cs.ps1",
+    "install-unity": "node src/install-unity.mjs",
+    "all": "npm run check-cs && npm run install-unity && npm run generate && npm run validate"
+  }
+}

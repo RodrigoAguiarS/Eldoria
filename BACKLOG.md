@@ -1,0 +1,35 @@
+# Backlog — Dungeon Crawler
+
+PO/Tech Lead: Codex. Escopo e dependências: [ROADMAP.md](ROADMAP.md). Classificação inicial: [auditoria](docs/MVP-AUDIT.md). Status: A fazer → Em andamento → Implementado, validação pendente → Concluído e validado; Bloqueado exige impedimento concreto.
+
+| ID | Prioridade / épico | Tarefa e critério de aceite | Dependências | Status |
+| --- | --- | --- | --- | --- |
+| AUD-001 | P0 / Fundação | Auditar scripts/assets/cenas, com foco na arena; versões/refs, testes e estados rastreáveis | — | Concluído e validado: auditoria inicial documentada; questões visuais/build registradas |
+| REP-001 | P0 / Fundação | Criar Git local; caches/logs/dados locais fora; commit inicial e commits por entrega, preservando metas | AUD-001 | Em andamento |
+| FIX-001 | P0 / Loot | Separar WeaponData.cs e reparar os dois assets via Editor; preservar GUID/nome/bônus; tabelas apontam para assets reais; teste de equipamento/build | AUD-001 | Próxima implementação |
+| FIX-002 | P1 / Renderização | Rastrear/limpar recursos órfãos/refs de render que causam avisos; preservar aparência; verificar Editor e Windows | AUD-001 | A fazer |
+| FIX-003 | P1 / Integração | Builder M1 não apaga dados/recompensas do Floor; reexecução não duplica nem muda GUIDs/composição | REP-001 | A fazer |
+| FIX-004 | P1 / Combate | Cancelamento ao desativar não aciona Animator inativo; sem dano/evento atrasado ou inscrição duplicada após reinício | AUD-001 | A fazer |
+| PERF-001 | P1 / Pool | Aquecer projéteis, garantir reuso e cancelamento/limpeza; provar rajada dentro da capacidade sem criar instâncias | R1 / FIX-001 | A fazer |
+| BOSS-001 | P1 / Boss | Visual de fase 2 no Warden visível, sem mudar regras 50%/3 s/transição única; tests e captura no jogo | FIX-001 | A fazer |
+| LOOP-001 | P1 / Dungeon | Integrar 4 salas: porta bloqueia, spawn correto, morte única, reabertura só ao limpar; ranged/elite atuam | FIX-001, FIX-003 | A fazer |
+| LOOP-002 | P1 / Aceite | Run normal até Boss/vitória e morte/reinício em Editor/Windows; gravação de evidências e erros/avisos | LOOP-001, BOSS-001, FIX-002, FIX-004, PERF-001 | A fazer |
+| QA-001 | P1 / Arena | Conferência visual específica da MVP_Arena: câmera, HP, flash, shake, dicas e painéis | AUD-001 | A fazer; testes funcionais de cena já passaram |
+| PROD-001 | P1 / Produto | Aprovar fronteira de 1.0 e regras do especial/recurso/defesa; distinguir expansão de requisito existente | ROADMAP | Proposta documentada, aguardará decisão antes da expansão |
+| RPG-001 | P2 / Gameplay | Implementar especial configurável e recurso/defesa desacoplados; sem alterar progressão existente sem decisão | PROD-001, LOOP-002 | Planejado |
+| UI-001 | P2 / Interface | Menu inicial/pausa/opções/retorno, foco/escala; UI apresenta estado e não decide combate | PROD-001, LOOP-002 | Planejado |
+| AUDIO-001 | P2 / Apresentação | Sons de ataque/impacto/dano/morte/coleta/Boss e música, com volume/ciclo de vida configuráveis | LOOP-002 | Planejado |
+| ACCESS-001 | P2 / Apresentação | Shake/flash ajustáveis e telegraph legível por forma/tempo além de cor, opções persistentes | UI-001 | Planejado |
+| VFX-001 | P2 / Game feel | Efeitos/hit-stop que preservem legibilidade; reuso/pool se houver efeitos transitórios; medir antes/depois | PROD-001, LOOP-002 | Planejado; adicionar só se necessário ao aceite |
+| BAL-001 | P2 / Balanço | Definir alvos após playtest; tabela de dano/tempo/XP e mudanças configuráveis com aprovação quando fundamentais | LOOP-002 | Planejado |
+| PERF-002 | P2 / Distribuição | Captura CPU/GPU/frame time/GC/memória na mesma carga/hardware, diagnosticar antes de otimizar | LOOP-002 | Planejado |
+| SHIP-001 | P2 / Distribuição | Windows release reproduzível, smoke test, percurso completo e instruções de execução; configurações gráficas | R3, PERF-002, BAL-001 | Planejado |
+| EXP-001 | Opcional / RPG | Inventário, slots/equipamentos/raridades/afixos, consumo manual, regras de capacidade | Decisão de produto, R2 | Fora da base atual; promoção para 1.0 a aprovar |
+| EXP-002 | Opcional / Combate | Ataque ranged do jogador, armas correspondentes e novos clips | Decisão de produto | Fora da base atual |
+| EXP-003 | Opcional / Conteúdo | Novos andares/geração procedural/save de campanha/quests/coop/lojas | Decisão de produto | Fora da base atual |
+
+## Registro da execução e retomada
+
+- AUD-001: documentos e versões conferidos; snapshot/backup; 155 assets inspecionados no Editor; 45 EditMode e 21 anteriores + 6 testes novos de cena aprovados. Três falhas iniciais eram das fixtures e foram corrigidas sem mudar gameplay.
+- Estado seguro inicial: nenhum arquivo desconhecido alterado desde o snapshot; projeto sem Git no início; Editor fechado normalmente para executar batchmode.
+- Próxima ação exata: criar/revisar histórico local, extrair WeaponData preservando LootTable.cs.meta, criar reparador idempotente dos assets via Editor, testar assets reais/loot/equipamento, executar suítes pertinentes e build. Atualizar esta seção e a auditoria ao terminar.

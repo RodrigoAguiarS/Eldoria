@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3e6ef504668f184eaefc268e7fbe08b, type: 3}
+  m_Name: Boss_Warden_Data
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Boss.BossData
+  maxHealth: 300
+  moveSpeed: 3
+  stopDistance: 2
+  thinkInterval: 0.2
+  introDelay: 1.5
+  corpseLifetime: 4
+  phaseThreshold: 0.5
+  transitionDuration: 3
+  phase2SpeedMultiplier: 1.3
+  slamDamage: 25
+  slamRadius: 3.5
+  slamTelegraph: 1.4
+  phase2SlamRadiusMultiplier: 1.3
+  phase2SlamTelegraph: 1
+  volleyCount: 10
+  volleyDamage: 12
+  volleySpeed: 9
+  volleyTelegraph: 1.2
+  volleyRingRadius: 2.5
+  volleyMinDistance: 4
+  recoverTime: 0.8
+  cooldownPhase1: 2.5
+  cooldownPhase2: 1.6

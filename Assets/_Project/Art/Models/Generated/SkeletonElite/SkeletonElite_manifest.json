@@ -1,0 +1,148 @@
+{
+  "id": "skeleton_elite",
+  "name": "SkeletonElite",
+  "role": "Inimigo elite (Enemy_Elite.prefab)",
+  "source": "ART_DIRECTION_AND_PROMPTS.md — Asset 02 (variante elite)",
+  "documented": true,
+  "assumptions": [],
+  "generator": "Tools/Lemo3DGenerator",
+  "lemo": {
+    "root": "G:/lemo-opuscar/lemo-opuscar",
+    "three": "0.170.0"
+  },
+  "units": "metros (1 unidade Unity = 1 m), Y para cima, frente +Z, pivô nos pés",
+  "heightMeters": 2.8,
+  "triangles": 2116,
+  "triangleBudget": [
+    3000,
+    4500
+  ],
+  "meshes": 2,
+  "bones": [
+    "Root",
+    "Hips",
+    "Spine",
+    "Chest",
+    "Neck",
+    "Head",
+    "Shoulder_L",
+    "UpperArm_L",
+    "LowerArm_L",
+    "Hand_L",
+    "UpperLeg_L",
+    "LowerLeg_L",
+    "Foot_L",
+    "Toes_L",
+    "Shoulder_R",
+    "UpperArm_R",
+    "LowerArm_R",
+    "Hand_R",
+    "UpperLeg_R",
+    "LowerLeg_R",
+    "Foot_R",
+    "Toes_R"
+  ],
+  "sockets": [
+    "Socket_Hand_L",
+    "Socket_Hand_R"
+  ],
+  "equipment": [
+    {
+      "name": "SkeletonElite_RustySword",
+      "socket": "Socket_Hand_R"
+    }
+  ],
+  "materials": [
+    {
+      "name": "SkeletonElite_bone",
+      "key": "bone",
+      "color": "#CFC6A8",
+      "smoothness": 0.2
+    },
+    {
+      "name": "SkeletonElite_boneDark",
+      "key": "boneDark",
+      "color": "#8F8770",
+      "smoothness": 0.15,
+      "note": "osso sombreado (derivado do #CFC6A8)"
+    },
+    {
+      "name": "SkeletonElite_armor",
+      "key": "armor",
+      "color": "#3E4152",
+      "metallic": 0.4,
+      "smoothness": 0.35
+    },
+    {
+      "name": "SkeletonElite_rust",
+      "key": "rust",
+      "color": "#8A4A22",
+      "metallic": 0.5,
+      "smoothness": 0.3
+    },
+    {
+      "name": "SkeletonElite_socket",
+      "key": "socket",
+      "color": "#1E1830",
+      "smoothness": 0.05,
+      "note": "órbitas/cavidades na cor oficial de sombra"
+    },
+    {
+      "name": "SkeletonElite_eyes",
+      "key": "eyes",
+      "color": "#FF9A2E",
+      "emissive": "#FF9A2E",
+      "emissiveIntensity": 3,
+      "smoothness": 0.5,
+      "note": "olhos laranja da elite (laranja oficial #FF9A2E)"
+    }
+  ],
+  "clips": [
+    {
+      "name": "Idle",
+      "duration": 2,
+      "loop": true,
+      "events": {},
+      "groundLift": 0.076
+    },
+    {
+      "name": "Chase",
+      "duration": 0.737,
+      "loop": true,
+      "events": {},
+      "groundLift": 0.042
+    },
+    {
+      "name": "Attack",
+      "duration": 1.1,
+      "loop": false,
+      "events": {
+        "hit": 0.6
+      },
+      "groundLift": 0.199
+    },
+    {
+      "name": "Hit",
+      "duration": 0.4,
+      "loop": false,
+      "events": {},
+      "groundLift": 0.162
+    },
+    {
+      "name": "Death",
+      "duration": 1.4,
+      "loop": false,
+      "events": {},
+      "groundLift": 0.281
+    }
+  ],
+  "locomotion": {
+    "Idle": 0,
+    "Chase": 3.8
+  },
+  "animatorNotes": "",
+  "files": {
+    "glb": "SkeletonElite.glb",
+    "fbx": "SkeletonElite.fbx"
+  }
+}

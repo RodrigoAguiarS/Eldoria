@@ -1,0 +1,225 @@
+{
+  "id": "hero",
+  "name": "Hero",
+  "role": "Jogador (Player.prefab)",
+  "source": "ART_DIRECTION_AND_PROMPTS.md — Asset 01",
+  "documented": true,
+  "assumptions": [],
+  "generator": "Tools/Lemo3DGenerator",
+  "lemo": {
+    "root": "G:/lemo-opuscar/lemo-opuscar",
+    "three": "0.170.0"
+  },
+  "units": "metros (1 unidade Unity = 1 m), Y para cima, frente +Z, pivô nos pés",
+  "heightMeters": 2,
+  "triangles": 2782,
+  "triangleBudget": [
+    3000,
+    5000
+  ],
+  "meshes": 2,
+  "bones": [
+    "Root",
+    "Hips",
+    "Spine",
+    "Chest",
+    "Neck",
+    "Head",
+    "Shoulder_L",
+    "UpperArm_L",
+    "LowerArm_L",
+    "Hand_L",
+    "UpperLeg_L",
+    "LowerLeg_L",
+    "Foot_L",
+    "Toes_L",
+    "Shoulder_R",
+    "UpperArm_R",
+    "LowerArm_R",
+    "Hand_R",
+    "UpperLeg_R",
+    "LowerLeg_R",
+    "Foot_R",
+    "Toes_R",
+    "Cape_1",
+    "Cape_2"
+  ],
+  "sockets": [
+    "Socket_Hand_L",
+    "Socket_Hand_R"
+  ],
+  "equipment": [
+    {
+      "name": "Hero_Sword",
+      "socket": "Socket_Hand_R"
+    }
+  ],
+  "materials": [
+    {
+      "name": "Hero_skin",
+      "key": "skin",
+      "color": "#E3B58F",
+      "smoothness": 0.2
+    },
+    {
+      "name": "Hero_leather",
+      "key": "leather",
+      "color": "#7A4B2A",
+      "smoothness": 0.25
+    },
+    {
+      "name": "Hero_leatherDark",
+      "key": "leatherDark",
+      "color": "#4E3020",
+      "smoothness": 0.25,
+      "note": "couro escuro (derivado do #7A4B2A em direção à sombra #1E1830)"
+    },
+    {
+      "name": "Hero_metal",
+      "key": "metal",
+      "color": "#B9C4CF",
+      "metallic": 0.6,
+      "smoothness": 0.55
+    },
+    {
+      "name": "Hero_cape",
+      "key": "cape",
+      "color": "#2F6BFF",
+      "smoothness": 0.15
+    },
+    {
+      "name": "Hero_brass",
+      "key": "brass",
+      "color": "#E0B040",
+      "metallic": 0.7,
+      "smoothness": 0.5
+    },
+    {
+      "name": "Hero_hair",
+      "key": "hair",
+      "color": "#4A2C1A",
+      "smoothness": 0.15,
+      "note": "suposição: cor do cabelo não definida no documento"
+    },
+    {
+      "name": "Hero_boot",
+      "key": "boot",
+      "color": "#3B2418",
+      "smoothness": 0.25,
+      "note": "couro escuro das botas (derivado)"
+    },
+    {
+      "name": "Hero_ink",
+      "key": "ink",
+      "color": "#1E1830",
+      "smoothness": 0.1,
+      "note": "olhos/boca na cor oficial de sombra"
+    }
+  ],
+  "clips": [
+    {
+      "name": "Idle",
+      "duration": 2.4,
+      "loop": true,
+      "events": {},
+      "groundLift": 0.023
+    },
+    {
+      "name": "Walk",
+      "duration": 1,
+      "loop": true,
+      "events": {},
+      "groundLift": 0.019
+    },
+    {
+      "name": "Run",
+      "duration": 0.64,
+      "loop": true,
+      "events": {},
+      "groundLift": 0
+    },
+    {
+      "name": "Attack",
+      "duration": 0.7,
+      "loop": false,
+      "events": {
+        "hit": 0.32
+      },
+      "groundLift": 0.073
+    },
+    {
+      "name": "HeavyAttack",
+      "duration": 1.2,
+      "loop": false,
+      "events": {
+        "hit": 0.7
+      },
+      "groundLift": 0.122
+    },
+    {
+      "name": "Attack_01",
+      "duration": 0.45,
+      "loop": false,
+      "events": {
+        "hit": 0.16
+      },
+      "groundLift": 0.073
+    },
+    {
+      "name": "Attack_02",
+      "duration": 0.5,
+      "loop": false,
+      "events": {
+        "hit": 0.19
+      },
+      "groundLift": 0.08
+    },
+    {
+      "name": "Attack_03",
+      "duration": 0.72,
+      "loop": false,
+      "events": {
+        "hit": 0.32
+      },
+      "groundLift": 0.122
+    },
+    {
+      "name": "Dash",
+      "duration": 0.4,
+      "loop": false,
+      "events": {},
+      "groundLift": 0.113
+    },
+    {
+      "name": "Hit",
+      "duration": 0.45,
+      "loop": false,
+      "events": {},
+      "groundLift": 0.092
+    },
+    {
+      "name": "Death",
+      "duration": 1.6,
+      "loop": false,
+      "events": {},
+      "groundLift": 0.209
+    },
+    {
+      "name": "Victory",
+      "duration": 2,
+      "loop": false,
+      "events": {},
+      "groundLift": 0.081
+    }
+  ],
+  "locomotion": {
+    "Idle": 0,
+    "Walk": 1.6,
+    "Run": 5
+  },
+  "animatorNotes": "",
+  "files": {
+    "glb": "Hero.glb",
+    "fbx": "Hero.fbx"
+  }
+}

@@ -1,0 +1,63 @@
+using System;
+using UnityEngine;
+
+namespace DungeonCrawler.Core
+{
+    /// <summary>
+    /// Componente de vida compartilhado por jogador e inimigos. Envolve um HealthModel e
+    /// adiciona invulnerabilidade temporária. Eventos de domínio: Changed, Damaged, Died.
+    /// </summary>
+    public sealed class Health : MonoBehaviour, IDamageable
+    {
+        [SerializeField, Min(1f)] private float maxHealth = 100f;
+
+        private HealthModel model;
+        private float invulnerableUntil;
+
+        public event Action<float, float> Changed
+        {
+            add { Model.Changed += value; }
+            remove { Model.Changed -= value; }
+        }
+
+        public event Action<float> Damaged
+        {
+            add { Model.Damaged += value; }
+            remove { Model.Damaged -= value; }
+        }
+
+        public event Action Died
+        {
+            add { Model.Died += value; }
+            remove { Model.Died -= value; }
+        }
+
+        private HealthModel Model => model ??= new HealthModel(maxHealth);
+
+        public bool IsAlive => Model.IsAlive;
+        public float Current => Model.Current;
+        public float Max => Model.Max;
+        public float Normalized => Model.Normalized;
+        public bool IsInvulnerable => Time.time < invulnerableUntil;
+
+        /// <summary>Define a vida máxima (ex.: a partir de EnemyData) e restaura a vida.</summary>
+        public void Configure(float max)
+        {
+            maxHealth = Mathf.Max(1f, max);
+            Model.Reset(maxHealth);
+        }
+
+        public void SetInvulnerableFor(float seconds)
+        {
+            invulnerableUntil = Mathf.Max(invulnerableUntil, Time.time + seconds);
+        }
+
+        public bool TakeDamage(float amount, Vector3 sourcePosition)
+        {
+            if (IsInvulnerable) return false;
+            return Model.TakeDamage(amount);
+        }
+
+        public void Heal(float amount) => Model.Heal(amount);
+    }
+}

@@ -1,0 +1,166 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4309747118791855611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 234314165495742801}
+  - component: {fileID: 4132303794750489453}
+  m_Layer: 0
+  m_Name: Warden_Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &234314165495742801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4309747118791855611}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7534736747647764545}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4132303794750489453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4309747118791855611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f13c7d3d2b15624ab78e0f95fa93049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.CharacterArt::DungeonCrawler.CharacterArt.GeneratedCharacterRig
+  animator: {fileID: 4499359851257614907}
+  bodyRenderer: {fileID: 958178376844821832}
+  rightHandSocket: {fileID: 1843158557778216453}
+  leftHandSocket: {fileID: 2666724495722319207}
+  equipment:
+  - {fileID: 6056378103504618586}
+--- !u!1001 &8005845822239272874
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 234314165495742801}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_Name
+      value: Warden
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0aa62d71a3fd53045abacda278a02315, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8706838682798405923}
+  m_SourcePrefab: {fileID: 100100000, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+--- !u!137 &958178376844821832 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2137423717929178398, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+  m_PrefabInstance: {fileID: 8005845822239272874}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1843158557778216453 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8542849838680271279, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+  m_PrefabInstance: {fileID: 8005845822239272874}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2666724495722319207 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5339124659419964109, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+  m_PrefabInstance: {fileID: 8005845822239272874}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4499359851257614907 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+  m_PrefabInstance: {fileID: 8005845822239272874}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6056378103504618586 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4965524701062026256, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+  m_PrefabInstance: {fileID: 8005845822239272874}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7195366313836991227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+  m_PrefabInstance: {fileID: 8005845822239272874}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8706838682798405923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7195366313836991227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c9289f91b080d41bf0b8b5193e40fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.CharacterArt::DungeonCrawler.CharacterArt.GeneratedCharacterAnimator
+  movingRoot: {fileID: 0}
+  speedSmoothing: 12
+--- !u!4 &7534736747647764545 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 34443bea7f0fa3b44877315c488380f9, type: 3}
+  m_PrefabInstance: {fileID: 8005845822239272874}
+  m_PrefabAsset: {fileID: 0}

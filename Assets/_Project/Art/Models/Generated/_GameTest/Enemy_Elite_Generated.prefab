@@ -1,0 +1,212 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5236424557177592640
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5095271035206537327, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_Name
+      value: Enemy_Elite_Generated
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6616899459104358277, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8179940604940289661}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5095271035206537327, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5008830907433460521}
+  m_SourcePrefab: {fileID: 100100000, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+--- !u!4 &307570741260272259 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5543704168372148675, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+  m_PrefabInstance: {fileID: 5236424557177592640}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1017125662284139311 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5095271035206537327, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+  m_PrefabInstance: {fileID: 5236424557177592640}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5008830907433460521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017125662284139311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e469e385ad0e35d4ab44fe6b02df2a64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.CharacterArt.GameBridge::DungeonCrawler.CharacterArt.GameBridge.GeneratedEnemyAnimationBridge
+  animator: {fileID: 2838622847226567687}
+  health: {fileID: 7389780896734504030}
+  combat: {fileID: 3105661904051186052}
+  attackStartSeconds: 0.1
+  hitColor: {r: 1, g: 0.3, b: 0.3, a: 1}
+  windupColor: {r: 1, g: 0.6, b: 0.1, a: 1}
+--- !u!114 &3105661904051186052 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7183808100835324612, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+  m_PrefabInstance: {fileID: 5236424557177592640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017125662284139311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 832164e85610d2643bfd19d4d1cdf7ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Enemies.EnemyCombat
+--- !u!114 &7389780896734504030 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3325419002181730078, guid: d33cfab92d28f2b4695c08f40e6a9e1f, type: 3}
+  m_PrefabInstance: {fileID: 5236424557177592640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017125662284139311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d768a958b17dda74c8b8111f099eacd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Core.Health
+--- !u!1001 &8506813546204488086
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 307570741260272259}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_Name
+      value: SkeletonElite_Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 39fa6569da13c624ead5efac5217e822, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7225490046959103089}
+  m_SourcePrefab: {fileID: 100100000, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+--- !u!95 &2838622847226567687 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+  m_PrefabInstance: {fileID: 8506813546204488086}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8179940604940289661 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+  m_PrefabInstance: {fileID: 8506813546204488086}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8849340207891406023 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d201bc2129773714e937ecf83a824b3f, type: 3}
+  m_PrefabInstance: {fileID: 8506813546204488086}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7225490046959103089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8849340207891406023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c9289f91b080d41bf0b8b5193e40fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.CharacterArt::DungeonCrawler.CharacterArt.GeneratedCharacterAnimator
+  movingRoot: {fileID: 0}
+  speedSmoothing: 12

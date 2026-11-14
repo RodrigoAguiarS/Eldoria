@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 412286ca5b957094e96f8bc29c8685b8, type: 3}
+  m_Name: PlayerCombo
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Player.PlayerComboDefinition
+  inputBufferSeconds: 0.15
+  steps:
+  - animationState: Attack_01
+    duration: 0.45
+    impactSeconds: 0.16
+    chainOpenSeconds: 0.24
+    chainCloseSeconds: 0.42
+    recoverySeconds: 0.06
+    damageMultiplier: 1
+    range: 2.2
+    arcDegrees: 120
+    clipImpactNormalized: 0.35555556
+  - animationState: Attack_02
+    duration: 0.5
+    impactSeconds: 0.19
+    chainOpenSeconds: 0.28
+    chainCloseSeconds: 0.47
+    recoverySeconds: 0.08
+    damageMultiplier: 1.1
+    range: 2.3
+    arcDegrees: 145
+    clipImpactNormalized: 0.38
+  - animationState: Attack_03
+    duration: 0.72
+    impactSeconds: 0.32
+    chainOpenSeconds: 0.72
+    chainCloseSeconds: 0.72
+    recoverySeconds: 0.28
+    damageMultiplier: 1.5
+    range: 2.5
+    arcDegrees: 90
+    clipImpactNormalized: 0.44444442
