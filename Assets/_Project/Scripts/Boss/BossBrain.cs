@@ -71,6 +71,7 @@ namespace DungeonCrawler.Boss
 
         private void Update()
         {
+            if (Time.timeScale <= 0f) return;
             if (State == BossState.Dead || State == BossState.Transition) return;
 
             float now = Time.time;

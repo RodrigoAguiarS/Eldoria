@@ -1,6 +1,8 @@
 # MVP.md — Plano de entregas
 
 ## Princípio
+
+R3 — inventário integrado aos três cenários de gameplay: 75/75 EditMode e 49/49 PlayMode passaram, incluindo cliques reais New Input System, equipamento, poções, pausa sem dano pendente e descarte que preserva itens. Layout/raridades observados no Editor em PlayMode com conteúdo de preview; a revisão visual antecedeu o botão Largar, cuja interação passou em teste. Especial, menus completos, áudio e opções ainda estão em desenvolvimento; 1.0 não concluída.
 Cada marco deve produzir estado executável e verificável. Não avançar com erros de compilação ou referências faltantes. Não confundir análise de código com execução no Unity Editor.
 
 Reparo de renderização FIX-002 validado: referências obsoletas e subassets sem script limpos pelas APIs; 19 componentes de volume preservados. Build Windows abre sem os avisos de pós-processamento diagnosticados. Evidências e limites em [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md).

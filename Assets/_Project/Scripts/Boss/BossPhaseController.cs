@@ -73,6 +73,7 @@ namespace DungeonCrawler.Boss
 
         private void Update()
         {
+            if (Time.timeScale <= 0f) return;
             Model.Tick(Time.time);
 
             if (visual == null || Model.Phase != BossPhase.Transition) return;

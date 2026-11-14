@@ -57,7 +57,7 @@ namespace DungeonCrawler.Core
 
         public bool TakeDamage(float amount, Vector3 sourcePosition)
         {
-            if (IsInvulnerable) return false;
+            if (Time.timeScale <= 0f || IsInvulnerable) return false;
             return Model.TakeDamage(DamageMitigation.ApplyDefense(amount, defense));
         }
 

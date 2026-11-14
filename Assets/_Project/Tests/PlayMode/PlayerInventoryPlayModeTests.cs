@@ -138,6 +138,51 @@ namespace DungeonCrawler.Tests.PlayMode
         }
 
 #if UNITY_EDITOR
+        [Test]
+        public void DroppingWithAllDirectionsBlocked_LeavesEquipmentAndItemIntact()
+        {
+            CreatePlayer(16, true);
+            var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Prefabs/Items/Pickup.prefab");
+            Field(inventory, "pickupPrefab", prefab.GetComponent<Pickup>());
+            Field(inventory, "dropObstacleMask", (LayerMask)(1 << 30));
+            var iron = UnityEditor.AssetDatabase.LoadAssetAtPath<WeaponData>("Assets/_Project/ScriptableObjects/Items/Weapon_IronSword.asset");
+            progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron));
+            for (int i = 0; i < 8; i++)
+            {
+                var blocker = new GameObject("DropBlocker"); created.Add(blocker); blocker.layer = 30;
+                blocker.transform.position = Vector3.up * .6f + Quaternion.AngleAxis(i * 45f, Vector3.up) * Vector3.forward * 1.5f;
+                blocker.AddComponent<BoxCollider>();
+            }
+            Physics.SyncTransforms();
+            Assert.IsFalse(inventory.TryDrop(0));
+            Assert.AreSame(iron, progression.Weapon);
+            Assert.AreSame(iron, inventory.Slots[0].Definition);
+            Assert.AreEqual(26f, combat.CurrentDamage);
+        }
+
+        [UnityTest]
+        public IEnumerator DroppingEquippedWeapon_KeepsWorldItemOutsideCollectionRadiusAndCanRecoverIt()
+        {
+            CreatePlayer(16, true);
+            var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Prefabs/Items/Pickup.prefab");
+            Field(inventory, "pickupPrefab", prefab.GetComponent<Pickup>());
+            var iron = UnityEditor.AssetDatabase.LoadAssetAtPath<WeaponData>("Assets/_Project/ScriptableObjects/Items/Weapon_IronSword.asset");
+            progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron));
+            Pickup dropped = null;
+            inventory.ItemDropped += value => { dropped = value; created.Add(value.gameObject); };
+            Assert.IsTrue(inventory.TryDrop(0));
+            Assert.IsNotNull(dropped);
+            Assert.IsNull(progression.Weapon);
+            Assert.AreEqual(20f, combat.CurrentDamage);
+            yield return new WaitForSeconds(.4f);
+            Assert.IsTrue(inventory.Slots[0].IsEmpty, "Dropping must not instantly collect the item again.");
+            var content = (LootDrop)typeof(Pickup).GetField("drop", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(dropped);
+            Assert.AreSame(iron, content.Weapon);
+            Assert.IsTrue(progression.TryCollect(content));
+            Assert.AreSame(iron, progression.Weapon);
+            Assert.AreEqual(26f, combat.CurrentDamage);
+        }
+
         [UnityTest]
         public IEnumerator SavedPickup_StaysWhenFullAndRetriesAfterSpaceIsFreed()
         {

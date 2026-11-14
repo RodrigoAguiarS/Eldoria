@@ -49,6 +49,7 @@ namespace DungeonCrawler.Systems
 
         private void Update()
         {
+            if (Time.timeScale <= 0f) return;
             if (released) return;
 
             float step = speed * Time.deltaTime;

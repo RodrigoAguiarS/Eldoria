@@ -141,6 +141,25 @@ namespace DungeonCrawler.Tests.EditMode
         }
 
         [Test]
+        public void TakingOneItem_PreservesDefinitionPowerAndClearsOnlyItsEquipmentReference()
+        {
+            var sword = Asset<WeaponData>();
+            var potion = Asset<PotionData>();
+            var model = new InventoryModel();
+            model.TryAdd(sword); model.TryAdd(potion, 2, 30);
+            Assert.IsTrue(model.TryTakeOne(1, out var dose));
+            Assert.AreSame(potion, dose.Definition);
+            Assert.AreEqual(30, dose.Potency);
+            Assert.AreEqual(1, dose.Count);
+            Assert.AreEqual(1, model.Slots[1].Count);
+            Assert.AreSame(sword, model.EquippedWeapon);
+            Assert.IsTrue(model.TryTakeOne(0, out var weapon));
+            Assert.AreSame(sword, weapon.Definition);
+            Assert.IsNull(model.EquippedWeapon);
+            Assert.IsTrue(model.Slots[0].IsEmpty);
+        }
+
+        [Test]
         public void MixedCommandSequence_PreservesSlotAndEquipmentInvariants()
         {
             var sword = Asset<WeaponData>();

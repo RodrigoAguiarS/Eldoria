@@ -123,6 +123,22 @@ namespace DungeonCrawler.Systems
             }
         }
 
+        public bool TryTakeOne(int index, out InventoryStack taken)
+        {
+            taken = default;
+            if (!Valid(index) || slots[index].IsEmpty) return false;
+            InventoryStack item = slots[index];
+            taken = new InventoryStack(item.Definition, 1, item.Potency);
+            slots[index] = item.Count > 1 ? new InventoryStack(item.Definition, item.Count - 1, item.Potency) : default;
+            if (slots[index].IsEmpty)
+            {
+                if (EquippedWeaponIndex == index) EquippedWeaponIndex = -1;
+                if (EquippedArmorIndex == index) EquippedArmorIndex = -1;
+            }
+            Changed?.Invoke();
+            return true;
+        }
+
         private bool Valid(int index) => index >= 0 && index < slots.Length;
         private static bool Compatible(InventoryStack item, ItemDefinition definition, int potency) =>
             item.Definition == definition && item.Potency == potency;

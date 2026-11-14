@@ -50,6 +50,7 @@ namespace DungeonCrawler.Enemies
 
         private void Update()
         {
+            if (Time.timeScale <= 0f) return;
             if (State == EnemyState.Dead) return;
 
             if (State == EnemyState.Attack && target != null)

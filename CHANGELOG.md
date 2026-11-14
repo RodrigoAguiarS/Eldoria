@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-14 — Inventário jogável e pausa
+
+- Integrados 16 espaços, raridades Comum/Raro/Épico, equipamento manual, poções com Q e atalhos I/Tab/Esc. Pausa cancela ações e bloqueia dano/spawns pendentes, restaurando apenas controles previamente habilitados.
+- UI apresenta atributos e solicita comandos; largar uma unidade devolve pickup com identidade/potência preservadas, recusando locais bloqueados. Armas +6/+12 mantidas; armadura e arma épica são dados novos, sem multiplicador oculto de raridade.
+- Builder idempotente configura prefab e três cenas por APIs do Editor. 75/75 EditMode e 49/49 PlayMode; checker estático sem erros/avisos. Layout observado em PlayMode com preview identificado; teste de cliques usa New Input System. Aceite Windows desta funcionalidade fica na QA final.
+
 ## 2026-11-13 — Auditoria e condução técnica
 
 - Assumida a coordenação técnica/PO nos limites do GDD/AGENTS e da solicitação do usuário; decisões significativas de produto continuam sujeitas a aprovação.

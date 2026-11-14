@@ -86,6 +86,7 @@ namespace DungeonCrawler.Player
         // Dash Update has completed before any damage can be dispatched.
         private void LateUpdate()
         {
+            if (Time.timeScale <= 0f) return;
             using var sample = TickMarker.Auto();
             if (!CanAttack()) { CancelAttack(); return; }
             Model.Tick(Time.time, input != null && input.AttackHeld);

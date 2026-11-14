@@ -47,6 +47,7 @@ namespace DungeonCrawler.Enemies
 
         private void Update()
         {
+            if (Time.timeScale <= 0f) return;
             if (!windingUp || Time.time < hitAt) return;
 
             windingUp = false;

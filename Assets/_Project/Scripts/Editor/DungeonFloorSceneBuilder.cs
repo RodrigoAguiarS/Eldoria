@@ -173,6 +173,7 @@ namespace DungeonCrawler.Editor
             AddFloorProgressHud(scene, floor);
             AddBossHud(scene, rooms[RoomCount - 1]);
             AddVictoryHud(scene, floor, restarter);
+            InventorySceneBuilder.ConfigureHud(scene, player, restarter);
 
             EditorBuildUtility.SaveScene(scene);
             EditorBuildUtility.EnsureSceneInBuildSettings(ProjectPaths.FloorScene);

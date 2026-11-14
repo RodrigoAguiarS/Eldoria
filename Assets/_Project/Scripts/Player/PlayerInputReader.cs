@@ -17,6 +17,8 @@ namespace DungeonCrawler.Player
         private InputAction point;
         private InputAction attack;
         private InputAction dash;
+        private InputActionMap gameplayMap;
+        private bool gameplaySuppressed;
 
         public Vector2 Move => move != null ? move.ReadValue<Vector2>() : Vector2.zero;
         public Vector2 PointerPosition => point != null ? point.ReadValue<Vector2>() : Vector2.zero;
@@ -35,6 +37,7 @@ namespace DungeonCrawler.Player
 
             runtimeActions = Instantiate(inputActions);
             InputActionMap map = runtimeActions.FindActionMap("Gameplay", true);
+            gameplayMap = map;
             move = map.FindAction("Move", true);
             point = map.FindAction("Point", true);
             attack = map.FindAction("Attack", true);
@@ -42,9 +45,16 @@ namespace DungeonCrawler.Player
             dash = map.FindAction("Dash", true);
         }
 
-        private void OnEnable() => runtimeActions?.FindActionMap("Gameplay")?.Enable();
+        private void OnEnable() { if (!gameplaySuppressed) gameplayMap?.Enable(); }
 
-        private void OnDisable() => runtimeActions?.FindActionMap("Gameplay")?.Disable();
+        private void OnDisable() => gameplayMap?.Disable();
+
+        public void SetGameplayEnabled(bool enabled)
+        {
+            gameplaySuppressed = !enabled;
+            if (enabled && isActiveAndEnabled) gameplayMap?.Enable();
+            else gameplayMap?.Disable();
+        }
 
         private void OnDestroy()
         {

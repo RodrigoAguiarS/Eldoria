@@ -43,3 +43,15 @@ EditMode: cálculos de dano, clamp HP, cooldown, transição de estado. PlayMode
 
 ## Git
 Ignorar `Library/`, `Temp/`, `Obj/`, `Build/`, `Builds/`, `Logs/`, `UserSettings/`, `.vs/` e IDE caches. Versionar `.meta`, `Assets`, `Packages`, `ProjectSettings` e documentação. Unity Asset Serialization: Force Text; Version Control: Visible Meta Files, quando disponível na versão do Editor.
+
+## Inventário e equipamento (1.0 / D-002)
+
+ItemDefinition/WeaponData/ArmorData/PotionData e ItemRarityDefinition são dados compartilhados; raridade não aplica multiplicador implícito. InventoryDefinition configura capacidade e a poção usada pelos drops. InventoryModel mantém slots fixos, pilhas por potência e índices de equipamento, com adição atômica; não controla HP ou UI.
+
+PlayerInventory valida comandos com Health e aplica equipamento via PlayerProgression/Health. PlayerProgression preserva fórmula de dano e XP/cura de nível; jogadores sem inventário mantêm compatibilidade com o MVP anterior. Pickup só se remove após TryCollect retornar sucesso; rejeição preserva o item e permite retry controlado. Largar devolve uma unidade ao mundo, verifica espaço por raycasts e mantém o item na bolsa se não houver posição válida.
+
+InventoryPresenter/SlotView apresentam estado e solicitam comandos; assinaturas acompanham OnEnable/OnDisable. Builders configuram os três cenários de gameplay e o prefab compartilhado pelas APIs do Editor, sem regenerar arte ou salas.
+
+## Pausa e atalhos (1.0 / D-002)
+
+GameplayPauseController suspende o mapa Gameplay, cancela controles explicitamente referenciados e congela Time.timeScale. Ao sair, restaura apenas controles previamente habilitados e jogador vivo; destruir/desativar o controlador restaura o tempo. Timers de combate/IA/spawn/projéteis respeitam a pausa, inclusive na janela de impacto. PlayerInventoryInput mantém I/Tab/Q/Esc em ações separadas, disponíveis durante o menu. GameMenuController apresenta os painéis e solicita pausa; não decide dano, cura ou progressão.

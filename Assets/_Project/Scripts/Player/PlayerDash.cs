@@ -31,6 +31,7 @@ namespace DungeonCrawler.Player
 
         private void Update()
         {
+            if (Time.timeScale <= 0f) return;
             float now = Time.time;
 
             if (dashing && now >= dashEndsAt)

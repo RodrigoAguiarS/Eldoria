@@ -90,6 +90,7 @@ namespace DungeonCrawler.Dungeon
 
         private void Update()
         {
+            if (Time.timeScale <= 0f) return;
             if (!spawnPending || Time.time < spawnAt) return;
 
             spawnPending = false;

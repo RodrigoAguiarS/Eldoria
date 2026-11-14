@@ -181,6 +181,7 @@ namespace DungeonCrawler.Editor
             SetObjArray(playerController, "disableOnDeath", new Object[] { movement, aim, combat, dash });
 
             DungeonCrawler.CharacterArt.Editor.GeneratedGameTestBuilder.ConfigurePlayerCombo(root);
+            InventorySceneBuilder.ConfigurePlayer(root);
             GameObject prefab = EditorBuildUtility.SavePrefab(root, PlayerPrefabPath);
             Object.DestroyImmediate(root);
             return prefab;
@@ -484,6 +485,7 @@ namespace DungeonCrawler.Editor
             SetObj(gameOver, "playerHealth", health);
             SetObj(gameOver, "panel", panel.gameObject);
             panel.gameObject.SetActive(false);
+            InventorySceneBuilder.ConfigureHud(scene, player, restarter);
         }
 
         // ------------------------------------------------------------------ helpers de construção

@@ -34,6 +34,7 @@ namespace DungeonCrawler.Systems
 
         private void Update()
         {
+            if (Time.timeScale <= 0f) return;
             if (Time.time >= expireAt)
             {
                 Destroy(gameObject);

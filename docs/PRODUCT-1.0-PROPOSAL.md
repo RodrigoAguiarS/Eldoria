@@ -19,4 +19,6 @@ Complementa o escopo aprovado em ROADMAP.md. Usuário aprovou a proposta complet
 
 Mudanças de comportamento aprovadas: poções deixam de curar automaticamente ao coletar; armas melhores deixam de substituir automaticamente uma arma já equipada; inventário pausa a partida; especial e armadura introduzem novas ferramentas de combate.
 
+Detalhe de gestão de capacidade: o botão Largar 1 devolve uma unidade ao chão, preservando definição/potência; equipamento largado deixa de aplicar bônus. Se não houver posição livre, a operação mantém o item na bolsa. A bolsa pode ser usada inteiramente por botões, sem arrastar itens.
+
 Aceite: testes de custo/regen/cancelamento/defesa, capacidade/stack/identidade/equipamento/consumo, coleta física com inventário cheio, persistência das opções, funcionamento dos menus e percurso normal completo em Editor/Windows. Nenhum marco será declarado pronto apenas pela presença dos scripts.

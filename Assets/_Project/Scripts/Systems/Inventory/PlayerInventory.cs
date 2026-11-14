@@ -13,7 +13,10 @@ namespace DungeonCrawler.Systems
         [SerializeField] private InventoryDefinition definition;
         [SerializeField] private Health health;
         [SerializeField] private PlayerProgression progression;
+        [SerializeField] private Pickup pickupPrefab;
+        [SerializeField] private LayerMask dropObstacleMask;
         private InventoryModel model;
+        private float dropDistance = 2.2f;
 
         public IReadOnlyList<InventoryStack> Slots => model != null ? model.Slots : Array.Empty<InventoryStack>();
         public int Capacity => model?.Capacity ?? 0;
@@ -21,6 +24,7 @@ namespace DungeonCrawler.Systems
         public int EquippedArmorIndex => model?.EquippedArmorIndex ?? -1;
         public event Action Changed;
         public event Action<InventoryCollectionFailure> CollectionDenied;
+        public event Action<Pickup> ItemDropped;
 
         private void Awake()
         {
@@ -31,6 +35,11 @@ namespace DungeonCrawler.Systems
                 return;
             }
             model = new InventoryModel(definition.capacity, definition.autoEquipFirstWeapon);
+            if (pickupPrefab != null && pickupPrefab.TryGetComponent(out SphereCollider trigger))
+            {
+                float playerRadius = TryGetComponent(out CharacterController controller) ? controller.radius : .5f;
+                dropDistance = trigger.radius * Mathf.Max(pickupPrefab.transform.localScale.x, pickupPrefab.transform.localScale.z) + playerRadius + .5f;
+            }
         }
 
         private void OnEnable()
@@ -73,6 +82,32 @@ namespace DungeonCrawler.Systems
         {
             if (!CanUseCommands || health.Current >= health.Max || !model.TryConsumePotion(index, out int healing)) return false;
             health.Heal(healing);
+            return true;
+        }
+
+        public bool TryDrop(int index)
+        {
+            if (!CanUseCommands || pickupPrefab == null || index < 0 || index >= model.Capacity || model.Slots[index].IsEmpty) return false;
+            InventoryStack item = model.Slots[index];
+            LootDrop drop;
+            if (item.Definition is WeaponData weapon) drop = new LootDrop(LootKind.Weapon, 0, weapon);
+            else if (item.Definition is ArmorData armor) drop = new LootDrop(LootKind.Armor, 0, armor: armor);
+            else if (item.Definition is PotionData) drop = new LootDrop(LootKind.Potion, item.Potency);
+            else return false;
+            Vector3 origin = transform.position + Vector3.up * .6f;
+            Vector3 position = origin;
+            bool foundSpace = false;
+            for (int directionIndex = 0; directionIndex < 8; directionIndex++)
+            {
+                Vector3 direction = Quaternion.AngleAxis(directionIndex * 45f, Vector3.up) * transform.forward;
+                if (Physics.Raycast(origin, direction, dropDistance + .3f, dropObstacleMask, QueryTriggerInteraction.Ignore)) continue;
+                position = origin + direction * dropDistance; foundSpace = true; break;
+            }
+            if (!foundSpace) return false;
+            Pickup pickup = Instantiate(pickupPrefab, position, Quaternion.identity);
+            pickup.Setup(drop);
+            if (!model.TryTakeOne(index, out _)) { Destroy(pickup.gameObject); return false; }
+            ItemDropped?.Invoke(pickup);
             return true;
         }
 
