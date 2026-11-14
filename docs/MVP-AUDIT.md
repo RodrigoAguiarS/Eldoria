@@ -65,6 +65,8 @@ Status descreve o requisito inteiro. Uma evidência parcial não aprova o restan
 
 Mana/estamina, defesa, especial, menus iniciais/pause/configurações, áudio, inventário interativo, raridades e ataque ranged do jogador não estão implementados. O ranged existente é do inimigo. A prioridade é fechar M0–M4 antes de ampliar esses sistemas. [ROADMAP](../ROADMAP.md) propõe a fronteira de 1.0; [BACKLOG](../BACKLOG.md) controla execução e aprovação de produto.
 
+Atualização D-001: usuário aprovou incluir inventário e raridades na 1.0. A implementação virá após estabilizar o MVP; ranged do jogador permanece expansão.
+
 ## Regra de atualização
 
 O quadro acima guarda a classificação da auditoria inicial. Cada entrega abaixo acrescenta correção, evidência nova e estado resultante; MVP.md resume o estado corrente, sem apagar o histórico.
@@ -72,3 +74,4 @@ O quadro acima guarda a classificação da auditoria inicial. Cada entrega abaix
 | Entrega | Resultado e evidência |
 | --- | --- |
 | AUD-001 | Auditoria inicial, snapshot de assets, 45 testes EditMode e 21 anteriores + 6 novos testes PlayMode aprovados após corrigir fixtures. Nenhuma nova funcionalidade de gameplay foi adicionada. |
+| REP-001 | Git local criado, commit inicial cf3720d e branch codex/mvp-stabilization; caches/builds/logs/configurações locais excluídos; triagem de segredos não encontrou credenciais nos 978 arquivos preparados. M0.1 agora concluído e validado. |

@@ -24,21 +24,21 @@ Compilação validada na Unity 6000.6.9f1; 45 testes EditMode passaram. Os 21 te
 Testes executados no Unity 6000.6.9f1: **32/32 EditMode e 5/5 PlayMode passaram**. Resultados em `Reports/MVP/`. Os testes atuais não cobrem uma partida completa. As caixas abaixo foram preservadas: presença de código e testes de componentes não substituem o aceite de cada marco.
 
 ## M0 — Fundação
-- [ ] Criar projeto Unity 6 URP e repositório Git.
-- [ ] Confirmar versão exata de Unity, Input System, Cinemachine, AI Navigation e Test Framework.
-- [ ] Criar pastas e documentos; configurar .gitignore e `.meta`.
-- [ ] Criar cena bootstrap simples e validar PlayMode sem erros.
+- [x] Criar projeto Unity 6 URP e repositório Git. (commit inicial cf3720d; histórico local)
+- [x] Confirmar versão exata de Unity, Input System, Cinemachine, AI Navigation e Test Framework. (FoundationValidator/EditMode-baseline.xml)
+- [x] Criar pastas e documentos; configurar .gitignore e `.meta`. (inventário, validação e exclusões revisadas)
+- [x] Criar cena bootstrap simples e validar PlayMode sem erros. (Arena-baseline.xml, Bootstrap_LoadsAndInitializesWithoutErrors)
 **Aceite:** Editor abre projeto, Console sem erros, commit inicial reproduzível.
 
 ## M1 — Vertical Slice: uma arena jogável
 - [ ] Arena com chão, paredes, luz e câmera Cinemachine a ~45°.
-- [ ] Player CharacterController com WASD relativo à tela.
-- [ ] Mira pelo mouse via raycast e rotação no plano XZ.
-- [ ] Ataque básico com alcance, dano e cooldown.
-- [ ] Dash com cooldown e invulnerabilidade breve.
-- [ ] Inimigo melee com NavMeshAgent e estados Idle/Chase/Attack/Dead.
+- [x] Player CharacterController com WASD relativo à tela. (Arena-baseline.xml, WasdMovesOnGroundAndMouseAimsInXZ)
+- [x] Mira pelo mouse via raycast e rotação no plano XZ. (mesmo teste de cena)
+- [x] Ataque básico com alcance, dano e cooldown. (testes de combo/Task02 e morte do melee na arena)
+- [x] Dash com cooldown e invulnerabilidade breve. (Arena-baseline.xml, DashMovesGrantsInvulnerabilityAndRespectsCooldown)
+- [x] Inimigo melee com NavMeshAgent e estados Idle/Chase/Attack/Dead. (testes da arena: navegação, dano e morte/agent/collider)
 - [ ] HP do player e inimigo; barra de vida, feedback de dano.
-- [ ] Morte e reinício da cena.
+- [x] Morte e reinício da cena. (Arena-baseline.xml, DeathDisablesPlayerAndRestartRestoresSavedScene)
 - [ ] Builder de cena idempotente via menu do Editor.
 - [ ] Testes EditMode/PlayMode pertinentes e checklist manual.
 **Aceite:** entrar em PlayMode, mover, mirar, atacar, matar inimigo, receber dano, morrer e reiniciar sem exceções.

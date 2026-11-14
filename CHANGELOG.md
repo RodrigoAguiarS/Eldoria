@@ -8,6 +8,8 @@
 - Acrescentados seis testes de aceitação que carregam Bootstrap/MVP_Arena e exercitam input, movimento, mira, dash, combate, navegação, morte e reinício. Todos passaram após corrigir isolamento/ordem de input das fixtures.
 - Benchmark existente aceita diretório de saída por variável de ambiente, preservando os relatórios históricos da Task 02 ao executar a auditoria.
 - Estado inicial: 45 testes EditMode passaram; os 21 testes PlayMode anteriores e os seis novos passaram. A auditoria registrou armas inválidas, integração visual do Boss, pool frio e recursos de renderização não resolvidos. Nenhuma nova funcionalidade de gameplay foi adicionada nesta etapa.
+- Histórico Git local criado (cf3720d), com exclusões e triagem de arquivos preparados; branch codex/mvp-stabilization, sem remoto/publicação.
+- Decisão D-001: usuário incluiu inventário interativo e raridades no escopo obrigatório da 1.0.
 
 ## Histórico preservado
 

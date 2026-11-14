@@ -27,6 +27,8 @@ Salas como prefabs, com pontos de entrada/saída, portas e pontos de spawn defin
 ## Progressão
 Inimigos concedem orbes de XP; ao subir de nível, cura configurável e +10% de dano (multiplicador por nível definido em código de progressão e testado). Drops possíveis: ouro, poção e arma. Itens, raridades e valores são ScriptableObjects.
 
+Inventário interativo e raridades integram o escopo da versão 1.0 por aprovação do usuário; ver [decisão D-001 e fronteira do produto](ROADMAP.md#decisões-de-produto). A implementação deve preservar a fórmula de progressão e definir explicitamente as regras de coleta, capacidade e equipamento.
+
 ## Direção visual
 Low-poly estilizado, silhuetas legíveis na câmera isométrica, cores vivas e contraste adequado entre personagem, inimigos, perigos e cenário. Pedra, tochas e obstáculos destrutíveis no escopo posterior. Não copiar assets ou personagens de jogos existentes.
 
