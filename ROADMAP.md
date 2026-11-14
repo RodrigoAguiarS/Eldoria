@@ -6,7 +6,7 @@ Base: [GAME_DESIGN.md](GAME_DESIGN.md), regras de [AGENTS.md](AGENTS.md), estado
 
 **Base já autorizada:** estabilizar M0–M4 e o andar fixo com quatro salas + Boss, herói/arte/rig Generic atuais, combo de três golpes, melee/ranged/elite inimigos, dash, progressão/loot e morte/reinício/vitória.
 
-**Escopo de 1.0 aprovado pelo usuário em 13/11/2026:** um andar completo e polido, com especial do jogador, recurso e defesa previstos no GDD, **inventário interativo e raridades**, menu inicial/pausa/configurações, som/música, opções de legibilidade/shake/volume, configurações gráficas e distribuição Windows. Detalhes do especial, recurso, defesa e inventário serão especificados concretamente antes do incremento correspondente. Preservar fórmulas/drop rates durante os reparos.
+**Escopo de 1.0 aprovado pelo usuário em 13/11/2026:** um andar completo e polido, com especial do jogador, recurso e defesa previstos no GDD, **inventário interativo e raridades**, menu inicial/pausa/configurações, som/música, opções de legibilidade/shake/volume, configurações gráficas e distribuição Windows. Regras concretas aprovadas em D-002, em 14/11/2026; ver docs/PRODUCT-1.0-PROPOSAL.md. Preservar fórmulas/drop rates durante os reparos.
 
 **Expansões opcionais:** múltiplos slots de armadura/afixos complexos, ranged do jogador, novos andares/biomas, geração procedural, save de campanha, quests, coop, lojas e publicação em loja. Inventário e raridades foram promovidos a 1.0 por decisão explícita; isso não os torna requisitos retroativos de M1.
 
@@ -16,8 +16,8 @@ Base: [GAME_DESIGN.md](GAME_DESIGN.md), regras de [AGENTS.md](AGENTS.md), estado
 | --- | --- | --- | --- | --- |
 | R0 — Auditoria e base | Inventário/refs, testes reais de Bootstrap/Arena, docs e Git | Instalação Unity atual | Relatórios com classificações, XMLs, backup, histórico local e nenhum arquivo alheio sobrescrito | Entregue, commit cf3720d |
 | R1 — MVP estável | Armas, referências inválidas, builders, ciclo de vida, aquecimento do pool | R0 | Assets reais carregam; GUIDs/valores preservados; regressões pertinentes passam; builds sem os Missing Script diagnosticados | Entregue: 53 EditMode/31 PlayMode, build/smoke Windows; aceite completo do andar fica em R2 |
-| R2 — Andar completo | Fluxo das quatro salas, ranged/elite, Boss/visual/transição/telegraph, HUD/vitória | R1 | Testes de integração e percurso normal Editor/Windows até vitória; morte/reinício; sem porta prematura/softlock | Pendente |
-| R3 — Fechamento de produto | Especial/recurso/defesa, inventário/raridades, menus, áudio, acessibilidade/opções | R2 + especificação dos incrementos | Cada sistema tem dados configuráveis, testes e playtest; controles legíveis, regras fora da UI | Escopo aprovado, planejado |
+| R2 — Andar completo | Fluxo das quatro salas, ranged/elite, Boss/visual/transição/telegraph, HUD/vitória | R1 | Testes de integração e percurso normal Editor/Windows até vitória; morte/reinício; sem porta prematura/softlock | Run Editor até vitória/5 de 5 confirmada pelo usuário; integração e ciclo de vida testados; run Windows pendente |
+| R3 — Fechamento de produto | Especial/recurso/defesa, inventário/raridades, menus, áudio, acessibilidade/opções | R2 + especificação dos incrementos | Cada sistema tem dados configuráveis, testes e playtest; controles legíveis, regras fora da UI | Regras aprovadas em D-002; implementação em seguida |
 | R4 — Candidato 1.0 | Balanço fundamentado em playtest, CPU/GPU/frame/GC/memória, build release/distribuição | R3 | Checklist completo; executável reproduzível, logs sem erros, evidência de início–fim e configuração persistente; riscos conhecidos documentados | Pendente |
 
 Não se inventou meta numérica de FPS, duração de campanha ou pacing por nível. Primeiro medir no hardware alvo e apresentar uma proposta. Uma animação mais curta não demonstra otimização.
@@ -33,3 +33,4 @@ O jogo deve continuar executável ao fim de cada incremento. Um marco só é fec
 | ID | Data | Decisão | Alternativas | Motivo/evidência | Impacto |
 | --- | --- | --- | --- | --- | --- |
 | D-001 | 13/11/2026 | Incluir inventário interativo e raridades na 1.0 do andar fixo | Manter como expansão | Usuário escolheu explicitamente “Incluir inventário e raridades na 1.0” | R3, RPG-002; ranged do jogador continua opcional |
+| D-002 | 14/11/2026 | Aprovar integralmente [regras concretas da 1.0](docs/PRODUCT-1.0-PROPOSAL.md): inventário 16 espaços/pausa, equipamento manual, poções guardadas/Q, armadura/defesa, três raridades, especial/estamina, menus/opções/apresentação | Ajustar a proposta antes de implementar | Usuário respondeu “Aprovar a proposta completa” | RPG-001/002, UI/AUDIO/ACCESS; manter fórmula de progressão e bônus +6/+12 |

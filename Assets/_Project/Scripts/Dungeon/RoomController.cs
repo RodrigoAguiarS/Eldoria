@@ -53,6 +53,19 @@ namespace DungeonCrawler.Dungeon
         {
             trigger.PlayerEntered += OnPlayerEntered;
             tracker.Cleared += Complete;
+            if (State == RoomState.Active && !spawnPending)
+            {
+                // Enemies can die while this controller is disabled. Rebuild the
+                // count from the explicit wave references before subscribing again.
+                tracker.Reset();
+                foreach (Health health in tracked)
+                {
+                    if (health == null || !health.IsAlive) continue;
+                    tracker.Register();
+                    health.Died += OnEnemyDied;
+                }
+                if (tracker.Alive == 0) Complete();
+            }
         }
 
         private void OnDisable()
@@ -61,7 +74,6 @@ namespace DungeonCrawler.Dungeon
             tracker.Cleared -= Complete;
             foreach (Health h in tracked)
                 if (h != null) h.Died -= OnEnemyDied;
-            tracked.Clear();
         }
 
         private void OnPlayerEntered()

@@ -9,6 +9,8 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace DungeonCrawler.Tests.PlayerInput
 {
@@ -160,6 +162,36 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.AreEqual(EnemyState.Dead, brain.State);
             Assert.IsFalse(brain.GetComponent<NavMeshAgent>().enabled);
             Assert.IsFalse(brain.GetComponent<CapsuleCollider>().enabled);
+        }
+
+        [UnityTest]
+        public IEnumerator Arena_RealMouseClickOnRestartButtonReloadsAfterDeath()
+        {
+            yield return LoadArena(); StopEnemy();
+            var health = FindInScene<PlayerCombat>().GetComponent<Health>();
+            health.TakeDamage(health.Max, Vector3.zero);
+            yield return null;
+            var button = FindInScene<Button>();
+            Assert.IsNotNull(button);
+            Assert.IsTrue(button.gameObject.activeInHierarchy);
+            Canvas.ForceUpdateCanvases();
+            Vector2 position = RectTransformUtility.WorldToScreenPoint(null, button.transform.position);
+            Set(mouse.position, position);
+            InputSystem.Update();
+            yield return null;
+            var hits = new System.Collections.Generic.List<RaycastResult>();
+            EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current) { position = position }, hits);
+            Assert.IsTrue(hits.Exists(hit => hit.gameObject.GetComponentInParent<Button>() == button),
+                "The saved Canvas must expose the button to UI raycasts.");
+            Press(mouse.leftButton);
+            yield return null;
+            Release(mouse.leftButton);
+            yield return null;
+            yield return null;
+            Assert.IsTrue(health == null, "The saved button must reload the scene through its persistent listener.");
+            var restored = FindInScene<PlayerCombat>();
+            Assert.IsTrue(restored.enabled);
+            Assert.AreEqual(restored.GetComponent<Health>().Max, restored.GetComponent<Health>().Current);
         }
 
         [UnityTest]

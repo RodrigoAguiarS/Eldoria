@@ -25,6 +25,7 @@ namespace DungeonCrawler.Dungeon
         private void OnEnable()
         {
             foreach (RoomController room in rooms) room.Cleared += OnRoomCleared;
+            RefreshProgress();
         }
 
         private void OnDisable()
@@ -45,9 +46,19 @@ namespace DungeonCrawler.Dungeon
 
         private void OnRoomCleared()
         {
-            ClearedCount++;
+            RefreshProgress();
+        }
+
+        private void RefreshProgress()
+        {
+            int count = 0;
+            foreach (RoomController room in rooms)
+                if (room.State == RoomState.Cleared) count++;
+            if (count == ClearedCount) return;
+            bool wasCompleted = IsCompleted;
+            ClearedCount = count;
             ProgressChanged?.Invoke(ClearedCount, TotalRooms);
-            if (IsCompleted) Completed?.Invoke();
+            if (!wasCompleted && IsCompleted) Completed?.Invoke();
         }
     }
 }

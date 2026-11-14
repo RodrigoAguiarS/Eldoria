@@ -29,6 +29,10 @@ Inimigos concedem orbes de XP; ao subir de nível, cura configurável e +10% de 
 
 Inventário interativo e raridades integram o escopo da versão 1.0 por aprovação do usuário; ver [decisão D-001 e fronteira do produto](ROADMAP.md#decisões-de-produto). A implementação deve preservar a fórmula de progressão e definir explicitamente as regras de coleta, capacidade e equipamento.
 
+Regras aprovadas para a implementação da 1.0 (D-002): inventário com 16 espaços, equipamento manual em um slot de arma e um de armadura, poções guardadas para consumo com Q e pilhas de até 5 por potência, XP/ouro imediatos e pickup mantido no chão se não houver capacidade. I/Tab abre o inventário e pausa a partida offline. Raridades Comum/Raro/Épico não aplicam multiplicadores ocultos; as armas existentes mantêm bônus +6/+12. Detalhes, valores iniciais e aceite em [regras da 1.0](docs/PRODUCT-1.0-PROPOSAL.md).
+
+O especial aprovado é um giro de espada em 360° (botão direito/E), alcance inicial 3 m, dano 2× o básico calculado, custo 30 de estamina e cooldown 6 s. Estamina inicial máxima 100, regeneração 20/s após 0,8 s sem especial; básico/dash mantêm suas regras. Defesa base 0, fornecida por armadura; dano recebido positivo = max(1, dano × 100/(100 + defesa)). Esses valores novos são configuráveis e sujeitos a playtest, sem alterar a progressão por nível.
+
 ## Direção visual
 Low-poly estilizado, silhuetas legíveis na câmera isométrica, cores vivas e contraste adequado entre personagem, inimigos, perigos e cenário. Pedra, tochas e obstáculos destrutíveis no escopo posterior. Não copiar assets ou personagens de jogos existentes.
 

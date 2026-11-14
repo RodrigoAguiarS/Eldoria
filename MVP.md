@@ -11,6 +11,8 @@ R1 técnico entregue: armas/render/builders/pool/ciclo de vida reparados; 53 Edi
 
 Atualização posterior: usuário confirmou WASD/dash/R na build Windows. Apresentação da fase 2 do Warden corrigida e observada no Editor (branco → vermelho, modelo visível); suítes atuais com 54 EditMode/32 PlayMode. Na partida do usuário, observados quatro salas concluídas e Boss em fase 2, sem observar a vitória. Revisão visual da arena confirmou perseguição/HP/morte; botão Reiniciar e flash/shake ainda em validação. R2 continua aberto.
 
+Validação mais recente: 54 EditMode/38 PlayMode; integração das cinco ondas, portas/última morte/vitória única, reativação das salas/andar e ranged pelo pool real. Botão Reiniciar passou com clique New Input System. Usuário confirmou a vitória normal do Editor com 5/5; run Windows atual e conferência visual de flash/shake seguem pendentes. Regras concretas de R3 aprovadas em D-002; não são novos critérios retroativos de M1.
+
 ## Estado corrente — auditoria e condução técnica em 13/11/2026
 
 Auditoria corrente com classificação por requisito e evidências: [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md). Planejamento: [ROADMAP.md](ROADMAP.md); execução: [BACKLOG.md](BACKLOG.md); alterações: [CHANGELOG.md](CHANGELOG.md).
