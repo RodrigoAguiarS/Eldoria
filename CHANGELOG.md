@@ -27,5 +27,7 @@
 
 ## Histórico preservado
 
+- FIX-003: builder M1 preserva os prefabs compartilhados existentes, incluindo recompensas e combo; arquivo inválido existente gera erro sem sobrescrita. 53/53 EditMode, com duas reconstruções completas e comprovação de atores únicos/GUIDs/bytes de prefabs intactos. Fixtures de cena/decoração restauradas ao terminar o teste.
+
 - Combo de três golpes, integração de clips Generic, cancelamentos, buffer e medições anteriores: [Reports/Task02/README.md](Reports/Task02/README.md).
 - Auditoria anterior dos marcos originais: [MVP_AUDIT.md](MVP_AUDIT.md).

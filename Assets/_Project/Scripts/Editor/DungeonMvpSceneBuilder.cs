@@ -20,7 +20,7 @@ namespace DungeonCrawler.Editor
 {
     /// <summary>
     /// Constrói a arena do M1 (MVP_Arena.unity) e os prefabs de Player e Enemy_Melee.
-    /// Idempotente: prefabs são regravados no mesmo caminho (GUID preservado); objetos de cena
+    /// Prefabs compartilhados existentes são preservados; objetos de cena
     /// são reaproveitados por nome; o HUD é recriado do zero.
     /// </summary>
     public static class DungeonMvpSceneBuilder
@@ -51,8 +51,8 @@ namespace DungeonCrawler.Editor
             }
 
             EnemyData enemyData = GetOrCreateEnemyData();
-            GameObject playerPrefab = BuildPlayerPrefab(actions);
-            GameObject enemyPrefab = BuildEnemyPrefab(EnemyName, enemyData, new Color(0.85f, 0.15f, 0.15f), 1f);
+            GameObject playerPrefab = GetOrCreateMvpPlayerPrefab();
+            GameObject enemyPrefab = GetOrCreateMvpEnemyPrefab(enemyData);
 
             Scene scene = EditorBuildUtility.OpenOrCreateScene(ProjectPaths.MvpArenaScene);
             if (!scene.IsValid()) return;
@@ -95,6 +95,31 @@ namespace DungeonCrawler.Editor
         }
 
         // ------------------------------------------------------------------ prefabs
+
+        /// <summary>M1 reuses shared composition added by later milestones.</summary>
+        public static GameObject GetOrCreateMvpPlayerPrefab()
+        {
+            GameObject existing = LoadExistingSharedPrefab(PlayerPrefabPath);
+            if (existing != null) return existing;
+            var actions = AssetDatabase.LoadAssetAtPath<InputActionAsset>(ProjectPaths.InputActionsAsset);
+            if (actions == null) throw new System.InvalidOperationException("InputActionAsset ausente.");
+            return BuildPlayerPrefab(actions);
+        }
+
+        public static GameObject GetOrCreateMvpEnemyPrefab(EnemyData data)
+        {
+            string path = ProjectPaths.PrefabsEnemies + "/" + EnemyName + ".prefab";
+            GameObject existing = LoadExistingSharedPrefab(path);
+            return existing != null ? existing : BuildEnemyPrefab(EnemyName, data, new Color(0.85f, 0.15f, 0.15f), 1f);
+        }
+
+        private static GameObject LoadExistingSharedPrefab(string path)
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (prefab == null && System.IO.File.Exists(path))
+                throw new System.InvalidOperationException("Prefab existente não carrega; não será sobrescrito: " + path);
+            return prefab;
+        }
 
         internal static GameObject BuildPlayerPrefab(InputActionAsset actions)
         {
