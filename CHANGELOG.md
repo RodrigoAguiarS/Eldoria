@@ -45,5 +45,7 @@
 
 ## Histórico preservado
 
+- R3 / RPG-002 em andamento: ItemDefinition/raridades/armadura/poção/configuração e InventoryModel com 16 espaços, pilhas por potência, comandos atômicos e equipamento por índice estável. WeaponData preserva campos/GUID/bônus e compartilha a base de itens. 64/64 EditMode, incluindo assets reais e sequência de 500 comandos; coleta/UI ainda não integradas nesta entrega.
+
 - Combo de três golpes, integração de clips Generic, cancelamentos, buffer e medições anteriores: [Reports/Task02/README.md](Reports/Task02/README.md).
 - Auditoria anterior dos marcos originais: [MVP_AUDIT.md](MVP_AUDIT.md).

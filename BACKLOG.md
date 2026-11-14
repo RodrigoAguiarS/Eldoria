@@ -17,7 +17,7 @@ PO/Tech Lead: Codex. Escopo e dependências: [ROADMAP.md](ROADMAP.md). Classific
 | QA-001 | P1 / Arena | Conferência visual específica da MVP_Arena: câmera, HP, flash, shake, dicas e painéis | AUD-001 | Parcial: cena/PlayMode/câmera/dicas/perseguição/HP/morte observados; clique Reiniciar validado por New Input System; flash/shake visual pendentes |
 | PROD-001 | P1 / Produto | Fronteira de 1.0 e regras do especial/recurso/defesa/inventário; distinguir expansão de requisito existente | ROADMAP | Concluído: D-001 e D-002; usuário aprovou integralmente docs/PRODUCT-1.0-PROPOSAL.md |
 | RPG-001 | P2 / Gameplay | Implementar especial configurável e recurso/defesa desacoplados; sem alterar progressão existente sem decisão | PROD-001, LOOP-002 | Planejado |
-| RPG-002 | P2 / RPG | Inventário interativo e raridades configuráveis, coleta/equipamento/consumo e UI; provar limites e integridade dos itens | PROD-001, FIX-001, LOOP-002 | Obrigatório da 1.0, aprovado pelo usuário |
+| RPG-002 | P2 / RPG | Inventário interativo e raridades configuráveis, coleta/equipamento/consumo e UI; provar limites e integridade dos itens | PROD-001, FIX-001, LOOP-002 | Em andamento: dados/modelo com 64 EditMode aprovados; integração de coleta/defesa/UI a seguir, conforme D-002 |
 | UI-001 | P2 / Interface | Menu inicial/pausa/opções/retorno, foco/escala; UI apresenta estado e não decide combate | PROD-001, LOOP-002 | Planejado |
 | AUDIO-001 | P2 / Apresentação | Sons de ataque/impacto/dano/morte/coleta/Boss e música, com volume/ciclo de vida configuráveis | LOOP-002 | Planejado |
 | ACCESS-001 | P2 / Apresentação | Shake/flash ajustáveis e telegraph legível por forma/tempo além de cor, opções persistentes | UI-001 | Planejado |
