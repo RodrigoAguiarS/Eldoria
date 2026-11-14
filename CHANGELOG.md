@@ -32,6 +32,8 @@
 
 ## 2026-11-14 — Integração do andar e decisões da 1.0
 
+- Usuário confirmou partida normal Windows concluída com vitória/5 de 5 na build com os reparos do Boss/salas. Log registra cinco ondas e nenhuma exceção/Missing Script. Morte/reinício após derrota Windows e flash/shake visual permanecem na QA final.
+
 - LOOP-001: corrigidas duas falhas reproduzidas de reativação em RoomController/FloorController, preservando referências e reconciliando mortes/progresso sem buscas globais. 54/54 EditMode e 38/38 PlayMode, incluindo ondas/portas/vitória única, mortes enquanto desativado e ranged usando pool real.
 - Botão Reiniciar validado com clique New Input System. Usuário confirmou partida normal do Editor concluída com vitória/5 de 5; agente observou a luta em 4/5 e o Boss em fase 2. Run Windows com reparos atuais continua pendente.
 - D-002: usuário aprovou integralmente as regras documentadas da 1.0 (inventário/raridades/consumo/equipamento/armadura/especial/estamina/menus/opções). Implementação de R3 autorizada, sem alterar bônus +6/+12 ou fórmula de progressão.

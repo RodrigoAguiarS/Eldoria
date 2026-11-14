@@ -13,6 +13,8 @@ Atualização posterior: usuário confirmou WASD/dash/R na build Windows. Aprese
 
 Validação mais recente: 54 EditMode/38 PlayMode; integração das cinco ondas, portas/última morte/vitória única, reativação das salas/andar e ranged pelo pool real. Botão Reiniciar passou com clique New Input System. Usuário confirmou a vitória normal do Editor com 5/5; run Windows atual e conferência visual de flash/shake seguem pendentes. Regras concretas de R3 aprovadas em D-002; não são novos critérios retroativos de M1.
 
+Confirmação posterior do usuário: executável Windows atualizado concluído até vitória/5 de 5. Log registra as cinco ondas e nenhuma exceção/Missing Script; ver Reports/Leadership/windows-normal-run.json. A revisão visual de flash/shake e o ciclo de morte/reinício Windows permanecem na QA final. R3 inicia pelos dados/modelos isolados enquanto essas verificações finais ficam rastreadas.
+
 ## Estado corrente — auditoria e condução técnica em 13/11/2026
 
 Auditoria corrente com classificação por requisito e evidências: [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md). Planejamento: [ROADMAP.md](ROADMAP.md); execução: [BACKLOG.md](BACKLOG.md); alterações: [CHANGELOG.md](CHANGELOG.md).
