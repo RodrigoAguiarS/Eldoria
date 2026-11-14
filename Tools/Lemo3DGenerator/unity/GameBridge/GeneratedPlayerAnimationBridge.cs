@@ -24,6 +24,7 @@ namespace DungeonCrawler.CharacterArt.GameBridge
         [SerializeField] private Health health;
         [SerializeField] private PlayerDash dash;
         [SerializeField] private PlayerCombat combat;
+        [SerializeField] private PlayerSpecial special;
         [Tooltip("Opcional: toca Victory quando o andar é concluído.")]
         [SerializeField] private FloorController floor;
         [SerializeField] private Color hitColor = new Color(1f, 0.25f, 0.25f);
@@ -45,6 +46,11 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         private void OnEnable()
         {
+            if (special != null)
+            {
+                special.AttackStarted += OnAttackStarted; special.AttackImpacted += OnAttackImpacted;
+                special.AttackFinished += OnAttackEnded; special.AttackCancelled += OnAttackEnded;
+            }
             if (health != null) { health.Damaged += OnDamaged; health.Died += OnDied; }
             if (floor != null) floor.Completed += OnFloorCompleted;
             if (combat != null)
@@ -58,6 +64,11 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         private void OnDisable()
         {
+            if (special != null)
+            {
+                special.AttackStarted -= OnAttackStarted; special.AttackImpacted -= OnAttackImpacted;
+                special.AttackFinished -= OnAttackEnded; special.AttackCancelled -= OnAttackEnded;
+            }
             wasDashing = false;
             if (health != null) { health.Damaged -= OnDamaged; health.Died -= OnDied; }
             if (floor != null) floor.Completed -= OnFloorCompleted;
@@ -113,7 +124,8 @@ namespace DungeonCrawler.CharacterArt.GameBridge
         private void OnDamaged(float amount)
         {
             flash.Flash(hitColor, 0.12f);
-            if (health.IsAlive && CanAnimate && (combat == null || !combat.IsAttacking)) animator.SetTrigger(HitTrigger);
+            if (health.IsAlive && CanAnimate && (combat == null || !combat.IsAttacking) &&
+                (special == null || !special.IsAttacking)) animator.SetTrigger(HitTrigger);
         }
 
         private void OnDied()

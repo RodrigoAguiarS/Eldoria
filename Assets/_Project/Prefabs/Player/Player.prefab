@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 7751617504920147796}
   - component: {fileID: 8568295202802695055}
   - component: {fileID: 7234607405715426165}
+  - component: {fileID: 7917289991465097981}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -236,6 +237,7 @@ MonoBehaviour:
   input: {fileID: 1226147028800101914}
   health: {fileID: 8531932573774126635}
   dash: {fileID: 1340403598580670389}
+  special: {fileID: 7917289991465097981}
   comboDefinition: {fileID: 11400000, guid: 40aef6fee38b844409662371ea105636, type: 2}
   enemyMask:
     serializedVersion: 2
@@ -381,6 +383,7 @@ MonoBehaviour:
   - {fileID: 8629715150995525593}
   - {fileID: 871491815960337618}
   - {fileID: 1340403598580670389}
+  - {fileID: 7917289991465097981}
 --- !u!114 &7751617504920147796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,6 +435,27 @@ MonoBehaviour:
   - {fileID: 8629715150995525593}
   - {fileID: 871491815960337618}
   - {fileID: 1340403598580670389}
+  - {fileID: 7917289991465097981}
+--- !u!114 &7917289991465097981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2167836254186514884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 691024bba7b01b048816c0a7491b876a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Player.PlayerSpecial
+  definition: {fileID: 11400000, guid: 3f061e8395882874c9091a2e5a62471a, type: 2}
+  input: {fileID: 1226147028800101914}
+  combat: {fileID: 871491815960337618}
+  dash: {fileID: 1340403598580670389}
+  health: {fileID: 8531932573774126635}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &2473901451848699153
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-14 — Especial e estamina
+
+- Implementado giro autoritativo em 360° com custo 30, cooldown 6 s, estamina 100 e regeneração 20/s após 0,8 s. Dados em PlayerSpecialDefinition; combo e especial respeitam recuperação mútua. Morte/dash/pausa/desativação cancelam impacto; segurar E/direito não repete.
+- Clip Special adicionado ao Hero Generic, sem alterar malha, materiais, transformações dos ossos nem os 12 clips existentes (comparação dos dados GLB registrada). Ponte recebe eventos C#; nenhum AnimationEvent causa dano. Prefab/três cenas configurados via Editor, com HUD de recurso.
+- 83/83 EditMode e 60/60 PlayMode passaram; teste adicional de medição passou. Consulta aquecida de 32 alvos/64 colliders: 27,817 ms/1.000 execuções, zero GC.Alloc com controle positivo. Comparação de CPU/limites em Reports/Leadership/SpecialPerf.
+- Editor aberto em PlayMode: HUD/estamina/cooldown observados durante entrada do usuário. Revisão visual do giro interrompida pelo usuário com Escape; não declarada concluída. Build Windows com especial ainda pendente.
+
 ## 2026-11-14 — Inventário jogável e pausa
 
 - Integrados 16 espaços, raridades Comum/Raro/Épico, equipamento manual, poções com Q e atalhos I/Tab/Esc. Pausa cancela ações e bloqueia dano/spawns pendentes, restaurando apenas controles previamente habilitados.

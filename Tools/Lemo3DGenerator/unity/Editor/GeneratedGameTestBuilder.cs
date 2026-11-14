@@ -258,6 +258,7 @@ namespace DungeonCrawler.CharacterArt.Editor
                     so.FindProperty("health").objectReferenceValue = p.GetComponent<Health>();
                     so.FindProperty("dash").objectReferenceValue = p.GetComponent<PlayerDash>();
                     so.FindProperty("combat").objectReferenceValue = p.GetComponent<PlayerCombat>();
+                    so.FindProperty("special").objectReferenceValue = p.GetComponent<PlayerSpecial>();
                     so.FindProperty("floor").objectReferenceValue = floor;
                     so.ApplyModifiedPropertiesWithoutUndo();
                 }

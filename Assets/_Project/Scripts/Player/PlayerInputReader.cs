@@ -17,6 +17,7 @@ namespace DungeonCrawler.Player
         private InputAction point;
         private InputAction attack;
         private InputAction dash;
+        private InputAction special;
         private InputActionMap gameplayMap;
         private bool gameplaySuppressed;
 
@@ -24,6 +25,7 @@ namespace DungeonCrawler.Player
         public Vector2 PointerPosition => point != null ? point.ReadValue<Vector2>() : Vector2.zero;
         public bool AttackHeld => attack != null && attack.IsPressed();
         public event Action AttackPressed;
+        public event Action SpecialPressed;
         public bool DashPressedThisFrame => dash != null && dash.WasPressedThisFrame();
 
         private void Awake()
@@ -43,6 +45,8 @@ namespace DungeonCrawler.Player
             attack = map.FindAction("Attack", true);
             attack.performed += OnAttackPerformed;
             dash = map.FindAction("Dash", true);
+            special = map.FindAction("Special", true);
+            special.performed += OnSpecialPerformed;
         }
 
         private void OnEnable() { if (!gameplaySuppressed) gameplayMap?.Enable(); }
@@ -59,9 +63,11 @@ namespace DungeonCrawler.Player
         private void OnDestroy()
         {
             if (attack != null) attack.performed -= OnAttackPerformed;
+            if (special != null) special.performed -= OnSpecialPerformed;
             if (runtimeActions != null) Destroy(runtimeActions);
         }
 
         private void OnAttackPerformed(InputAction.CallbackContext context) => AttackPressed?.Invoke();
+        private void OnSpecialPerformed(InputAction.CallbackContext context) => SpecialPressed?.Invoke();
     }
 }

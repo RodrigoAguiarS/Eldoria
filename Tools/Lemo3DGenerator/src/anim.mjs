@@ -141,6 +141,17 @@ export function heroCounterSlash(name, { duration, windup, hit }) {
   return { name, duration, loop: false, events: { hit }, keys: L([0, ready], [windup, cock], [hit, strike], [hit + .09, { ...strike, Chest: [4, 48, 0], UpperArm_R: [-65, -55, -65] }], [duration, ready]) };
 }
 
+// Hero-only full turn: rotate the hips (not Root), keeping the controller in-place.
+export function heroSpin(name = 'Special', duration = .9) {
+  const stance = { UpperArm_R: [-75, 0, -82], LowerArm_R: [-10, 0, 0], Hand_R: [0, 0, -30], UpperArm_L: [-25, 0, 45], LowerArm_L: [-45, 0, 0], UpperLeg_L: [-10, 0, 8], UpperLeg_R: [10, 0, -8], LowerLeg_L: [16, 0, 0], LowerLeg_R: [16, 0, 0], $hips: [0, -.06, 0] };
+  const turn = (angle) => ({ ...stance, Hips: [0, angle, 0], Chest: [4, -12, 0], Head: [-4, 12, 0] });
+  return { name, duration, loop: false, events: { hit: duration * .4 }, keys: L(
+    [0, { ...stance, Hips: [0, 0, 0] }], [duration * .16, turn(-35)],
+    [duration * .28, turn(0)], [duration * .4, turn(110)],
+    [duration * .54, turn(240)], [duration * .7, turn(360)],
+    [duration, { Hips: [0, 360, 0], UpperArm_R: [-20, 0, -10], LowerArm_R: [-40, 0, 0] }]) };
+}
+
 export function dash(name, duration = .4) {
   const tuck = { Hips: [12, 0, 0], Spine: [14, 0, 0], Chest: [14, 0, 0], Head: [-22, 0, 0], UpperArm_L: [45, 0, 15], UpperArm_R: [40, 0, -18], LowerArm_L: [-20, 0, 0], LowerArm_R: [-25, 0, 0], UpperLeg_L: [-67, 0, 4], UpperLeg_R: [23, 0, -4], LowerLeg_L: [60, 0, 0], LowerLeg_R: [40, 0, 0], Foot_L: [-5, 0, 0], Foot_R: [-20, 0, 0], $hips: [0, -.18, 0] };
   return { name, duration, loop: false, keys: L([0, {}], [duration * .25, tuck], [duration * .7, { ...tuck, $hips: [0, -.14, 0] }], [duration, {}]) };

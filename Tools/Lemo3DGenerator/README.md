@@ -54,7 +54,7 @@ Os GUIDs da cópia e dos encounters são preservados nas reconstruções.
 4. Reexecute o passo 2 sempre que `Floor_01` mudar (a cópia é refeita do zero).
 
 As pontes (`unity/GameBridge`) só **leem** o jogo: `EnemyCombat.IsBusy` → Attack, `PlayerDash.IsDashing` → Dash,
-ativação do `AttackVisual` → Attack, `BossBrain.State` (+ tamanho do telegraph) → SlamWindup/Slam/Volley/Roar,
+eventos C# de `PlayerCombat`/`PlayerSpecial` → Attack_01/02/03/Special (nenhum AnimationEvent aplica dano), `BossBrain.State` (+ tamanho do telegraph) → SlamWindup/Slam/Volley/Roar,
 `Health.Damaged/Died` → Hit + flash/Death, `FloorController.Completed` → Victory.
 
 ## Arte do cenário no jogo (salas)

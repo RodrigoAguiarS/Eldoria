@@ -110,6 +110,7 @@ namespace DungeonCrawler.Editor
 
         public static void ConfigurePlayer(GameObject root)
         {
+            PlayerSpecialSceneBuilder.ConfigurePlayer(root);
             var inventory = Get<PlayerInventory>(root);
             var health = root.GetComponent<Health>(); var progression = root.GetComponent<PlayerProgression>();
             var input = root.GetComponent<PlayerInputReader>();
@@ -123,13 +124,14 @@ namespace DungeonCrawler.Editor
             var shortcuts = Get<PlayerInventoryInput>(root); Set(shortcuts, "inventory", inventory);
             var pause = Get<GameplayPauseController>(root); Set(pause, "health", health); Set(pause, "input", input);
             SetArray(pause, "gameplayControls", new Object[] { root.GetComponent<PlayerMovement>(), root.GetComponent<PlayerAim>(),
-                root.GetComponent<PlayerCombat>(), root.GetComponent<PlayerDash>() });
+                root.GetComponent<PlayerCombat>(), root.GetComponent<PlayerDash>(), root.GetComponent<PlayerSpecial>() });
         }
 
         public static void ConfigureHud(Scene scene, GameObject player, GameRestarter restarter)
         {
             ConfigurePlayer(player);
             var hud = scene.GetRootGameObjects().Single(root => root.name == "HUD");
+            PlayerSpecialSceneBuilder.ConfigureHud(hud, player);
             var events = scene.GetRootGameObjects().Select(root => root.GetComponent<EventSystem>()).First(value => value != null);
             RectTransform root = Node(hud.transform, "InventoryUI"); Stretch(root); root.SetAsLastSibling();
             var menu = Get<GameMenuController>(root.gameObject);

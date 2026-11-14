@@ -29,7 +29,7 @@ namespace DungeonCrawler.CharacterArt.Editor
             if (importer.animationType != ModelImporterAnimationType.Generic)
                 throw new System.InvalidOperationException("O Hero deve preservar seu rig Generic.");
             var imports = importer.clipAnimations.ToList();
-            foreach (string name in new[] { "Attack_01", "Attack_02", "Attack_03" })
+            foreach (string name in new[] { "Attack_01", "Attack_02", "Attack_03", "Special" })
             {
                 if (imports.Any(c => c.name == name)) continue;
                 ModelImporterClipAnimation clip = importer.defaultClipAnimations.First(c => c.takeName == name);
@@ -52,7 +52,7 @@ namespace DungeonCrawler.CharacterArt.Editor
                 ctrl.AddParameter(new AnimatorControllerParameter { name = "ComboSpeed", type = AnimatorControllerParameterType.Float, defaultFloat = 1f });
             AnimatorStateMachine sm = ctrl.layers[0].stateMachine;
             var clips = AssetDatabase.LoadAllAssetsAtPath(fbx).OfType<AnimationClip>().ToArray();
-            foreach (string name in new[] { "Attack_01", "Attack_02", "Attack_03" })
+            foreach (string name in new[] { "Attack_01", "Attack_02", "Attack_03", "Special" })
             {
                 AnimatorState state = sm.states.Select(s => s.state).FirstOrDefault(s => s.name == name) ?? sm.AddState(name);
                 state.motion = clips.First(c => c.name == name);
@@ -227,7 +227,7 @@ namespace DungeonCrawler.CharacterArt.Editor
 
                 AnimatorState s = sm.AddState(c.name, new Vector3(520f, row++ * 70f, 0f));
                 s.motion = clips[c.name];
-                if (m.name == "Hero" && c.name.StartsWith("Attack_"))
+                if (m.name == "Hero" && (c.name.StartsWith("Attack_") || c.name == "Special"))
                 {
                     s.speedParameter = "ComboSpeed";
                     s.speedParameterActive = true;

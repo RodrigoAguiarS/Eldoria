@@ -14,6 +14,7 @@ namespace DungeonCrawler.Player
         [SerializeField] private PlayerInputReader input;
         [SerializeField] private Health health;
         [SerializeField] private PlayerDash dash;
+        [SerializeField] private PlayerSpecial special;
         [SerializeField] private PlayerComboDefinition comboDefinition;
         [SerializeField] private LayerMask enemyMask;
         [SerializeField, Min(0f)] private float damage = 20f;
@@ -29,6 +30,7 @@ namespace DungeonCrawler.Player
         public event Action AttackCancelled;
 
         public bool IsAttacking => combo != null && combo.IsAttacking;
+        public bool IsBusy => IsAttacking || (combo != null && combo.IsRecovering(Time.time));
         public int ComboIndex => combo?.Index ?? -1;
         public PlayerComboStep CurrentStep => Model.CurrentStep;
         public int HitBufferCapacity => hitBuffer.Length;
@@ -93,6 +95,7 @@ namespace DungeonCrawler.Player
         }
 
         private bool CanAttack() => (health == null || health.IsAlive) &&
+            (special == null || !special.IsBusy) &&
             (dash == null || !dash.IsDashing) && (input == null || !input.DashPressedThisFrame);
 
         public void CancelAttack() { combo?.Cancel(Time.time); SetVisual(false); }

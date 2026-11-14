@@ -55,3 +55,7 @@ InventoryPresenter/SlotView apresentam estado e solicitam comandos; assinaturas 
 ## Pausa e atalhos (1.0 / D-002)
 
 GameplayPauseController suspende o mapa Gameplay, cancela controles explicitamente referenciados e congela Time.timeScale. Ao sair, restaura apenas controles previamente habilitados e jogador vivo; destruir/desativar o controlador restaura o tempo. Timers de combate/IA/spawn/projéteis respeitam a pausa, inclusive na janela de impacto. PlayerInventoryInput mantém I/Tab/Q/Esc em ações separadas, disponíveis durante o menu. GameMenuController apresenta os painéis e solicita pausa; não decide dano, cura ou progressão.
+
+## Especial e estamina (1.0 / D-002)
+
+PlayerSpecialDefinition configura recurso, custo, regeneração, cooldown e movimento. PlayerSpecialModel usa relógio escalado e emite início/impacto/fim/cancelamento; custo e cooldown não são devolvidos ao cancelar. PlayerSpecial aplica um hit radial autoritativo, deduplica IDamageable e amplia o buffer antes de causar dano quando saturado. Morte, dash, desativação e pausa impedem impacto pendente; básico e especial respeitam a recuperação um do outro. E/direito não repetem ao segurar. A ponte do Hero representa os mesmos eventos C#, alinhando a pose de impacto sem AnimationEvent de dano; o rig continua Generic/in-place.

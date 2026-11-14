@@ -21,6 +21,7 @@ namespace DungeonCrawler.Player
         public event Action Cancelled;
 
         public bool IsAttacking { get; private set; }
+        public bool IsRecovering(float now) => !IsAttacking && now < readyAt;
         public int Index { get; private set; } = -1;
         public PlayerComboStep CurrentStep => Step(Index < 0 ? 0 : Index);
         private int Count => definition != null && definition.Count > 0 ? definition.Count : fallback.Length;

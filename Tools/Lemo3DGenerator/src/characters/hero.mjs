@@ -122,6 +122,7 @@ export function clips() {
     withCape(A.slash('Attack_01', { duration: .45, windup: .10, hit: .16 }), swordGuard(1)),
     withCape(A.heroCounterSlash('Attack_02', { duration: .5, windup: .12, hit: .19 }), swordGuard(1.2)),
     withCape(A.slash('Attack_03', { duration: .72, windup: .24, hit: .32, heavy: true }), swordGuard(1.5)),
+    withCape(A.heroSpin('Special', .9), (u) => ({ Cape_1: [18, 0, -12 * Math.sin(u * Math.PI)], Cape_2: [25, 0, -20 * Math.sin(u * Math.PI)] })),
     withCape(A.dash('Dash', .4), () => ({ Cape_1: [34, 0, 0], Cape_2: [18, 0, 0] })),
     withCape(A.hit('Hit', .45), (u) => ({ Cape_1: [10 * Math.sin(u * Math.PI), 0, 0] })),
     withCape(A.death('Death', { duration: 1.6, hipsRest: -.52, back: -.45 }), (u) => ({ Cape_1: [-15 * u, 0, 0], Cape_2: [-30 * u, 0, 0] })),

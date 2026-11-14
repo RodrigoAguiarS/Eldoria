@@ -33,6 +33,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             map.AddAction("Point", InputActionType.Value, expectedControlLayout: "Vector2");
             map.AddAction("Attack", InputActionType.Button, "<Mouse>/leftButton");
             map.AddAction("Dash", InputActionType.Button, "<Keyboard>/space");
+            map.AddAction("Special", InputActionType.Button, "<Keyboard>/e");
             player = new GameObject("Input Combo Player"); player.SetActive(false);
             player.AddComponent<Health>();
             reader = player.AddComponent<PlayerInputReader>();

@@ -14,6 +14,33 @@ namespace DungeonCrawler.Editor
     public static class MvpVisualReview
     {
         private static GameObject bossPreview;
+        private static double specialPreviewEnds;
+        private static float previousPreviewScale;
+
+        [MenuItem("Tools/Dungeon Crawler/QA/Preview Player Special (Slow)")]
+        public static void PreviewSpecial()
+        {
+            if (!EditorApplication.isPlaying) throw new InvalidOperationException("Abra uma cena jogável em PlayMode.");
+            PlayerSpecial special = null;
+            foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                special = root.GetComponentInChildren<PlayerSpecial>();
+                if (special != null) break;
+            }
+            if (special == null || !special.RequestAttack()) throw new InvalidOperationException("Especial indisponível.");
+            previousPreviewScale = Time.timeScale;
+            Time.timeScale = .15f;
+            specialPreviewEnds = EditorApplication.timeSinceStartup + 8f;
+            EditorApplication.update -= EndSpecialPreview;
+            EditorApplication.update += EndSpecialPreview;
+            Debug.Log("[QA Special] Reprodução lenta isolada; tempo restaurado após 8 s. Não é prova de input/run normal.");
+        }
+        private static void EndSpecialPreview()
+        {
+            if (EditorApplication.isPlaying && EditorApplication.timeSinceStartup < specialPreviewEnds) return;
+            Time.timeScale = previousPreviewScale;
+            EditorApplication.update -= EndSpecialPreview;
+        }
 
         [MenuItem("Tools/Dungeon Crawler/QA/Preview Inventory Contents")]
         public static void PreviewInventory()
