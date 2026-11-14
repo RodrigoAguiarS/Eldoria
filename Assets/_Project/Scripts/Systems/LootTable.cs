@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DungeonCrawler.Systems
 {
-    public enum LootKind { Xp, Gold, Potion, Weapon }
+    public enum LootKind { Xp = 0, Gold = 1, Potion = 2, Weapon = 3, Armor = 4 }
 
     [Serializable]
     public struct LootEntry
@@ -15,6 +15,7 @@ namespace DungeonCrawler.Systems
         public int min;
         public int max;
         public WeaponData weapon;
+        public ArmorData armor;
     }
 
     public readonly struct LootDrop
@@ -22,12 +23,14 @@ namespace DungeonCrawler.Systems
         public readonly LootKind Kind;
         public readonly int Amount;
         public readonly WeaponData Weapon;
+        public readonly ArmorData Armor;
 
-        public LootDrop(LootKind kind, int amount, WeaponData weapon = null)
+        public LootDrop(LootKind kind, int amount, WeaponData weapon = null, ArmorData armor = null)
         {
             Kind = kind;
             Amount = amount;
             Weapon = weapon;
+            Armor = armor;
         }
     }
 
@@ -50,11 +53,12 @@ namespace DungeonCrawler.Systems
                 LootEntry e = entries[i];
                 if (e.kind == LootKind.Xp || rng() >= e.chance) continue;
                 if (e.kind == LootKind.Weapon && e.weapon == null) continue;
+                if (e.kind == LootKind.Armor && e.armor == null) continue;
 
                 int lo = Math.Min(e.min, e.max);
                 int hi = Math.Max(e.min, e.max);
                 int amount = Math.Min(hi, lo + (int)(rng() * (hi - lo + 1)));
-                results.Add(new LootDrop(e.kind, amount, e.weapon));
+                results.Add(new LootDrop(e.kind, amount, e.weapon, e.armor));
             }
         }
     }

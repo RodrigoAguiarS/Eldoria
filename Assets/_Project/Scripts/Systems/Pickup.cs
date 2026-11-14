@@ -17,6 +17,9 @@ namespace DungeonCrawler.Systems
         private float baseY;
         private float expireAt;
         private bool collected;
+        private float nextCollectAt;
+        private PlayerProgression rejectedFor;
+        private MaterialPropertyBlock block;
 
         public LootKind Kind => drop.Kind;
 
@@ -25,7 +28,8 @@ namespace DungeonCrawler.Systems
             drop = lootDrop;
             baseY = transform.position.y;
             expireAt = Time.time + lifetime;
-            Tint(ColorFor(lootDrop.Kind));
+            ItemDefinition item = lootDrop.Kind == LootKind.Weapon ? lootDrop.Weapon : lootDrop.Armor;
+            Tint(item != null && item.rarity != null ? item.rarity.color : ColorFor(lootDrop.Kind));
         }
 
         private void Update()
@@ -42,22 +46,38 @@ namespace DungeonCrawler.Systems
             transform.Rotate(0f, spinSpeed * Time.deltaTime, 0f, Space.World);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other) => TryCollect(other);
+        private void OnTriggerStay(Collider other) => TryCollect(other);
+        private void OnTriggerExit(Collider other)
         {
-            if (collected) return;
+            if (other.GetComponentInParent<PlayerProgression>() != rejectedFor) return;
+            rejectedFor = null;
+            nextCollectAt = 0f;
+        }
+
+        private void TryCollect(Collider other)
+        {
+            if (collected || Time.time < nextCollectAt) return;
 
             PlayerProgression progression = other.GetComponentInParent<PlayerProgression>();
             if (progression == null) return;
 
+            if (!progression.TryCollect(drop, progression != rejectedFor))
+            {
+                rejectedFor = progression;
+                nextCollectAt = Time.time + .25f;
+                expireAt = float.PositiveInfinity; // Capacity rejection must not silently delete the drop.
+                return;
+            }
+
             collected = true;
-            progression.Collect(drop);
             Destroy(gameObject);
         }
 
         private void Tint(Color color)
         {
             if (visual == null) return;
-            var block = new MaterialPropertyBlock();
+            block ??= new MaterialPropertyBlock();
             visual.GetPropertyBlock(block);
             block.SetColor(BaseColorId, color);
             block.SetColor(ColorId, color);
@@ -71,6 +91,7 @@ namespace DungeonCrawler.Systems
                 case LootKind.Xp: return new Color(0.3f, 0.9f, 1f);
                 case LootKind.Gold: return new Color(1f, 0.85f, 0.2f);
                 case LootKind.Potion: return new Color(0.9f, 0.2f, 0.4f);
+                case LootKind.Armor: return new Color(0.6f, 0.75f, 0.9f);
                 default: return new Color(0.95f, 0.95f, 0.95f);
             }
         }

@@ -8,5 +8,6 @@ namespace DungeonCrawler.Systems
         [Range(1, 256)] public int capacity = 16;
         public bool autoEquipFirstWeapon = true;
         public PotionData healthPotion;
+        [Min(0f)] public float baseDefense;
     }
 }

@@ -13,6 +13,7 @@ namespace DungeonCrawler.Systems
     {
         [SerializeField] private Health health;
         [SerializeField] private PlayerCombat combat;
+        [SerializeField] private PlayerInventory inventory;
         [SerializeField, Range(0f, 1f)] private float healFractionOnLevelUp = 0.4f;
         [SerializeField, Min(1)] private int baseXpToLevel = 30;
         [SerializeField, Min(1f)] private float xpGrowth = 1.35f;
@@ -32,18 +33,39 @@ namespace DungeonCrawler.Systems
 
         private ExperienceModel Model => model ??= new ExperienceModel(baseXpToLevel, xpGrowth, maxLevel);
 
-        private void Awake() => ApplyCombatStats();
-
-        public void Collect(in LootDrop drop)
+        private void Awake()
         {
+            if (inventory == null) inventory = GetComponent<PlayerInventory>();
+            ApplyCombatStats();
+        }
+
+        public void Collect(in LootDrop drop) => TryCollect(drop);
+
+        public bool TryCollect(in LootDrop drop, bool notifyRejection = true)
+        {
+            if (health == null || !health.IsAlive) return false;
+            if (inventory != null && (drop.Kind == LootKind.Weapon || drop.Kind == LootKind.Potion || drop.Kind == LootKind.Armor))
+                return inventory.TryStore(drop, notifyRejection);
             switch (drop.Kind)
             {
-                case LootKind.Xp: AddXp(drop.Amount); return;
+                case LootKind.Xp: AddXp(drop.Amount); return true;
                 case LootKind.Gold: Gold += drop.Amount; break;
                 case LootKind.Potion: health.Heal(drop.Amount); break;
-                case LootKind.Weapon: Equip(drop.Weapon); break;
+                case LootKind.Weapon:
+                    if (drop.Weapon == null) return false;
+                    Equip(drop.Weapon); break;
+                default: return false;
             }
 
+            Changed?.Invoke();
+            return true;
+        }
+
+        public void SetEquippedWeapon(WeaponData weapon)
+        {
+            if (Weapon == weapon) return;
+            Weapon = weapon;
+            ApplyCombatStats();
             Changed?.Invoke();
         }
 

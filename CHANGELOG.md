@@ -45,6 +45,8 @@
 
 ## Histórico preservado
 
+- R3 / integração de inventário: PlayerInventory aplica equipamento/defesa e consome poções apenas com jogador vivo/ferido; progressão mantém cálculo/XP/cura de nível. Armor adicionado ao loot preservando índices antigos. Pickup recusado permanece no chão e tenta novamente sem spam de notificações; teste físico prova coleta após liberar espaço. 72/72 EditMode e 43/43 PlayMode. As cenas ainda não receberam o componente/configuração/UI nesta entrega; coleta anterior permanece como compatibilidade nos jogadores sem inventário.
+
 - R3 / RPG-002 em andamento: ItemDefinition/raridades/armadura/poção/configuração e InventoryModel com 16 espaços, pilhas por potência, comandos atômicos e equipamento por índice estável. WeaponData preserva campos/GUID/bônus e compartilha a base de itens. 64/64 EditMode, incluindo assets reais e sequência de 500 comandos; coleta/UI ainda não integradas nesta entrega.
 
 - Combo de três golpes, integração de clips Generic, cancelamentos, buffer e medições anteriores: [Reports/Task02/README.md](Reports/Task02/README.md).

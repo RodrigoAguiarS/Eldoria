@@ -13,6 +13,7 @@ namespace DungeonCrawler.Core
 
         private HealthModel model;
         private float invulnerableUntil;
+        private float defense;
 
         public event Action<float, float> Changed
         {
@@ -39,6 +40,8 @@ namespace DungeonCrawler.Core
         public float Max => Model.Max;
         public float Normalized => Model.Normalized;
         public bool IsInvulnerable => Time.time < invulnerableUntil;
+        public float Defense => defense;
+        public void SetDefense(float value) => defense = Mathf.Max(0f, value);
 
         /// <summary>Define a vida máxima (ex.: a partir de EnemyData) e restaura a vida.</summary>
         public void Configure(float max)
@@ -55,7 +58,7 @@ namespace DungeonCrawler.Core
         public bool TakeDamage(float amount, Vector3 sourcePosition)
         {
             if (IsInvulnerable) return false;
-            return Model.TakeDamage(amount);
+            return Model.TakeDamage(DamageMitigation.ApplyDefense(amount, defense));
         }
 
         public void Heal(float amount) => Model.Heal(amount);
