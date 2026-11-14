@@ -62,6 +62,45 @@ namespace DungeonCrawler.Tests.PlayMode
         }
 
         [UnityTest]
+        public IEnumerator ProjectilePool_WarmsBurstAndCancelsAllShotsOnDisable()
+        {
+            var prefabGo = Track(new GameObject("ProjectilePrefab"));
+            prefabGo.SetActive(false);
+            var prefab = prefabGo.AddComponent<Projectile>();
+            var poolGo = Track(new GameObject("Pool"));
+            var pool = poolGo.AddComponent<ProjectilePool>();
+            pool.Initialize(prefab);
+            Assert.AreEqual(16, pool.InactiveCount);
+            Assert.AreEqual(0, pool.ActiveCount);
+            var warmIds = new System.Collections.Generic.HashSet<Transform>();
+            for (int i = 0; i < poolGo.transform.childCount; i++)
+                warmIds.Add(poolGo.transform.GetChild(i));
+            var fired = new Projectile[16];
+            for (int i = 0; i < fired.Length; i++)
+            {
+                fired[i] = pool.Fire(Vector3.zero, Vector3.forward, 0f, 1f);
+                Assert.IsTrue(warmIds.Remove(fired[i].transform), "Must reuse distinct warmed instances.");
+            }
+            Assert.AreEqual(0, warmIds.Count);
+            Assert.AreEqual(16, pool.TotalCount);
+            poolGo.SetActive(false);
+            Assert.AreEqual(0, pool.ActiveCount);
+            Assert.AreEqual(16, pool.InactiveCount);
+            Assert.IsNull(pool.Fire(Vector3.zero, Vector3.forward, 0f, 1f));
+            foreach (Projectile projectile in fired)
+            {
+                Assert.IsFalse(projectile.IsFlying);
+                projectile.ForceRelease();
+            }
+            Assert.AreEqual(16, pool.InactiveCount);
+            poolGo.SetActive(true);
+            yield return null;
+            Assert.AreEqual(0, pool.ActiveCount);
+            Assert.IsNotNull(pool.Fire(Vector3.zero, Vector3.forward, 0f, 1f));
+            Assert.AreEqual(16, pool.TotalCount);
+        }
+
+        [UnityTest]
         public IEnumerator ProjectilePool_ReusesReleasedInstance()
         {
             var prefabGo = Track(new GameObject("ProjectilePrefab"));

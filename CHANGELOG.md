@@ -25,9 +25,12 @@
 - Mantidos recursos de pós-processamento usados pelos construtores URP; demais flags de stripping preservadas. Checker estático: zero erros/avisos. Build Windows com zero erros; smoke visual confirmou herói/cenário/ataque e ausência dos quatro avisos de pós-processamento, Missing Script e exceções.
 - Tamanho reportado passou de 136.970.135 para 139.923.015 bytes. Permanecem 496 avisos de shaders de inferência e mensagem de info queue D3D12 do driver; nenhuma alteração de gameplay ou nova arte. Percurso completo continua pendente.
 
-## Histórico preservado
+## 2026-11-13 — FIX-003 e PERF-001
 
-- FIX-003: builder M1 preserva os prefabs compartilhados existentes, incluindo recompensas e combo; arquivo inválido existente gera erro sem sobrescrita. 53/53 EditMode, com duas reconstruções completas e comprovação de atores únicos/GUIDs/bytes de prefabs intactos. Fixtures de cena/decoração restauradas ao terminar o teste.
+- Builder M1 preserva prefabs compartilhados existentes, incluindo recompensas e combo; arquivo inválido existente gera erro sem sobrescrita. 53/53 EditMode, com duas reconstruções completas e comprovação de atores únicos/GUIDs/bytes de prefabs intactos. Fixtures de cena/decoração restauradas ao terminar o teste.
+- Pool aquece 16 projéteis, reutiliza o callback e cancela tiros ao desativar. 30/30 PlayMode; Profiler com controle positivo: 5.000 → 0 alocações em 5.000 disparos, primeira rajada com 0 novas instâncias. Corrigida a instrumentação: contador de bytes do thread não detecta alocação de controle nesta instalação. Melee revalidado com Profiler: 0 alocações após aquecimento; sem ganho de CPU. Evidências em Reports/Leadership/PoolPerf.
+
+## Histórico preservado
 
 - Combo de três golpes, integração de clips Generic, cancelamentos, buffer e medições anteriores: [Reports/Task02/README.md](Reports/Task02/README.md).
 - Auditoria anterior dos marcos originais: [MVP_AUDIT.md](MVP_AUDIT.md).

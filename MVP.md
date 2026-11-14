@@ -5,6 +5,8 @@ Cada marco deve produzir estado executável e verificável. Não avançar com er
 
 Reparo de renderização FIX-002 validado: referências obsoletas e subassets sem script limpos pelas APIs; 19 componentes de volume preservados. Build Windows abre sem os avisos de pós-processamento diagnosticados. Evidências e limites em [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md).
 
+PERF-001 validado com 30 testes PlayMode: pool aquecido com 16 instâncias, rajada sem novas criações e zero alocações nos disparos aquecidos segundo Profiler com controle positivo. O contador de bytes do thread desta instalação não é usado como prova de GC. Medições em [PoolPerf](Reports/Leadership/PoolPerf/README.md).
+
 ## Estado corrente — auditoria e condução técnica em 13/11/2026
 
 Auditoria corrente com classificação por requisito e evidências: [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md). Planejamento: [ROADMAP.md](ROADMAP.md); execução: [BACKLOG.md](BACKLOG.md); alterações: [CHANGELOG.md](CHANGELOG.md).

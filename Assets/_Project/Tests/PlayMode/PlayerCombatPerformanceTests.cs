@@ -6,6 +6,7 @@ using System.Reflection;
 using DungeonCrawler.Core;
 using DungeonCrawler.Player;
 using NUnit.Framework;
+using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.TestTools;
 using Object = UnityEngine.Object;
@@ -48,6 +49,20 @@ namespace DungeonCrawler.Tests.PlayMode
             UnityEngine.Profiling.Profiler.enabled = true;
             try
             {
+                using (var control = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "GC.Alloc", 16,
+                    ProfilerRecorderOptions.CollectOnlyOnCurrentThread))
+                {
+                    long beforeControl = GC.GetAllocatedBytesForCurrentThread();
+                    var allocationProbe = new byte[4096];
+                    GC.KeepAlive(allocationProbe);
+                    long controlThreadBytes = GC.GetAllocatedBytesForCurrentThread() - beforeControl;
+                    control.Stop();
+                    long controlCount = 0;
+                    for (int i = 0; i < control.Count; i++) controlCount += control.GetSample(i).Count;
+                    Assert.Greater(controlCount, 0, "Profiler must detect the allocation control.");
+                    File.WriteAllText(Path.Combine(ReportDirectory, "allocation-control.json"),
+                        "{\"profilerAllocationCount\":" + controlCount + ",\"threadCounterBytes\":" + controlThreadBytes + "}");
+                }
                 for (int i = 0; i < 200; i++) { legacy(); hit(); }
                 yield return null;
                 Measure(legacy, "Task02.LegacyMeleeQuery.10000", "legacy_profiled");
@@ -68,6 +83,8 @@ namespace DungeonCrawler.Tests.PlayMode
         private static void Measure(Action hit, string sample, string phase)
         {
                 var watch = new Stopwatch();
+                using var allocationRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "GC.Alloc", 1024,
+                    ProfilerRecorderOptions.CollectOnlyOnCurrentThread | ProfilerRecorderOptions.WrapAroundWhenCapacityReached);
                 long before = GC.GetAllocatedBytesForCurrentThread();
                 UnityEngine.Profiling.Profiler.BeginSample(sample);
                 watch.Start();
@@ -75,12 +92,16 @@ namespace DungeonCrawler.Tests.PlayMode
                 watch.Stop();
                 UnityEngine.Profiling.Profiler.EndSample();
                 long allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+                allocationRecorder.Stop();
+                long allocationCount = 0;
+                for (int i = 0; i < allocationRecorder.Count; i++) allocationCount += allocationRecorder.GetSample(i).Count;
                 Directory.CreateDirectory(ReportDirectory);
                 File.WriteAllText(Path.Combine(ReportDirectory, phase + ".json"),
                     "{\"iterations\":10000,\"warmup\":200,\"targets\":32,\"colliders\":64,\"cpuMs\":" +
                     watch.Elapsed.TotalMilliseconds.ToString(System.Globalization.CultureInfo.InvariantCulture) +
-                    ",\"gcBytes\":" + allocated + ",\"unity\":\"" + Application.unityVersion + "\"}");
-                Assert.AreEqual(0, allocated, "Steady-state melee queries must not allocate managed memory.");
+                    ",\"threadCounterBytes\":" + allocated + ",\"profilerAllocationCount\":" + allocationCount +
+                    ",\"unity\":\"" + Application.unityVersion + "\"}");
+                Assert.AreEqual(0, allocationCount, "Steady-state melee queries must not allocate managed memory.");
         }
 
         // Exact pre-task query algorithm, retained only for a same-session comparison.
