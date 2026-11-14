@@ -33,6 +33,8 @@ namespace DungeonCrawler.CharacterArt.GameBridge
         private int attackState;
         private float clipLength;
         private AnimationClip[] clips;
+        private bool CanAnimate => isActiveAndEnabled && animator != null &&
+            animator.isActiveAndEnabled && animator.runtimeAnimatorController != null;
 
         private void Awake()
         {
@@ -56,6 +58,7 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         private void OnDisable()
         {
+            wasDashing = false;
             if (health != null) { health.Damaged -= OnDamaged; health.Died -= OnDied; }
             if (floor != null) floor.Completed -= OnFloorCompleted;
             if (combat != null)
@@ -70,7 +73,7 @@ namespace DungeonCrawler.CharacterArt.GameBridge
         private void Update()
         {
             flash.Tick();
-            if (animator == null || (health != null && !health.IsAlive)) return;
+            if (!CanAnimate || (health != null && !health.IsAlive)) return;
 
             bool dashing = dash != null && dash.IsDashing;
             if (dashing && !wasDashing) animator.SetTrigger(DashTrigger);
@@ -80,18 +83,18 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         private void OnAttackStarted(int index, PlayerComboStep step)
         {
-            if (animator == null) return;
             attackState = Animator.StringToHash(step.AnimationState);
             clipLength = step.Duration;
             foreach (AnimationClip clip in clips)
                 if (clip.name == step.AnimationState) { clipLength = clip.length; break; }
+            if (!CanAnimate) return;
             animator.SetFloat(ComboSpeed, clipLength * step.ClipImpactNormalized / Mathf.Max(.001f, step.ImpactSeconds));
             animator.CrossFadeInFixedTime(attackState, .035f, 0, 0f);
         }
 
         private void OnAttackImpacted(int index, PlayerComboStep step)
         {
-            if (animator == null) return;
+            if (!CanAnimate) return;
             // Align the contact pose on the exact gameplay damage frame, even after a slow frame.
             animator.Play(attackState, 0, step.ClipImpactNormalized);
             animator.SetFloat(ComboSpeed, clipLength * (1f - step.ClipImpactNormalized) /
@@ -101,7 +104,7 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         private void OnAttackEnded()
         {
-            if (animator == null || (health != null && !health.IsAlive)) return;
+            if (!CanAnimate || (health != null && !health.IsAlive)) return;
             // Do not override a dash that won priority in this frame.
             if (dash != null && dash.IsDashing) return;
             animator.CrossFadeInFixedTime(Locomotion, .06f);
@@ -110,17 +113,17 @@ namespace DungeonCrawler.CharacterArt.GameBridge
         private void OnDamaged(float amount)
         {
             flash.Flash(hitColor, 0.12f);
-            if (health.IsAlive && animator != null && (combat == null || !combat.IsAttacking)) animator.SetTrigger(HitTrigger);
+            if (health.IsAlive && CanAnimate && (combat == null || !combat.IsAttacking)) animator.SetTrigger(HitTrigger);
         }
 
         private void OnDied()
         {
-            if (animator != null) animator.SetBool(DeadBool, true);
+            if (CanAnimate) animator.SetBool(DeadBool, true);
         }
 
         private void OnFloorCompleted()
         {
-            if (animator != null && health != null && health.IsAlive) animator.SetTrigger(VictoryTrigger);
+            if (CanAnimate && health != null && health.IsAlive) animator.SetTrigger(VictoryTrigger);
         }
     }
 }

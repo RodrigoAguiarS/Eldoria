@@ -32,5 +32,7 @@
 
 ## Histórico preservado
 
+- FIX-004/R1: corrigidas chamadas ao Animator inativo nas duas cópias da ponte do jogador. Regressão reproduzida com três avisos na cena gerada; corrigida com zero avisos, cancelamento sem impacto atrasado e timers funcionando com Animator desabilitado. 53/53 EditMode e 31/31 PlayMode. Build Windows incremental sem erros/avisos e smoke de render/ataque sem Missing Script/exceções/avisos Animator. Cache de shaders não substitui rebuild limpo; teclado/reinício Windows e run completa continuam pendentes de confirmação visual.
+
 - Combo de três golpes, integração de clips Generic, cancelamentos, buffer e medições anteriores: [Reports/Task02/README.md](Reports/Task02/README.md).
 - Auditoria anterior dos marcos originais: [MVP_AUDIT.md](MVP_AUDIT.md).

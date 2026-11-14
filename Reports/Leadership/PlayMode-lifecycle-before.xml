@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-14 02:42:16Z" end-time="2026-11-14 02:42:19Z" duration="2,7420112">
+  <test-suite type="TestSuite" id="1053" name="My project" fullname="My project" runstate="Runnable" testcasecount="31" result="Failed" site="Child" start-time="2026-11-14 02:42:16Z" end-time="2026-11-14 02:42:19Z" duration="2.742011" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1068" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="12" result="Failed" site="Child" start-time="2026-11-14 02:42:16Z" end-time="2026-11-14 02:42:19Z" duration="2.731192" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="19704" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1069" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="12" result="Failed" site="Child" start-time="2026-11-14 02:42:16Z" end-time="2026-11-14 02:42:19Z" duration="2.729756" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1070" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="12" result="Failed" site="Child" start-time="2026-11-14 02:42:16Z" end-time="2026-11-14 02:42:19Z" duration="2.729130" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1071" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="12" result="Failed" site="Child" start-time="2026-11-14 02:42:16Z" end-time="2026-11-14 02:42:19Z" duration="2.728487" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1054" name="MvpSceneAcceptanceTests" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" testcasecount="8" result="Failed" site="Child" start-time="2026-11-14 02:42:16Z" end-time="2026-11-14 02:42:19Z" duration="2.726287" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1061" name="GeneratedFloor_CancellationAndInactiveAnimatorKeepCombatAuthority" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests.GeneratedFloor_CancellationAndInactiveAnimatorKeepCombatAuthority" methodname="GeneratedFloor_CancellationAndInactiveAnimatorKeepCombatAuthority" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" seed="1872713471" result="Failed" start-time="2026-11-14 02:42:16Z" end-time="2026-11-14 02:42:19Z" duration="2.702503" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Lifecycle events must not command an inactive Animator.
+  Expected: 0
+  But was:  3
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests+<GeneratedFloor_CancellationAndInactiveAnimatorKeepCombatAuthority>d__16.MoveNext () [0x003b7] in G:\DungeonCrawler\My project\Assets\_Project\Tests\PlayMode\PlayerInput\MvpSceneAcceptanceTests.cs:255
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[Game object with animator is inactive
+Game object with animator is inactive
+Game object with animator is inactive
+Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/My project\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

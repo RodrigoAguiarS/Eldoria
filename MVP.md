@@ -7,6 +7,8 @@ Reparo de renderização FIX-002 validado: referências obsoletas e subassets se
 
 PERF-001 validado com 30 testes PlayMode: pool aquecido com 16 instâncias, rajada sem novas criações e zero alocações nos disparos aquecidos segundo Profiler com controle positivo. O contador de bytes do thread desta instalação não é usado como prova de GC. Medições em [PoolPerf](Reports/Leadership/PoolPerf/README.md).
 
+R1 técnico entregue: armas/render/builders/pool/ciclo de vida reparados; 53 EditMode e 31 PlayMode passaram. Build Windows atual abre e executa ataque sem Missing Script/exceções/avisos Animator. O aceite completo do MVP/andar, incluindo Boss e validação visual de teclado/reinício Windows, permanece aberto em R2.
+
 ## Estado corrente — auditoria e condução técnica em 13/11/2026
 
 Auditoria corrente com classificação por requisito e evidências: [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md). Planejamento: [ROADMAP.md](ROADMAP.md); execução: [BACKLOG.md](BACKLOG.md); alterações: [CHANGELOG.md](CHANGELOG.md).

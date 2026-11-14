@@ -206,6 +206,58 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.IsFalse(restored.IsAttacking);
         }
 
+        [UnityTest]
+        public IEnumerator GeneratedFloor_CancellationAndInactiveAnimatorKeepCombatAuthority()
+        {
+            yield return SceneManager.LoadSceneAsync(
+                "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity");
+            yield return null;
+            var combat = FindInScene<PlayerCombat>();
+            var health = combat.GetComponent<Health>();
+            var animator = combat.GetComponentInChildren<Animator>();
+            Assert.IsNotNull(animator);
+            int starts = 0, impacts = 0, cancellations = 0, animatorWarnings = 0;
+            combat.AttackStarted += (_, __) => starts++;
+            combat.AttackImpacted += (_, __) => impacts++;
+            combat.AttackCancelled += () => cancellations++;
+            Application.LogCallback logs = (message, _, type) =>
+            {
+                if (type == LogType.Warning && message.ToLowerInvariant().Contains("animator")) animatorWarnings++;
+            };
+            Application.logMessageReceived += logs;
+            try
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    combat.RequestAttack();
+                    yield return null;
+                    Assert.IsTrue(combat.IsAttacking);
+                    combat.gameObject.SetActive(false);
+                    yield return new WaitForSeconds(.25f);
+                    Assert.IsFalse(combat.IsAttacking);
+                    Assert.AreEqual(0, impacts, "No delayed damage after disabling the hero.");
+                    combat.gameObject.SetActive(true);
+                    yield return null;
+                }
+                Assert.AreEqual(3, starts);
+                Assert.AreEqual(3, cancellations, "Re-enabling must not duplicate domain subscriptions.");
+
+                animator.enabled = false;
+                combat.RequestAttack();
+                yield return new WaitForSeconds(.7f);
+                Assert.AreEqual(1, impacts, "The gameplay timer still applies damage without an active Animator.");
+                Assert.IsFalse(combat.IsAttacking);
+                combat.RequestAttack();
+                yield return null;
+                health.TakeDamage(health.Max, Vector3.zero);
+                yield return new WaitForSeconds(.8f);
+                Assert.AreEqual(1, impacts, "Death must cancel pending impact.");
+                Assert.AreEqual(0, animatorWarnings, "Lifecycle events must not command an inactive Animator.");
+            }
+            finally { Application.logMessageReceived -= logs; }
+            yield return LoadArena();
+        }
+
 #if UNITY_EDITOR
         [UnityTest]
         public IEnumerator Arena_RealWeaponAndXpPickupsCollectThroughPhysics()
