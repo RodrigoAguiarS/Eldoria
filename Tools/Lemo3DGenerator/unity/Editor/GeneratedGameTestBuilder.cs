@@ -29,6 +29,45 @@ namespace DungeonCrawler.CharacterArt.Editor
         private const string OfficialScene = "Assets/_Project/Scenes/Floor_01.unity";
         public const string TestScene = Root + "/Floor_01_GeneratedCharacters.unity";
 
+        [MenuItem("Tools/Dungeon Crawler/Generated Characters/Repair Boss Phase Presentation")]
+        public static void RepairBossPhasePresentation()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+                throw new InvalidOperationException("Saia do PlayMode.");
+            string path = Root + "/Boss_Warden_Generated.prefab";
+            string guid = AssetDatabase.AssetPathToGUID(path);
+            if (string.IsNullOrEmpty(guid)) throw new InvalidOperationException("Generated Boss prefab missing.");
+            GameObject root = PrefabUtility.LoadPrefabContents(path);
+            try
+            {
+                Animator animator = root.GetComponentInChildren<Animator>(true);
+                if (animator == null) throw new InvalidOperationException("Visible Warden Animator missing.");
+                ConfigureBossPresentation(root, animator);
+                PrefabUtility.SaveAsPrefabAsset(root, path);
+            }
+            finally { PrefabUtility.UnloadPrefabContents(root); }
+            if (AssetDatabase.AssetPathToGUID(path) != guid)
+                throw new InvalidOperationException("Boss GUID changed.");
+            AssetDatabase.SaveAssets();
+        }
+
+        public static void ConfigureBossPresentation(GameObject root, Animator animator)
+        {
+            var phase = root.GetComponent<BossPhaseController>();
+            if (phase == null) throw new InvalidOperationException("Boss phase controller missing.");
+            var bridge = root.GetComponent<GeneratedBossAnimationBridge>() ?? root.AddComponent<GeneratedBossAnimationBridge>();
+            var so = new SerializedObject(bridge);
+            so.FindProperty("animator").objectReferenceValue = animator;
+            so.FindProperty("health").objectReferenceValue = root.GetComponent<Health>();
+            so.FindProperty("brain").objectReferenceValue = root.GetComponent<BossBrain>();
+            so.FindProperty("phase").objectReferenceValue = phase;
+            so.FindProperty("telegraphOuter").objectReferenceValue = GeneratedCharacterBuilder.FindDeep(root.transform, "Outer");
+            so.ApplyModifiedPropertiesWithoutUndo();
+            var phaseSettings = new SerializedObject(phase);
+            phaseSettings.FindProperty("visual").objectReferenceValue = animator.transform;
+            phaseSettings.ApplyModifiedPropertiesWithoutUndo();
+        }
+
         public static void ConfigurePlayerCombo(GameObject player)
         {
             const string folder = "Assets/_Project/ScriptableObjects/Combat";
@@ -121,16 +160,7 @@ namespace DungeonCrawler.CharacterArt.Editor
                 prefabMap[AssetDatabase.LoadAssetAtPath<GameObject>(path)] = v;
             }
 
-            GameObject boss = BuildVariant(BossPrefab, "Warden", (root, animator) =>
-            {
-                var bridge = root.AddComponent<GeneratedBossAnimationBridge>();
-                var so = new SerializedObject(bridge);
-                so.FindProperty("animator").objectReferenceValue = animator;
-                so.FindProperty("health").objectReferenceValue = root.GetComponent<Health>();
-                so.FindProperty("brain").objectReferenceValue = root.GetComponent<BossBrain>();
-                so.FindProperty("telegraphOuter").objectReferenceValue = GeneratedCharacterBuilder.FindDeep(root.transform, "Outer");
-                so.ApplyModifiedPropertiesWithoutUndo();
-            });
+            GameObject boss = BuildVariant(BossPrefab, "Warden", ConfigureBossPresentation);
             if (boss == null) return false;
             prefabMap[AssetDatabase.LoadAssetAtPath<GameObject>(BossPrefab)] = boss;
 

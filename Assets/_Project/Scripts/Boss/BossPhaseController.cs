@@ -26,6 +26,9 @@ namespace DungeonCrawler.Boss
 
         public BossPhase Phase => Model.Phase;
         public bool TransitionHappened => Model.TransitionHappened;
+        public Color Phase2Color => phase2Color;
+        public float TransitionRemainingSeconds => Phase == BossPhase.Transition
+            ? Mathf.Max(0f, data.transitionDuration - (Time.time - transitionStartedAt)) : 0f;
 
         /// <summary>Início da transição (Boss invulnerável).</summary>
         public event Action TransitionStarted;

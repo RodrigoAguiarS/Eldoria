@@ -32,6 +32,9 @@
 
 ## Histórico preservado
 
+- Confirmação manual posterior: usuário confirmou WASD, Espaço e R funcionando na build Windows R1.
+- BOSS-001: pulso da transição ligado ao modelo Warden visível, cor de fase 2 persistente e restauração após flash sem instanciar materiais. Prefab configurado pelas APIs e builder atualizado nas duas cópias. 54 EditMode/32 PlayMode; preview visual branco → vermelho no Editor. Na luta real, observados 4/5 salas, Warden vermelho/telegraph e HUD; vitória não observada. Arena original também revisada em PlayMode; input do botão Reiniciar e flash/shake ainda em validação.
+
 - FIX-004/R1: corrigidas chamadas ao Animator inativo nas duas cópias da ponte do jogador. Regressão reproduzida com três avisos na cena gerada; corrigida com zero avisos, cancelamento sem impacto atrasado e timers funcionando com Animator desabilitado. 53/53 EditMode e 31/31 PlayMode. Build Windows incremental sem erros/avisos e smoke de render/ataque sem Missing Script/exceções/avisos Animator. Cache de shaders não substitui rebuild limpo; teclado/reinício Windows e run completa continuam pendentes de confirmação visual.
 
 - Combo de três golpes, integração de clips Generic, cancelamentos, buffer e medições anteriores: [Reports/Task02/README.md](Reports/Task02/README.md).

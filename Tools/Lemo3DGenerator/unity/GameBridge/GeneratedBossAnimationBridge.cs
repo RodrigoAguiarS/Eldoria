@@ -24,6 +24,7 @@ namespace DungeonCrawler.CharacterArt.GameBridge
         [SerializeField] private Animator animator;
         [SerializeField] private Health health;
         [SerializeField] private BossBrain brain;
+        [SerializeField] private BossPhaseController phase;
         [Tooltip("Disco externo do BossAttackTelegraph: diâmetro grande = Slam (raio 3,5+), pequeno = Volley (raio 2,5).")]
         [SerializeField] private Transform telegraphOuter;
         [SerializeField, Min(0f)] private float slamDiameterThreshold = 6f;
@@ -34,6 +35,8 @@ namespace DungeonCrawler.CharacterArt.GameBridge
         private GeneratedHitFlash flash;
         private BossState last = BossState.Idle;
         private bool pendingSlam;
+        private bool CanAnimate => isActiveAndEnabled && animator != null &&
+            animator.isActiveAndEnabled && animator.runtimeAnimatorController != null;
 
         private void Awake()
         {
@@ -43,17 +46,29 @@ namespace DungeonCrawler.CharacterArt.GameBridge
         private void OnEnable()
         {
             if (health != null) { health.Damaged += OnDamaged; health.Died += OnDied; }
+            if (phase != null)
+            {
+                phase.TransitionStarted += OnTransitionStarted;
+                phase.Phase2Started += OnPhase2Started;
+                if (phase.Phase == BossPhase.Transition) OnTransitionStarted();
+                else if (phase.Phase == BossPhase.Phase2) OnPhase2Started();
+            }
         }
 
         private void OnDisable()
         {
             if (health != null) { health.Damaged -= OnDamaged; health.Died -= OnDied; }
+            if (phase != null)
+            {
+                phase.TransitionStarted -= OnTransitionStarted;
+                phase.Phase2Started -= OnPhase2Started;
+            }
         }
 
         private void Update()
         {
             flash.Tick();
-            if (animator == null || brain == null) return;
+            if (!CanAnimate || brain == null) return;
 
             BossState state = brain.State;
             if (state == last) return;
@@ -80,12 +95,24 @@ namespace DungeonCrawler.CharacterArt.GameBridge
         {
             flash.Flash(hitColor, 0.1f);
             BossState s = brain != null ? brain.State : BossState.Chase;
-            if (health.IsAlive && animator != null && (s == BossState.Chase || s == BossState.Idle)) animator.SetTrigger(HitTrigger);
+            if (health.IsAlive && CanAnimate && (s == BossState.Chase || s == BossState.Idle)) animator.SetTrigger(HitTrigger);
+        }
+
+        private void OnTransitionStarted()
+        {
+            flash.SetBaseTint(phase.Phase2Color);
+            flash.Flash(Color.white, phase.TransitionRemainingSeconds);
+        }
+
+        private void OnPhase2Started()
+        {
+            flash.SetBaseTint(phase.Phase2Color);
+            flash.ClearFlash();
         }
 
         private void OnDied()
         {
-            if (animator != null) animator.SetBool(DeadBool, true);
+            if (CanAnimate) animator.SetBool(DeadBool, true);
         }
     }
 }

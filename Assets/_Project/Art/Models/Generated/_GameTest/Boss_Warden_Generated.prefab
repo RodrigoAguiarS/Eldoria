@@ -149,6 +149,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7214315918942232291, guid: 1e613f9cc667bb748a75ea8ac8e660e3, type: 3}
+      propertyPath: visual
+      value: 
+      objectReference: {fileID: 1190004687524275989}
     - target: {fileID: 7380850461050430991, guid: 1e613f9cc667bb748a75ea8ac8e660e3, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -188,10 +192,22 @@ MonoBehaviour:
   animator: {fileID: 5072058279498284399}
   health: {fileID: 9213440692292892808}
   brain: {fileID: 1632002556981643651}
+  phase: {fileID: 1455586268900556182}
   telegraphOuter: {fileID: 6677603836776324494}
   slamDiameterThreshold: 6
   slamStartSeconds: 0.12
   hitColor: {r: 1, g: 0.3, b: 0.3, a: 1}
+--- !u!114 &1455586268900556182 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7214315918942232291, guid: 1e613f9cc667bb748a75ea8ac8e660e3, type: 3}
+  m_PrefabInstance: {fileID: 8083154173836632949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019783619007002405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ce9096463503fb4b97f81e58dc655c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Boss.BossPhaseController
 --- !u!114 &1632002556981643651 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7389043906644814582, guid: 1e613f9cc667bb748a75ea8ac8e660e3, type: 3}

@@ -9,6 +9,8 @@ PERF-001 validado com 30 testes PlayMode: pool aquecido com 16 instâncias, raja
 
 R1 técnico entregue: armas/render/builders/pool/ciclo de vida reparados; 53 EditMode e 31 PlayMode passaram. Build Windows atual abre e executa ataque sem Missing Script/exceções/avisos Animator. O aceite completo do MVP/andar, incluindo Boss e validação visual de teclado/reinício Windows, permanece aberto em R2.
 
+Atualização posterior: usuário confirmou WASD/dash/R na build Windows. Apresentação da fase 2 do Warden corrigida e observada no Editor (branco → vermelho, modelo visível); suítes atuais com 54 EditMode/32 PlayMode. Na partida do usuário, observados quatro salas concluídas e Boss em fase 2, sem observar a vitória. Revisão visual da arena confirmou perseguição/HP/morte; botão Reiniciar e flash/shake ainda em validação. R2 continua aberto.
+
 ## Estado corrente — auditoria e condução técnica em 13/11/2026
 
 Auditoria corrente com classificação por requisito e evidências: [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md). Planejamento: [ROADMAP.md](ROADMAP.md); execução: [BACKLOG.md](BACKLOG.md); alterações: [CHANGELOG.md](CHANGELOG.md).
