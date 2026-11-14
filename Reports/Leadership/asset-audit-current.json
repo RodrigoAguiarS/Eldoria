@@ -1,16 +1,8 @@
 {
     "unityVersion": "6000.6.9f1",
-    "timestampUtc": "2026-11-14T02:14:04.8197630Z",
+    "timestampUtc": "2026-11-14T02:27:29.8584192Z",
     "serialization": "ForceText",
-    "issues": [
-        "Assets/Settings/PC_Renderer.asset: unresolved UnityEngine.Rendering.Universal.UniversalRendererData (PC_Renderer).probeVolumeResources.probeVolumeDebugShader",
-        "Assets/Settings/PC_Renderer.asset: unresolved UnityEngine.Rendering.Universal.UniversalRendererData (PC_Renderer).probeVolumeResources.probeVolumeFragmentationDebugShader",
-        "Assets/Settings/PC_Renderer.asset: unresolved UnityEngine.Rendering.Universal.UniversalRendererData (PC_Renderer).probeVolumeResources.probeVolumeOffsetDebugShader",
-        "Assets/Settings/PC_Renderer.asset: unresolved UnityEngine.Rendering.Universal.UniversalRendererData (PC_Renderer).probeVolumeResources.probeVolumeSamplingDebugShader",
-        "Assets/Settings/PC_Renderer.asset: unresolved UnityEngine.Rendering.Universal.UniversalRendererData (PC_Renderer).probeVolumeResources.probeSamplingDebugMesh",
-        "Assets/Settings/PC_Renderer.asset: unresolved UnityEngine.Rendering.Universal.UniversalRendererData (PC_Renderer).probeVolumeResources.probeSamplingDebugTexture",
-        "Assets/Settings/PC_Renderer.asset: unresolved UnityEngine.Rendering.Universal.UniversalRendererData (PC_Renderer).probeVolumeResources.probeVolumeBlendStatesCS"
-    ],
+    "issues": [],
     "foundation": [
         "PASS Unity Editor 6000.6.9f1",
         "PASS com.unity.render-pipelines.universal 17.6.0",
@@ -60242,7 +60234,11 @@
                     ]
                 },
                 {
-                    "type": "UnityEditor.Animations.AnimatorState (Volley)",
+                    "type": "UnityEditor.Animations.AnimatorStateMachine (Base Layer)",
+                    "fields": []
+                },
+                {
+                    "type": "UnityEditor.Animations.AnimatorState (Slam)",
                     "fields": [
                         {
                             "property": "m_Speed",
@@ -60408,7 +60404,7 @@
                     ]
                 },
                 {
-                    "type": "UnityEditor.Animations.AnimatorState (SlamWindup)",
+                    "type": "UnityEditor.Animations.AnimatorState (Volley)",
                     "fields": [
                         {
                             "property": "m_Speed",
@@ -60417,6 +60413,10 @@
                         {
                             "property": "m_CycleOffset",
                             "value": "0"
+                        },
+                        {
+                            "property": "m_Transitions.Array.data[0]",
+                            "value": "Assets/_Project/Art/Models/Generated/Warden/Warden.controller"
                         },
                         {
                             "property": "m_Position",
@@ -60487,10 +60487,6 @@
                             "value": ""
                         }
                     ]
-                },
-                {
-                    "type": "UnityEditor.Animations.AnimatorStateMachine (Base Layer)",
-                    "fields": []
                 },
                 {
                     "type": "UnityEditor.Animations.AnimatorState (Hit)",
@@ -60578,7 +60574,7 @@
                     ]
                 },
                 {
-                    "type": "UnityEditor.Animations.AnimatorState (Slam)",
+                    "type": "UnityEditor.Animations.AnimatorState (Death)",
                     "fields": [
                         {
                             "property": "m_Speed",
@@ -60587,10 +60583,6 @@
                         {
                             "property": "m_CycleOffset",
                             "value": "0"
-                        },
-                        {
-                            "property": "m_Transitions.Array.data[0]",
-                            "value": "Assets/_Project/Art/Models/Generated/Warden/Warden.controller"
                         },
                         {
                             "property": "m_Position",
@@ -60748,7 +60740,7 @@
                     ]
                 },
                 {
-                    "type": "UnityEditor.Animations.AnimatorState (Death)",
+                    "type": "UnityEditor.Animations.AnimatorState (SlamWindup)",
                     "fields": [
                         {
                             "property": "m_Speed",
@@ -75862,160 +75854,6 @@
                     ]
                 },
                 {
-                    "type": "UnityEditor.Animations.AnimatorStateTransition ()",
-                    "fields": [
-                        {
-                            "property": "m_Conditions.Array.data[0].m_ConditionMode",
-                            "value": "6"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[0].m_ConditionEvent",
-                            "value": "Direction"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[0].m_EventTreshold",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[1].m_ConditionMode",
-                            "value": "2"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[1].m_ConditionEvent",
-                            "value": "Moving"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[1].m_EventTreshold",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_DstStateMachine",
-                            "value": "null"
-                        },
-                        {
-                            "property": "m_DstState",
-                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Hero_Sprite.controller"
-                        },
-                        {
-                            "property": "m_Solo",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_Mute",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_IsExit",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_TransitionDuration",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_TransitionOffset",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_ExitTime",
-                            "value": "0.75"
-                        },
-                        {
-                            "property": "m_HasExitTime",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_HasFixedDuration",
-                            "value": "True"
-                        },
-                        {
-                            "property": "m_OrderedInterruption",
-                            "value": "True"
-                        },
-                        {
-                            "property": "m_CanTransitionToSelf",
-                            "value": "False"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEditor.Animations.AnimatorStateTransition ()",
-                    "fields": [
-                        {
-                            "property": "m_Conditions.Array.data[0].m_ConditionMode",
-                            "value": "6"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[0].m_ConditionEvent",
-                            "value": "Direction"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[0].m_EventTreshold",
-                            "value": "2"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[1].m_ConditionMode",
-                            "value": "2"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[1].m_ConditionEvent",
-                            "value": "Moving"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[1].m_EventTreshold",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_DstStateMachine",
-                            "value": "null"
-                        },
-                        {
-                            "property": "m_DstState",
-                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Hero_Sprite.controller"
-                        },
-                        {
-                            "property": "m_Solo",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_Mute",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_IsExit",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_TransitionDuration",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_TransitionOffset",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_ExitTime",
-                            "value": "0.75"
-                        },
-                        {
-                            "property": "m_HasExitTime",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_HasFixedDuration",
-                            "value": "True"
-                        },
-                        {
-                            "property": "m_OrderedInterruption",
-                            "value": "True"
-                        },
-                        {
-                            "property": "m_CanTransitionToSelf",
-                            "value": "False"
-                        }
-                    ]
-                },
-                {
                     "type": "UnityEditor.Animations.AnimatorState (Walk_Left)",
                     "fields": [
                         {
@@ -76093,6 +75931,322 @@
                         {
                             "property": "m_TimeParameter",
                             "value": ""
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEditor.Animations.AnimatorStateTransition ()",
+                    "fields": [
+                        {
+                            "property": "m_Conditions.Array.data[0].m_ConditionMode",
+                            "value": "6"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[0].m_ConditionEvent",
+                            "value": "Direction"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[0].m_EventTreshold",
+                            "value": "2"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[1].m_ConditionMode",
+                            "value": "2"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[1].m_ConditionEvent",
+                            "value": "Moving"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[1].m_EventTreshold",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_DstStateMachine",
+                            "value": "null"
+                        },
+                        {
+                            "property": "m_DstState",
+                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Hero_Sprite.controller"
+                        },
+                        {
+                            "property": "m_Solo",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_Mute",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_IsExit",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_TransitionDuration",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_TransitionOffset",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_ExitTime",
+                            "value": "0.75"
+                        },
+                        {
+                            "property": "m_HasExitTime",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_HasFixedDuration",
+                            "value": "True"
+                        },
+                        {
+                            "property": "m_OrderedInterruption",
+                            "value": "True"
+                        },
+                        {
+                            "property": "m_CanTransitionToSelf",
+                            "value": "False"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEditor.Animations.AnimatorState (Idle_Back)",
+                    "fields": [
+                        {
+                            "property": "m_Speed",
+                            "value": "1"
+                        },
+                        {
+                            "property": "m_CycleOffset",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_Position",
+                            "value": "(50.000, 50.000, 0.000)"
+                        },
+                        {
+                            "property": "m_Position.x",
+                            "value": "50"
+                        },
+                        {
+                            "property": "m_Position.y",
+                            "value": "50"
+                        },
+                        {
+                            "property": "m_Position.z",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_IKOnFeet",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_WriteDefaultValues",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_Mirror",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_SpeedParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_MirrorParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_CycleOffsetParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_TimeParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_Motion",
+                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Clips/Hero_Idle_Back.anim"
+                        },
+                        {
+                            "property": "m_Tag",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_SpeedParameter",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_MirrorParameter",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_CycleOffsetParameter",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_TimeParameter",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEditor.Animations.AnimatorState (Idle_Left)",
+                    "fields": [
+                        {
+                            "property": "m_Speed",
+                            "value": "1"
+                        },
+                        {
+                            "property": "m_CycleOffset",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_Position",
+                            "value": "(50.000, 50.000, 0.000)"
+                        },
+                        {
+                            "property": "m_Position.x",
+                            "value": "50"
+                        },
+                        {
+                            "property": "m_Position.y",
+                            "value": "50"
+                        },
+                        {
+                            "property": "m_Position.z",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_IKOnFeet",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_WriteDefaultValues",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_Mirror",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_SpeedParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_MirrorParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_CycleOffsetParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_TimeParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_Motion",
+                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Clips/Hero_Idle_Left.anim"
+                        },
+                        {
+                            "property": "m_Tag",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_SpeedParameter",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_MirrorParameter",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_CycleOffsetParameter",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_TimeParameter",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEditor.Animations.AnimatorStateTransition ()",
+                    "fields": [
+                        {
+                            "property": "m_Conditions.Array.data[0].m_ConditionMode",
+                            "value": "6"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[0].m_ConditionEvent",
+                            "value": "Direction"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[0].m_EventTreshold",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[1].m_ConditionMode",
+                            "value": "1"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[1].m_ConditionEvent",
+                            "value": "Moving"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[1].m_EventTreshold",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_DstStateMachine",
+                            "value": "null"
+                        },
+                        {
+                            "property": "m_DstState",
+                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Hero_Sprite.controller"
+                        },
+                        {
+                            "property": "m_Solo",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_Mute",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_IsExit",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_TransitionDuration",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_TransitionOffset",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_ExitTime",
+                            "value": "0.75"
+                        },
+                        {
+                            "property": "m_HasExitTime",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_HasFixedDuration",
+                            "value": "True"
+                        },
+                        {
+                            "property": "m_OrderedInterruption",
+                            "value": "True"
+                        },
+                        {
+                            "property": "m_CanTransitionToSelf",
+                            "value": "False"
                         }
                     ]
                 },
@@ -76190,245 +76344,6 @@
                         },
                         {
                             "property": "m_Conditions.Array.data[0].m_EventTreshold",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[1].m_ConditionMode",
-                            "value": "1"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[1].m_ConditionEvent",
-                            "value": "Moving"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[1].m_EventTreshold",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_DstStateMachine",
-                            "value": "null"
-                        },
-                        {
-                            "property": "m_DstState",
-                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Hero_Sprite.controller"
-                        },
-                        {
-                            "property": "m_Solo",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_Mute",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_IsExit",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_TransitionDuration",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_TransitionOffset",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_ExitTime",
-                            "value": "0.75"
-                        },
-                        {
-                            "property": "m_HasExitTime",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_HasFixedDuration",
-                            "value": "True"
-                        },
-                        {
-                            "property": "m_OrderedInterruption",
-                            "value": "True"
-                        },
-                        {
-                            "property": "m_CanTransitionToSelf",
-                            "value": "False"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEditor.Animations.AnimatorState (Idle_Left)",
-                    "fields": [
-                        {
-                            "property": "m_Speed",
-                            "value": "1"
-                        },
-                        {
-                            "property": "m_CycleOffset",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_Position",
-                            "value": "(50.000, 50.000, 0.000)"
-                        },
-                        {
-                            "property": "m_Position.x",
-                            "value": "50"
-                        },
-                        {
-                            "property": "m_Position.y",
-                            "value": "50"
-                        },
-                        {
-                            "property": "m_Position.z",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_IKOnFeet",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_WriteDefaultValues",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_Mirror",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_SpeedParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_MirrorParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_CycleOffsetParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_TimeParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_Motion",
-                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Clips/Hero_Idle_Left.anim"
-                        },
-                        {
-                            "property": "m_Tag",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_SpeedParameter",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_MirrorParameter",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_CycleOffsetParameter",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_TimeParameter",
-                            "value": ""
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEditor.Animations.AnimatorState (Idle_Back)",
-                    "fields": [
-                        {
-                            "property": "m_Speed",
-                            "value": "1"
-                        },
-                        {
-                            "property": "m_CycleOffset",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_Position",
-                            "value": "(50.000, 50.000, 0.000)"
-                        },
-                        {
-                            "property": "m_Position.x",
-                            "value": "50"
-                        },
-                        {
-                            "property": "m_Position.y",
-                            "value": "50"
-                        },
-                        {
-                            "property": "m_Position.z",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_IKOnFeet",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_WriteDefaultValues",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_Mirror",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_SpeedParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_MirrorParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_CycleOffsetParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_TimeParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_Motion",
-                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Clips/Hero_Idle_Back.anim"
-                        },
-                        {
-                            "property": "m_Tag",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_SpeedParameter",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_MirrorParameter",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_CycleOffsetParameter",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_TimeParameter",
-                            "value": ""
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEditor.Animations.AnimatorStateTransition ()",
-                    "fields": [
-                        {
-                            "property": "m_Conditions.Array.data[0].m_ConditionMode",
-                            "value": "6"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[0].m_ConditionEvent",
-                            "value": "Direction"
-                        },
-                        {
-                            "property": "m_Conditions.Array.data[0].m_EventTreshold",
                             "value": "1"
                         },
                         {
@@ -76490,6 +76405,87 @@
                         {
                             "property": "m_CanTransitionToSelf",
                             "value": "False"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEditor.Animations.AnimatorState (Walk_Back)",
+                    "fields": [
+                        {
+                            "property": "m_Speed",
+                            "value": "1"
+                        },
+                        {
+                            "property": "m_CycleOffset",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_Position",
+                            "value": "(50.000, 50.000, 0.000)"
+                        },
+                        {
+                            "property": "m_Position.x",
+                            "value": "50"
+                        },
+                        {
+                            "property": "m_Position.y",
+                            "value": "50"
+                        },
+                        {
+                            "property": "m_Position.z",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_IKOnFeet",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_WriteDefaultValues",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_Mirror",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_SpeedParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_MirrorParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_CycleOffsetParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_TimeParameterActive",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_Motion",
+                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Clips/Hero_Walk_Back.anim"
+                        },
+                        {
+                            "property": "m_Tag",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_SpeedParameter",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_MirrorParameter",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_CycleOffsetParameter",
+                            "value": ""
+                        },
+                        {
+                            "property": "m_TimeParameter",
+                            "value": ""
                         }
                     ]
                 },
@@ -76652,87 +76648,6 @@
                     ]
                 },
                 {
-                    "type": "UnityEditor.Animations.AnimatorState (Walk_Back)",
-                    "fields": [
-                        {
-                            "property": "m_Speed",
-                            "value": "1"
-                        },
-                        {
-                            "property": "m_CycleOffset",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_Position",
-                            "value": "(50.000, 50.000, 0.000)"
-                        },
-                        {
-                            "property": "m_Position.x",
-                            "value": "50"
-                        },
-                        {
-                            "property": "m_Position.y",
-                            "value": "50"
-                        },
-                        {
-                            "property": "m_Position.z",
-                            "value": "0"
-                        },
-                        {
-                            "property": "m_IKOnFeet",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_WriteDefaultValues",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_Mirror",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_SpeedParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_MirrorParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_CycleOffsetParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_TimeParameterActive",
-                            "value": "False"
-                        },
-                        {
-                            "property": "m_Motion",
-                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Clips/Hero_Walk_Back.anim"
-                        },
-                        {
-                            "property": "m_Tag",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_SpeedParameter",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_MirrorParameter",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_CycleOffsetParameter",
-                            "value": ""
-                        },
-                        {
-                            "property": "m_TimeParameter",
-                            "value": ""
-                        }
-                    ]
-                },
-                {
                     "type": "UnityEditor.Animations.AnimatorStateTransition ()",
                     "fields": [
                         {
@@ -76750,6 +76665,83 @@
                         {
                             "property": "m_Conditions.Array.data[1].m_ConditionMode",
                             "value": "1"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[1].m_ConditionEvent",
+                            "value": "Moving"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[1].m_EventTreshold",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_DstStateMachine",
+                            "value": "null"
+                        },
+                        {
+                            "property": "m_DstState",
+                            "value": "Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Hero_Sprite.controller"
+                        },
+                        {
+                            "property": "m_Solo",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_Mute",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_IsExit",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_TransitionDuration",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_TransitionOffset",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_ExitTime",
+                            "value": "0.75"
+                        },
+                        {
+                            "property": "m_HasExitTime",
+                            "value": "False"
+                        },
+                        {
+                            "property": "m_HasFixedDuration",
+                            "value": "True"
+                        },
+                        {
+                            "property": "m_OrderedInterruption",
+                            "value": "True"
+                        },
+                        {
+                            "property": "m_CanTransitionToSelf",
+                            "value": "False"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEditor.Animations.AnimatorStateTransition ()",
+                    "fields": [
+                        {
+                            "property": "m_Conditions.Array.data[0].m_ConditionMode",
+                            "value": "6"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[0].m_ConditionEvent",
+                            "value": "Direction"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[0].m_EventTreshold",
+                            "value": "0"
+                        },
+                        {
+                            "property": "m_Conditions.Array.data[1].m_ConditionMode",
+                            "value": "2"
                         },
                         {
                             "property": "m_Conditions.Array.data[1].m_ConditionEvent",
@@ -121823,6 +121815,159 @@
                     ]
                 },
                 {
+                    "type": "UnityEngine.InputSystem.InputActionReference (UI/TrackedDevicePosition)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "24908448-c609-4bc3-a128-ea258674378a"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEngine.InputSystem.InputActionReference (UI/TrackedDeviceOrientation)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEngine.InputSystem.InputActionReference (Player/Interact)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "852140f2-7766-474d-8707-702459ba45f3"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEngine.InputSystem.InputActionReference (UI/Navigate)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "c95b2375-e6d9-4b88-9c4c-c5e76515df4b"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEngine.InputSystem.InputActionReference (Player/Sprint)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "641cd816-40e6-41b4-8c3d-04687c349290"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEngine.InputSystem.InputActionReference (UI/Point)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "32b35790-4ed0-4e9a-aa41-69ac6d629449"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEngine.InputSystem.InputActionReference (Player/Jump)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "f1ba0d36-48eb-4cd5-b651-1c94a6531f70"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEngine.InputSystem.InputActionReference (UI/RightClick)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "44b200b1-1557-4083-816c-b22cbdf77ddf"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEngine.InputSystem.InputActionReference (UI/Click)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "3c7022bf-7922-4f7c-a998-c437916075ad"
+                        }
+                    ]
+                },
+                {
                     "type": "UnityEngine.InputSystem.InputActionReference (UI/Submit)",
                     "fields": [
                         {
@@ -121874,57 +122019,6 @@
                     ]
                 },
                 {
-                    "type": "UnityEngine.InputSystem.InputActionReference (UI/Point)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "32b35790-4ed0-4e9a-aa41-69ac6d629449"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEngine.InputSystem.InputActionReference (UI/TrackedDevicePosition)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "24908448-c609-4bc3-a128-ea258674378a"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEngine.InputSystem.InputActionReference (Player/Attack)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a"
-                        }
-                    ]
-                },
-                {
                     "type": "UnityEngine.InputSystem.InputActionReference (Player/Crouch)",
                     "fields": [
                         {
@@ -121942,7 +122036,7 @@
                     ]
                 },
                 {
-                    "type": "UnityEngine.InputSystem.InputActionReference (UI/MiddleClick)",
+                    "type": "UnityEngine.InputSystem.InputActionReference (Player/Attack)",
                     "fields": [
                         {
                             "property": "m_Script",
@@ -121954,160 +122048,7 @@
                         },
                         {
                             "property": "m_ActionId",
-                            "value": "dad70c86-b58c-4b17-88ad-f5e53adf419e"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEngine.InputSystem.InputActionReference (Player/Sprint)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "641cd816-40e6-41b4-8c3d-04687c349290"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEngine.InputSystem.InputActionReference (UI/Navigate)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "c95b2375-e6d9-4b88-9c4c-c5e76515df4b"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEngine.InputSystem.InputActionReference (Player/Interact)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "852140f2-7766-474d-8707-702459ba45f3"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEngine.InputSystem.InputActionReference (UI/TrackedDeviceOrientation)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEngine.InputSystem.InputActionReference (UI/Click)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "3c7022bf-7922-4f7c-a998-c437916075ad"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEngine.InputSystem.InputActionReference (UI/Cancel)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "15cef263-9014-4fd5-94d9-4e4a6234a6ef"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEngine.InputSystem.InputActionReference (Player/Jump)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "f1ba0d36-48eb-4cd5-b651-1c94a6531f70"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEngine.InputSystem.InputActionReference (Player/Next)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba"
-                        }
-                    ]
-                },
-                {
-                    "type": "UnityEngine.InputSystem.InputActionReference (UI/RightClick)",
-                    "fields": [
-                        {
-                            "property": "m_Script",
-                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
-                        },
-                        {
-                            "property": "m_Asset",
-                            "value": "Assets/InputSystem_Actions.inputactions"
-                        },
-                        {
-                            "property": "m_ActionId",
-                            "value": "44b200b1-1557-4083-816c-b22cbdf77ddf"
+                            "value": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a"
                         }
                     ]
                 },
@@ -122142,6 +122083,57 @@
                         {
                             "property": "m_ActionId",
                             "value": "2776c80d-3c14-4091-8c56-d04ced07a2b0"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEngine.InputSystem.InputActionReference (UI/MiddleClick)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "dad70c86-b58c-4b17-88ad-f5e53adf419e"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEngine.InputSystem.InputActionReference (Player/Next)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba"
+                        }
+                    ]
+                },
+                {
+                    "type": "UnityEngine.InputSystem.InputActionReference (UI/Cancel)",
+                    "fields": [
+                        {
+                            "property": "m_Script",
+                            "value": "Packages/com.unity.inputsystem/InputSystem/Runtime/Actions/InputActionReference.cs"
+                        },
+                        {
+                            "property": "m_Asset",
+                            "value": "Assets/InputSystem_Actions.inputactions"
+                        },
+                        {
+                            "property": "m_ActionId",
+                            "value": "15cef263-9014-4fd5-94d9-4e4a6234a6ef"
                         }
                     ]
                 }
@@ -124593,20 +124585,12 @@
             "guid": "f288ae1f4751b564a96ac7587541f7a2",
             "kind": ".asset",
             "dependencies": [
-                "Packages/com.unity.render-pipelines.universal/Textures/BlueNoise256/LDR_LLL1_1.png",
                 "Packages/com.unity.render-pipelines.universal/Shaders/Debug/ProbeVolumeSamplingDebugPositionNormal.compute",
                 "Packages/com.unity.render-pipelines.universal/Shaders/Debug/HDRDebugView.shader",
-                "Packages/com.unity.render-pipelines.universal/Textures/BlueNoise256/LDR_LLL1_6.png",
-                "Packages/com.unity.render-pipelines.universal/Textures/BlueNoise256/LDR_LLL1_0.png",
                 "Packages/com.unity.render-pipelines.universal/Runtime/RendererFeatures/ScreenSpaceAmbientOcclusion.cs",
-                "Packages/com.unity.render-pipelines.universal/Textures/BlueNoise256/LDR_LLL1_3.png",
                 "Packages/com.unity.render-pipelines.universal/Shaders/Debug/DebugReplacement.shader",
                 "Packages/com.unity.render-pipelines.universal/Runtime/Data/PostProcessData.asset",
-                "Packages/com.unity.render-pipelines.universal/Runtime/UniversalRendererData.cs",
-                "Packages/com.unity.render-pipelines.universal/Textures/BlueNoise256/LDR_LLL1_5.png",
-                "Packages/com.unity.render-pipelines.universal/Textures/BlueNoise256/LDR_LLL1_4.png",
-                "Packages/com.unity.render-pipelines.universal/Shaders/Utils/ScreenSpaceAmbientOcclusion.shader",
-                "Packages/com.unity.render-pipelines.universal/Textures/BlueNoise256/LDR_LLL1_2.png"
+                "Packages/com.unity.render-pipelines.universal/Runtime/UniversalRendererData.cs"
             ],
             "nodes": [],
             "objects": [
@@ -125697,7 +125681,7 @@
                         },
                         {
                             "property": "m_Settings.m_SettingsList.m_List.Array.data[0].m_StripUnusedPostProcessingVariantsAndResources",
-                            "value": "True"
+                            "value": "False"
                         },
                         {
                             "property": "m_Settings.m_SettingsList.m_List.Array.data[0].m_StripUnusedVariants",

@@ -3,6 +3,8 @@
 ## Princípio
 Cada marco deve produzir estado executável e verificável. Não avançar com erros de compilação ou referências faltantes. Não confundir análise de código com execução no Unity Editor.
 
+Reparo de renderização FIX-002 validado: referências obsoletas e subassets sem script limpos pelas APIs; 19 componentes de volume preservados. Build Windows abre sem os avisos de pós-processamento diagnosticados. Evidências e limites em [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md).
+
 ## Estado corrente — auditoria e condução técnica em 13/11/2026
 
 Auditoria corrente com classificação por requisito e evidências: [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md). Planejamento: [ROADMAP.md](ROADMAP.md); execução: [BACKLOG.md](BACKLOG.md); alterações: [CHANGELOG.md](CHANGELOG.md).

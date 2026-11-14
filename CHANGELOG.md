@@ -11,8 +11,6 @@
 - Histórico Git local criado (cf3720d), com exclusões e triagem de arquivos preparados; branch codex/mvp-stabilization, sem remoto/publicação.
 - Decisão D-001: usuário incluiu inventário interativo e raridades no escopo obrigatório da 1.0.
 
-## Histórico preservado
-
 ## 2026-11-13 — FIX-001: armas serializadas
 
 - Extraída WeaponData para o arquivo de mesmo nome, mantendo namespace/campos e LootTable.cs.meta.
@@ -20,6 +18,12 @@
 - Acrescentados seis testes EditMode de assets/tabelas/equipamento/idempotência e teste PlayMode de coleta física de arma/XP na arena real.
 - Validação: 51/51 EditMode e 28/28 PlayMode; build Windows release Succeeded, 0 erros; executável iniciado e ataque observado, sem Missing Script/exceções. Ainda há quatro avisos URP e avisos de compilação dos shaders de inferência Unity. Não representa aceite completo do andar.
 - Criado MvpReleaseBuild para gerar Builds/WindowsMVP/DungeonCrawler.exe sem alterar a lista compartilhada de cenas; inspeção corrente de assets guardada separadamente da auditoria inicial.
+
+## 2026-11-13 — FIX-002: recursos URP
+
+- RenderAssetRepair removeu nove subassets de teste sem scripts carregáveis e sete referências obsoletas de debug pelas APIs do Editor, preservando GUIDs, os 19 componentes válidos/parâmetros do volume e renderer features.
+- Mantidos recursos de pós-processamento usados pelos construtores URP; demais flags de stripping preservadas. Checker estático: zero erros/avisos. Build Windows com zero erros; smoke visual confirmou herói/cenário/ataque e ausência dos quatro avisos de pós-processamento, Missing Script e exceções.
+- Tamanho reportado passou de 136.970.135 para 139.923.015 bytes. Permanecem 496 avisos de shaders de inferência e mensagem de info queue D3D12 do driver; nenhuma alteração de gameplay ou nova arte. Percurso completo continua pendente.
 
 ## Histórico preservado
 
