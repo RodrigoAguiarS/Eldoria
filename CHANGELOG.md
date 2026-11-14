@@ -13,5 +13,15 @@
 
 ## Histórico preservado
 
+## 2026-11-13 — FIX-001: armas serializadas
+
+- Extraída WeaponData para o arquivo de mesmo nome, mantendo namespace/campos e LootTable.cs.meta.
+- Reparados Weapon_IronSword e Weapon_WardenBlade por script idempotente do Editor. GUIDs, nomes, bônus e referências das tabelas preservados; nenhuma edição textual dos assets foi usada no reparo.
+- Acrescentados seis testes EditMode de assets/tabelas/equipamento/idempotência e teste PlayMode de coleta física de arma/XP na arena real.
+- Validação: 51/51 EditMode e 28/28 PlayMode; build Windows release Succeeded, 0 erros; executável iniciado e ataque observado, sem Missing Script/exceções. Ainda há quatro avisos URP e avisos de compilação dos shaders de inferência Unity. Não representa aceite completo do andar.
+- Criado MvpReleaseBuild para gerar Builds/WindowsMVP/DungeonCrawler.exe sem alterar a lista compartilhada de cenas; inspeção corrente de assets guardada separadamente da auditoria inicial.
+
+## Histórico preservado
+
 - Combo de três golpes, integração de clips Generic, cancelamentos, buffer e medições anteriores: [Reports/Task02/README.md](Reports/Task02/README.md).
 - Auditoria anterior dos marcos originais: [MVP_AUDIT.md](MVP_AUDIT.md).

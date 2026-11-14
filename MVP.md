@@ -9,6 +9,8 @@ Auditoria corrente com classificação por requisito e evidências: [docs/MVP-AU
 
 Compilação validada na Unity 6000.6.9f1; 45 testes EditMode passaram. Os 21 testes PlayMode anteriores e seis novos testes de Bootstrap/MVP_Arena passaram (os novos foram reexecutados após corrigir três falhas das fixtures). Movimento, mira, dash/invulnerabilidade, combo, navegação/dano melee e morte/reinício têm provas na cena real. Ainda faltam conferência visual específica da arena, estabilidade dos builders, reparo das armas, integração visual da fase 2 e percurso completo do andar. **O MVP global continua pendente.**
 
+Atualização FIX-001: armas/tabelas reparadas com GUIDs preservados; **51/51 EditMode e 28/28 PlayMode passaram**, incluindo coleta física de arma/XP, cura e aplicação da progressão. Build Windows gerada e iniciada com **0 Missing Script e 0 exceções** no log; quatro avisos URP permanecem. Git local inicializado em cf3720d. O quadro de auditoria anterior abaixo é histórico; [auditoria corrente](docs/MVP-AUDIT.md) contém os deltas por entrega.
+
 ## Auditoria anterior — 13/11/2026 (histórico)
 
 **O MVP ainda não está completo.** A revisão dos 26 itens e suas evidências estão em [MVP_AUDIT.md](MVP_AUDIT.md).

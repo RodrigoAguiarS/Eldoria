@@ -49,7 +49,11 @@ namespace DungeonCrawler.Editor
         }
 
         [MenuItem("Tools/Dungeon Crawler/Audit/Inspect Project Assets")]
-        public static void Inspect()
+        public static void Inspect() => InspectProject("Reports/Leadership/asset-audit.json");
+
+        public static void InspectCurrent() => InspectProject("Reports/Leadership/asset-audit-current.json");
+
+        private static void InspectProject(string reportPath)
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Saia do PlayMode.");
             for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -94,7 +98,7 @@ namespace DungeonCrawler.Editor
             }
             if (original.IsValid() && original.isLoaded) SceneManager.SetActiveScene(original);
             Directory.CreateDirectory("Reports/Leadership");
-            File.WriteAllText("Reports/Leadership/asset-audit.json", JsonUtility.ToJson(report, true));
+            File.WriteAllText(reportPath, JsonUtility.ToJson(report, true));
             Debug.Log($"[MVP Audit] Inspected {report.assets.Count} assets; {report.issues.Count} unresolved references/types. No scene or asset saved.");
         }
 

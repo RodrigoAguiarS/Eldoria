@@ -205,5 +205,42 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.AreEqual(restored.GetComponent<Health>().Max, restored.GetComponent<Health>().Current);
             Assert.IsFalse(restored.IsAttacking);
         }
+
+#if UNITY_EDITOR
+        [UnityTest]
+        public IEnumerator Arena_RealWeaponAndXpPickupsCollectThroughPhysics()
+        {
+            yield return LoadArena(); StopEnemy();
+            var combat = FindInScene<PlayerCombat>();
+            var progression = combat.GetComponent<PlayerProgression>();
+            var health = combat.GetComponent<Health>();
+            var iron = UnityEditor.AssetDatabase.LoadAssetAtPath<WeaponData>(
+                "Assets/_Project/ScriptableObjects/Items/Weapon_IronSword.asset");
+            Assert.IsNotNull(iron);
+            var reward = FindInScene<EnemyReward>();
+            Assert.IsNotNull(reward, "MVP enemy retains the shared Floor reward composition.");
+            var prefab = (Pickup)typeof(EnemyReward).GetField("pickupPrefab",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(reward);
+            Assert.IsNotNull(prefab);
+            health.TakeDamage(60f, Vector3.zero);
+            var weaponPickup = Object.Instantiate(prefab, combat.transform.position + Vector3.up * .6f, Quaternion.identity);
+            weaponPickup.Setup(new LootDrop(LootKind.Weapon, 0, iron));
+            Physics.SyncTransforms();
+            float timeout = Time.time + 1f;
+            while (progression.Weapon == null && Time.time < timeout) yield return null;
+            Assert.AreSame(iron, progression.Weapon);
+            Assert.AreEqual(26f, combat.CurrentDamage);
+            yield return null;
+            Assert.IsTrue(weaponPickup == null, "Collected pickup is removed exactly once.");
+            var xpPickup = Object.Instantiate(prefab, combat.transform.position + Vector3.up * .6f, Quaternion.identity);
+            xpPickup.Setup(new LootDrop(LootKind.Xp, 71));
+            Physics.SyncTransforms();
+            timeout = Time.time + 1f;
+            while (progression.Level < 3 && Time.time < timeout) yield return null;
+            Assert.AreEqual(3, progression.Level);
+            Assert.AreEqual(100f, health.Current);
+            Assert.AreEqual(31.2f, combat.CurrentDamage, .001f);
+        }
+#endif
     }
 }

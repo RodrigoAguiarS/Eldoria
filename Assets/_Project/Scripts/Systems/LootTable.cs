@@ -6,14 +6,6 @@ namespace DungeonCrawler.Systems
 {
     public enum LootKind { Xp, Gold, Potion, Weapon }
 
-    /// <summary>Arma coletável: bônus de dano plano somado ao dano base (nunca modificada em runtime).</summary>
-    [CreateAssetMenu(menuName = "Dungeon Crawler/Weapon Data", fileName = "WeaponData")]
-    public sealed class WeaponData : ScriptableObject
-    {
-        public string displayName = "Arma";
-        [Min(0f)] public float damageBonus = 5f;
-    }
-
     [Serializable]
     public struct LootEntry
     {
