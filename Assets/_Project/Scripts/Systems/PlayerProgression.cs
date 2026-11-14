@@ -30,6 +30,7 @@ namespace DungeonCrawler.Systems
         /// <summary>Qualquer mudança de estado (XP, nível, ouro, arma) para o HUD.</summary>
         public event Action Changed;
         public event Action<int> LeveledUp;
+        public event Action<LootKind> Collected;
 
         private ExperienceModel Model => model ??= new ExperienceModel(baseXpToLevel, xpGrowth, maxLevel);
 
@@ -45,10 +46,14 @@ namespace DungeonCrawler.Systems
         {
             if (health == null || !health.IsAlive) return false;
             if (inventory != null && (drop.Kind == LootKind.Weapon || drop.Kind == LootKind.Potion || drop.Kind == LootKind.Armor))
-                return inventory.TryStore(drop, notifyRejection);
+            {
+                bool stored = inventory.TryStore(drop, notifyRejection);
+                if (stored) Collected?.Invoke(drop.Kind);
+                return stored;
+            }
             switch (drop.Kind)
             {
-                case LootKind.Xp: AddXp(drop.Amount); return true;
+                case LootKind.Xp: AddXp(drop.Amount); Collected?.Invoke(drop.Kind); return true;
                 case LootKind.Gold: Gold += drop.Amount; break;
                 case LootKind.Potion: health.Heal(drop.Amount); break;
                 case LootKind.Weapon:
@@ -58,6 +63,7 @@ namespace DungeonCrawler.Systems
             }
 
             Changed?.Invoke();
+            Collected?.Invoke(drop.Kind);
             return true;
         }
 

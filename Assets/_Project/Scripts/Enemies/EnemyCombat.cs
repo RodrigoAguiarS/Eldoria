@@ -1,6 +1,7 @@
 using DungeonCrawler.Core;
 using DungeonCrawler.Systems;
 using UnityEngine;
+using System;
 
 namespace DungeonCrawler.Enemies
 {
@@ -24,6 +25,7 @@ namespace DungeonCrawler.Enemies
         private Transform targetTransform;
 
         public bool IsBusy => windingUp;
+        public event Action AttackStarted;
 
         public void Initialize(EnemyData enemyData) => data = enemyData;
 
@@ -41,6 +43,7 @@ namespace DungeonCrawler.Enemies
             hitAt = Time.time + data.attackWindup;
             cooldownTimer.Start(Time.time, data.attackCooldown);
             if (flash != null) flash.Flash(windupColor, data.attackWindup);
+            AttackStarted?.Invoke();
         }
 
         public void CancelAttack() => windingUp = false;

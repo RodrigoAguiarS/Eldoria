@@ -20,8 +20,10 @@ namespace DungeonCrawler.UI
             draft = options.Current.Copy();
             music.SetValueWithoutNotify(draft.music); effects.SetValueWithoutNotify(draft.effects);
             shake.SetValueWithoutNotify(draft.shake); flash.SetValueWithoutNotify(draft.flash);
-            quality.ClearOptions(); quality.AddOptions(new List<string>(QualitySettings.names));
-            quality.SetValueWithoutNotify(Mathf.Clamp(draft.quality < 0 ? QualitySettings.GetQualityLevel() : draft.quality, 0, quality.options.Count - 1));
+            var qualityNames = new List<string> { "Padrão" };
+            for (int i = 0; i < options.PresetCount; i++) qualityNames.Add(options.GetPreset(i).name);
+            quality.ClearOptions(); quality.AddOptions(qualityNames);
+            quality.SetValueWithoutNotify(Mathf.Clamp(draft.quality + 1, 0, quality.options.Count - 1));
             sizes.Clear(); AddSize(Screen.width, Screen.height);
             AddSize(1280, 720); AddSize(1600, 900); AddSize(1920, 1080);
             foreach (var size in Screen.resolutions) if (size.width >= 960 && size.height >= 540) AddSize(size.width, size.height);
@@ -54,7 +56,7 @@ namespace DungeonCrawler.UI
         public void Apply()
         {
             draft.music = music.value; draft.effects = effects.value; draft.shake = shake.value; draft.flash = flash.value;
-            draft.quality = quality.value; Vector2Int size = sizes[resolution.value];
+            draft.quality = quality.value - 1; Vector2Int size = sizes[resolution.value];
             draft.width = size.x; draft.height = size.y; draft.fullscreen = fullscreen.isOn;
             options.Apply(draft); status.text = "Opções salvas.";
         }

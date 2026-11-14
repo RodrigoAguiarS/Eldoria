@@ -552,6 +552,7 @@ GameObject:
   - component: {fileID: 1793263154910869646}
   - component: {fileID: 7214315918942232291}
   - component: {fileID: 7389043906644814582}
+  - component: {fileID: 1190269299563685969}
   m_Layer: 10
   m_Name: Boss_Warden
   m_TagString: Untagged
@@ -774,3 +775,19 @@ MonoBehaviour:
   bodyCollider: {fileID: 3178662925361430865}
   turnSpeedDegrees: 270
   volleyHeight: 1
+--- !u!114 &1190269299563685969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9082597342985786448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123dec5138cbaa84e8e1c976097ebd61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Audio.EnemyAudioBridge
+  health: {fileID: 1148864975289228285}
+  combat: {fileID: 0}
+  phase: {fileID: 7214315918942232291}
+  pool: {fileID: 0}

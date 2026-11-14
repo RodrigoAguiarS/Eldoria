@@ -20,6 +20,13 @@ namespace DungeonCrawler.Tests.EditMode
         }
         [TestCase("broken json")] [TestCase("null")] [TestCase("{\"version\":99}")]
         public void InvalidOrFutureVersion_IsRejected(string text) => Assert.IsFalse(GameOptionsData.TryParse(text, out _));
+        [Test] public void VersionOne_MigratesNativeQualityIndexWithoutLosingOtherOptions()
+        {
+            Assert.IsTrue(GameOptionsData.TryParse("{\"version\":1,\"music\":0.23,\"effects\":0.61,\"quality\":1,\"width\":1280,\"height\":720,\"fullscreen\":true}", out var value));
+            Assert.AreEqual(2, value.version); Assert.AreEqual(-1, value.quality);
+            Assert.AreEqual(.23f, value.music, .001f); Assert.AreEqual(.61f, value.effects, .001f);
+            Assert.AreEqual(1280, value.width); Assert.AreEqual(720, value.height); Assert.IsTrue(value.fullscreen);
+        }
         [Test] public void Definition_PersistsReloadsAndCopiesWithoutChangingDefaults()
         {
             string key = "DungeonCrawler.Tests.Options." + Guid.NewGuid().ToString("N");

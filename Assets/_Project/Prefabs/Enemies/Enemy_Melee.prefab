@@ -261,6 +261,7 @@ GameObject:
   - component: {fileID: 5254086766574462127}
   - component: {fileID: 6875740658766261224}
   - component: {fileID: 8699454120705232657}
+  - component: {fileID: 3764300911749812912}
   m_Layer: 10
   m_Name: Enemy_Melee
   m_TagString: Untagged
@@ -422,6 +423,22 @@ MonoBehaviour:
   lootTable: {fileID: 11400000, guid: 95e6d944872712147a5894f9659c663f, type: 2}
   pickupPrefab: {fileID: 3495455061051880951, guid: 89e14e6489b6dc9488686542f11bbf9a, type: 3}
   scatterRadius: 1
+--- !u!114 &3764300911749812912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5642547496212540843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123dec5138cbaa84e8e1c976097ebd61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Audio.EnemyAudioBridge
+  health: {fileID: 4344908295453216928}
+  combat: {fileID: 5254086766574462127}
+  phase: {fileID: 0}
+  pool: {fileID: 0}
 --- !u!1 &8815387471760917843
 GameObject:
   m_ObjectHideFlags: 0

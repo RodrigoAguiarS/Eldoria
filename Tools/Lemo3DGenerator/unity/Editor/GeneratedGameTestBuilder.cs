@@ -7,6 +7,7 @@ using DungeonCrawler.Core;
 using DungeonCrawler.Dungeon;
 using DungeonCrawler.Enemies;
 using DungeonCrawler.Player;
+using DungeonCrawler.Systems;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -61,6 +62,7 @@ namespace DungeonCrawler.CharacterArt.Editor
             so.FindProperty("health").objectReferenceValue = root.GetComponent<Health>();
             so.FindProperty("brain").objectReferenceValue = root.GetComponent<BossBrain>();
             so.FindProperty("phase").objectReferenceValue = phase;
+            so.FindProperty("options").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameOptionsDefinition>("Assets/_Project/ScriptableObjects/GameOptions.asset");
             so.FindProperty("telegraphOuter").objectReferenceValue = GeneratedCharacterBuilder.FindDeep(root.transform, "Outer");
             so.ApplyModifiedPropertiesWithoutUndo();
             var phaseSettings = new SerializedObject(phase);
@@ -154,6 +156,7 @@ namespace DungeonCrawler.CharacterArt.Editor
                     so.FindProperty("health").objectReferenceValue = root.GetComponent<Health>();
                     so.FindProperty("combat").objectReferenceValue = root.GetComponent<EnemyCombat>();
                     so.FindProperty("attackStartSeconds").floatValue = attackStart;
+                    so.FindProperty("options").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameOptionsDefinition>("Assets/_Project/ScriptableObjects/GameOptions.asset");
                     so.ApplyModifiedPropertiesWithoutUndo();
                 });
                 if (v == null) return false;
@@ -259,6 +262,7 @@ namespace DungeonCrawler.CharacterArt.Editor
                     so.FindProperty("dash").objectReferenceValue = p.GetComponent<PlayerDash>();
                     so.FindProperty("combat").objectReferenceValue = p.GetComponent<PlayerCombat>();
                     so.FindProperty("special").objectReferenceValue = p.GetComponent<PlayerSpecial>();
+                    so.FindProperty("options").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameOptionsDefinition>("Assets/_Project/ScriptableObjects/GameOptions.asset");
                     so.FindProperty("floor").objectReferenceValue = floor;
                     so.ApplyModifiedPropertiesWithoutUndo();
                 }

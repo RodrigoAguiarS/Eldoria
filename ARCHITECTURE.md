@@ -24,7 +24,7 @@ Unity 6 LTS disponível na instalação, projeto template **Universal 3D (URP)**
 - `ScriptableObject` define configurações; instâncias de runtime guardam HP/cooldown e não alteram o asset compartilhado.
 
 ## Input e movimento
-Criar asset `.inputactions` com mapa `Gameplay`: `Move` (Vector2 WASD), `Point` (mouse position), `Attack` (left click), `Dash` (space), `Special` (right click/E, ainda não usado). Utilizar callbacks ou leitura de `InputActionReference`; nunca Input legado. Projetar forward/right da câmera no plano XZ e normalizar. Mira: raio da câmera para chão/collider, fallback a plano horizontal quando apropriado.
+Asset `.inputactions` com mapa `Gameplay`: `Move` (Vector2 WASD), `Point` (mouse position), `Attack` (left click), `Dash` (space), `Special` (right click/E). Utilizar callbacks ou leitura de `InputActionReference`; nunca Input legado. Projetar forward/right da câmera no plano XZ e normalizar. Mira: raio da câmera para chão/collider, fallback a plano horizontal quando apropriado.
 
 ## Câmera
 Cinemachine com follow e offset isométrico; confirmar API conforme versão instalada. Configurar smoothing e orientação fixa; tremor somente via componente/efeito compatível, não manipular transform da câmera principal de forma conflitante.
@@ -65,3 +65,11 @@ PlayerSpecialDefinition configura recurso, custo, regeneração, cooldown e movi
 MainMenu e o andar são destinos explícitos de GameSceneFlow; iniciar/reiniciar cria uma run nova. MenuScreenStack oculta a tela anterior e restaura o foco ao voltar, mantendo o menu superior como superfície interativa. GameMenuController solicita pausa ao domínio; telas de vitória/derrota encerram overlays e selecionam o botão de reinício. GameShellSceneBuilder configura telas/referências pelas APIs e coloca MainMenu antes do andar no build, preservando as demais cenas de teste no Editor.
 
 GameOptionsDefinition compartilha defaults serializados e estado de sessão não serializado; os ajustes ficam em JSON versionado no PlayerPrefs por usuário, separados da progressão. Dados inválidos/versões futuras não são aplicados; valores são limitados antes de uso. GameOptionsPresenter edita uma cópia e só persiste ao aplicar. GameOptionsApplier usa as APIs de qualidade/tela no player, preservando o seletor de resolução do Game view no Editor. Referências explícitas de opções ajustam flash e impulso de câmera, incluindo o rugido do Boss; a cor persistente da fase 2 permanece legível com flash desligado.
+
+Apenas PC está incluído nos níveis nativos do build Windows; por isso as escolhas Leve/Equilibrada/Alta usam presets de escala/sombras no SO, além de Padrão. GameOptionsApplier altera uma cópia temporária do pipeline URP e restaura a referência ao sair, sem editar o asset do projeto. Opções v1 migram para v2 preservando volumes/legibilidade/tela e trocando o índice nativo dependente da plataforma por Padrão.
+
+## Áudio e diagnóstico (1.0)
+
+GameAudioDefinition contém clips e roteamento Music/SFX. GameAudioPool reutiliza oito vozes pré-configuradas, limita prioridade/repetição e aplica ganhos das categorias em dB; mute em zero é explícito. GameplayAudioBridge e EnemyAudioBridge escutam eventos C# com inscrições no ciclo de vida. EnemySpawner injeta o pool nos atores instanciados; progressão emite Collected apenas após coleta aceita. Variação sonora não altera o gerador aleatório do loot.
+
+Sons e loop originais são reproduzíveis em Tools/AudioGenerator. Clips são PCM/precarregados; novas fontes não são criadas durante golpes. Diagnóstico opcional no player registra contadores e pode capturar o DSP do próprio jogo; sem flags, coletores/cenário ficam desativados e o filtro de captura não é instanciado. Limites, flags e fontes das APIs em Tools/AudioGenerator/DIAGNOSTICS.md.

@@ -1,6 +1,22 @@
 # MVP.md — Plano de entregas
 
-## Princípio
+## Estado atual — candidato RC2 (14/11/2026)
+
+Candidato RC2: 93/93 EditMode e 69/69 PlayMode passaram. Áudio funcional/mixer/pool, opções gráficas reais com cópia do pipeline, migração das opções e coletores opcionais integrados. Builds release e diagnóstico geradas sem erros; release preserva 496 avisos upstream conhecidos. Comparação Windows em carga sintética equivalente concluída para CPU/GPU/frame/memória; GC em diagnóstico e medição/escuta do áudio seguem em QA. A 1.0 completa ainda não foi declarada pronta.
+
+| Entrega | Evidência corrente | Aceite restante |
+| --- | --- | --- |
+| Fundação e reparos | Git local, referências reparadas, builders idempotentes, pool aquecido e suítes completas aprovadas | Nenhum bloqueio técnico aberto desta etapa |
+| Arena e andar | Movimento/combate/morte/reinício testados; vitória normal 5/5 confirmada em Editor e Windows antes do áudio | Conferência visual final de flash/tremor e ciclo derrota→reinício no Windows atual |
+| Inventário e especial | Dados/modelos/UI integrados; vitória com ambos observada no Editor; especial por direito observado no Windows | Percurso Windows atual, tecla física E, equipamento/poções e legibilidade |
+| Menus/opções/áudio | Persistência/resolução observadas no Windows; presets reais, mixer/eventos/pool aprovados em testes | Qualidade visual, escuta e medição da mistura Windows |
+| Distribuição | RC2 x64 gerado sem erros; medições release e empacotador preparados | GC comparável, QA do candidato, versão final e ZIP verificado |
+
+Cada marco deve produzir estado executável e verificável. Não avançar com erros de compilação ou referências faltantes. Não confundir análise de código com execução no Unity Editor. Planejamento: [ROADMAP.md](ROADMAP.md); execução: [BACKLOG.md](BACKLOG.md); provas e histórico detalhado: [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md).
+
+## Histórico de validações incrementais
+
+Os registros e checklists abaixo preservam o estado de cada etapa na data da execução. Pendências antigas foram resolvidas em entregas posteriores; o quadro acima descreve o estado atual.
 
 Menus/opções integrados: 90 EditMode e idempotência final 2/2; quatro testes de menus revalidados após corrigir tolerância numérica da fixture e o layout de dropdown encontrado na revisão. Windows abriu menu→andar e executou o especial por direito; ajuste 720p/janela persistiu após sair/reabrir, e 1080p/tela cheia foi restaurado. Layouts observados em ambas as resoluções. Controle de tremor/flash passou no teste; áudio e QA final da 1.0 ainda pendentes.
 
@@ -21,7 +37,7 @@ Validação mais recente: 54 EditMode/38 PlayMode; integração das cinco ondas,
 
 Confirmação posterior do usuário: executável Windows atualizado concluído até vitória/5 de 5. Log registra as cinco ondas e nenhuma exceção/Missing Script; ver Reports/Leadership/windows-normal-run.json. A revisão visual de flash/shake e o ciclo de morte/reinício Windows permanecem na QA final. R3 inicia pelos dados/modelos isolados enquanto essas verificações finais ficam rastreadas.
 
-## Estado corrente — auditoria e condução técnica em 13/11/2026
+## Histórico — auditoria e condução técnica em 13/11/2026
 
 Auditoria corrente com classificação por requisito e evidências: [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md). Planejamento: [ROADMAP.md](ROADMAP.md); execução: [BACKLOG.md](BACKLOG.md); alterações: [CHANGELOG.md](CHANGELOG.md).
 

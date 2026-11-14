@@ -11,6 +11,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using static DungeonCrawler.Editor.InventorySceneBuilder;
 using Object = UnityEngine.Object;
 
@@ -49,12 +51,13 @@ namespace DungeonCrawler.Editor
         public static GameOptionsDefinition EnsureOptions()
         {
             var options = AssetDatabase.LoadAssetAtPath<GameOptionsDefinition>(OptionsPath);
-            if (options != null) return options;
+            if (options != null) { EditorUtility.SetDirty(options); return options; }
             if (File.Exists(OptionsPath)) throw new InvalidOperationException("Unreadable options asset preserved.");
             options = ScriptableObject.CreateInstance<GameOptionsDefinition>(); AssetDatabase.CreateAsset(options, OptionsPath); return options;
         }
         public static void ConfigureActor(GameObject root)
         {
+            GameAudioSceneBuilder.ConfigureEnemy(root);
             var options = EnsureOptions();
             foreach (MonoBehaviour component in root.GetComponentsInChildren<MonoBehaviour>(true))
             {
@@ -70,7 +73,7 @@ namespace DungeonCrawler.Editor
             ConfigureActor(player);
             var systems = menu.gameObject.scene.GetRootGameObjects().Single(root => root.GetComponent<GameRestarter>() != null);
             var flow = Get<GameSceneFlow>(systems);
-            Set(Get<GameOptionsApplier>(systems), "options", EnsureOptions());
+            ConfigureOptions(systems);
             var window = (RectTransform)pausePanel.transform.Find("Window"); window.sizeDelta = new Vector2(540f, 630f);
             var openOptions = Button(window, "Options", "Opções", new Vector2(80f, -322f), new Vector2(380f, 60f));
             var mainMenu = Button(window, "MainMenu", "Voltar ao menu", new Vector2(80f, -404f), new Vector2(380f, 60f));
@@ -95,6 +98,7 @@ namespace DungeonCrawler.Editor
                     Set(presenter, "firstFocus", panel.Find(name == "GameOverPanel" ? "RestartButton" : "PlayAgainButton").GetComponent<Button>());
                 }
             }
+            GameAudioSceneBuilder.ConfigureGameplay(systems, hud, player);
         }
         private static GameObject BuildOptions(Transform parent, out Button back, out Selectable first)
         {
@@ -170,7 +174,7 @@ namespace DungeonCrawler.Editor
                 DungeonMvpSceneBuilder.BuildEventSystem(scene);
                 var events = scene.GetRootGameObjects().Single(root => root.GetComponent<EventSystem>() != null).GetComponent<EventSystem>();
                 var systems = EditorBuildUtility.GetOrCreateRoot(scene, "GameSystems", out _); var flow = Get<GameSceneFlow>(systems);
-                Set(Get<GameOptionsApplier>(systems), "options", EnsureOptions());
+                ConfigureOptions(systems);
                 var listener = Get<AudioListener>(systems); listener.enabled = true;
                 var stack = Get<MenuScreenStack>(hud); Set(stack, "eventSystem", events);
                 var controller = Get<MainMenuController>(hud); Set(controller, "screens", stack);
@@ -183,6 +187,7 @@ namespace DungeonCrawler.Editor
                 var quit = Button(content, "Quit", "Sair", new Vector2(300f, -520f), new Vector2(500f, 72f)); Link(quit, flow.QuitGame);
                 Label(content, "Controls", "WASD · mover   |   Mouse · mirar   |   Esquerdo · combo   |   E / direito · giro\nEspaço · dash   |   I / Tab · inventário   |   Q · poção   |   Esc · pausa", new Vector2(0f, -665f), new Vector2(1100f, 100f), 24).alignment = TextAnchor.MiddleCenter;
                 var optionPanel = BuildOptions(hud.transform, out var back, out var first); Link(back, controller.Back);
+                GameAudioSceneBuilder.ConfigureMenu(systems, hud);
                 SetScreens(stack, new[] { MenuScreen.Title, MenuScreen.Options }, new[] { title.gameObject, optionPanel }, new Selectable[] { play, first });
                 title.gameObject.SetActive(true); EditorSceneManager.SaveScene(scene, MenuScene);
             }
@@ -212,6 +217,14 @@ namespace DungeonCrawler.Editor
             var scenes = new[] { new EditorBuildSettingsScene(MenuScene, true), new EditorBuildSettingsScene(MvpReleaseBuild.Floor, true) }
                 .Concat(EditorBuildSettings.scenes.Where(s => s.path != MenuScene && s.path != MvpReleaseBuild.Floor)).ToArray();
             EditorBuildSettings.scenes = scenes;
+        }
+        private static void ConfigureOptions(GameObject systems)
+        {
+            var applier = Get<GameOptionsApplier>(systems); Set(applier, "options", EnsureOptions());
+            var pipeline = QualitySettings.GetRenderPipelineAssetAt(QualitySettings.GetQualityLevel()) as UniversalRenderPipelineAsset;
+            if (pipeline == null) pipeline = GraphicsSettings.defaultRenderPipeline as UniversalRenderPipelineAsset;
+            if (pipeline == null) throw new InvalidOperationException("Expected the existing URP pipeline.");
+            Set(applier, "basePipeline", pipeline);
         }
     }
 }

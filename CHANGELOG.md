@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-14 — Áudio funcional e candidato 1.0
+
+- Criados oito sons originais e um loop reproduzível, sem samples/imagens externos. Mixer Music/SFX e pool aquecido de oito vozes; mute em zero, prioridades, intervalo entre cues idênticos e variação sem consumir RNG de loot. Eventos de ataque/dano/morte/coleta/Boss/vitória, com injeção do pool pelo spawner e inscrições no ciclo de vida.
+- Suítes completas RC2: 93/93 EditMode e 69/69 PlayMode. Após aquecimento, 1.000 reproduções reais: 3,012 ms e zero GC.Alloc com controle positivo (RC2Perf/audio-pool.json). Escuta/medição da mistura Windows ainda em andamento.
+- Coletores opcionais de frame/CPU/GPU/memória/GC e captura DSP somente do jogo; cenário sintético de 32 atores/64 colliders/projéteis pooled, desativado na partida normal. Primeiro probe release obteve CPU/GPU/memória, mas não expôs GC bytes; zeros não são tratados como ausência de alocações. Dados iniciais guardados separadamente, sem comparação com builds posteriores.
+- Corrigida limitação real das opções: Windows inclui só o nível nativo PC. Presets Padrão/Leve/Equilibrada/Alta agora alteram escala/sombras numa cópia runtime do pipeline, preservando assets. Dados v1 migram para v2 sem perder volume/legibilidade/tela. Teste PlayMode aprovou isolamento, reutilização e restauração do pipeline original.
+- RC2 release e Development gerados com zero erros (496/636 avisos de shaders upstream, respectivamente). Mesmo release/carga sintética: áudio desligado/ligado resultou em CPU média de 1,241/1,264 ms e memória usada de 355,54/360,52 MiB; uma amostra por condição, sem alegação de ganho de desempenho. Dados e limites em Reports/Leadership/WindowsPerf. GC bytes indisponível no release; probe Development detectou alocações, mas foi interrompido pelo Firewall e não serve de comparação final.
+- Bundle version do candidato Windows identificada por API do Editor (RC1/RC2); produto/companhia mantidos para preservar o caminho das opções existentes. Nenhum pacote foi alterado. A versão ainda não foi declarada 1.0 concluída.
+
 ## 2026-11-14 — Menus e opções persistentes
 
 - Menu inicial, pausa/opções/retorno e botões de retorno nas telas de vitória/derrota. Pilha de telas mantém foco e oculta o menu anterior; telas terminais selecionam Reiniciar. Build agora inclui MainMenu e o andar, preservando as cenas de teste no Editor.

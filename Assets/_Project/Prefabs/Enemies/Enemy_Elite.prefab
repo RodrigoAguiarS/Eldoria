@@ -261,6 +261,7 @@ GameObject:
   - component: {fileID: 7183808100835324612}
   - component: {fileID: 1248468240042698632}
   - component: {fileID: 5018417653084339393}
+  - component: {fileID: 5018827263436409301}
   m_Layer: 10
   m_Name: Enemy_Elite
   m_TagString: Untagged
@@ -422,6 +423,22 @@ MonoBehaviour:
   lootTable: {fileID: 11400000, guid: 3090fb6182a9b784a8097d2d0f72276e, type: 2}
   pickupPrefab: {fileID: 3495455061051880951, guid: 89e14e6489b6dc9488686542f11bbf9a, type: 3}
   scatterRadius: 1
+--- !u!114 &5018827263436409301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5095271035206537327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123dec5138cbaa84e8e1c976097ebd61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Audio.EnemyAudioBridge
+  health: {fileID: 3325419002181730078}
+  combat: {fileID: 7183808100835324612}
+  phase: {fileID: 0}
+  pool: {fileID: 0}
 --- !u!1 &5690693105833783530
 GameObject:
   m_ObjectHideFlags: 0

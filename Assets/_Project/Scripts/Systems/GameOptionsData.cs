@@ -6,7 +6,7 @@ namespace DungeonCrawler.Systems
     [Serializable]
     public sealed class GameOptionsData
     {
-        public int version = 1;
+        public int version = 2;
         public float music = .55f;
         public float effects = .75f;
         public float shake = 1f;
@@ -30,7 +30,8 @@ namespace DungeonCrawler.Systems
             if (string.IsNullOrEmpty(json)) return false;
             try { value = JsonUtility.FromJson<GameOptionsData>(json); }
             catch (ArgumentException) { return false; }
-            if (value == null || value.version != 1) { value = null; return false; }
+            if (value == null || (value.version != 1 && value.version != 2)) { value = null; return false; }
+            if (value.version == 1) { value.version = 2; value.quality = -1; } // Old native quality indices were platform-dependent.
             value.Validate(); return true;
         }
     }

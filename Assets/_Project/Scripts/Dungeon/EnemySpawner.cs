@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DungeonCrawler.Core;
+using DungeonCrawler.Audio;
 using DungeonCrawler.Enemies;
 using DungeonCrawler.Systems;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace DungeonCrawler.Dungeon
     public sealed class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private Transform[] spawnPoints;
+        [SerializeField] private GameAudioPool audioPool;
         [SerializeField, Min(0f)] private float spreadRadius = 1.2f;
 
         /// <summary>Retorna a quantidade instanciada; adiciona o Health de cada inimigo em 'spawned'.</summary>
@@ -49,6 +51,7 @@ namespace DungeonCrawler.Dungeon
                     }
 
                     brain.Inject(target, pool);
+                    if (instance.TryGetComponent(out EnemyAudioBridge audio)) audio.Inject(audioPool);
                     spawned.Add(health);
                 }
             }
