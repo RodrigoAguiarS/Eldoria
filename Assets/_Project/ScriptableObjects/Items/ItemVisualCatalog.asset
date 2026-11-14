@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c4e38285af4ee4da9e9184b40497f4, type: 3}
+  m_Name: ItemVisualCatalog
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Systems.ItemVisualCatalog
+  items:
+  - assetId: MODEL-ITEM-IRON / ICON-ITEM-IRON
+    item: {fileID: 11400000, guid: 07a3d1916572dc6458b68b154eb5d3c0, type: 2}
+    icon: {fileID: 21300000, guid: f42aad14123450d4ba8bf71f174e9338, type: 3}
+    groundPrefab: {fileID: 7957857496850104635, guid: 654e6b96e75dcf446a5bf6dbc270aeaf, type: 3}
+    equippedPrefab: {fileID: 168189233454359199, guid: d9dac97a1ba1d1a45ab62bbcf3fb4032, type: 3}
+  - assetId: MODEL-ITEM-WARDEN / ICON-ITEM-WARDEN
+    item: {fileID: 11400000, guid: 464c97b9c1f29ea42bf7d304648f5d96, type: 2}
+    icon: {fileID: 21300000, guid: c92238e4c35dcba4099f37031f8fcb5a, type: 3}
+    groundPrefab: {fileID: 3770127443944251733, guid: 3962f64ceef780041929af8e6a6900c8, type: 3}
+    equippedPrefab: {fileID: 2681313950087974316, guid: 891d28d7efaf79d40b9deb85008bdef5, type: 3}
+  - assetId: MODEL-ITEM-ANCIENT / ICON-ITEM-ANCIENT
+    item: {fileID: 11400000, guid: a33866f6136a0564aa6adc3e210089ae, type: 2}
+    icon: {fileID: 21300000, guid: 13f902a18d997ff4db4cbcd829caae14, type: 3}
+    groundPrefab: {fileID: 1131107924514356871, guid: 34490b6376140e1489e5f52e3e965016, type: 3}
+    equippedPrefab: {fileID: 8294364391268839561, guid: b92cf39f90bf5cf479933d2f70526d06, type: 3}
+  - assetId: MODEL-ITEM-LEATHER / ICON-ITEM-LEATHER
+    item: {fileID: 11400000, guid: 5eb876043ebbecd45a32dd8df2e79ab3, type: 2}
+    icon: {fileID: 21300000, guid: 1c8da5095b4bec749b6c9e60f1239543, type: 3}
+    groundPrefab: {fileID: 7699009749535143156, guid: ac75f75dc2dff88439799659de22250d, type: 3}
+    equippedPrefab: {fileID: 919132149155446097, guid: d691bc178a7b4764896d71f62b684571, type: 3}
+  - assetId: MODEL-ITEM-HEALTH / ICON-ITEM-HEALTH
+    item: {fileID: 11400000, guid: ed1cb9ab53730d641a52af5ca4ce876d, type: 2}
+    icon: {fileID: 21300000, guid: 1fd227601d20c9945a99379defd1f581, type: 3}
+    groundPrefab: {fileID: 7254365957579160507, guid: f0f90438126e3f7419fa4a15e2c1c0c2, type: 3}
+    equippedPrefab: {fileID: 0}
+  loot:
+  - assetId: MODEL-LOOT-XP
+    kind: 0
+    groundPrefab: {fileID: 7509606249210112282, guid: f750ede644b8bd64aa4c63a7f8ed7eac, type: 3}
+  - assetId: MODEL-LOOT-GOLD
+    kind: 1
+    groundPrefab: {fileID: 1273870413186495426, guid: 764ef1d527330994498d307daefb0ef5, type: 3}
+  - assetId: MODEL-ITEM-HEALTH
+    kind: 2
+    groundPrefab: {fileID: 7254365957579160507, guid: f0f90438126e3f7419fa4a15e2c1c0c2, type: 3}

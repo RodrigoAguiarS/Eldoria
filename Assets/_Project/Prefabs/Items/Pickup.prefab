@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &274442729890938943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1658300132024148676}
+  m_Layer: 0
+  m_Name: ModelRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1658300132024148676
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274442729890938943}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1249234684416084791}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3812413109044455447
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,6 +133,7 @@ GameObject:
   - component: {fileID: 5896592860144133144}
   - component: {fileID: 6731328109051637161}
   - component: {fileID: 3495455061051880951}
+  - component: {fileID: 557410149430114140}
   m_Layer: 0
   m_Name: Pickup
   m_TagString: Untagged
@@ -123,6 +155,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3408632253783934442}
+  - {fileID: 1658300132024148676}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &5896592860144133144
@@ -186,6 +219,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Systems.Pickup
   visual: {fileID: 267361572364028455}
+  presenter: {fileID: 557410149430114140}
   lifetime: 45
   bobHeight: 0.15
   spinSpeed: 120
+--- !u!114 &557410149430114140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4605335068779239259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e6b28f007f218b469fc1a9c88c40b0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Systems.PickupVisualPresenter
+  catalog: {fileID: 11400000, guid: 1a3f71d354cf67d4b93a4ba0366e058d, type: 2}
+  modelRoot: {fileID: 1658300132024148676}
+  fallbackVisual: {fileID: 267361572364028455}

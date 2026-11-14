@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "audit_date_local": "2026-11-14",
   "timezone": "America/Fortaleza",
-  "revision": "2304c64785d595aa86cfafbc987f1c47468fce03",
+  "revision": "5d9563c (lote ITEMS-COMBAT sem commit)",
   "counting_method": "Recurso lógico/família explicitamente agrupada; clips 3D individuais. Não somar file_index/subassets aos totais. EXISTENTE não implica integrado: consultar integration_state.",
   "status_definitions": {
     "EXISTENTE": "Arquivo/base identificado; integração/uso descritos separadamente.",
@@ -18,9 +18,9 @@
   "summary": {
     "logical_resources": 133,
     "by_status": {
-      "EXISTENTE": 97,
-      "AUSENTE": 29,
-      "INCOMPLETO": 5,
+      "EXISTENTE": 117,
+      "AUSENTE": 13,
+      "INCOMPLETO": 1,
       "NÃO VERIFICADO": 2
     },
     "by_category": {
@@ -34,16 +34,13 @@
         "AUSENTE": 1
       },
       "C": {
-        "EXISTENTE": 4,
-        "AUSENTE": 6
+        "EXISTENTE": 10
       },
       "D": {
-        "AUSENTE": 2,
-        "INCOMPLETO": 2,
-        "EXISTENTE": 2
+        "EXISTENTE": 6
       },
       "E": {
-        "AUSENTE": 3
+        "EXISTENTE": 3
       },
       "F": {
         "EXISTENTE": 6,
@@ -54,17 +51,16 @@
         "AUSENTE": 2
       },
       "H": {
-        "INCOMPLETO": 1,
-        "AUSENTE": 2
+        "EXISTENTE": 3
       },
       "I": {
         "EXISTENTE": 12,
         "AUSENTE": 1
       },
       "J": {
-        "AUSENTE": 9,
-        "EXISTENTE": 5,
-        "INCOMPLETO": 2
+        "EXISTENTE": 9,
+        "INCOMPLETO": 1,
+        "AUSENTE": 6
       }
     },
     "by_priority": {
@@ -3157,7 +3153,7 @@
       "category": "C",
       "category_name": "Armas e equipamentos",
       "functionality": "Identidade visual do item em slots e detalhes",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P1",
       "type": "ícone 2D",
       "scope": "aprovado_1_0",
@@ -3173,13 +3169,25 @@
         {
           "path": "Assets/_Project/Scripts/UI/InventorySlotView.cs",
           "detail": "Render textual, sem Image de item."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemIcons.mjs",
+          "detail": "Fonte editável do render de ícones."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Icons/ICON-ITEM-IRON.png",
+          "detail": "Ícone integrado; alpha verificado em ItemIcons.validation.json e ItemsCombatAssetTests."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/inventory.png",
+          "detail": "Inventário em PlayMode."
         }
       ],
       "depends_on": [],
       "technical_dependencies": [
         "Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Integrado: Sprite (sem mipmaps, clamp, PPU 100) no ItemVisualCatalog; slots, detalhes, equipamento e HUD de poções.",
       "visual_specification": "Short straight steel sword, simple brass crossguard, dark leather grip, broad readable blade; match the existing Hero_Sword family, no magical glow.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3188,13 +3196,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "512×512; leitura 48 e 32 px",
         "delivery_format": "PNG RGBA + fonte editável",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.",
         "prompt_en": "ASSET ID: ICON-ITEM-IRON\nPURPOSE AND VISUAL BRIEF: Inventory icon for the existing item Espada de Ferro. Short straight steel sword, simple brass crossguard, dark leather grip, broad readable blade; match the existing Hero_Sword family, no magical glow.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: One isolated three-quarter object, soft top-left light; no rarity frame, quantity or name baked.\nENGINE CONTRACT: Deliver one 512x512 PNG RGBA with genuine transparent alpha and editable source. Fit silhouette in a centred 416x416 area with 48px padding. Sprite Single, sRGB, no mipmaps, bilinear, clamp, PPU 100. No checkerboard, baked text, numbers, rarity border, labels, watermark, scenery or duplicate object. Verify at 48px and 32px on light, dark and stone backgrounds.\nVALIDATION: Verify real alpha and distinguish all five items by silhouette in greyscale at 32px.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/ICON-ITEM-IRON/",
@@ -3204,7 +3212,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido por render dos mesmos modelos (página three.js via core/render/page.mjs do Lemo); PNG RGBA 512 com alpha real, conteúdo em 416 px, contorno para leitura a 32/48 px."
     },
     {
       "id": "MODEL-ITEM-IRON",
@@ -3212,7 +3221,7 @@
       "category": "C",
       "category_name": "Armas e equipamentos",
       "functionality": "Forma no chão; equipamento visível é extensão visual opcional",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "modelo 3D",
       "scope": "sugestão_polimento",
@@ -3228,6 +3237,30 @@
         {
           "path": "Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemModels.mjs",
+          "detail": "Fonte editável .mjs (Lemo3DGenerator; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Item_IronSword.fbx",
+          "detail": "FBX importado (escala 1, sem colliders, normais do arquivo)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Ground_Item_IronSword.prefab",
+          "detail": "Modelo de chão referenciado pelo ItemVisualCatalog."
+        },
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset",
+          "detail": "Associação explícita ItemDefinition/LootKind → modelo → ícone."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/pickups.png",
+          "detail": "Captura PlayMode na cena da release."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Equip_Item_IronSword.prefab",
+          "detail": "Visual equipado no Socket_Hand_R (transform identidade)."
         }
       ],
       "depends_on": [
@@ -3237,7 +3270,7 @@
         "Seletor visual futuro por LootKind/ItemDefinition; Pickup atual recebe um Renderer/tint.",
         "Troca visual futura por referências/eventos nos sockets; não duplicar Hero_Sword fixa."
       ],
-      "integration_state": "Sugestão; pickup usa esfera e equipar aplica atributos sem trocar malha.",
+      "integration_state": "Integrado: Pickup.prefab → PickupVisualPresenter → catálogo; esfera tingida só como fallback. Equipada: PlayerEquipmentVisualPresenter alterna a espada no Socket_Hand_R e oculta a Hero_Sword fixa.",
       "visual_specification": "Short straight steel sword, simple brass crossguard, dark leather grip, broad readable blade; match the existing Hero_Sword family, no magical glow.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3246,13 +3279,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "0,85×0,16×0,06 m (proposta a ajustar ao Hero); pivô na empunhadura para espada, base para demais",
         "delivery_format": "FBX + .blend; espadas 300–800 tris, colete 500–1200, frasco 150–350; 1–2 materiais",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
         "prompt_en": "ASSET ID: MODEL-ITEM-IRON\nPURPOSE AND VISUAL BRIEF: Optional dedicated 3D visual for the existing item Espada de Ferro. Short straight steel sword, simple brass crossguard, dark leather grip, broad readable blade; match the existing Hero_Sword family, no magical glow.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Match the existing 2-metre hero. Nominal dimensions 0.85×0.16×0.06 m. Sword pivot at hand grip; vest/flask at base centre. Swords 300-800 triangles, vest 500-1200, flask 150-350, one or two reused URP material slots. Reuse the current Hero sword for the iron variant if suitable before authoring another mesh.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: Show floor and hand previews. A wearable vest needs a separate optional skinned variant bound to the current Generic rig; a static mesh alone is not wearable. Preserve damage, range, defence and current body/clothing.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/MODEL-ITEM-IRON/",
@@ -3262,7 +3295,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido (Lemo3DGenerator; FBX + GLB de revisão em ProductionStaging/ITEMS-COMBAT/Source~) e importado em Assets/_Project/Art/Items/Models."
     },
     {
       "id": "ICON-ITEM-WARDEN",
@@ -3270,7 +3304,7 @@
       "category": "C",
       "category_name": "Armas e equipamentos",
       "functionality": "Identidade visual do item em slots e detalhes",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P1",
       "type": "ícone 2D",
       "scope": "aprovado_1_0",
@@ -3286,13 +3320,25 @@
         {
           "path": "Assets/_Project/Scripts/UI/InventorySlotView.cs",
           "detail": "Render textual, sem Image de item."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemIcons.mjs",
+          "detail": "Fonte editável do render de ícones."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Icons/ICON-ITEM-WARDEN.png",
+          "detail": "Ícone integrado; alpha verificado em ItemIcons.validation.json e ItemsCombatAssetTests."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/inventory.png",
+          "detail": "Inventário em PlayMode."
         }
       ],
       "depends_on": [],
       "technical_dependencies": [
         "Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Integrado: Sprite (sem mipmaps, clamp, PPU 100) no ItemVisualCatalog; slots, detalhes, equipamento e HUD de poções.",
       "visual_specification": "Short broad steel sword, heavier angular guard, one restrained cyan inset. Keep it one-handed, distinct from the boss maul.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3301,13 +3347,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "512×512; leitura 48 e 32 px",
         "delivery_format": "PNG RGBA + fonte editável",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.",
         "prompt_en": "ASSET ID: ICON-ITEM-WARDEN\nPURPOSE AND VISUAL BRIEF: Inventory icon for the existing item Lâmina do Guardião. Short broad steel sword, heavier angular guard, one restrained cyan inset. Keep it one-handed, distinct from the boss maul.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: One isolated three-quarter object, soft top-left light; no rarity frame, quantity or name baked.\nENGINE CONTRACT: Deliver one 512x512 PNG RGBA with genuine transparent alpha and editable source. Fit silhouette in a centred 416x416 area with 48px padding. Sprite Single, sRGB, no mipmaps, bilinear, clamp, PPU 100. No checkerboard, baked text, numbers, rarity border, labels, watermark, scenery or duplicate object. Verify at 48px and 32px on light, dark and stone backgrounds.\nVALIDATION: Verify real alpha and distinguish all five items by silhouette in greyscale at 32px.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/ICON-ITEM-WARDEN/",
@@ -3317,7 +3363,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido por render dos mesmos modelos (página three.js via core/render/page.mjs do Lemo); PNG RGBA 512 com alpha real, conteúdo em 416 px, contorno para leitura a 32/48 px."
     },
     {
       "id": "MODEL-ITEM-WARDEN",
@@ -3325,7 +3372,7 @@
       "category": "C",
       "category_name": "Armas e equipamentos",
       "functionality": "Forma no chão; equipamento visível é extensão visual opcional",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "modelo 3D",
       "scope": "sugestão_polimento",
@@ -3341,6 +3388,30 @@
         {
           "path": "Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemModels.mjs",
+          "detail": "Fonte editável .mjs (Lemo3DGenerator; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Item_WardenBlade.fbx",
+          "detail": "FBX importado (escala 1, sem colliders, normais do arquivo)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Ground_Item_WardenBlade.prefab",
+          "detail": "Modelo de chão referenciado pelo ItemVisualCatalog."
+        },
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset",
+          "detail": "Associação explícita ItemDefinition/LootKind → modelo → ícone."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/pickups.png",
+          "detail": "Captura PlayMode na cena da release."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Equip_Item_WardenBlade.prefab",
+          "detail": "Visual equipado no Socket_Hand_R (transform identidade)."
         }
       ],
       "depends_on": [
@@ -3350,7 +3421,7 @@
         "Seletor visual futuro por LootKind/ItemDefinition; Pickup atual recebe um Renderer/tint.",
         "Troca visual futura por referências/eventos nos sockets; não duplicar Hero_Sword fixa."
       ],
-      "integration_state": "Sugestão; pickup usa esfera e equipar aplica atributos sem trocar malha.",
+      "integration_state": "Integrado: Pickup.prefab → PickupVisualPresenter → catálogo; esfera tingida só como fallback. Equipada: PlayerEquipmentVisualPresenter alterna a espada no Socket_Hand_R e oculta a Hero_Sword fixa.",
       "visual_specification": "Short broad steel sword, heavier angular guard, one restrained cyan inset. Keep it one-handed, distinct from the boss maul.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3359,13 +3430,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "0,95×0,22×0,07 m (proposta a ajustar ao Hero); pivô na empunhadura para espada, base para demais",
         "delivery_format": "FBX + .blend; espadas 300–800 tris, colete 500–1200, frasco 150–350; 1–2 materiais",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
         "prompt_en": "ASSET ID: MODEL-ITEM-WARDEN\nPURPOSE AND VISUAL BRIEF: Optional dedicated 3D visual for the existing item Lâmina do Guardião. Short broad steel sword, heavier angular guard, one restrained cyan inset. Keep it one-handed, distinct from the boss maul.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Match the existing 2-metre hero. Nominal dimensions 0.95×0.22×0.07 m. Sword pivot at hand grip; vest/flask at base centre. Swords 300-800 triangles, vest 500-1200, flask 150-350, one or two reused URP material slots. Reuse the current Hero sword for the iron variant if suitable before authoring another mesh.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: Show floor and hand previews. A wearable vest needs a separate optional skinned variant bound to the current Generic rig; a static mesh alone is not wearable. Preserve damage, range, defence and current body/clothing.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/MODEL-ITEM-WARDEN/",
@@ -3375,7 +3446,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido (Lemo3DGenerator; FBX + GLB de revisão em ProductionStaging/ITEMS-COMBAT/Source~) e importado em Assets/_Project/Art/Items/Models."
     },
     {
       "id": "ICON-ITEM-ANCIENT",
@@ -3383,7 +3455,7 @@
       "category": "C",
       "category_name": "Armas e equipamentos",
       "functionality": "Identidade visual do item em slots e detalhes",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P1",
       "type": "ícone 2D",
       "scope": "aprovado_1_0",
@@ -3399,13 +3471,25 @@
         {
           "path": "Assets/_Project/Scripts/UI/InventorySlotView.cs",
           "detail": "Render textual, sem Image de item."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemIcons.mjs",
+          "detail": "Fonte editável do render de ícones."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Icons/ICON-ITEM-ANCIENT.png",
+          "detail": "Ícone integrado; alpha verificado em ItemIcons.validation.json e ItemsCombatAssetTests."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/inventory.png",
+          "detail": "Inventário em PlayMode."
         }
       ],
       "depends_on": [],
       "technical_dependencies": [
         "Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Integrado: Sprite (sem mipmaps, clamp, PPU 100) no ItemVisualCatalog; slots, detalhes, equipamento e HUD de poções.",
       "visual_specification": "Short broad ancient steel sword, stepped angular guard, one brass geometric inset and subtle wear. No new element or damage type.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3414,13 +3498,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "512×512; leitura 48 e 32 px",
         "delivery_format": "PNG RGBA + fonte editável",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.",
         "prompt_en": "ASSET ID: ICON-ITEM-ANCIENT\nPURPOSE AND VISUAL BRIEF: Inventory icon for the existing item Fio Antigo. Short broad ancient steel sword, stepped angular guard, one brass geometric inset and subtle wear. No new element or damage type.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: One isolated three-quarter object, soft top-left light; no rarity frame, quantity or name baked.\nENGINE CONTRACT: Deliver one 512x512 PNG RGBA with genuine transparent alpha and editable source. Fit silhouette in a centred 416x416 area with 48px padding. Sprite Single, sRGB, no mipmaps, bilinear, clamp, PPU 100. No checkerboard, baked text, numbers, rarity border, labels, watermark, scenery or duplicate object. Verify at 48px and 32px on light, dark and stone backgrounds.\nVALIDATION: Verify real alpha and distinguish all five items by silhouette in greyscale at 32px.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/ICON-ITEM-ANCIENT/",
@@ -3430,7 +3514,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido por render dos mesmos modelos (página three.js via core/render/page.mjs do Lemo); PNG RGBA 512 com alpha real, conteúdo em 416 px, contorno para leitura a 32/48 px."
     },
     {
       "id": "MODEL-ITEM-ANCIENT",
@@ -3438,7 +3523,7 @@
       "category": "C",
       "category_name": "Armas e equipamentos",
       "functionality": "Forma no chão; equipamento visível é extensão visual opcional",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "modelo 3D",
       "scope": "sugestão_polimento",
@@ -3454,6 +3539,30 @@
         {
           "path": "Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemModels.mjs",
+          "detail": "Fonte editável .mjs (Lemo3DGenerator; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Item_AncientEdge.fbx",
+          "detail": "FBX importado (escala 1, sem colliders, normais do arquivo)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Ground_Item_AncientEdge.prefab",
+          "detail": "Modelo de chão referenciado pelo ItemVisualCatalog."
+        },
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset",
+          "detail": "Associação explícita ItemDefinition/LootKind → modelo → ícone."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/pickups.png",
+          "detail": "Captura PlayMode na cena da release."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Equip_Item_AncientEdge.prefab",
+          "detail": "Visual equipado no Socket_Hand_R (transform identidade)."
         }
       ],
       "depends_on": [
@@ -3463,7 +3572,7 @@
         "Seletor visual futuro por LootKind/ItemDefinition; Pickup atual recebe um Renderer/tint.",
         "Troca visual futura por referências/eventos nos sockets; não duplicar Hero_Sword fixa."
       ],
-      "integration_state": "Sugestão; pickup usa esfera e equipar aplica atributos sem trocar malha.",
+      "integration_state": "Integrado: Pickup.prefab → PickupVisualPresenter → catálogo; esfera tingida só como fallback. Equipada: PlayerEquipmentVisualPresenter alterna a espada no Socket_Hand_R e oculta a Hero_Sword fixa.",
       "visual_specification": "Short broad ancient steel sword, stepped angular guard, one brass geometric inset and subtle wear. No new element or damage type.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3472,13 +3581,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "0,95×0,24×0,07 m (proposta a ajustar ao Hero); pivô na empunhadura para espada, base para demais",
         "delivery_format": "FBX + .blend; espadas 300–800 tris, colete 500–1200, frasco 150–350; 1–2 materiais",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
         "prompt_en": "ASSET ID: MODEL-ITEM-ANCIENT\nPURPOSE AND VISUAL BRIEF: Optional dedicated 3D visual for the existing item Fio Antigo. Short broad ancient steel sword, stepped angular guard, one brass geometric inset and subtle wear. No new element or damage type.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Match the existing 2-metre hero. Nominal dimensions 0.95×0.24×0.07 m. Sword pivot at hand grip; vest/flask at base centre. Swords 300-800 triangles, vest 500-1200, flask 150-350, one or two reused URP material slots. Reuse the current Hero sword for the iron variant if suitable before authoring another mesh.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: Show floor and hand previews. A wearable vest needs a separate optional skinned variant bound to the current Generic rig; a static mesh alone is not wearable. Preserve damage, range, defence and current body/clothing.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/MODEL-ITEM-ANCIENT/",
@@ -3488,7 +3597,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido (Lemo3DGenerator; FBX + GLB de revisão em ProductionStaging/ITEMS-COMBAT/Source~) e importado em Assets/_Project/Art/Items/Models."
     },
     {
       "id": "ICON-ITEM-LEATHER",
@@ -3496,7 +3606,7 @@
       "category": "D",
       "category_name": "Inventário e itens",
       "functionality": "Identidade visual do item em slots e detalhes",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P1",
       "type": "ícone 2D",
       "scope": "aprovado_1_0",
@@ -3512,13 +3622,25 @@
         {
           "path": "Assets/_Project/Scripts/UI/InventorySlotView.cs",
           "detail": "Render textual, sem Image de item."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemIcons.mjs",
+          "detail": "Fonte editável do render de ícones."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Icons/ICON-ITEM-LEATHER.png",
+          "detail": "Ícone integrado; alpha verificado em ItemIcons.validation.json e ItemsCombatAssetTests."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/inventory.png",
+          "detail": "Inventário em PlayMode."
         }
       ],
       "depends_on": [],
       "technical_dependencies": [
         "Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Integrado: Sprite (sem mipmaps, clamp, PPU 100) no ItemVisualCatalog; slots, detalhes, equipamento e HUD de poções.",
       "visual_specification": "Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3527,13 +3649,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "512×512; leitura 48 e 32 px",
         "delivery_format": "PNG RGBA + fonte editável",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.",
         "prompt_en": "ASSET ID: ICON-ITEM-LEATHER\nPURPOSE AND VISUAL BRIEF: Inventory icon for the existing item Colete de couro. Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: One isolated three-quarter object, soft top-left light; no rarity frame, quantity or name baked.\nENGINE CONTRACT: Deliver one 512x512 PNG RGBA with genuine transparent alpha and editable source. Fit silhouette in a centred 416x416 area with 48px padding. Sprite Single, sRGB, no mipmaps, bilinear, clamp, PPU 100. No checkerboard, baked text, numbers, rarity border, labels, watermark, scenery or duplicate object. Verify at 48px and 32px on light, dark and stone backgrounds.\nVALIDATION: Verify real alpha and distinguish all five items by silhouette in greyscale at 32px.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/ICON-ITEM-LEATHER/",
@@ -3543,7 +3665,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido por render dos mesmos modelos (página three.js via core/render/page.mjs do Lemo); PNG RGBA 512 com alpha real, conteúdo em 416 px, contorno para leitura a 32/48 px."
     },
     {
       "id": "MODEL-ITEM-LEATHER",
@@ -3551,7 +3674,7 @@
       "category": "D",
       "category_name": "Inventário e itens",
       "functionality": "Forma no chão; equipamento visível é extensão visual opcional",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "modelo 3D",
       "scope": "sugestão_polimento",
@@ -3567,6 +3690,30 @@
         {
           "path": "Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemModels.mjs",
+          "detail": "Fonte editável .mjs (Lemo3DGenerator; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Item_LeatherVest.fbx",
+          "detail": "FBX importado (escala 1, sem colliders, normais do arquivo)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Ground_Item_LeatherVest.prefab",
+          "detail": "Modelo de chão referenciado pelo ItemVisualCatalog."
+        },
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset",
+          "detail": "Associação explícita ItemDefinition/LootKind → modelo → ícone."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/pickups.png",
+          "detail": "Captura PlayMode na cena da release."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Hero_LeatherVest.fbx",
+          "detail": "Variante vestível skinned no esqueleto do Hero (Hips/Spine/Chest), ligada aos ossos da cena por nome."
         }
       ],
       "depends_on": [
@@ -3576,7 +3723,7 @@
         "Seletor visual futuro por LootKind/ItemDefinition; Pickup atual recebe um Renderer/tint.",
         "Troca visual futura por referências/eventos nos sockets; não duplicar Hero_Sword fixa."
       ],
-      "integration_state": "Sugestão; pickup usa esfera e equipar aplica atributos sem trocar malha.",
+      "integration_state": "Integrado: Pickup.prefab → PickupVisualPresenter → catálogo; esfera tingida só como fallback. Vestível: Hero_Model/Equip_LeatherVest (SkinnedMeshRenderer nos ossos do Hero), ativado ao equipar.",
       "visual_specification": "Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3585,13 +3732,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "0,60×0,65×0,25 m (proposta a ajustar ao Hero); pivô na empunhadura para espada, base para demais",
         "delivery_format": "FBX + .blend; espadas 300–800 tris, colete 500–1200, frasco 150–350; 1–2 materiais",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
         "prompt_en": "ASSET ID: MODEL-ITEM-LEATHER\nPURPOSE AND VISUAL BRIEF: Optional dedicated 3D visual for the existing item Colete de couro. Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Match the existing 2-metre hero. Nominal dimensions 0.60×0.65×0.25 m. Sword pivot at hand grip; vest/flask at base centre. Swords 300-800 triangles, vest 500-1200, flask 150-350, one or two reused URP material slots. Reuse the current Hero sword for the iron variant if suitable before authoring another mesh.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: Show floor and hand previews. A wearable vest needs a separate optional skinned variant bound to the current Generic rig; a static mesh alone is not wearable. Preserve damage, range, defence and current body/clothing.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/MODEL-ITEM-LEATHER/",
@@ -3601,7 +3748,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido (Lemo3DGenerator; FBX + GLB de revisão em ProductionStaging/ITEMS-COMBAT/Source~) e importado em Assets/_Project/Art/Items/Models."
     },
     {
       "id": "ICON-ITEM-HEALTH",
@@ -3609,7 +3757,7 @@
       "category": "E",
       "category_name": "Poções e consumíveis",
       "functionality": "Identidade visual do item em slots e detalhes",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P1",
       "type": "ícone 2D",
       "scope": "aprovado_1_0",
@@ -3625,13 +3773,25 @@
         {
           "path": "Assets/_Project/Scripts/UI/InventorySlotView.cs",
           "detail": "Render textual, sem Image de item."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemIcons.mjs",
+          "detail": "Fonte editável do render de ícones."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Icons/ICON-ITEM-HEALTH.png",
+          "detail": "Ícone integrado; alpha verificado em ItemIcons.validation.json e ItemsCombatAssetTests."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/inventory.png",
+          "detail": "Inventário em PlayMode."
         }
       ],
       "depends_on": [],
       "technical_dependencies": [
         "Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Integrado: Sprite (sem mipmaps, clamp, PPU 100) no ItemVisualCatalog; slots, detalhes, equipamento e HUD de poções.",
       "visual_specification": "Squat faceted glass flask, broad round body, short neck, cork and dark leather collar; ruby-red liquid, clear highlight, chunky silhouette.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3640,13 +3800,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "512×512; leitura 48 e 32 px",
         "delivery_format": "PNG RGBA + fonte editável",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.",
         "prompt_en": "ASSET ID: ICON-ITEM-HEALTH\nPURPOSE AND VISUAL BRIEF: Inventory icon for the existing item Poção de vida. Squat faceted glass flask, broad round body, short neck, cork and dark leather collar; ruby-red liquid, clear highlight, chunky silhouette.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: One isolated three-quarter object, soft top-left light; no rarity frame, quantity or name baked.\nENGINE CONTRACT: Deliver one 512x512 PNG RGBA with genuine transparent alpha and editable source. Fit silhouette in a centred 416x416 area with 48px padding. Sprite Single, sRGB, no mipmaps, bilinear, clamp, PPU 100. No checkerboard, baked text, numbers, rarity border, labels, watermark, scenery or duplicate object. Verify at 48px and 32px on light, dark and stone backgrounds.\nVALIDATION: Verify real alpha and distinguish all five items by silhouette in greyscale at 32px.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/ICON-ITEM-HEALTH/",
@@ -3656,7 +3816,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido por render dos mesmos modelos (página three.js via core/render/page.mjs do Lemo); PNG RGBA 512 com alpha real, conteúdo em 416 px, contorno para leitura a 32/48 px."
     },
     {
       "id": "MODEL-ITEM-HEALTH",
@@ -3664,7 +3825,7 @@
       "category": "E",
       "category_name": "Poções e consumíveis",
       "functionality": "Forma no chão; equipamento visível é extensão visual opcional",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "modelo 3D",
       "scope": "sugestão_polimento",
@@ -3680,6 +3841,26 @@
         {
           "path": "Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemModels.mjs",
+          "detail": "Fonte editável .mjs (Lemo3DGenerator; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Item_HealthPotion.fbx",
+          "detail": "FBX importado (escala 1, sem colliders, normais do arquivo)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Ground_Item_HealthPotion.prefab",
+          "detail": "Modelo de chão referenciado pelo ItemVisualCatalog."
+        },
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset",
+          "detail": "Associação explícita ItemDefinition/LootKind → modelo → ícone."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/pickups.png",
+          "detail": "Captura PlayMode na cena da release."
         }
       ],
       "depends_on": [
@@ -3689,7 +3870,7 @@
         "Seletor visual futuro por LootKind/ItemDefinition; Pickup atual recebe um Renderer/tint.",
         "Troca visual futura por referências/eventos nos sockets; não duplicar Hero_Sword fixa."
       ],
-      "integration_state": "Sugestão; pickup usa esfera e equipar aplica atributos sem trocar malha.",
+      "integration_state": "Integrado: Pickup.prefab → PickupVisualPresenter → catálogo; esfera tingida só como fallback.",
       "visual_specification": "Squat faceted glass flask, broad round body, short neck, cork and dark leather collar; ruby-red liquid, clear highlight, chunky silhouette.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3698,13 +3879,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "0,22×0,32×0,22 m (proposta a ajustar ao Hero); pivô na empunhadura para espada, base para demais",
         "delivery_format": "FBX + .blend; espadas 300–800 tris, colete 500–1200, frasco 150–350; 1–2 materiais",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
         "prompt_en": "ASSET ID: MODEL-ITEM-HEALTH\nPURPOSE AND VISUAL BRIEF: Optional dedicated 3D visual for the existing item Poção de vida. Squat faceted glass flask, broad round body, short neck, cork and dark leather collar; ruby-red liquid, clear highlight, chunky silhouette.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Match the existing 2-metre hero. Nominal dimensions 0.22×0.32×0.22 m. Sword pivot at hand grip; vest/flask at base centre. Swords 300-800 triangles, vest 500-1200, flask 150-350, one or two reused URP material slots. Reuse the current Hero sword for the iron variant if suitable before authoring another mesh.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: Show floor and hand previews. A wearable vest needs a separate optional skinned variant bound to the current Generic rig; a static mesh alone is not wearable. Preserve damage, range, defence and current body/clothing.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/MODEL-ITEM-HEALTH/",
@@ -3714,7 +3895,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido (Lemo3DGenerator; FBX + GLB de revisão em ProductionStaging/ITEMS-COMBAT/Source~) e importado em Assets/_Project/Art/Items/Models."
     },
     {
       "id": "LOOT-SHARED",
@@ -3722,7 +3904,7 @@
       "category": "H",
       "category_name": "Loot e recompensas",
       "functionality": "Coleta por trigger, rejeição mantém drop",
-      "status": "INCOMPLETO",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "modelo 3D",
       "scope": "aprovado_1_0",
@@ -3738,18 +3920,22 @@
         {
           "path": "Assets/_Project/Scripts/Systems/PlayerProgression.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Assets/_Project/Scripts/Systems/PickupVisualPresenter.cs",
+          "detail": "Presenter do pickup."
         }
       ],
       "depends_on": [],
       "technical_dependencies": [],
-      "integration_state": "Integrado e utilizável como placeholder.",
+      "integration_state": "Agora apresenta o modelo do catálogo; esfera só como fallback; rejeição mantém item e modelo.",
       "visual_specification": "Esfera visual .4 m: cor por tipo/raridade, bob .15 m, giro 120°/s. Lifetime 45 s; rejeição remove expiração. Funcional, sem silhueta por item.",
       "acceptance_criteria": [
         "Preservar trigger e retry .25 s; item rejeitado permanece no chão.",
         "Cor não deve ser a única distinção em futuro acabamento."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": null,
@@ -3757,7 +3943,8 @@
         "kind": "project_existing",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Pickup compartilhado mantido (trigger 1,2 m, retry 0,25 s, lifetime)."
     },
     {
       "id": "MODEL-LOOT-GOLD",
@@ -3765,7 +3952,7 @@
       "category": "H",
       "category_name": "Loot e recompensas",
       "functionality": "Leitura de recompensa imediata",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "modelo 3D",
       "scope": "sugestão_polimento",
@@ -3777,13 +3964,33 @@
         {
           "path": "Assets/_Project/Scripts/Systems/PlayerProgression.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemModels.mjs",
+          "detail": "Fonte editável .mjs (Lemo3DGenerator; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Loot_Gold.fbx",
+          "detail": "FBX importado (escala 1, sem colliders, normais do arquivo)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Ground_Loot_Gold.prefab",
+          "detail": "Modelo de chão referenciado pelo ItemVisualCatalog."
+        },
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset",
+          "detail": "Associação explícita ItemDefinition/LootKind → modelo → ícone."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/pickups.png",
+          "detail": "Captura PlayMode na cena da release."
         }
       ],
       "depends_on": [
         "LOOT-SHARED"
       ],
       "technical_dependencies": [],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Integrado: Pickup.prefab → PickupVisualPresenter → catálogo; esfera tingida só como fallback.",
       "visual_specification": "A small chunky stack of three brass-gold coins, plain broad bevels, bright upper edge, dark underside, no lettering.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3792,13 +3999,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "0.30 x 0.14 x 0.30 m; pivô base",
         "delivery_format": "FBX + .blend; 100–250 tris, 1 material",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
         "prompt_en": "ASSET ID: MODEL-LOOT-GOLD\nPURPOSE AND VISUAL BRIEF: Optional pickup mesh for Ouro. A small chunky stack of three brass-gold coins, plain broad bevels, bright upper edge, dark underside, no lettering.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: 0.30 x 0.14 x 0.30 m, base-centred pivot, 100-250 triangles, one material.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: Distinguish gold, XP, potions and hostile projectiles at the gameplay camera; retain current trigger/bob/spin and immediate collection rules.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/MODEL-LOOT-GOLD/",
@@ -3808,7 +4015,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido (Lemo3DGenerator; FBX + GLB de revisão em ProductionStaging/ITEMS-COMBAT/Source~) e importado em Assets/_Project/Art/Items/Models."
     },
     {
       "id": "MODEL-LOOT-XP",
@@ -3816,7 +4024,7 @@
       "category": "H",
       "category_name": "Loot e recompensas",
       "functionality": "Leitura de recompensa imediata",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "modelo 3D",
       "scope": "sugestão_polimento",
@@ -3828,13 +4036,33 @@
         {
           "path": "Assets/_Project/Scripts/Systems/PlayerProgression.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/ItemModels.mjs",
+          "detail": "Fonte editável .mjs (Lemo3DGenerator; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Loot_XpOrb.fbx",
+          "detail": "FBX importado (escala 1, sem colliders, normais do arquivo)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Ground_Loot_XpOrb.prefab",
+          "detail": "Modelo de chão referenciado pelo ItemVisualCatalog."
+        },
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset",
+          "detail": "Associação explícita ItemDefinition/LootKind → modelo → ícone."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/pickups.png",
+          "detail": "Captura PlayMode na cena da release."
         }
       ],
       "depends_on": [
         "LOOT-SHARED"
       ],
       "technical_dependencies": [],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Integrado: Pickup.prefab → PickupVisualPresenter → catálogo; esfera tingida só como fallback.",
       "visual_specification": "A simple faceted cyan orb, dark lower facet and restrained bright core, clearly distinct from an orange hostile projectile.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -3843,13 +4071,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "0.25 m diameter; pivô base",
         "delivery_format": "FBX + .blend; 100–250 tris, 1 material",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
         "prompt_en": "ASSET ID: MODEL-LOOT-XP\nPURPOSE AND VISUAL BRIEF: Optional pickup mesh for Orbe de XP. A simple faceted cyan orb, dark lower facet and restrained bright core, clearly distinct from an orange hostile projectile.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: 0.25 m diameter, base-centred pivot, 100-250 triangles, one material.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: Distinguish gold, XP, potions and hostile projectiles at the gameplay camera; retain current trigger/bob/spin and immediate collection rules.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/MODEL-LOOT-XP/",
@@ -3859,7 +4087,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido (Lemo3DGenerator; FBX + GLB de revisão em ProductionStaging/ITEMS-COMBAT/Source~) e importado em Assets/_Project/Art/Items/Models."
     },
     {
       "id": "REF-CONCEPT-01",
@@ -5244,7 +5473,7 @@
       "category": "D",
       "category_name": "Inventário e itens",
       "functionality": "Apresentação da funcionalidade já entregue",
-      "status": "INCOMPLETO",
+      "status": "EXISTENTE",
       "priority": "P1",
       "type": "interface",
       "scope": "aprovado_1_0",
@@ -5268,6 +5497,10 @@
         {
           "path": "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/inventory.png",
+          "detail": "Captura PlayMode."
         }
       ],
       "depends_on": [
@@ -5279,7 +5512,7 @@
         "ICON-ITEM-HEALTH"
       ],
       "technical_dependencies": [],
-      "integration_state": "Integrado e funcional; apresentação parcial.",
+      "integration_state": "Integrado nos 16 slots, detalhes e equipamento; layout observado em 2560×1440 no Editor.",
       "visual_specification": "Window central 1180×780, título/capacidade, grade 4×4, lateral equipamento/detalhes; ações inferiores. Funcional textual; ícones ausentes.",
       "acceptance_criteria": [
         "Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.",
@@ -5287,7 +5520,7 @@
         "UI solicita comandos, sem calcular dano/consumo/equipamento."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente. 1280×720/1920×1080 observados na build.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": null,
@@ -5295,7 +5528,8 @@
         "kind": "project_existing",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Ícones, quantidade sobreposta, potência (Cura N), moldura+marcador de seleção independentes da cor."
     },
     {
       "id": "UI-SLOTS",
@@ -5303,7 +5537,7 @@
       "category": "D",
       "category_name": "Inventário e itens",
       "functionality": "Apresentação da funcionalidade já entregue",
-      "status": "INCOMPLETO",
+      "status": "EXISTENTE",
       "priority": "P1",
       "type": "interface",
       "scope": "aprovado_1_0",
@@ -5327,6 +5561,10 @@
         {
           "path": "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/inventory.png",
+          "detail": "Captura PlayMode."
         }
       ],
       "depends_on": [
@@ -5338,7 +5576,7 @@
         "ICON-ITEM-HEALTH"
       ],
       "technical_dependencies": [],
-      "integration_state": "Integrado e funcional; apresentação parcial.",
+      "integration_state": "Integrado nos 16 slots, detalhes e equipamento; layout observado em 2560×1440 no Editor.",
       "visual_specification": "16 slots 188×104, passo 200×116; nome/raridade/quantidade/Equipado; vazio com travessão. Seleção por fundo; Transition.None sem hover/focus distinto.",
       "acceptance_criteria": [
         "Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.",
@@ -5346,7 +5584,7 @@
         "UI solicita comandos, sem calcular dano/consumo/equipamento."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente. 1280×720/1920×1080 observados na build.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": null,
@@ -5354,7 +5592,8 @@
         "kind": "project_existing",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Ícones, quantidade sobreposta, potência (Cura N), moldura+marcador de seleção independentes da cor."
     },
     {
       "id": "UI-EQUIPMENT",
@@ -6062,7 +6301,7 @@
       "category": "E",
       "category_name": "Poções e consumíveis",
       "functionality": "Leitura de Q sem abrir inventário",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P1",
       "type": "interface",
       "scope": "aprovado_1_0",
@@ -6078,6 +6317,10 @@
         {
           "path": "Assets/_Project/Scripts/UI/PlayerResourcePresenter.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Assets/_Project/Scripts/UI/PotionHudPresenter.cs",
+          "detail": "Somente leitura."
         }
       ],
       "depends_on": [
@@ -6087,7 +6330,7 @@
       "technical_dependencies": [
         "Presenter futuro somente leitura em Inventory.Changed/Health.Changed; não mudar escolha de Q nem capacidade."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Integrado: ícone, total somado sem fundir pilhas, tecla Q e estado textual (Pronto/HP cheio/Sem poções/Indisponível).",
       "visual_specification": "Proposta: ícone frasco 48×48, Q e total; zero/HP cheio/morto indisponível, sem sugerir cooldown.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -6096,13 +6339,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "Componente 160×64 no canvas 1920×1080; âncora superior esquerda/margem 24, proposta y=-180",
         "delivery_format": "UGUI editável; ícone referenciado; textos runtime",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "UGUI editável; sprites e texto separados, referência 1920×1080/CanvasScaler match .5. Preservar Text/LegacyRuntime.ttf, InputSystemUIInputModule, pilha de menus e presenters atuais; imagem achatada não é interface funcional.",
         "prompt_en": "ASSET ID: HUD-POTIONS\nPURPOSE AND VISUAL BRIEF: Potion quick-use HUD for the current Q action. Use the health-flask icon at 48x48, runtime Q label and total count, matching the existing HUD. Empty shows 0 and an unavailable label; full HP and dead states are disabled without implying empty inventory.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Editable 160x64 UGUI block, top-left anchor, 24px margin, proposed y=-180 below current stamina. Document ready, empty, full-health, dead and focus states. Proposed placement requires in-game review.\nENGINE CONTRACT: Deliver editable UGUI components and separate art sprites, 1920x1080 reference layout with documented anchors. Keep text/counters native runtime UI. Preserve the current input module, presenters, menu stack and pause rules. Do not modify existing code or saved scenes in the art delivery.\nVALIDATION: Count stored PotionData stacks, preserve potency-specific stacks and the current first-potion choice. No potion cooldown exists: do not invent one. Test inventory/health event refresh and I/Tab pause.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/HUD-POTIONS/",
@@ -6112,7 +6355,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido em UGUI (InventorySceneBuilder.ConfigureItemVisuals)."
     },
     {
       "id": "ICON-ACTION-DASH",
@@ -6445,7 +6689,7 @@
       "category": "J",
       "category_name": "VFX e animações adicionais",
       "functionality": "Feedback implementado",
-      "status": "INCOMPLETO",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "VFX",
       "scope": "aprovado_1_0",
@@ -6465,7 +6709,7 @@
       ],
       "depends_on": [],
       "technical_dependencies": [],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "PlayerCombat.showDiagnosticAttackVisual=false por padrão: não aparece na apresentação normal, inclusive após rebuild; dano continua pela consulta física/cone.",
       "visual_specification": "Marcador simples temporário no impacto; não é trail na trajetória da espada.",
       "acceptance_criteria": [
         "Arte apenas observa domínio; preservar dano/colliders/timers.",
@@ -6473,7 +6717,7 @@
         "Flash/shake 0 não ocultam área do perigo nem cor persistente da fase."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": null,
@@ -6481,7 +6725,8 @@
         "kind": "project_existing",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Marcador branco AttackVisual (cubo Mat_Attack) mantido apenas como diagnóstico."
     },
     {
       "id": "FX-PROJECTILE",
@@ -6533,7 +6778,7 @@
       "category": "J",
       "category_name": "VFX e animações adicionais",
       "functionality": "Polimento opcional de ação existente",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "VFX",
       "scope": "sugestão_polimento",
@@ -6553,6 +6798,18 @@
         {
           "path": "Assets/_Project/Scripts/Systems/Projectile.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Assets/_Project/Scripts/Player/PlayerAttackVfxPresenter.cs",
+          "detail": "Observa eventos C#; não aplica dano nem consulta alvos."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/VFX",
+          "detail": "Texturas RGBA e materiais URP Particles/Unlit aditivos, sem ZWrite."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/attack_01.png",
+          "detail": "Três golpes distintos capturados (attack_01..03)."
         }
       ],
       "depends_on": [
@@ -6563,7 +6820,7 @@
       "technical_dependencies": [
         "PlayerCombat.AttackStarted/AttackImpacted/AttackCancelled; sem hit-confirm/posição por alvo."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Integrado na cena da release; emissão em torno do impacto real de cada golpe (0,16/0,19/0,32 s); finalizador mais largo.",
       "visual_specification": "Three concise steel/cyan sword arcs: right diagonal, left diagonal and compact downward finisher. No broad opaque glow.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -6572,13 +6829,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "0.12–0.18 s; <=12 particles per impact; radius never exceeds actual combo range",
         "delivery_format": "Prefab visual + fontes; PNG RGBA 128/256 se necessário",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.",
         "prompt_en": "ASSET ID: FX-SLASH\nPURPOSE AND VISUAL BRIEF: Optional presentation effect: Rastro do combo. Three concise steel/cyan sword arcs: right diagonal, left diagonal and compact downward finisher. No broad opaque glow.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Envelope: 0.12–0.18 s; <=12 particles per impact; radius never exceeds actual combo range. Reuse plain geometry or one small texture sheet; isolated review prefab/component.\nENGINE CONTRACT: Deliver a Unity 6000.6.9f1 URP 17.6.0 presentation prefab, editable sources and necessary alpha textures. Lightweight particles/meshes/trails, no new packages, damage or colliders. Reset pooled effects and clear trails/particles on return; honour pause, cancellation and flash/shake options.\nVALIDATION: Effect returns to rest and resets after two rapid activations, pause, death, cancellation and pool return. Never apply damage or delay input. Honour existing flash/shake options and compare in real gameplay.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/FX-SLASH/",
@@ -6588,7 +6845,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido: TrailRenderer na lâmina (filho do Socket_Hand_R) + FX_SlashTrail.png."
     },
     {
       "id": "FX-SPECIAL",
@@ -6596,7 +6854,7 @@
       "category": "J",
       "category_name": "VFX e animações adicionais",
       "functionality": "Polimento opcional de ação existente",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "VFX",
       "scope": "sugestão_polimento",
@@ -6616,6 +6874,18 @@
         {
           "path": "Assets/_Project/Scripts/Systems/Projectile.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Assets/_Project/Scripts/Player/PlayerAttackVfxPresenter.cs",
+          "detail": "Observa eventos C#; não aplica dano nem consulta alvos."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/VFX",
+          "detail": "Texturas RGBA e materiais URP Particles/Unlit aditivos, sem ZWrite."
+        },
+        {
+          "path": "Reports/Leadership/ProductionVisual/Captures/special.png",
+          "detail": "Giro em PlayMode."
         }
       ],
       "depends_on": [
@@ -6624,7 +6894,7 @@
       "technical_dependencies": [
         "PlayerSpecial.AttackImpacted .36 s; não há VFX específico inscrito."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Integrado; anel no impacto 0,36 s por 0,28 s, raio visual ≤ alcance real (3 m).",
       "visual_specification": "One thin cyan circular sword sweep, empty centre, restrained pale edge, clearly distinct from a red hostile ground telegraph.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -6633,13 +6903,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "0.18–0.30 s; radius <=3 m; <=24 particles",
         "delivery_format": "Prefab visual + fontes; PNG RGBA 128/256 se necessário",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.",
         "prompt_en": "ASSET ID: FX-SPECIAL\nPURPOSE AND VISUAL BRIEF: Optional presentation effect: Rastro do giro. One thin cyan circular sword sweep, empty centre, restrained pale edge, clearly distinct from a red hostile ground telegraph.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Envelope: 0.18–0.30 s; radius <=3 m; <=24 particles. Reuse plain geometry or one small texture sheet; isolated review prefab/component.\nENGINE CONTRACT: Deliver a Unity 6000.6.9f1 URP 17.6.0 presentation prefab, editable sources and necessary alpha textures. Lightweight particles/meshes/trails, no new packages, damage or colliders. Reset pooled effects and clear trails/particles on return; honour pause, cancellation and flash/shake options.\nVALIDATION: Effect returns to rest and resets after two rapid activations, pause, death, cancellation and pool return. Never apply damage or delay input. Honour existing flash/shake options and compare in real gameplay.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/FX-SPECIAL/",
@@ -6649,7 +6919,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido: rastro do giro + anel fino ciano de centro vazio (FX_Ring.png)."
     },
     {
       "id": "FX-HIT",
@@ -6657,7 +6928,7 @@
       "category": "J",
       "category_name": "VFX e animações adicionais",
       "functionality": "Polimento opcional de ação existente",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "VFX",
       "scope": "sugestão_polimento",
@@ -6677,6 +6948,14 @@
         {
           "path": "Assets/_Project/Scripts/Systems/Projectile.cs",
           "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+        },
+        {
+          "path": "Assets/_Project/Scripts/Player/PlayerAttackVfxPresenter.cs",
+          "detail": "Observa eventos C#; não aplica dano nem consulta alvos."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/VFX",
+          "detail": "Texturas RGBA e materiais URP Particles/Unlit aditivos, sem ZWrite."
         }
       ],
       "depends_on": [
@@ -6685,7 +6964,7 @@
       "technical_dependencies": [
         "Health.Damaged só fornece quantidade; posição/direção precisariam ponte futura."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Integrado para o combo: PlayerCombat.TargetHit só após TakeDamage retornar true. O giro especial não emite FX-HIT (PlayerSpecial fora do escopo de arquivos).",
       "visual_specification": "Small directional ivory chips and two orange sparks for bone/metal contact; no blood, large flash or persistent debris.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -6694,13 +6973,13 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1: integrador 67/67 verificações, EditMode 99/99 e PlayMode 74/74 (+1 captura explícita no Editor com janela) em 14/11/2026; build Windows Succeeded (0 erros, 496 avisos de shader conhecidos). Build: menu, andar e stress diagnóstico sem exceções/Missing Script. Conferido na build Windows (ver production_batches ITEMS-COMBAT.build_visual_check); aprovação artística humana pendente.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
         "dimensions": "0.15–0.25 s; radius <=0.3 m; <=10 particles",
         "delivery_format": "Prefab visual + fontes; PNG RGBA 128/256 se necessário",
-        "production_gate": "Lote futuro; nenhuma geração autorizada nesta etapa.",
+        "production_gate": "Produzido no lote ITEMS-COMBAT (autorizado pelo usuário em 14/11/2026).",
         "technical_requirements": "Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.",
         "prompt_en": "ASSET ID: FX-HIT\nPURPOSE AND VISUAL BRIEF: Optional presentation effect: Impacto de acerto. Small directional ivory chips and two orange sparks for bone/metal contact; no blood, large flash or persistent debris.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Envelope: 0.15–0.25 s; radius <=0.3 m; <=10 particles. Reuse plain geometry or one small texture sheet; isolated review prefab/component.\nENGINE CONTRACT: Deliver a Unity 6000.6.9f1 URP 17.6.0 presentation prefab, editable sources and necessary alpha textures. Lightweight particles/meshes/trails, no new packages, damage or colliders. Reset pooled effects and clear trails/particles on return; honour pause, cancellation and flash/shake options.\nVALIDATION: Effect returns to rest and resets after two rapid activations, pause, death, cancellation and pool return. Never apply damage or delay input. Honour existing flash/shake options and compare in real gameplay.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/FX-HIT/",
@@ -6710,7 +6989,8 @@
         "kind": "not_produced",
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+      },
+      "production_state": "Produzido: ParticleSystem world-space, 6 lascas + 2 faíscas por acerto, sem instanciação."
     },
     {
       "id": "FX-HEAL",
@@ -12117,6 +12397,153 @@
         "MvpProjectAudit.InspectCurrent pós-build falhou (IOException 1224: asset-audit-current.json travado por outro processo); relatório API não regenerado.",
         "Testes de desempenho regravaram relatórios em Reports/Leadership e Reports/Task02; originais restaurados e novas medições arquivadas em Reports/Production/ANIM-TORCH/test-run-side-effects."
       ]
+    },
+    {
+      "id": "ITEMS-COMBAT",
+      "date_local": "2026-11-14",
+      "branch": "codex/anim-torch (sem commit)",
+      "produced": [
+        "MODEL-ITEM-IRON",
+        "MODEL-ITEM-WARDEN",
+        "MODEL-ITEM-ANCIENT",
+        "MODEL-ITEM-LEATHER",
+        "MODEL-ITEM-HEALTH",
+        "MODEL-LOOT-GOLD",
+        "MODEL-LOOT-XP",
+        "ICON-ITEM-IRON",
+        "ICON-ITEM-WARDEN",
+        "ICON-ITEM-ANCIENT",
+        "ICON-ITEM-LEATHER",
+        "ICON-ITEM-HEALTH",
+        "FX-SLASH",
+        "FX-SPECIAL",
+        "FX-HIT",
+        "FX-BASIC",
+        "HUD-POTIONS",
+        "UI-SLOTS",
+        "UI-INVENTORY",
+        "LOOT-SHARED"
+      ],
+      "imported": [
+        "MODEL-ITEM-IRON",
+        "MODEL-ITEM-WARDEN",
+        "MODEL-ITEM-ANCIENT",
+        "MODEL-ITEM-LEATHER",
+        "MODEL-ITEM-HEALTH",
+        "MODEL-LOOT-GOLD",
+        "MODEL-LOOT-XP",
+        "ICON-ITEM-IRON",
+        "ICON-ITEM-WARDEN",
+        "ICON-ITEM-ANCIENT",
+        "ICON-ITEM-LEATHER",
+        "ICON-ITEM-HEALTH",
+        "FX-SLASH",
+        "FX-SPECIAL",
+        "FX-HIT"
+      ],
+      "integrated": [
+        "MODEL-ITEM-IRON",
+        "MODEL-ITEM-WARDEN",
+        "MODEL-ITEM-ANCIENT",
+        "MODEL-ITEM-LEATHER",
+        "MODEL-ITEM-HEALTH",
+        "MODEL-LOOT-GOLD",
+        "MODEL-LOOT-XP",
+        "ICON-ITEM-IRON",
+        "ICON-ITEM-WARDEN",
+        "ICON-ITEM-ANCIENT",
+        "ICON-ITEM-LEATHER",
+        "ICON-ITEM-HEALTH",
+        "FX-SLASH",
+        "FX-SPECIAL",
+        "FX-HIT",
+        "FX-BASIC",
+        "HUD-POTIONS",
+        "UI-SLOTS",
+        "UI-INVENTORY",
+        "LOOT-SHARED"
+      ],
+      "validated_in_editor": [
+        "MODEL-ITEM-IRON",
+        "MODEL-ITEM-WARDEN",
+        "MODEL-ITEM-ANCIENT",
+        "MODEL-ITEM-LEATHER",
+        "MODEL-ITEM-HEALTH",
+        "MODEL-LOOT-GOLD",
+        "MODEL-LOOT-XP",
+        "ICON-ITEM-IRON",
+        "ICON-ITEM-WARDEN",
+        "ICON-ITEM-ANCIENT",
+        "ICON-ITEM-LEATHER",
+        "ICON-ITEM-HEALTH",
+        "FX-SLASH",
+        "FX-SPECIAL",
+        "FX-HIT",
+        "FX-BASIC",
+        "HUD-POTIONS",
+        "UI-SLOTS",
+        "UI-INVENTORY",
+        "LOOT-SHARED"
+      ],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity",
+        "Assets/_Project/Prefabs/Items/Pickup.prefab",
+        "Assets/_Project/Scripts/Systems/Pickup.cs",
+        "Assets/_Project/Scripts/Player/PlayerCombat.cs",
+        "Assets/_Project/Scripts/UI/InventorySlotView.cs",
+        "Assets/_Project/Scripts/UI/InventoryPresenter.cs",
+        "Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs",
+        "Assets/_Project/Scripts/Editor/DungeonFloorSceneBuilder.cs",
+        "Assets/_Project/Scripts/Editor/DungeonMvpSceneBuilder.cs"
+      ],
+      "new_code": [
+        "Tools/Lemo3DGenerator/src/production/ItemModels.mjs",
+        "Tools/Lemo3DGenerator/src/production/ItemIcons.mjs",
+        "Assets/_Project/Scripts/Systems/ItemVisualCatalog.cs",
+        "Assets/_Project/Scripts/Systems/PickupVisualPresenter.cs",
+        "Assets/_Project/Scripts/Player/PlayerEquipmentVisualPresenter.cs",
+        "Assets/_Project/Scripts/Player/PlayerAttackVfxPresenter.cs",
+        "Assets/_Project/Scripts/UI/PotionHudPresenter.cs",
+        "Assets/_Project/Scripts/Editor/ProductionVisualIntegrator.cs",
+        "Assets/_Project/Tests/EditMode/ItemsCombatAssetTests.cs",
+        "Assets/_Project/Tests/PlayMode/PlayerInput/ItemsCombatSceneTests.cs"
+      ],
+      "build": {
+        "menu": "Tools/Dungeon Crawler/Build/Windows Release (Current MVP) (MvpReleaseBuild.BuildWindows via -executeMethod)",
+        "executable": "Builds/WindowsMVP/DungeonCrawler.exe",
+        "result": "Succeeded",
+        "errors": 0,
+        "warnings": 496,
+        "zip_replaced": false
+      },
+      "tests": {
+        "editmode": "99/99",
+        "playmode": "74/74 + 1 captura explícita (Editor com janela)"
+      },
+      "preservation": "Hero.fbx/controller/materiais, Player.prefab, Floor_01, MVP_Arena, MainMenu, Art_Test_Hero, Mat_Hero_Concept_Billboard, SOs de itens e PlayerCombo idênticos por SHA256; arquivos regravados por testes reconstrutores restaurados; ZIP 1.0.0 intacto (c0b846b3).",
+      "limitations": [
+        "Aprovação artística humana pendente.",
+        "FX-HIT só no combo; giro especial sem faíscas por alvo (PlayerSpecial fora do escopo).",
+        "Espadas/frasco usam 3–5 materiais (a família Hero_Sword usa 3), acima da meta 1–2 da ficha.",
+        "Fonte editável é .mjs (sem .blend; Blender não instalado), como no restante do pipeline.",
+        "Espadas/colete equipados não observados na build (nenhum drop até a sala 2); verificados no PlayMode da mesma cena."
+      ],
+      "build_visual_check": {
+        "date_local": "2026-11-14",
+        "evidence": "Reports/Leadership/ProductionVisual/Captures/Build",
+        "observed": [
+          "drops ouro/XP/poção",
+          "Largar 1 recria o frasco",
+          "inventário/HUD/Q em 1920×1080 e 1280×720",
+          "rastro, FX-HIT e anel do giro (modo -dcc-stress)",
+          "sem retângulo branco"
+        ],
+        "not_observed": [
+          "espadas e colete equipados na build (verificados no PlayMode)"
+        ],
+        "options_restored": "1920×1080, tela cheia, Alta"
+      }
     }
   ]
 }

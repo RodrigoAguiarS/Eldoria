@@ -11,10 +11,19 @@ namespace DungeonCrawler.UI
         [SerializeField] private Button button;
         [SerializeField] private Text label;
         [SerializeField] private Image background;
+        [Tooltip("Optional item icon (ICON-ITEM-*); text stays as the primary label.")]
+        [SerializeField] private Image icon;
+        [SerializeField] private Text quantity;
+        [Tooltip("Shape cue for selection, independent of the background color.")]
+        [SerializeField] private GameObject selectionFrame;
         private int index;
         private Action<int> selected;
         private bool subscribed;
         public Button Button => button;
+        public Image Icon => icon;
+        public Text Quantity => quantity;
+        public GameObject SelectionFrame => selectionFrame;
+        public Text Label => label;
 
         public void Bind(int slot, Action<int> onSelected)
         {
@@ -29,16 +38,22 @@ namespace DungeonCrawler.UI
         private void OnClicked() => selected?.Invoke(index);
         public void OnSelect(BaseEventData _) => selected?.Invoke(index);
 
-        public void Render(InventoryStack stack, bool isSelected, bool equipped)
+        public void Render(InventoryStack stack, bool isSelected, bool equipped, Sprite itemIcon = null)
         {
             background.color = isSelected ? new Color(.32f, .26f, .16f) : new Color(.10f, .13f, .17f);
-            if (stack.IsEmpty) { label.text = "—\n<size=18>Vazio</size>"; label.color = new Color(.5f, .56f, .63f); return; }
+            if (selectionFrame != null && selectionFrame.activeSelf != isSelected) selectionFrame.SetActive(isSelected);
+            bool hasIcon = !stack.IsEmpty && itemIcon != null && icon != null;
+            if (icon != null) { icon.enabled = hasIcon; icon.sprite = hasIcon ? itemIcon : null; }
+            if (quantity != null) quantity.text = !stack.IsEmpty && stack.Count > 1 ? "×" + stack.Count : "";
+            if (stack.IsEmpty) { label.text = "—\n<size=16>Vazio</size>"; label.color = new Color(.5f, .56f, .63f); return; }
             label.color = Color.white;
             string rarity = stack.Definition.rarity != null ? stack.Definition.rarity.displayName : "Comum";
             string color = stack.Definition.rarity != null ? ColorUtility.ToHtmlStringRGB(stack.Definition.rarity.color) : "C6CED8";
-            string quantity = stack.Count > 1 ? " ×" + stack.Count : "";
-            label.text = stack.Definition.DisplayName + quantity + "\n<size=18><color=#" + color + ">" + rarity +
-                "</color>" + (equipped ? " · Equipado" : "") + "</size>";
+            // Without a quantity overlay the count stays in the label (legacy layout).
+            string count = quantity == null && stack.Count > 1 ? " ×" + stack.Count : "";
+            string potency = stack.Definition.Kind == InventoryItemKind.Potion ? "\nCura " + stack.Potency : "";
+            label.text = stack.Definition.DisplayName + count + "\n<size=15><color=#" + color + ">" + rarity + "</color>" + potency +
+                (equipped ? "\n<b>Equipado</b>" : "") + "</size>";
         }
     }
 }

@@ -1,0 +1,389 @@
+{
+  "batch": "ITEMS-COMBAT",
+  "generator": "Tools/Lemo3DGenerator/src/production/ItemModels.mjs",
+  "three": "0.170.0",
+  "lemoRoot": "G:/lemo-opuscar/lemo-opuscar",
+  "units": "metros, Y para cima, +Z frente (convenção do export-fbx.mjs)",
+  "materials": {
+    "Item_steel": {
+      "color": "#B9C4CF",
+      "metallic": 0.6,
+      "smoothness": 0.55,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_steelDark": {
+      "color": "#6F7B88",
+      "metallic": 0.6,
+      "smoothness": 0.45,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_brass": {
+      "color": "#E0B040",
+      "metallic": 0.7,
+      "smoothness": 0.5,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_leatherDark": {
+      "color": "#4E3020",
+      "metallic": 0,
+      "smoothness": 0.25,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_wardenSteel": {
+      "color": "#A9B6C2",
+      "metallic": 0.65,
+      "smoothness": 0.55,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_wardenGuard": {
+      "color": "#4A5563",
+      "metallic": 0.6,
+      "smoothness": 0.4,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_cyanInset": {
+      "color": "#4FD8FF",
+      "metallic": 0,
+      "smoothness": 0.6,
+      "emissive": "#4FD8FF",
+      "emissiveIntensity": 0.55
+    },
+    "Item_ancientSteel": {
+      "color": "#97A09F",
+      "metallic": 0.5,
+      "smoothness": 0.35,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_ancientBrass": {
+      "color": "#C99A3B",
+      "metallic": 0.7,
+      "smoothness": 0.42,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_vestLeather": {
+      "color": "#9A6234",
+      "metallic": 0,
+      "smoothness": 0.28,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_vestSeam": {
+      "color": "#3A2418",
+      "metallic": 0,
+      "smoothness": 0.2,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_glass": {
+      "color": "#D3E2EA",
+      "metallic": 0.1,
+      "smoothness": 0.85,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_ruby": {
+      "color": "#C21D3A",
+      "metallic": 0,
+      "smoothness": 0.7,
+      "emissive": "#7A0F22",
+      "emissiveIntensity": 0.35
+    },
+    "Item_cork": {
+      "color": "#A8794A",
+      "metallic": 0,
+      "smoothness": 0.2,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_highlight": {
+      "color": "#FFFFFF",
+      "metallic": 0,
+      "smoothness": 0.9,
+      "emissive": "#FFFFFF",
+      "emissiveIntensity": 0.35
+    },
+    "Item_gold": {
+      "color": "#F2C14E",
+      "metallic": 0.8,
+      "smoothness": 0.6,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_xp": {
+      "color": "#4FD8FF",
+      "metallic": 0,
+      "smoothness": 0.6,
+      "emissive": "#2FB8E8",
+      "emissiveIntensity": 0.9
+    },
+    "Item_xpDark": {
+      "color": "#1C5F7A",
+      "metallic": 0,
+      "smoothness": 0.5,
+      "emissive": "#0B2A38",
+      "emissiveIntensity": 0.4
+    },
+    "Item_xpRing": {
+      "color": "#DFFBFF",
+      "metallic": 0,
+      "smoothness": 0.8,
+      "emissive": "#BFF4FF",
+      "emissiveIntensity": 1.2
+    }
+  },
+  "models": [
+    {
+      "id": "MODEL-ITEM-IRON",
+      "name": "Item_IronSword",
+      "kind": "sword",
+      "fbx": "Models/Item_IronSword.fbx",
+      "submeshMaterials": [
+        "Item_steel",
+        "Item_steelDark",
+        "Item_brass",
+        "Item_leatherDark"
+      ],
+      "triangles": 340,
+      "pivot": "grip (Socket_Hand_R, lâmina +Z)",
+      "bounds": {
+        "min": [
+          -0.155,
+          -0.042,
+          -0.108
+        ],
+        "max": [
+          0.155,
+          0.042,
+          0.7471
+        ],
+        "size": [
+          0.31,
+          0.084,
+          0.8551
+        ]
+      }
+    },
+    {
+      "id": "MODEL-ITEM-WARDEN",
+      "name": "Item_WardenBlade",
+      "kind": "sword",
+      "fbx": "Models/Item_WardenBlade.fbx",
+      "submeshMaterials": [
+        "Item_wardenSteel",
+        "Item_steelDark",
+        "Item_wardenGuard",
+        "Item_cyanInset",
+        "Item_leatherDark"
+      ],
+      "triangles": 224,
+      "pivot": "grip (Socket_Hand_R, lâmina +Z)",
+      "bounds": {
+        "min": [
+          -0.2067,
+          -0.04,
+          -0.1205
+        ],
+        "max": [
+          0.2067,
+          0.04,
+          0.787
+        ],
+        "size": [
+          0.4133,
+          0.08,
+          0.9075
+        ]
+      }
+    },
+    {
+      "id": "MODEL-ITEM-ANCIENT",
+      "name": "Item_AncientEdge",
+      "kind": "sword",
+      "fbx": "Models/Item_AncientEdge.fbx",
+      "submeshMaterials": [
+        "Item_ancientSteel",
+        "Item_ancientBrass",
+        "Item_steelDark",
+        "Item_leatherDark"
+      ],
+      "triangles": 348,
+      "pivot": "grip (Socket_Hand_R, lâmina +Z)",
+      "bounds": {
+        "min": [
+          -0.14,
+          -0.0303,
+          -0.164
+        ],
+        "max": [
+          0.14,
+          0.0303,
+          0.7653
+        ],
+        "size": [
+          0.28,
+          0.0606,
+          0.9293
+        ]
+      }
+    },
+    {
+      "id": "MODEL-ITEM-LEATHER",
+      "name": "Item_LeatherVest",
+      "kind": "vest",
+      "fbx": "Models/Item_LeatherVest.fbx",
+      "submeshMaterials": [
+        "Item_vestLeather",
+        "Item_vestSeam",
+        "Item_brass"
+      ],
+      "triangles": 588,
+      "pivot": "base",
+      "bounds": {
+        "min": [
+          -0.2872,
+          0,
+          -0.2483
+        ],
+        "max": [
+          0.2872,
+          0.5735,
+          0.2483
+        ],
+        "size": [
+          0.5743,
+          0.5735,
+          0.4966
+        ]
+      }
+    },
+    {
+      "id": "MODEL-ITEM-HEALTH",
+      "name": "Item_HealthPotion",
+      "kind": "potion",
+      "fbx": "Models/Item_HealthPotion.fbx",
+      "submeshMaterials": [
+        "Item_ruby",
+        "Item_glass",
+        "Item_leatherDark",
+        "Item_cork",
+        "Item_highlight"
+      ],
+      "triangles": 286,
+      "pivot": "base",
+      "bounds": {
+        "min": [
+          -0.1035,
+          0,
+          -0.1035
+        ],
+        "max": [
+          0.1035,
+          0.325,
+          0.1035
+        ],
+        "size": [
+          0.2069,
+          0.325,
+          0.2069
+        ]
+      }
+    },
+    {
+      "id": "MODEL-LOOT-GOLD",
+      "name": "Loot_Gold",
+      "kind": "gold",
+      "fbx": "Models/Loot_Gold.fbx",
+      "submeshMaterials": [
+        "Item_gold"
+      ],
+      "triangles": 200,
+      "pivot": "base",
+      "bounds": {
+        "min": [
+          -0.1849,
+          0,
+          -0.1521
+        ],
+        "max": [
+          0.1768,
+          0.1723,
+          0.1388
+        ],
+        "size": [
+          0.3617,
+          0.1723,
+          0.2909
+        ]
+      }
+    },
+    {
+      "id": "MODEL-LOOT-XP",
+      "name": "Loot_XpOrb",
+      "kind": "xp",
+      "fbx": "Models/Loot_XpOrb.fbx",
+      "submeshMaterials": [
+        "Item_xp",
+        "Item_xpDark",
+        "Item_xpRing"
+      ],
+      "triangles": 152,
+      "pivot": "base",
+      "bounds": {
+        "min": [
+          -0.1409,
+          0,
+          -0.1306
+        ],
+        "max": [
+          0.1409,
+          0.2,
+          0.1306
+        ],
+        "size": [
+          0.2817,
+          0.2,
+          0.2612
+        ]
+      }
+    },
+    {
+      "id": "MODEL-ITEM-LEATHER",
+      "name": "Hero_LeatherVest",
+      "kind": "wearable",
+      "fbx": "Models/Hero_LeatherVest.fbx",
+      "skinned": true,
+      "skeleton": "Hero (humanoidSkeleton(P) + Cape_1/Cape_2, sockets)",
+      "submeshMaterials": [
+        "Item_vestLeather",
+        "Item_vestSeam",
+        "Item_brass"
+      ],
+      "triangles": 588,
+      "bounds": {
+        "min": [
+          -0.2872,
+          0.7426,
+          -0.2356
+        ],
+        "max": [
+          0.2872,
+          1.3161,
+          0.261
+        ],
+        "size": [
+          0.5743,
+          0.5735,
+          0.4966
+        ]
+      }
+    }
+  ]
+}

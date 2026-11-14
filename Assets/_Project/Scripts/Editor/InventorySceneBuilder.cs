@@ -191,7 +191,77 @@ namespace DungeonCrawler.Editor
             if (controls != null) controls.GetComponent<Text>().text = "WASD mover | Mouse mirar | Esquerdo atacar | Espaço dash | I/Tab inventário | Q poção | Esc pausa | R reiniciar";
             panel.gameObject.SetActive(false); pausePanel.gameObject.SetActive(false);
             GameShellSceneBuilder.ConfigureGameplay(hud, player, menu, panel.gameObject, pausePanel.gameObject, events, resume);
+            ConfigureItemVisuals(hud, player);
             root.SetAsLastSibling();
+        }
+
+        /// <summary>
+        /// ITEMS-COMBAT presentation: slot icon/quantity/selection frame, details and equipment icons, potion HUD.
+        /// Idempotent and presentation-only; works without the catalog (images stay empty, text remains the label).
+        /// </summary>
+        public static void ConfigureItemVisuals(GameObject hud, GameObject player)
+        {
+            var catalog = AssetDatabase.LoadAssetAtPath<ItemVisualCatalog>(ProductionVisualIntegrator.CatalogPath);
+            Transform windowTransform = hud.transform.Find("InventoryUI/InventoryPanel/Window");
+            if (windowTransform == null) throw new InvalidOperationException("Inventory window missing; integrate the inventory first.");
+            var window = (RectTransform)windowTransform;
+            var presenter = window.parent.GetComponent<InventoryPresenter>();
+            for (int i = 0; i < 16; i++)
+            {
+                var button = window.Find("Slot_" + i.ToString("00")) as RectTransform;
+                if (button == null) throw new InvalidOperationException("Inventory slot missing: " + i);
+                var view = button.GetComponent<InventorySlotView>();
+                Image icon = IconImage(button, "Icon", new Vector2(6f, -20f), new Vector2(64f, 64f));
+                icon.preserveAspect = true; icon.enabled = false;
+                Text quantity = Label(button, "Quantity", "", new Vector2(4f, -60f), new Vector2(66f, 26f), 20);
+                quantity.alignment = TextAnchor.LowerRight; quantity.fontStyle = FontStyle.Bold;
+                Get<Outline>(quantity.gameObject).effectDistance = new Vector2(1.5f, -1.5f);
+                Text label = button.Find("Label").GetComponent<Text>();
+                var labelRect = label.rectTransform; labelRect.anchoredPosition = new Vector2(76f, -4f); labelRect.sizeDelta = new Vector2(106f, 96f);
+                label.fontSize = 17; label.alignment = TextAnchor.MiddleLeft; label.horizontalOverflow = HorizontalWrapMode.Wrap; label.verticalOverflow = VerticalWrapMode.Truncate;
+                label.lineSpacing = .95f; label.supportRichText = true;
+                RectTransform frame = Node(button, "SelectionFrame"); Stretch(frame);
+                foreach ((string side, Vector2 min, Vector2 max) in new[] { ("Top", new Vector2(0f, 1f), Vector2.one), ("Bottom", Vector2.zero, new Vector2(1f, 0f)),
+                             ("Left", Vector2.zero, new Vector2(0f, 1f)), ("Right", new Vector2(1f, 0f), Vector2.one) })
+                {
+                    RectTransform edge = Node(frame, side); edge.anchorMin = min; edge.anchorMax = max; edge.pivot = new Vector2(.5f, .5f);
+                    edge.sizeDelta = side == "Top" || side == "Bottom" ? new Vector2(0f, 4f) : new Vector2(4f, 0f); edge.anchoredPosition = Vector2.zero;
+                    var img = Get<Image>(edge.gameObject); img.color = new Color(1f, .82f, .45f); img.raycastTarget = false;
+                }
+                // corner marker: selection reads by shape, not only by color
+                RectTransform marker = Box(frame, "Marker", new Vector2(-2f, 2f), new Vector2(16f, 16f)); marker.localEulerAngles = new Vector3(0f, 0f, 45f);
+                var markerImage = Get<Image>(marker.gameObject); markerImage.color = new Color(1f, .82f, .45f); markerImage.raycastTarget = false;
+                frame.gameObject.SetActive(false);
+                Set(view, "icon", icon); Set(view, "quantity", quantity); Set(view, "selectionFrame", frame.gameObject);
+            }
+            Image detailsIcon = IconImage(window, "DetailsIcon", new Vector2(1076f, -366f), new Vector2(72f, 72f));
+            Image weaponIcon = IconImage(window, "EquippedWeaponIcon", new Vector2(1100f, -118f), new Vector2(46f, 46f));
+            Image armorIcon = IconImage(window, "EquippedArmorIcon", new Vector2(1100f, -193f), new Vector2(46f, 46f));
+            foreach (Image image in new[] { detailsIcon, weaponIcon, armorIcon }) { image.preserveAspect = true; image.enabled = false; }
+            Set(presenter, "catalog", catalog); Set(presenter, "detailsIcon", detailsIcon);
+            Set(presenter, "equippedWeaponIcon", weaponIcon); Set(presenter, "equippedArmorIcon", armorIcon);
+
+            // HUD-POTIONS: top-left, under the stamina bar.
+            RectTransform potionHud = Box(hud.transform, "PotionHud", new Vector2(24f, -178f), new Vector2(240f, 60f));
+            var background = Get<Image>(potionHud.gameObject); background.color = new Color(.03f, .045f, .06f, .72f); background.raycastTarget = false;
+            var group = Get<CanvasGroup>(potionHud.gameObject); group.interactable = false; group.blocksRaycasts = false;
+            Image potionIcon = IconImage(potionHud, "Icon", new Vector2(6f, -6f), new Vector2(48f, 48f)); potionIcon.preserveAspect = true;
+            var definition = EnsureDefinition();
+            potionIcon.sprite = catalog != null ? catalog.GetIcon(definition.healthPotion) : null; potionIcon.enabled = potionIcon.sprite != null;
+            RectTransform key = Box(potionHud, "KeyBadge", new Vector2(36f, -32f), new Vector2(26f, 26f));
+            var keyImage = Get<Image>(key.gameObject); keyImage.color = new Color(1f, .82f, .45f); keyImage.raycastTarget = false;
+            Text keyLabel = Label(key, "Label", "Q", Vector2.zero, new Vector2(26f, 26f), 18);
+            keyLabel.alignment = TextAnchor.MiddleCenter; keyLabel.fontStyle = FontStyle.Bold; keyLabel.color = new Color(.04f, .06f, .08f);
+            Text count = Label(potionHud, "Count", "× 0", new Vector2(66f, -2f), new Vector2(168f, 30f), 26); count.fontStyle = FontStyle.Bold;
+            Text status = Label(potionHud, "Status", "", new Vector2(66f, -32f), new Vector2(170f, 24f), 16); status.color = new Color(.82f, .87f, .92f);
+            var potionPresenter = Get<PotionHudPresenter>(potionHud.gameObject);
+            Set(potionPresenter, "inventory", player.GetComponent<PlayerInventory>()); Set(potionPresenter, "health", player.GetComponent<Health>());
+            Set(potionPresenter, "icon", potionIcon); Set(potionPresenter, "count", count); Set(potionPresenter, "status", status); Set(potionPresenter, "group", group);
+        }
+
+        private static Image IconImage(Transform parent, string name, Vector2 position, Vector2 size)
+        {
+            var rect = Box(parent, name, position, size); var image = Get<Image>(rect.gameObject); image.raycastTarget = false; image.color = Color.white; return image;
         }
 
         internal static T Get<T>(GameObject root) where T : Component

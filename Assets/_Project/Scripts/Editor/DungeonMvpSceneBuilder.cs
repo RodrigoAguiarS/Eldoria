@@ -72,6 +72,8 @@ namespace DungeonCrawler.Editor
             BuildEventSystem(scene);
             GameRestarter restarter = BuildGameSystems(scene, actions);
             BuildHud(scene, player, restarter);
+            // ITEMS-COMBAT: placeholder sword sweep (no Hero socket here); the white AttackVisual stays diagnostic-only.
+            if (ProductionVisualIntegrator.LoadCatalog() != null) ProductionVisualIntegrator.ConfigurePlayerPresentation(player);
 
             EditorBuildUtility.SaveScene(scene);
             EditorBuildUtility.EnsureSceneInBuildSettings(ProjectPaths.MvpArenaScene);
@@ -138,6 +140,7 @@ namespace DungeonCrawler.Editor
                 new Vector3(0f, 1f, 0f), Vector3.one);
             CreateVisual(root.transform, "FacingMarker", PrimitiveType.Cube, accentMat,
                 new Vector3(0f, 1.2f, 0.5f), new Vector3(0.25f, 0.25f, 0.5f));
+            // Diagnostic marker only (PlayerCombat.showDiagnosticAttackVisual = false by default); damage uses the physics query.
             Renderer attackVisual = CreateVisual(root.transform, "AttackVisual", PrimitiveType.Cube, attackMat,
                 new Vector3(0f, 0.6f, 1.3f), new Vector3(2.2f, 0.1f, 1.6f));
             attackVisual.gameObject.SetActive(false);

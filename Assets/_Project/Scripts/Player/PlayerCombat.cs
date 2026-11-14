@@ -18,7 +18,9 @@ namespace DungeonCrawler.Player
         [SerializeField] private PlayerComboDefinition comboDefinition;
         [SerializeField] private LayerMask enemyMask;
         [SerializeField, Min(0f)] private float damage = 20f;
+        [Tooltip("Marcador de diagnóstico (não é a hitbox). Fica oculto na apresentação normal; a autoridade é a consulta física.")]
         [SerializeField] private GameObject attackVisual;
+        [SerializeField] private bool showDiagnosticAttackVisual;
 
         private Collider[] hitBuffer = new Collider[16];
         private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>(16);
@@ -28,6 +30,8 @@ namespace DungeonCrawler.Player
         public event Action<int, PlayerComboStep> AttackImpacted;
         public event Action AttackFinished;
         public event Action AttackCancelled;
+        /// <summary>Presentation only: raised after TakeDamage accepted the hit (contact point, attack direction).</summary>
+        public event Action<Vector3, Vector3> TargetHit;
 
         public bool IsAttacking => combo != null && combo.IsAttacking;
         public bool IsBusy => IsAttacking || (combo != null && combo.IsRecovering(Time.time));
@@ -102,7 +106,8 @@ namespace DungeonCrawler.Player
         private void OnStarted(int index, PlayerComboStep step) { SetVisual(false); AttackStarted?.Invoke(index, step); }
         private void OnFinished() { SetVisual(false); AttackFinished?.Invoke(); }
         private void OnCancelled() { SetVisual(false); AttackCancelled?.Invoke(); }
-        private void SetVisual(bool active) { if (attackVisual != null) attackVisual.SetActive(active); }
+        public bool ShowDiagnosticAttackVisual { get => showDiagnosticAttackVisual; set { showDiagnosticAttackVisual = value; if (!value) SetVisual(false); } }
+        private void SetVisual(bool active) { if (attackVisual != null) attackVisual.SetActive(active && showDiagnosticAttackVisual); }
 
         private void OnImpact(int index, PlayerComboStep step)
         {
@@ -140,7 +145,12 @@ namespace DungeonCrawler.Player
                 toTarget.y = 0f;
                 if (toTarget.sqrMagnitude > .0001f && Vector3.Dot(transform.forward, toTarget.normalized) < minDot) continue;
                 if (!hitTargets.Add(target)) continue;
-                target.TakeDamage(amount, origin);
+                if (target.TakeDamage(amount, origin) && TargetHit != null)
+                {
+                    Vector3 point = other.bounds.center;
+                    Vector3 direction = toTarget.sqrMagnitude > .0001f ? toTarget.normalized : transform.forward;
+                    TargetHit(point - direction * Mathf.Min(other.bounds.extents.x, other.bounds.extents.z), direction);
+                }
                 // A target's damage callback may kill/deactivate the attacker.
                 if ((attackingAtStart && (!isActiveAndEnabled || !IsAttacking)) || !CanAttack()) break;
             }

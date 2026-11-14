@@ -1,0 +1,290 @@
+{
+  "ok": true,
+  "issues": [],
+  "report": [
+    {
+      "id": "MODEL-ITEM-IRON",
+      "name": "Item_IronSword",
+      "triangles": 340,
+      "budget": [
+        300,
+        800
+      ],
+      "materials": [
+        "Item_steel",
+        "Item_steelDark",
+        "Item_brass",
+        "Item_leatherDark"
+      ],
+      "bounds": {
+        "min": [
+          -0.155,
+          -0.042,
+          -0.108
+        ],
+        "max": [
+          0.155,
+          0.042,
+          0.7471
+        ],
+        "size": [
+          0.31,
+          0.084,
+          0.8551
+        ]
+      },
+      "pivot": "grip (Socket_Hand_R, lâmina +Z)"
+    },
+    {
+      "id": "MODEL-ITEM-WARDEN",
+      "name": "Item_WardenBlade",
+      "triangles": 224,
+      "budget": [
+        300,
+        800
+      ],
+      "materials": [
+        "Item_wardenSteel",
+        "Item_steelDark",
+        "Item_wardenGuard",
+        "Item_cyanInset",
+        "Item_leatherDark"
+      ],
+      "bounds": {
+        "min": [
+          -0.2067,
+          -0.04,
+          -0.1205
+        ],
+        "max": [
+          0.2067,
+          0.04,
+          0.787
+        ],
+        "size": [
+          0.4133,
+          0.08,
+          0.9075
+        ]
+      },
+      "pivot": "grip (Socket_Hand_R, lâmina +Z)"
+    },
+    {
+      "id": "MODEL-ITEM-ANCIENT",
+      "name": "Item_AncientEdge",
+      "triangles": 348,
+      "budget": [
+        300,
+        800
+      ],
+      "materials": [
+        "Item_ancientSteel",
+        "Item_ancientBrass",
+        "Item_steelDark",
+        "Item_leatherDark"
+      ],
+      "bounds": {
+        "min": [
+          -0.14,
+          -0.0303,
+          -0.164
+        ],
+        "max": [
+          0.14,
+          0.0303,
+          0.7653
+        ],
+        "size": [
+          0.28,
+          0.0606,
+          0.9293
+        ]
+      },
+      "pivot": "grip (Socket_Hand_R, lâmina +Z)"
+    },
+    {
+      "id": "MODEL-ITEM-LEATHER",
+      "name": "Item_LeatherVest",
+      "triangles": 588,
+      "budget": [
+        500,
+        1200
+      ],
+      "materials": [
+        "Item_vestLeather",
+        "Item_vestSeam",
+        "Item_brass"
+      ],
+      "bounds": {
+        "min": [
+          -0.2872,
+          0,
+          -0.2483
+        ],
+        "max": [
+          0.2872,
+          0.5735,
+          0.2483
+        ],
+        "size": [
+          0.5743,
+          0.5735,
+          0.4966
+        ]
+      },
+      "pivot": "base"
+    },
+    {
+      "id": "MODEL-ITEM-HEALTH",
+      "name": "Item_HealthPotion",
+      "triangles": 286,
+      "budget": [
+        150,
+        350
+      ],
+      "materials": [
+        "Item_ruby",
+        "Item_glass",
+        "Item_leatherDark",
+        "Item_cork",
+        "Item_highlight"
+      ],
+      "bounds": {
+        "min": [
+          -0.1035,
+          0,
+          -0.1035
+        ],
+        "max": [
+          0.1035,
+          0.325,
+          0.1035
+        ],
+        "size": [
+          0.2069,
+          0.325,
+          0.2069
+        ]
+      },
+      "pivot": "base"
+    },
+    {
+      "id": "MODEL-LOOT-GOLD",
+      "name": "Loot_Gold",
+      "triangles": 200,
+      "budget": [
+        100,
+        250
+      ],
+      "materials": [
+        "Item_gold"
+      ],
+      "bounds": {
+        "min": [
+          -0.1849,
+          0,
+          -0.1521
+        ],
+        "max": [
+          0.1768,
+          0.1723,
+          0.1388
+        ],
+        "size": [
+          0.3617,
+          0.1723,
+          0.2909
+        ]
+      },
+      "pivot": "base"
+    },
+    {
+      "id": "MODEL-LOOT-XP",
+      "name": "Loot_XpOrb",
+      "triangles": 152,
+      "budget": [
+        100,
+        250
+      ],
+      "materials": [
+        "Item_xp",
+        "Item_xpDark",
+        "Item_xpRing"
+      ],
+      "bounds": {
+        "min": [
+          -0.1409,
+          0,
+          -0.1306
+        ],
+        "max": [
+          0.1409,
+          0.2,
+          0.1306
+        ],
+        "size": [
+          0.2817,
+          0.2,
+          0.2612
+        ]
+      },
+      "pivot": "base"
+    },
+    {
+      "id": "MODEL-ITEM-LEATHER",
+      "name": "Hero_LeatherVest",
+      "variant": "wearable",
+      "triangles": 588,
+      "bones": [
+        "Root",
+        "Hips",
+        "Spine",
+        "Chest",
+        "Neck",
+        "Head",
+        "Shoulder_L",
+        "UpperArm_L",
+        "LowerArm_L",
+        "Hand_L",
+        "UpperLeg_L",
+        "LowerLeg_L",
+        "Foot_L",
+        "Toes_L",
+        "Shoulder_R",
+        "UpperArm_R",
+        "LowerArm_R",
+        "Hand_R",
+        "UpperLeg_R",
+        "LowerLeg_R",
+        "Foot_R",
+        "Toes_R",
+        "Cape_1",
+        "Cape_2"
+      ],
+      "weightedBones": [
+        "Hips",
+        "Spine",
+        "Chest"
+      ],
+      "bounds": {
+        "min": [
+          -0.2872,
+          0.7426,
+          -0.2356
+        ],
+        "max": [
+          0.2872,
+          1.3161,
+          0.261
+        ],
+        "size": [
+          0.5743,
+          0.5735,
+          0.4966
+        ]
+      }
+    }
+  ],
+  "date": "2026-11-14T19:13:56.293Z",
+  "node": "v24.18.0"
+}

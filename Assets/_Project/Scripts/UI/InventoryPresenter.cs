@@ -24,6 +24,11 @@ namespace DungeonCrawler.UI
         [SerializeField] private Button unequip;
         [SerializeField] private Button use;
         [SerializeField] private Button drop;
+        [Tooltip("Optional presentation map (icons). Never changes item rules.")]
+        [SerializeField] private ItemVisualCatalog catalog;
+        [SerializeField] private Image detailsIcon;
+        [SerializeField] private Image equippedWeaponIcon;
+        [SerializeField] private Image equippedArmorIcon;
         private int selected;
 
         private void Awake()
@@ -67,11 +72,13 @@ namespace DungeonCrawler.UI
                 InventoryStack stack = i < inventory.Slots.Count ? inventory.Slots[i] : default;
                 if (!stack.IsEmpty) occupied++;
                 bool equipped = i == inventory.EquippedArmorIndex || i == inventory.EquippedWeaponIndex;
-                slots[i].Render(stack, i == selected, equipped);
+                slots[i].Render(stack, i == selected, equipped, stack.IsEmpty ? null : Icon(stack.Definition));
             }
             title.text = $"INVENTÁRIO   {occupied}/{inventory.Capacity}";
             string weapon = progression.Weapon != null ? progression.Weapon.DisplayName : "Espada básica";
             string armor = inventory.EquippedArmorIndex >= 0 ? inventory.Slots[inventory.EquippedArmorIndex].Definition.DisplayName : "Sem armadura";
+            ShowIcon(equippedWeaponIcon, progression.Weapon != null ? Icon(progression.Weapon) : null);
+            ShowIcon(equippedArmorIcon, inventory.EquippedArmorIndex >= 0 ? Icon(inventory.Slots[inventory.EquippedArmorIndex].Definition) : null);
             equipment.text = $"ARMA\n{weapon}\n\nARMADURA\n{armor}\n\nDano {combat.CurrentDamage:0.#}   Defesa {health.Defense:0.#}\nHP {health.Current:0}/{health.Max:0}";
             InventoryStack item = selected < inventory.Slots.Count ? inventory.Slots[selected] : default;
             bool selectedEquipped = selected == inventory.EquippedWeaponIndex || selected == inventory.EquippedArmorIndex;
@@ -80,14 +87,23 @@ namespace DungeonCrawler.UI
             unequip.interactable = health.IsAlive && gear && selectedEquipped;
             use.interactable = health.IsAlive && !item.IsEmpty && item.Definition.Kind == InventoryItemKind.Potion && health.Current < health.Max;
             drop.interactable = health.IsAlive && !item.IsEmpty;
+            ShowIcon(detailsIcon, item.IsEmpty ? null : Icon(item.Definition));
             if (item.IsEmpty) { details.text = "Selecione um item.\n\nPoções ficam guardadas.\nUse Q para beber uma poção.\n\nA partida está pausada."; return; }
             string rarity = item.Definition.rarity != null ? item.Definition.rarity.displayName : "Comum";
             string stat = item.Definition is WeaponData blade ? $"+{blade.damageBonus:0.#} de dano" :
                 item.Definition is ArmorData armorData ? $"+{armorData.defense:0.#} de defesa" : $"Restaura {item.Potency} HP";
             string help = item.Definition is PotionData ? "Use quando estiver ferido. Q bebe uma poção guardada." :
                 item.Definition is ArmorData ? "Reduz o dano recebido enquanto estiver equipada." : "Troque de arma sem perder a anterior.";
-            details.text = item.Definition.DisplayName + "\n" + rarity + "\n\n" + stat +
+            details.text = item.Definition.DisplayName + "\n" + rarity + (selectedEquipped ? " · Equipado" : "") + "\n\n" + stat +
                 (item.Count > 1 ? "\nQuantidade: " + item.Count : "") + "\n\n" + help;
+        }
+
+        private Sprite Icon(ItemDefinition item) => catalog != null ? catalog.GetIcon(item) : null;
+        private static void ShowIcon(Image image, Sprite sprite)
+        {
+            if (image == null) return;
+            image.sprite = sprite;
+            image.enabled = sprite != null;
         }
     }
 }

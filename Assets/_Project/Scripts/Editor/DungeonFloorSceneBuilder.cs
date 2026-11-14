@@ -174,6 +174,7 @@ namespace DungeonCrawler.Editor
             AddBossHud(scene, rooms[RoomCount - 1]);
             AddVictoryHud(scene, floor, restarter);
             InventorySceneBuilder.ConfigureHud(scene, player, restarter);
+            if (ProductionVisualIntegrator.LoadCatalog() != null) ProductionVisualIntegrator.ConfigurePlayerPresentation(player);
 
             EditorBuildUtility.SaveScene(scene);
             EditorBuildUtility.EnsureSceneInBuildSettings(ProjectPaths.FloorScene);
@@ -184,6 +185,8 @@ namespace DungeonCrawler.Editor
             EditorBuildUtility.UseStartupScene(GeneratedGameTestBuilder.TestScene, ProjectPaths.FloorScene);
             GameShellSceneBuilder.Integrate();
             GameShellSceneBuilder.EnsureBuildScenes();
+            // ITEMS-COMBAT: equipped visuals, sword VFX and inventory icons on the regenerated release floor.
+            if (ProductionVisualIntegrator.LoadCatalog() != null) ProductionVisualIntegrator.IntegrateReleaseFloorScene();
             EditorSceneManager.OpenScene(GeneratedGameTestBuilder.TestScene, OpenSceneMode.Single);
             AssetDatabase.SaveAssets();
             Debug.Log($"[DungeonCrawler] Andar com personagens 3D pronto e aberto: {GeneratedGameTestBuilder.TestScene}. Cena inicial do build configurada.");
@@ -265,6 +268,8 @@ namespace DungeonCrawler.Editor
 
             var pickup = root.AddComponent<Pickup>();
             DungeonMvpSceneBuilder.SetObj(pickup, "visual", visual);
+            // ITEMS-COMBAT: per-item model through the catalog; the tinted sphere stays as fallback.
+            ProductionVisualIntegrator.ConfigurePickup(root);
 
             EditorBuildUtility.EnsureFolder(ProjectPaths.Root + "/Prefabs/Items");
             GameObject prefab = EditorBuildUtility.SavePrefab(root, ProjectPaths.Root + "/Prefabs/Items/Pickup.prefab");

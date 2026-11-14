@@ -9,6 +9,8 @@ namespace DungeonCrawler.Systems
         private static readonly int ColorId = Shader.PropertyToID("_Color");
 
         [SerializeField] private Renderer visual;
+        [Tooltip("Optional: shows the catalog model; the tinted sphere stays as fallback.")]
+        [SerializeField] private PickupVisualPresenter presenter;
         [SerializeField, Min(1f)] private float lifetime = 45f;
         [SerializeField, Min(0f)] private float bobHeight = 0.15f;
         [SerializeField, Min(0f)] private float spinSpeed = 120f;
@@ -22,12 +24,15 @@ namespace DungeonCrawler.Systems
         private MaterialPropertyBlock block;
 
         public LootKind Kind => drop.Kind;
+        public LootDrop Drop => drop;
+        public PickupVisualPresenter Presenter => presenter;
 
         public void Setup(in LootDrop lootDrop)
         {
             drop = lootDrop;
             baseY = transform.position.y;
             expireAt = Time.time + lifetime;
+            if (presenter != null && presenter.Present(lootDrop)) return;
             ItemDefinition item = lootDrop.Kind == LootKind.Weapon ? lootDrop.Weapon : lootDrop.Armor;
             Tint(item != null && item.rarity != null ? item.rarity.color : ColorFor(lootDrop.Kind));
         }
