@@ -1,0 +1,45 @@
+<!doctype html><html><head><meta charset="utf-8"><title>ANIM-TORCH preview</title>
+<style>html,body{margin:0;height:100%;background:#15131f;overflow:hidden;font:600 15px/1.3 system-ui,sans-serif;color:#d8d6e6}
+#hud{position:absolute;left:14px;top:10px;white-space:pre}#lbl{position:absolute;bottom:10px;width:100%;display:flex;justify-content:space-around;color:#9a98ad}</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js"}}</script></head>
+<body><div id="hud"></div><div id="lbl"><span>câmera de jogo aprox. (45°, ~11 m)</span><span>close-up 3/4</span><span>close-up frontal</span></div>
+<script type="module">
+import * as THREE from 'three';
+const data = await (await fetch('./data.json')).json();
+const W = innerWidth, H = innerHeight;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H); renderer.setScissorTest(true); document.body.prepend(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x15131f);
+scene.add(new THREE.HemisphereLight(0x9fb8ff, 0x1e1830, 0.9));
+const moon = new THREE.DirectionalLight(0x9fb8ff, 1.2); moon.position.set(-4, 8, -6); scene.add(moon);
+const toGl = v => [-v[0], v[1], v[2]];
+function geom(verts, off) { const p = []; for (let i = 0; i < verts.length; i += 3) for (const j of [0, 2, 1]) { const v = verts[i + j]; p.push(...toGl([v[0] - off[0], v[1] - off[1], v[2] - off[2]])); }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(p, 3)); g.computeVertexNormals(); return g; }
+const iron = new THREE.MeshStandardMaterial({ color: 0x2a2a33, metalness: .5, roughness: .65, flatShading: true });
+const fire = new THREE.MeshStandardMaterial({ color: 0xff9a2e, emissive: 0xff9a2e, emissiveIntensity: 2.2, flatShading: true });
+const wallM = new THREE.MeshStandardMaterial({ color: 0x3e4152, roughness: .95, flatShading: true }), floorM = new THREE.MeshStandardMaterial({ color: 0x55596b, roughness: .95, flatShading: true });
+// parede (−z da tocha), piso e a tocha a 0,868 m (altura real das salas: wallH 1,4 × 0,62)
+const wall = new THREE.Mesh(new THREE.BoxGeometry(6, 1.4, 1), wallM); wall.position.set(0, .7, -.5); scene.add(wall);
+const floor = new THREE.Mesh(new THREE.BoxGeometry(10, .2, 8), floorM); floor.position.set(0, -.1, 3); scene.add(floor);
+const torch = new THREE.Group(); torch.position.set(0, .868, 0); scene.add(torch);
+torch.add(new THREE.Mesh(geom(data.geometry.support, [0, 0, 0]), iron));
+const flame = new THREE.Mesh(geom(data.geometry.flame, data.geometry.flamePivot), fire); flame.position.set(...toGl(data.geometry.flamePivot)); torch.add(flame);
+const ghost = new THREE.Mesh(flame.geometry, new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: .25 })); ghost.position.copy(flame.position); torch.add(ghost);
+const pl = new THREE.PointLight(0xff9a2e, 4, 7, 2); pl.position.set(0, 1.318, .6); scene.add(pl);   // luz fixa (não animada), como TorchLight
+function hermite(keys, t) { if (t <= keys[0].time) return keys[0].value;
+  for (let i = 0; i < keys.length - 1; i++) { const a = keys[i], b = keys[i + 1]; if (t > b.time) continue; const dt = b.time - a.time, s = (t - a.time) / dt, s2 = s * s, s3 = s2 * s;
+    return (2*s3-3*s2+1)*a.value + (s3-2*s2+s)*dt*a.outTangent + (-2*s3+3*s2)*b.value + (s3-s2)*dt*b.inTangent; } return keys[keys.length - 1].value; }
+const cams = [
+  (() => { const c = new THREE.PerspectiveCamera(40, (W/3)/H, .1, 100); c.position.set(0, .868 + 7.8, 7.8); c.lookAt(0, .868, 0); return c; })(),
+  (() => { const c = new THREE.PerspectiveCamera(30, (W/3)/H, .05, 50); c.position.set(-1.1, 1.75, 1.6); c.lookAt(0, 1.2, .3); return c; })(),
+  (() => { const c = new THREE.PerspectiveCamera(30, (W/3)/H, .05, 50); c.position.set(0, 1.25, 2.2); c.lookAt(0, 1.2, .3); return c; })(),
+];
+const hud = document.getElementById('hud'), T = data.clip.duration;
+window.render = t => {
+  const tt = ((t % T) + T) % T, v = data.clip.curves.map(c => hermite(c.keys, tt));
+  const n = Math.hypot(v[0], v[1], v[2], v[3]); flame.quaternion.set(v[0] / n, -v[1] / n, -v[2] / n, v[3] / n); flame.scale.set(v[4], v[5], v[6]);
+  hud.textContent = data.clip.name + '  t=' + tt.toFixed(3) + ' s  quadro ' + (tt * data.clip.fps).toFixed(1) + '/' + Math.round(T * data.clip.fps) + '\nescala y ' + v[5].toFixed(4) + '   wireframe = pose de repouso (GA_Torch)';
+  cams.forEach((c, i) => { renderer.setViewport(i * W / 3, 0, W / 3, H); renderer.setScissor(i * W / 3, 0, W / 3, H); renderer.render(scene, c); });
+};
+window.render(0); window.READY = true;
+</script></body></html>
