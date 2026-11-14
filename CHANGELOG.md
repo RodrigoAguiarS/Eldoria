@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-14 — Menus e opções persistentes
+
+- Menu inicial, pausa/opções/retorno e botões de retorno nas telas de vitória/derrota. Pilha de telas mantém foco e oculta o menu anterior; telas terminais selecionam Reiniciar. Build agora inclui MainMenu e o andar, preservando as cenas de teste no Editor.
+- JSON versionado em PlayerPrefs armazena volumes, flash/tremor e qualidade/resolução/tela cheia; defaults do SO não mudam. Flash ajustável também nos modelos gerados e tremor ajustável no dano/rugido, preservando a cor persistente da fase 2.
+- 90/90 EditMode; suíte inicial PlayMode 62/63 e os três testes de menus passaram na reexecução após corrigir tolerância numérica da fixture. Controle positivo confirma sinal Cinemachine normal e nenhum sinal com intensidade zero. Build Windows Succeeded, 0 erros, 496 avisos de shaders conhecidos.
+- Revisão Windows encontrou texto cortado nos dropdowns (fontes maiores que linhas padrão). Corrigido e revalidado: quatro testes de menus, glifos visíveis/seleção por clique e duas execuções Windows. Menu/opções legíveis em 1080p e 720p; aplicar 1280×720/janela, sair e reabrir preservou o ajuste. Configuração anterior 1920×1080/tela cheia restaurada. Jogar abriu o andar; direito acionou pose do especial/custo/cooldown e retorno à locomoção. Sem exceções/Missing Script no log; troca de qualidade/ultrawide e percurso final continuam em QA. Sons/música ainda em implementação.
+- Observada diretamente a tela de vitória/andar completo da partida do usuário com inventário/especial no Editor antes de encerrar PlayMode com autorização. Evidência em Reports/Leadership/editor-inventory-special-victory.json.
+
 ## 2026-11-14 — Especial e estamina
 
 - Implementado giro autoritativo em 360° com custo 30, cooldown 6 s, estamina 100 e regeneração 20/s após 0,8 s. Dados em PlayerSpecialDefinition; combo e especial respeitam recuperação mútua. Morte/dash/pausa/desativação cancelam impacto; segurar E/direito não repete.

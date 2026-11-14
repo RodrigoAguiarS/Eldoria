@@ -1,6 +1,7 @@
 // Campos preenchidos pelo builder/Inspector.
 #pragma warning disable 0649
 using DungeonCrawler.Core;
+using DungeonCrawler.Systems;
 using DungeonCrawler.Dungeon;
 using DungeonCrawler.Player;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         [SerializeField] private Animator animator;
         [SerializeField] private Health health;
+        [SerializeField] private GameOptionsDefinition options;
         [SerializeField] private PlayerDash dash;
         [SerializeField] private PlayerCombat combat;
         [SerializeField] private PlayerSpecial special;
@@ -39,7 +41,7 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         private void Awake()
         {
-            flash = new GeneratedHitFlash(animator != null ? animator.GetComponentsInChildren<Renderer>() : new Renderer[0]);
+            flash = new GeneratedHitFlash(animator != null ? animator.GetComponentsInChildren<Renderer>() : new Renderer[0], options);
             clips = animator != null && animator.runtimeAnimatorController != null
                 ? animator.runtimeAnimatorController.animationClips : new AnimationClip[0];
         }

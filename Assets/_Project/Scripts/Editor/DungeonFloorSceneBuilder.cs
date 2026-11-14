@@ -182,6 +182,7 @@ namespace DungeonCrawler.Editor
             // Arte do cenário (pedra/portões/tochas) sobre salas e cenas recém-geradas; após o bake do NavMesh, só troca malha/material.
             GeneratedArtApplier.ApplyEnvironment();
             EditorBuildUtility.UseStartupScene(GeneratedGameTestBuilder.TestScene, ProjectPaths.FloorScene);
+            GameShellSceneBuilder.EnsureBuildScenes();
             EditorSceneManager.OpenScene(GeneratedGameTestBuilder.TestScene, OpenSceneMode.Single);
             AssetDatabase.SaveAssets();
             Debug.Log($"[DungeonCrawler] Andar com personagens 3D pronto e aberto: {GeneratedGameTestBuilder.TestScene}. Cena inicial do build configurada.");

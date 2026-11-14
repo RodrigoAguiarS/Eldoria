@@ -1,6 +1,7 @@
 // Campos preenchidos pelo builder/Inspector.
 #pragma warning disable 0649
 using DungeonCrawler.Core;
+using DungeonCrawler.Systems;
 using DungeonCrawler.Enemies;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         [SerializeField] private Animator animator;
         [SerializeField] private Health health;
+        [SerializeField] private GameOptionsDefinition options;
         [SerializeField] private EnemyCombat combat;
         [Tooltip("Início dentro do clip Attack para o golpe/disparo do clip coincidir com o fim do windup do EnemyData.")]
         [SerializeField, Min(0f)] private float attackStartSeconds = 0.1f;
@@ -30,7 +32,7 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         private void Awake()
         {
-            flash = new GeneratedHitFlash(animator != null ? animator.GetComponentsInChildren<Renderer>() : new Renderer[0]);
+            flash = new GeneratedHitFlash(animator != null ? animator.GetComponentsInChildren<Renderer>() : new Renderer[0], options);
         }
 
         private void OnEnable()

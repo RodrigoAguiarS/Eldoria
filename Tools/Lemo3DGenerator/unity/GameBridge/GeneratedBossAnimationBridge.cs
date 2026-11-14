@@ -2,6 +2,7 @@
 #pragma warning disable 0649
 using DungeonCrawler.Boss;
 using DungeonCrawler.Core;
+using DungeonCrawler.Systems;
 using UnityEngine;
 
 namespace DungeonCrawler.CharacterArt.GameBridge
@@ -23,6 +24,7 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         [SerializeField] private Animator animator;
         [SerializeField] private Health health;
+        [SerializeField] private GameOptionsDefinition options;
         [SerializeField] private BossBrain brain;
         [SerializeField] private BossPhaseController phase;
         [Tooltip("Disco externo do BossAttackTelegraph: diâmetro grande = Slam (raio 3,5+), pequeno = Volley (raio 2,5).")]
@@ -40,7 +42,7 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         private void Awake()
         {
-            flash = new GeneratedHitFlash(animator != null ? animator.GetComponentsInChildren<Renderer>() : new Renderer[0]);
+            flash = new GeneratedHitFlash(animator != null ? animator.GetComponentsInChildren<Renderer>() : new Renderer[0], options);
         }
 
         private void OnEnable()

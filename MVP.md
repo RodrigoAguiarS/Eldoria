@@ -2,6 +2,8 @@
 
 ## Princípio
 
+Menus/opções integrados: 90 EditMode e idempotência final 2/2; quatro testes de menus revalidados após corrigir tolerância numérica da fixture e o layout de dropdown encontrado na revisão. Windows abriu menu→andar e executou o especial por direito; ajuste 720p/janela persistiu após sair/reabrir, e 1080p/tela cheia foi restaurado. Layouts observados em ambas as resoluções. Controle de tremor/flash passou no teste; áudio e QA final da 1.0 ainda pendentes.
+
 Especial/estamina implementados com 83/83 EditMode e 60/60 PlayMode aprovados, preservando progressão/arma e clips anteriores do Hero. HUD observado no Editor; revisão visual do giro interrompida pelo usuário e build Windows do especial pendentes. Menus completos, áudio e opções seguem abertos.
 
 R3 — inventário integrado aos três cenários de gameplay: 75/75 EditMode e 49/49 PlayMode passaram, incluindo cliques reais New Input System, equipamento, poções, pausa sem dano pendente e descarte que preserva itens. Layout/raridades observados no Editor em PlayMode com conteúdo de preview; a revisão visual antecedeu o botão Largar, cuja interação passou em teste. Especial, menus completos, áudio e opções ainda estão em desenvolvimento; 1.0 não concluída.

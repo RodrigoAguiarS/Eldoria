@@ -1,0 +1,25 @@
+{
+  "build": "windows-menus-fixed-build.json",
+  "renderedSizes": [
+    "1920x1080 fullscreen",
+    "1280x720 windowed"
+  ],
+  "observed": [
+    "Title and options layout readable",
+    "Dropdown resolution labels rendered after fix",
+    "Selected 1280x720 and applied windowed mode",
+    "Quit button exited the player",
+    "Relaunch retained 1280x720 windowed",
+    "Restored 1920x1080 fullscreen and saved",
+    "Play button loaded generated floor at 0/5",
+    "Right mouse triggered Special pose and stamina 100 to 70 with cooldown 6s",
+    "Hero returned to locomotion and stamina recovered"
+  ],
+  "limitations": [
+    "Synthetic E key did not provide confirmation; New Input E test passed and physical keyboard previously worked",
+    "No enemy hit or full floor run in this smoke session",
+    "Volume category output awaits audio integration",
+    "Graphics quality switch and ultrawide still pending"
+  ],
+  "originalDisplayRestored": true
+}

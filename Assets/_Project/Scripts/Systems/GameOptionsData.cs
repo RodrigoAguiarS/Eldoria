@@ -1,0 +1,37 @@
+using System;
+using UnityEngine;
+
+namespace DungeonCrawler.Systems
+{
+    [Serializable]
+    public sealed class GameOptionsData
+    {
+        public int version = 1;
+        public float music = .55f;
+        public float effects = .75f;
+        public float shake = 1f;
+        public float flash = 1f;
+        public int quality = -1;
+        public int width;
+        public int height;
+        public bool fullscreen;
+        public GameOptionsData Copy() => (GameOptionsData)MemberwiseClone();
+        public void Validate()
+        {
+            music = Unit(music, .55f); effects = Unit(effects, .75f);
+            shake = Unit(shake, 1f); flash = Unit(flash, 1f);
+            quality = Math.Max(-1, quality);
+            if (width < 640 || width > 16384 || height < 360 || height > 16384) width = height = 0;
+        }
+        private static float Unit(float value, float fallback) => float.IsNaN(value) || float.IsInfinity(value) ? fallback : Mathf.Clamp01(value);
+        public static bool TryParse(string json, out GameOptionsData value)
+        {
+            value = null;
+            if (string.IsNullOrEmpty(json)) return false;
+            try { value = JsonUtility.FromJson<GameOptionsData>(json); }
+            catch (ArgumentException) { return false; }
+            if (value == null || value.version != 1) { value = null; return false; }
+            value.Validate(); return true;
+        }
+    }
+}

@@ -15,6 +15,8 @@ namespace DungeonCrawler.UI
         [SerializeField] private GameObject pausePanel;
         [SerializeField] private EventSystem eventSystem;
         [SerializeField] private Button resumeButton;
+        [SerializeField] private MenuScreenStack screens;
+        private bool terminalVisible;
         public bool InventoryOpen => inventoryPanel.activeSelf;
 
         private void Awake() { inventoryPanel.SetActive(false); pausePanel.SetActive(false); }
@@ -32,24 +34,27 @@ namespace DungeonCrawler.UI
         }
         public void ToggleInventory()
         {
-            if (!health.IsAlive) return;
-            bool show = !inventoryPanel.activeSelf;
-            pausePanel.SetActive(false);
-            pause.SetPaused(show);
-            inventoryPanel.SetActive(show);
+            if (!health.IsAlive || terminalVisible) return;
+            if (!screens.IsEmpty && screens.Current != MenuScreen.Inventory) return;
+            if (!screens.IsEmpty) { Resume(); return; }
+            pause.SetPaused(true); screens.Push(MenuScreen.Inventory);
         }
         public void TogglePause()
         {
-            if (inventoryPanel.activeSelf || pausePanel.activeSelf) { Resume(); return; }
+            if (terminalVisible) return;
+            if (!screens.IsEmpty && screens.Current == MenuScreen.Options) { CloseOptions(); return; }
+            if (!screens.IsEmpty) { Resume(); return; }
             if (!health.IsAlive) return;
             pause.SetPaused(true);
-            pausePanel.SetActive(true);
-            if (eventSystem != null) eventSystem.SetSelectedGameObject(resumeButton.gameObject);
+            screens.Push(MenuScreen.Pause);
         }
         public void Resume()
         {
-            inventoryPanel.SetActive(false); pausePanel.SetActive(false);
+            screens.Clear();
             pause.SetPaused(false);
         }
+        public void OpenOptions() => screens.Push(MenuScreen.Options);
+        public void CloseOptions() => screens.Pop();
+        public void ShowTerminal() { Resume(); terminalVisible = true; }
     }
 }

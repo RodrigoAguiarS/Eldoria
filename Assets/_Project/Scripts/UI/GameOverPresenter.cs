@@ -1,5 +1,7 @@
 using DungeonCrawler.Core;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace DungeonCrawler.UI
 {
@@ -8,6 +10,9 @@ namespace DungeonCrawler.UI
     {
         [SerializeField] private Health playerHealth;
         [SerializeField] private GameObject panel;
+        [SerializeField] private GameMenuController menu;
+        [SerializeField] private EventSystem eventSystem;
+        [SerializeField] private Button firstFocus;
 
         private void Awake() => panel.SetActive(false);
 
@@ -15,6 +20,11 @@ namespace DungeonCrawler.UI
 
         private void OnDisable() => playerHealth.Died -= OnPlayerDied;
 
-        private void OnPlayerDied() => panel.SetActive(true);
+        private void OnPlayerDied()
+        {
+            if (menu != null) menu.ShowTerminal();
+            panel.SetActive(true);
+            if (eventSystem != null && firstFocus != null) eventSystem.SetSelectedGameObject(firstFocus.gameObject);
+        }
     }
 }

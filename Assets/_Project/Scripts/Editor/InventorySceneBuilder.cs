@@ -111,6 +111,7 @@ namespace DungeonCrawler.Editor
         public static void ConfigurePlayer(GameObject root)
         {
             PlayerSpecialSceneBuilder.ConfigurePlayer(root);
+            GameShellSceneBuilder.ConfigureActor(root);
             var inventory = Get<PlayerInventory>(root);
             var health = root.GetComponent<Health>(); var progression = root.GetComponent<PlayerProgression>();
             var input = root.GetComponent<PlayerInputReader>();
@@ -189,50 +190,55 @@ namespace DungeonCrawler.Editor
             Transform controls = hud.transform.Find("Controls");
             if (controls != null) controls.GetComponent<Text>().text = "WASD mover | Mouse mirar | Esquerdo atacar | Espaço dash | I/Tab inventário | Q poção | Esc pausa | R reiniciar";
             panel.gameObject.SetActive(false); pausePanel.gameObject.SetActive(false);
+            GameShellSceneBuilder.ConfigureGameplay(hud, player, menu, panel.gameObject, pausePanel.gameObject, events, resume);
             root.SetAsLastSibling();
         }
 
-        private static T Get<T>(GameObject root) where T : Component => root.GetComponent<T>() ?? root.AddComponent<T>();
-        private static RectTransform Node(Transform parent, string name)
+        internal static T Get<T>(GameObject root) where T : Component
+        {
+            T component = root.GetComponent<T>();
+            return component != null ? component : root.AddComponent<T>();
+        }
+        internal static RectTransform Node(Transform parent, string name)
         {
             Transform existing = parent.Find(name);
             if (existing != null) return existing as RectTransform ?? throw new InvalidOperationException("Expected UI RectTransform: " + name);
             var root = new GameObject(name, typeof(RectTransform)); root.transform.SetParent(parent, false); return (RectTransform)root.transform;
         }
-        private static void Stretch(RectTransform rect) { rect.anchorMin = Vector2.zero; rect.anchorMax = Vector2.one; rect.offsetMin = rect.offsetMax = Vector2.zero; }
-        private static RectTransform Box(Transform parent, string name, Vector2 position, Vector2 size, Vector2? anchor = null)
+        internal static void Stretch(RectTransform rect) { rect.anchorMin = Vector2.zero; rect.anchorMax = Vector2.one; rect.offsetMin = rect.offsetMax = Vector2.zero; }
+        internal static RectTransform Box(Transform parent, string name, Vector2 position, Vector2 size, Vector2? anchor = null)
         {
             var rect = Node(parent, name); Vector2 point = anchor ?? new Vector2(0f, 1f);
             rect.anchorMin = rect.anchorMax = rect.pivot = point; rect.anchoredPosition = position; rect.sizeDelta = size; return rect;
         }
-        private static RectTransform Panel(Transform parent, string name, Color color)
+        internal static RectTransform Panel(Transform parent, string name, Color color)
         { var rect = Node(parent, name); var image = Get<Image>(rect.gameObject); image.color = color; image.raycastTarget = true; return rect; }
-        private static Text Label(Transform parent, string name, string text, Vector2 position, Vector2 size, int fontSize)
+        internal static Text Label(Transform parent, string name, string text, Vector2 position, Vector2 size, int fontSize)
         {
             var rect = Box(parent, name, position, size); var label = Get<Text>(rect.gameObject); label.text = text;
             label.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf"); label.fontSize = fontSize; label.color = Color.white;
             label.alignment = TextAnchor.MiddleLeft; label.raycastTarget = false; return label;
         }
-        private static Button Button(Transform parent, string name, string text, Vector2 position, Vector2 size)
+        internal static Button Button(Transform parent, string name, string text, Vector2 position, Vector2 size)
         {
             var rect = Box(parent, name, position, size); var image = Get<Image>(rect.gameObject); image.color = new Color(.8f, .68f, .45f); image.raycastTarget = true;
             var button = Get<Button>(rect.gameObject); button.targetGraphic = image;
             Text label = Label(rect, "Label", text, new Vector2(8f, -8f), size - Vector2.one * 16f, 22);
             label.alignment = TextAnchor.MiddleCenter; label.color = new Color(.04f, .06f, .08f); return button;
         }
-        private static void Link(Button button, UnityAction callback)
+        internal static void Link(Button button, UnityAction callback)
         {
             for (int i = 0; i < button.onClick.GetPersistentEventCount(); i++)
                 if (button.onClick.GetPersistentTarget(i) == callback.Target as Object && button.onClick.GetPersistentMethodName(i) == callback.Method.Name) return;
             UnityEventTools.AddPersistentListener(button.onClick, callback);
         }
-        private static void Set(Object target, string field, Object value)
+        internal static void Set(Object target, string field, Object value)
         {
             var serialized = new SerializedObject(target); serialized.FindProperty(field).objectReferenceValue = value;
             if (!serialized.ApplyModifiedPropertiesWithoutUndo()) return;
             PrefabUtility.RecordPrefabInstancePropertyModifications(target); EditorUtility.SetDirty(target);
         }
-        private static void SetArray(Object target, string field, Object[] values)
+        internal static void SetArray(Object target, string field, Object[] values)
         {
             var serialized = new SerializedObject(target); var array = serialized.FindProperty(field); array.arraySize = values.Length;
             for (int i = 0; i < values.Length; i++) array.GetArrayElementAtIndex(i).objectReferenceValue = values[i];

@@ -1,4 +1,5 @@
 using UnityEngine;
+using DungeonCrawler.Systems;
 
 namespace DungeonCrawler.CharacterArt.GameBridge
 {
@@ -17,9 +18,14 @@ namespace DungeonCrawler.CharacterArt.GameBridge
         private bool active;
         private bool tinted;
         private Color tint;
+        private readonly GameOptionsDefinition options;
+        private Color currentFlash;
+        private float lastIntensity;
+        private float Intensity => options != null ? options.Current.flash : 1f;
 
-        public GeneratedHitFlash(Renderer[] renderers)
+        public GeneratedHitFlash(Renderer[] renderers, GameOptionsDefinition options = null)
         {
+            this.options = options;
             this.renderers = renderers;
             baseColors = new Color[renderers.Length][];
             for (int i = 0; i < renderers.Length; i++)
@@ -47,6 +53,8 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         public void Flash(Color color, float seconds)
         {
+            currentFlash = color;
+            lastIntensity = Intensity;
             Apply(color);
             until = Time.time + seconds;
             active = true;
@@ -54,7 +62,9 @@ namespace DungeonCrawler.CharacterArt.GameBridge
 
         public void Tick()
         {
-            if (!active || Time.time < until) return;
+            if (!active) return;
+            if (lastIntensity != Intensity) { lastIntensity = Intensity; Apply(currentFlash); }
+            if (Time.time < until) return;
             ClearFlash();
         }
 
@@ -67,7 +77,8 @@ namespace DungeonCrawler.CharacterArt.GameBridge
                 for (int j = 0; j < baseColors[i].Length; j++)
                 {
                     if (!flashColor.HasValue && !tinted) { renderer.SetPropertyBlock(null, j); continue; }
-                    Color color = flashColor ?? Color.Lerp(baseColors[i][j], tint, .65f);
+                    Color baseline = tinted ? Color.Lerp(baseColors[i][j], tint, .65f) : baseColors[i][j];
+                    Color color = flashColor.HasValue ? Color.Lerp(baseline, flashColor.Value, Intensity) : baseline;
                     color.a = baseColors[i][j].a;
                     block.Clear();
                     block.SetColor(BaseColorId, color);

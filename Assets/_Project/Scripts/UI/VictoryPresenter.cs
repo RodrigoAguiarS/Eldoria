@@ -1,5 +1,7 @@
 using DungeonCrawler.Dungeon;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace DungeonCrawler.UI
 {
@@ -8,6 +10,9 @@ namespace DungeonCrawler.UI
     {
         [SerializeField] private FloorController floor;
         [SerializeField] private GameObject panel;
+        [SerializeField] private GameMenuController menu;
+        [SerializeField] private EventSystem eventSystem;
+        [SerializeField] private Button firstFocus;
         [SerializeField, Min(0f)] private float delaySeconds = 1.5f;
 
         private bool pending;
@@ -33,7 +38,9 @@ namespace DungeonCrawler.UI
             if (!pending || Time.time < showAt) return;
 
             pending = false;
+            if (menu != null) menu.ShowTerminal();
             panel.SetActive(true);
+            if (eventSystem != null && firstFocus != null) eventSystem.SetSelectedGameObject(firstFocus.gameObject);
         }
     }
 }

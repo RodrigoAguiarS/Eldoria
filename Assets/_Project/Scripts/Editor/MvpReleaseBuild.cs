@@ -18,6 +18,7 @@ namespace DungeonCrawler.Editor
             public string unityVersion;
             public string executable;
             public string scene;
+            public string[] scenes;
             public ulong bytes;
             public int errors;
             public int warnings;
@@ -36,7 +37,7 @@ namespace DungeonCrawler.Editor
             Directory.CreateDirectory(Path.GetDirectoryName(Executable));
             BuildReport report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
-                scenes = new[] { Floor },
+                scenes = new[] { GameShellSceneBuilder.MenuScene, Floor },
                 locationPathName = Executable,
                 target = BuildTarget.StandaloneWindows64,
                 options = BuildOptions.None
@@ -44,7 +45,7 @@ namespace DungeonCrawler.Editor
             var result = new Result
             {
                 result = report.summary.result.ToString(), unityVersion = Application.unityVersion,
-                executable = Executable, scene = Floor, bytes = report.summary.totalSize,
+                executable = Executable, scene = Floor, scenes = new[] { GameShellSceneBuilder.MenuScene, Floor }, bytes = report.summary.totalSize,
                 errors = report.summary.totalErrors, warnings = report.summary.totalWarnings,
                 seconds = report.summary.totalTime.TotalSeconds
             };

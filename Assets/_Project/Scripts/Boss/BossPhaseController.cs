@@ -1,5 +1,6 @@
 using System;
 using DungeonCrawler.Core;
+using DungeonCrawler.Systems;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace DungeonCrawler.Boss
     public sealed class BossPhaseController : MonoBehaviour
     {
         [SerializeField] private Health health;
+        [SerializeField] private GameOptionsDefinition options;
         [SerializeField] private BossData data;
         [SerializeField] private DamageFlash flash;
         [SerializeField] private CinemachineImpulseSource impulse;
@@ -94,7 +96,8 @@ namespace DungeonCrawler.Boss
                 flash.Flash(Color.white, data.transitionDuration); // do branco até a cor da Fase 2
             }
 
-            if (impulse != null) impulse.GenerateImpulse(roarShakeForce);
+            float intensity = options != null ? options.Current.shake : 1f;
+            if (impulse != null && intensity > 0f) impulse.GenerateImpulse(roarShakeForce * intensity);
             TransitionStarted?.Invoke();
         }
 

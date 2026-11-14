@@ -1,4 +1,5 @@
 using UnityEngine;
+using DungeonCrawler.Systems;
 
 namespace DungeonCrawler.Core
 {
@@ -8,6 +9,7 @@ namespace DungeonCrawler.Core
         private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
 
         [SerializeField] private Health health;
+        [SerializeField] private GameOptionsDefinition options;
         [SerializeField] private Renderer targetRenderer;
         [SerializeField] private Color hitColor = new Color(1f, 0.1f, 0.1f);
         [SerializeField, Min(0.01f)] private float hitDuration = 0.15f;
@@ -50,10 +52,10 @@ namespace DungeonCrawler.Core
         /// <summary>Pisca com a cor informada por 'seconds'.</summary>
         public void Flash(Color color, float seconds)
         {
-            currentFlash = color;
+            currentFlash = Color.Lerp(baseColor, color, options != null ? options.Current.flash : 1f);
             duration = Mathf.Max(0.01f, seconds);
             remaining = duration;
-            Apply(color);
+            Apply(currentFlash);
             enabled = true;
         }
 
