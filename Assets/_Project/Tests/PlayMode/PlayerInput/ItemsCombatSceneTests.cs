@@ -258,6 +258,24 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.AreEqual(1f, Time.timeScale);
         }
 
+        [UnityTest]
+        public IEnumerator ReleaseFloor_ItemShowcaseShortcutGivesEquippedItemsAndSpawnsEachPickup()
+        {
+            yield return Load();
+            var showcase = SceneManager.GetActiveScene().GetRootGameObjects().Select(r => r.GetComponent<DungeonCrawler.Diagnostics.ItemShowcaseScenario>()).FirstOrDefault(c => c != null);
+            Assert.IsNotNull(showcase, "QA_ItemShowcase must exist in the release floor.");
+            Assert.IsFalse(showcase.HasRun, "Shortcut is off without -dcc-items.");
+            int before = Object.FindObjectsByType<Pickup>().Length;
+            showcase.Run();
+            yield return null;
+            var equipment = player.GetComponent<PlayerEquipmentVisualPresenter>();
+            Assert.AreSame(Asset<WeaponData>("Weapon_AncientEdge"), equipment.ShownWeapon);
+            Assert.AreSame(Asset<ArmorData>("Armor_Leather"), equipment.ShownArmor);
+            Assert.AreEqual(38f, combat.CurrentDamage, .001f, "Shortcut uses the normal rules (+18).");
+            Assert.AreEqual(3, InScene<PotionHudPresenter>().Total);
+            Assert.AreEqual(before + 7, Object.FindObjectsByType<Pickup>().Length);
+        }
+
         /// <summary>Visual evidence (Game view captures). Not an assertion of art approval.
         /// Explicit: WaitForEndOfFrame never fires in -batchmode, so run it from a windowed Editor (-runTests without -batchmode).</summary>
         [UnityTest, Explicit("Visual capture; needs a rendering Game view.")]

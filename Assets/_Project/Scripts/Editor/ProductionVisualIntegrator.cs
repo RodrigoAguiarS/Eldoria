@@ -358,7 +358,28 @@ namespace DungeonCrawler.Editor
             GameObject player = scene.GetRootGameObjects().Single(r => r.GetComponent<PlayerCombat>() != null);
             ConfigurePlayerPresentation(player);
             ConfigureSceneInventoryVisuals(scene, player);
+            ConfigureShowcase(scene, player);
         });
+
+        /// <summary>Test shortcut object (inactive unless -dcc-items or the Editor test menu runs it).</summary>
+        public static void ConfigureShowcase(Scene scene, GameObject player)
+        {
+            GameObject root = scene.GetRootGameObjects().FirstOrDefault(r => r.name == "QA_ItemShowcase");
+            if (root == null) { root = new GameObject("QA_ItemShowcase"); SceneManager.MoveGameObjectToScene(root, scene); }
+            var showcase = GetOrAdd<DungeonCrawler.Diagnostics.ItemShowcaseScenario>(root);
+            SetRef(showcase, "progression", player.GetComponent<PlayerProgression>());
+            SetRef(showcase, "inventory", player.GetComponent<PlayerInventory>());
+            SetRef(showcase, "health", player.GetComponent<Health>());
+            SetRef(showcase, "pickupPrefab", AssetDatabase.LoadAssetAtPath<GameObject>(PickupPrefabPath).GetComponent<Pickup>());
+            SetRef(showcase, "armor", AssetDatabase.LoadAssetAtPath<ArmorData>(Items + "/Armor_Leather.asset"));
+            var so = new SerializedObject(showcase);
+            SerializedProperty weapons = so.FindProperty("weapons");
+            string[] paths = { Items + "/Weapon_IronSword.asset", Items + "/Weapon_WardenBlade.asset", Items + "/Weapon_AncientEdge.asset" };
+            weapons.arraySize = paths.Length;
+            for (int i = 0; i < paths.Length; i++) weapons.GetArrayElementAtIndex(i).objectReferenceValue = AssetDatabase.LoadAssetAtPath<WeaponData>(paths[i]);
+            so.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(showcase);
+        }
 
         /// <summary>Equipment and attack VFX on a gameplay player. Uses the generated Hero when installed, else a placeholder sweep.</summary>
         public static void ConfigurePlayerPresentation(GameObject player)
@@ -592,6 +613,8 @@ namespace DungeonCrawler.Editor
                 Check(slots.Length == 16 && slots.All(s => s.Icon != null && s.Quantity != null && s.SelectionFrame != null), "16 slots com ícone, quantidade e moldura de seleção");
                 var potion = player.scene.GetRootGameObjects().Select(r => r.GetComponentInChildren<PotionHudPresenter>(true)).FirstOrDefault(p => p != null);
                 Check(potion != null && new SerializedObject(potion).FindProperty("inventory").objectReferenceValue == player.GetComponent<PlayerInventory>(), "HUD de poções ligado ao inventário");
+                var showcase = player.scene.GetRootGameObjects().Select(r => r.GetComponent<DungeonCrawler.Diagnostics.ItemShowcaseScenario>()).FirstOrDefault(s => s != null);
+                Check(showcase != null && new SerializedObject(showcase).FindProperty("weapons").arraySize == 3 && new SerializedObject(showcase).FindProperty("pickupPrefab").objectReferenceValue != null, "atalho de teste de itens (QA_ItemShowcase) configurado");
             });
             rep.ok = rep.issues.Count == 0;
             Directory.CreateDirectory(ReportFolder);
