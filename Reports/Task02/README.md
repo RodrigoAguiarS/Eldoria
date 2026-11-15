@@ -1,5 +1,7 @@
 # Task 02 — combo do jogador
 
+> Registro histórico da execução indicada. Afirmações de ausência de Git/arte/sistemas e pendências descrevem aquela data; consultar [PROJECT_AUDIT](../../PROJECT_AUDIT.md) para estado atual. Medições e limites abaixo foram preservados; não são testes reexecutados por esta revisão documental.
+
 Implementação em 13/11/2026, Unity 6000.6.9f1, Windows, Ryzen 5 5500 (6 cores/12 threads). O projeto não possui repositório Git. Nenhuma branch ou commit foi criado. Backup dos arquivos envolvidos: `G:/DungeonCrawler/Task02_Backup_20261113_210310`.
 
 ## Comportamento

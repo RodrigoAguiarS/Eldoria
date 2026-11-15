@@ -53,6 +53,15 @@ namespace DungeonCrawler.Editor
 
         public static void InspectCurrent() => InspectProject("Reports/Leadership/asset-audit-current.json");
 
+        [MenuItem("Tools/Dungeon Crawler/Audit/Inspect Cleanup Baseline")]
+        public static void InspectCleanupBaseline()
+        {
+            string path = Environment.GetEnvironmentVariable("DUNGEON_CRAWLER_AUDIT_REPORT");
+            if (string.IsNullOrWhiteSpace(path)) path = "Reports/ProjectAudit/editor-assets.json";
+            if (File.Exists(path)) throw new IOException("Preserve o relatório existente e escolha outro DUNGEON_CRAWLER_AUDIT_REPORT.");
+            InspectProject(path);
+        }
+
         private static void InspectProject(string reportPath)
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Saia do PlayMode.");
@@ -97,7 +106,7 @@ namespace DungeonCrawler.Editor
                 }
             }
             if (original.IsValid() && original.isLoaded) SceneManager.SetActiveScene(original);
-            Directory.CreateDirectory("Reports/Leadership");
+            Directory.CreateDirectory(Path.GetDirectoryName(reportPath));
             File.WriteAllText(reportPath, JsonUtility.ToJson(report, true));
             Debug.Log($"[MVP Audit] Inspected {report.assets.Count} assets; {report.issues.Count} unresolved references/types. No scene or asset saved.");
         }

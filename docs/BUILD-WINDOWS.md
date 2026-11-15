@@ -2,6 +2,12 @@
 
 Unity **6000.6.9f1**, URP 17.6.0 e pacotes fixados em `Packages/manifest.json`/`packages-lock.json`. Abra o projeto por essa versão; não atualize pacotes para reproduzir esta entrega. Feche PlayMode e qualquer outra instância do Editor antes de executar batchmode no mesmo projeto.
 
+## Abrir o projeto existente
+
+Use Unity Hub → Add project → esta pasta, com o Editor fixado e módulo Windows Build Support. Este repositório já contém jogo, Git, pacotes, metas, cenas e dados; não crie outro projeto nem execute git init para continuar. Input é exclusivamente New Input System; Force Text e metas visíveis já foram configurados. Conferir FoundationValidator e manifest/lock antes de corrigir configuração.
+
+Para jogar a revisão atual e testar itens sem depender de drops aleatórios, siga [COMO-TESTAR](../COMO-TESTAR.md). Os atalhos de aff1895 abrem MainMenu ou a cena real de release; o modo com itens é diagnóstico e deve ser identificado como tal nas evidências. SpriteLab/billboard são experimentos separados. Testar aparência não exige reconstruir o andar.
+
 ## Build
 
 No PowerShell, a partir de `G:\DungeonCrawler\My project`:
@@ -16,7 +22,7 @@ A chamada pode retornar antes de o processo Unity terminar. Aguarde o processo e
 
 ## Testes
 
-Execute separadamente, aguardando uma suíte terminar antes de iniciar a outra. Não use `-quit` com `-runTests` nesta instalação.
+Execute separadamente, aguardando uma suíte terminar antes de iniciar a outra. Não use `-quit` com `-runTests` nesta instalação. Para execuções novas, escolha diretório e nomes novos de XML/log, preservando EditMode-final/PlayMode-final históricos. Alguns testes EditMode de idempotência salvam assets; registre hashes/diff antes/depois e não restaure mudanças de terceiros automaticamente.
 
 ```powershell
 $env:DUNGEON_CRAWLER_TEST_REPORT_DIR='Reports/Leadership/FinalPerf'
@@ -24,6 +30,23 @@ $env:DUNGEON_CRAWLER_TEST_REPORT_DIR='Reports/Leadership/FinalPerf'
 ```
 
 Repita com `-testPlatform PlayMode`, resultado `PlayMode-final.xml` e log `PlayMode-final.log`. A variável separa os relatórios novos dos históricos da Task 02. Os resultados da entrega ficam em `Reports/Leadership`; a matriz de cobertura e aceite manual está em `RELEASE-1.0-VALIDATION.md`.
+
+O exemplo acima reconstrói os caminhos da entrega histórica: para auditoria nova, troque **todos** os destinos por uma pasta exclusiva (por exemplo Reports/ProjectAudit/<execucao>) antes de executar. Confira o NUnit XML (passed/failed/skipped), não só o código do processo. Um teste Explicit de captura pode ser ignorado em batchmode; não apresentá-lo como revisão visual concluída.
+
+## Roteiro de regressão
+
+Este roteiro consolida M1–M4 e a QA do candidato. Registrar commit, build/versão, cena, resolução, origem da evidência e resultado; não marcar etapas por presença de código. Valores atuais vêm de SOs e [BALANCE-1.0](BALANCE-1.0.md), não dos checklists antigos.
+
+1. **Fundação e arena:** Console sem erros, referências resolvidas; Bootstrap inicia com ações Gameplay; na MVP_Arena conferir chão/obstáculos/luz, câmera isométrica fixa seguindo suavemente, WASD relativo à tela no XZ e mira horizontal pelo mouse. Inimigo contorna pilares com NavMesh; player não usa Rigidbody.
+2. **Combate e sobrevivência:** clique/segurar executa combo01/02/03 com impactos únicos, buffer limitado e retorno à locomoção; dash em movimento/parado respeita cooldown/invulnerabilidade. HP/HUD/flash/shake respondem; morte cancela controles/dano pendente, R e botão reiniciam. Registrar câmera/pose/impacto observados, não só valores.
+3. **Salas:** percorrer quatro salas normais; entrada fecha, onda inicia, saída fica bloqueada enquanto um inimigo vive e abre somente após a última morte. Conferir ranged/elite, recuo/tiros, colisão em parede/porta e pool reutilizado; sem atravessar portas ou softlock. O quinto encontro é o Boss: não esperar vitória após sala4.
+4. **Boss:** HUD aparece só durante a luta, Slam/Volley avisam antes do dano; transição única a50% com3s invulnerável, visual persistente no Warden e novo padrão. Telegraph nunca abaixo1s; sair da área/dash evita dano segundo as regras. Derrotar até5/5 e observar vitória; depois testar derrota→reinício. Preview de fase/diagnóstico não é prova de vitória normal.
+5. **Progressão/bolsa:** XP/ouro imediatos; nível/dano/cura coerentes; armas/poções/armadura entram na bolsa. Testar16slots, stack5 e potências distintas, primeira arma e troca manual, desequipar, defesa, Q/Usar ferido/cheio/morto, Largar1 em espaço livre/bloqueado. Coleta recusada preserva pickup e permite nova tentativa após liberar espaço. I/Tab pausa; Esc volta; UI não dispara ataque.
+6. **Visual pós-release:** modelos próprios de itens no chão, ícones/quantidade/estado de poções, uma espada equipada e colete acompanhando Run/Dash/Hit/Death/combos/especial. Trails/faíscas só após acerto aceito; giro com anel, sem cubo branco na apresentação normal; chama animada. Use diagnóstico de itens para cobertura visual e partida normal separada para loot/progressão.
+7. **Menus/opções:** MainMenu→Jogar inicia run nova; pausa/bolsa/opções/foco/retorno corretos; terminais fecham overlays e focam Reiniciar. Aplicar persiste, Voltar descarta rascunho. Testar1280×720 janela e1920×1080 tela cheia, dropdowns/textos longos, presets Leve/Padrão sem rosa; fechar/reabrir preserva opções e restaurar preferências anteriores. Ultrawide emulado não comprova monitor físico.
+8. **Áudio/legibilidade/build:** música/SFX em0 silenciam categorias; flash/tremor em0 removem efeitos opcionais sem ocultar perigo/fase2. Ouvir ataque/acerto/dano/coleta/morte/rugido/vitória/música, anotar sons ausentes/desconforto/distorção. No Windows normal, concluir andar e derrota/reinício; triar log para exceções/Missing Script/avisos Animator. Métricas de perfil, diagnóstico sintético e escuta humana são evidências distintas; repetir com mesma configuração antes de alegar melhoria.
+
+Aceite humano complementa testes automatizados. Se não abriu a cena e observou PlayMode, a revisão visual permanece `NÃO VALIDADO NO EDITOR`.
 
 ## Reconstrução da composição
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-14 — Auditoria, consolidação e catálogo
+
+- 14 documentos históricos consolidados/removidos; 5 guias de produção compactados após conferir 145 fichas e 30 prompts contra o manifesto preservado. Decisões no GDD, estado/aceite no MVP, regressão no guia de build e fila única NEXT_STEPS. PROJECT_AUDIT registra motivos, limites e destino de cada documento; PROMPT_CATALOG contém 15 funcionalidades e 15 briefs artísticos, sem execução.
+- AGENTS/CLAUDE orientam leitura seletiva; inventário de hashes/cópias/links automatizado e auditor API com saída separada/protegida. Nenhuma refatoração de runtime ou ganho de FPS reivindicado; assets/pacotes/funcionalidades preservados.
+- Unity real: 207 assets sem referências inválidas antes/depois do handoff, 99 EditMode iniciais e 75 PlayMode após retomada aprovados; um caso visual explícito ignorado. Sem novo playthrough/revisão visual/build. Trabalho externo aff1895 e alterações locais preservados; side effect conhecido de define do pacote restaurado ao snapshot. Evidências em Reports/ProjectAudit.
+
 ## 2026-11-14 — Windows 1.0.0 entregue
 
 - Escopo D-001/D-002 concluído: andar de quatro salas + Guardião, combo/dash/especial/recurso/defesa, progressão/loot, inventário/raridades, menus/opções e áudio. Usuário confirmou explicitamente a RC2 com derrota→reinício, vitória 5/5, E/I/Tab/Q e áudio/feedback aprovados. Log final registra cinco encontros sem exceções/Missing Script; automação observou 3/5, sem capturar a vitória.
@@ -88,4 +94,4 @@
 - R3 / RPG-002 em andamento: ItemDefinition/raridades/armadura/poção/configuração e InventoryModel com 16 espaços, pilhas por potência, comandos atômicos e equipamento por índice estável. WeaponData preserva campos/GUID/bônus e compartilha a base de itens. 64/64 EditMode, incluindo assets reais e sequência de 500 comandos; coleta/UI ainda não integradas nesta entrega.
 
 - Combo de três golpes, integração de clips Generic, cancelamentos, buffer e medições anteriores: [Reports/Task02/README.md](Reports/Task02/README.md).
-- Auditoria anterior dos marcos originais: [MVP_AUDIT.md](MVP_AUDIT.md).
+- Auditoria anterior dos marcos originais: [PROJECT_AUDIT](PROJECT_AUDIT.md).

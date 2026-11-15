@@ -1,5 +1,7 @@
 # Relatório — Teste de sprites com Lemo-Opuscar (2026-11-13)
 
+> Registro histórico da execução indicada. Afirmações de ausência de Git/arte/sistemas e pendências descrevem aquela data; consultar [PROJECT_AUDIT](../../PROJECT_AUDIT.md) para estado atual. Medições e limites abaixo foram preservados; não são testes reexecutados por esta revisão documental.
+
 ## 1. Resultado
 Herói jogável (Asset 01) em pixel art: **40 frames 128×128** (Idle 4 + Walk 6, × Frente/Costas/Esquerda/Direita),
 frames individuais, 3 spritesheets, JSON de metadados, sombra separada, prévias (HTML, APNG, prancha de contato,

@@ -1,5 +1,7 @@
 # Guia de integração e validação Unity
 
+> Atualização: ItemVisualCatalog, PickupVisualPresenter, PlayerEquipmentVisualPresenter, PotionHudPresenter e PlayerAttackVfxPresenter já estão integrados. ANIM-TORCH também existe. As etapas futuras abaixo registram o plano anterior; não reimplementar esses bindings. Consultar lotes/status por ID e AGENTS para leitura seletiva. Nenhuma migração Humanoid/atlas está autorizada.
+
 Data: 14/11/2026. Procedimento para tarefas futuras. **Nenhuma integração, geração, compilação ou execução de PlayMode deste guia foi realizada nesta auditoria. NÃO VALIDADO NO EDITOR.**
 
 ## Ambiente e destinos reais

@@ -1,5 +1,7 @@
 # VFX e feedback visual — especificações
 
+> Consolidação de 14/11/2026: fichas repetidas foram substituídas por índices por ID; os dados e prompts completos permanecem no manifesto, sem alteração. Ler somente o registro necessário. Lotes ANIM-TORCH e ITEMS-COMBAT já foram produzidos/integrados; o diagnóstico introdutório antigo abaixo é histórico onde divergir desses lotes. Novas sugestões prontas para escolha estão em [PROMPT_CATALOG](../../../../PROMPT_CATALOG.md).
+
 Data: 14/11/2026. **NÃO VALIDADO NO EDITOR nesta auditoria.** A release já tem flash, shake, windup, telegraph e mudança de fase; estes são recursos existentes. Os efeitos adicionais são P2 opcionais de apresentação, não correções de regras nem novos sistemas.
 
 ## Lote ITEMS-COMBAT — golpes, giro e acerto (14/11/2026)
@@ -20,7 +22,7 @@ GeneratedHitFlash tinge cada submesh por MaterialPropertyBlock e restaura base; 
 
 BossAttackTelegraph mantém dois objetos fixos, borda externa da área e preenchimento crescente. Não substituir o aviso por partículas sem geometria precisa. Dados atuais: Slam 3,5 m/1,4 s fase 1; fase 2 raio 4,55 m/1 s; Volley raio 2,5 m/1,2 s. Nunca reduzir aviso abaixo1 s. Diferenciar efeito de impacto (cosmético, depois do timer) de aviso (antes do dano); área desenhada deve seguir dados reais, sem inferir alcance pela arte.
 
-O projétil já é pooled e visualizado como esfera laranja .4 m. Ataque básico ativa AttackVisual no impacto até fim/cancelamento, sem trail da espada. Especial já tem animação/timing e feedback sonoro, mas não foi localizado componente visual específico de partículas/trail. Tochas usam malha emissiva estática, não ParticleSystem. Ausência de ParticleSystem não significa ausência de feedback funcional.
+O projétil já é pooled e visualizado como esfera laranja .4 m. O básico usa trail e FX-HIT por contato aceito; o especial usa trail/anel. AttackVisual permanece só diagnóstico, desligado. ANIM-TORCH anima o visual da chama; não encomendar o loop novamente. FX-HIT do giro ainda exige hook próprio. O quadro de eventos abaixo conserva o diagnóstico original; PlayerCombat.TargetHit(Vector3,Vector3) já supre contato do básico, sem alterar Health.Damaged.
 
 ## Contratos de eventos e lacunas de integração
 
@@ -56,553 +58,130 @@ Som funcional já existe (9 WAV e mixer); reutilizar roteamento/pool, sem encome
 
 ## Fichas detalhadas de reuso e produção
 
+<a id="anim-torch"></a>
+
 ## ANIM-TORCH — Loop discreto da chama
 
-**Categoria:** J — VFX e animações adicionais. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** animação 3D. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento de chama estática
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-TORCH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Pequena oscilação só do filho visual, suporte/luzes fixos.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedArtApplier.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedArtApplier.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ENV-TORCH
-
-**Dimensões/tempo:** Torch_FlameLoop; 1,2 s, loop, 30 fps; escala .98–1.02
-
-**Entrega:** AnimationClip .anim + fonte de autoria; variante visual isolada Support/Flame se necessária, sem rig esquelético
-
-**Contrato Unity:** Animação de Transform de objeto, sem skin, Avatar ou rig esquelético. A tocha atual combina ferro/chama em uma malha com duas submalhas: criar só uma variante isolada com filhos Support/Flame se esse polimento for adotado; preservar GA_Torch original. Entregar fonte e AnimationClip .anim por API Editor, 30 fps, raiz fixa; sem dano, luz animada ou colisão.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#anim-torch) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="fx-damage"></a>
 
 ## FX-DAMAGE — Flash de dano/windup
 
-**Categoria:** J — VFX e animações adicionais. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** VFX. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** VFX. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Feedback implementado
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-DAMAGE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Vermelho no dano, laranja no windup; PropertyBlock e intensidade configurável.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Core/DamageFlash.cs](../../../../Assets/_Project/Scripts/Core/DamageFlash.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedHitFlash.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedHitFlash.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Arte apenas observa domínio; preservar dano/colliders/timers.
-- Pool real de projéteis e discos fixos mantidos.
-- Flash/shake 0 não ocultam área do perigo nem cor persistente da fase.
-
+<a id="fx-shake"></a>
 
 ## FX-SHAKE — Impulso de câmera
 
-**Categoria:** J — VFX e animações adicionais. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** VFX. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** VFX. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Feedback implementado
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-SHAKE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Impulso Cinemachine com intensidade configurável; versão real 6.6.0, sem copiar API 3.1 da skill.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Player/PlayerHitShake.cs](../../../../Assets/_Project/Scripts/Player/PlayerHitShake.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Packages/manifest.json](../../../../Packages/manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Arte apenas observa domínio; preservar dano/colliders/timers.
-- Pool real de projéteis e discos fixos mantidos.
-- Flash/shake 0 não ocultam área do perigo nem cor persistente da fase.
-
+<a id="fx-boss-phase"></a>
 
 ## FX-BOSS-PHASE — Transição e cor fase 2
 
-**Categoria:** J — VFX e animações adicionais. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** VFX. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** VFX. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Feedback implementado
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-BOSS-PHASE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Transição única, branco e vermelho persistente no modelo visível; fase 2 continua legível com flash 0, não exige segunda malha.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Boss/BossPhaseController.cs](../../../../Assets/_Project/Scripts/Boss/BossPhaseController.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/boss-visual-review.json](../../../../Reports/Leadership/boss-visual-review.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Arte apenas observa domínio; preservar dano/colliders/timers.
-- Pool real de projéteis e discos fixos mantidos.
-- Flash/shake 0 não ocultam área do perigo nem cor persistente da fase.
-
+<a id="fx-telegraph"></a>
 
 ## FX-TELEGRAPH — Aviso de ataque Boss
 
-**Categoria:** J — VFX e animações adicionais. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** VFX. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** VFX. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Feedback implementado
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-TELEGRAPH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Dois discos fixos reutilizados; externo área real, interno cresce; Slam raio 3,5/4,55 m fase 2, Volley 2,5 m, aviso >=1 s.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Boss/BossAttackTelegraph.cs](../../../../Assets/_Project/Scripts/Boss/BossAttackTelegraph.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Materials/Mat_TelegraphOuter.mat](../../../../Assets/_Project/Materials/Mat_TelegraphOuter.mat) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Materials/Mat_TelegraphFill.mat](../../../../Assets/_Project/Materials/Mat_TelegraphFill.mat) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Arte apenas observa domínio; preservar dano/colliders/timers.
-- Pool real de projéteis e discos fixos mantidos.
-- Flash/shake 0 não ocultam área do perigo nem cor persistente da fase.
-
+<a id="fx-basic"></a>
 
 ## FX-BASIC — AttackVisual básico
 
-**Categoria:** J — VFX e animações adicionais. **Status:** INCOMPLETO. **Prioridade:** P2. **Tipo:** VFX. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** VFX. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Feedback implementado
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-BASIC]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Marcador simples temporário no impacto; não é trail na trajetória da espada.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Player/PlayerCombat.cs](../../../../Assets/_Project/Scripts/Player/PlayerCombat.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Prefabs/Player/Player.prefab](../../../../Assets/_Project/Prefabs/Player/Player.prefab) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Arte apenas observa domínio; preservar dano/colliders/timers.
-- Pool real de projéteis e discos fixos mantidos.
-- Flash/shake 0 não ocultam área do perigo nem cor persistente da fase.
-
+<a id="fx-projectile"></a>
 
 ## FX-PROJECTILE — Projétil inimigo/Boss
 
-**Categoria:** J — VFX e animações adicionais. **Status:** INCOMPLETO. **Prioridade:** P2. **Tipo:** VFX. **Escopo:** aprovado_1_0.
+**Estado atual:** INCOMPLETO. **Tipo:** VFX. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Feedback implementado
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-PROJECTILE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Esfera laranja .4 m integrada ao pool; sem cauda própria. Não precisa arco/flecha.
-
-**Evidências:**
-
-- [Assets/_Project/Prefabs/Projectiles/Projectile.prefab](../../../../Assets/_Project/Prefabs/Projectiles/Projectile.prefab) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/ProjectilePool.cs](../../../../Assets/_Project/Scripts/Systems/ProjectilePool.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Projectile.cs](../../../../Assets/_Project/Scripts/Systems/Projectile.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Arte apenas observa domínio; preservar dano/colliders/timers.
-- Pool real de projéteis e discos fixos mantidos.
-- Flash/shake 0 não ocultam área do perigo nem cor persistente da fase.
-
+<a id="fx-slash"></a>
 
 ## FX-SLASH — Rastro do combo
 
-**Categoria:** J — VFX e animações adicionais. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** VFX. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** VFX. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento opcional de ação existente
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-SLASH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Three concise steel/cyan sword arcs: right diagonal, left diagonal and compact downward finisher. No broad opaque glow.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Player/PlayerCombat.cs](../../../../Assets/_Project/Scripts/Player/PlayerCombat.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Player/PlayerSpecial.cs](../../../../Assets/_Project/Scripts/Player/PlayerSpecial.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Projectile.cs](../../../../Assets/_Project/Scripts/Systems/Projectile.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ANIM-HERO-ATTACK-01, ANIM-HERO-ATTACK-02, ANIM-HERO-ATTACK-03
-
-**Integração técnica pendente:**
-
-- PlayerCombat.AttackStarted/AttackImpacted/AttackCancelled; sem hit-confirm/posição por alvo.
-
-**Dimensões/tempo:** 0.12–0.18 s; <=12 particles per impact; radius never exceeds actual combo range
-
-**Entrega:** Prefab visual + fontes; PNG RGBA 128/256 se necessário
-
-**Contrato Unity:** Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#fx-slash) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="fx-special"></a>
 
 ## FX-SPECIAL — Rastro do giro
 
-**Categoria:** J — VFX e animações adicionais. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** VFX. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** VFX. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento opcional de ação existente
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-SPECIAL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** One thin cyan circular sword sweep, empty centre, restrained pale edge, clearly distinct from a red hostile ground telegraph.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Player/PlayerCombat.cs](../../../../Assets/_Project/Scripts/Player/PlayerCombat.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Player/PlayerSpecial.cs](../../../../Assets/_Project/Scripts/Player/PlayerSpecial.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Projectile.cs](../../../../Assets/_Project/Scripts/Systems/Projectile.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ANIM-HERO-SPECIAL
-
-**Integração técnica pendente:**
-
-- PlayerSpecial.AttackImpacted .36 s; não há VFX específico inscrito.
-
-**Dimensões/tempo:** 0.18–0.30 s; radius <=3 m; <=24 particles
-
-**Entrega:** Prefab visual + fontes; PNG RGBA 128/256 se necessário
-
-**Contrato Unity:** Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#fx-special) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="fx-hit"></a>
 
 ## FX-HIT — Impacto de acerto
 
-**Categoria:** J — VFX e animações adicionais. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** VFX. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** VFX. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento opcional de ação existente
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-HIT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Small directional ivory chips and two orange sparks for bone/metal contact; no blood, large flash or persistent debris.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Player/PlayerCombat.cs](../../../../Assets/_Project/Scripts/Player/PlayerCombat.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Player/PlayerSpecial.cs](../../../../Assets/_Project/Scripts/Player/PlayerSpecial.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Projectile.cs](../../../../Assets/_Project/Scripts/Systems/Projectile.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** FX-DAMAGE
-
-**Integração técnica pendente:**
-
-- Health.Damaged só fornece quantidade; posição/direção precisariam ponte futura.
-
-**Dimensões/tempo:** 0.15–0.25 s; radius <=0.3 m; <=10 particles
-
-**Entrega:** Prefab visual + fontes; PNG RGBA 128/256 se necessário
-
-**Contrato Unity:** Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#fx-hit) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="fx-heal"></a>
 
 ## FX-HEAL — Recuperação de vida
 
-**Categoria:** J — VFX e animações adicionais. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** VFX. **Escopo:** sugestão_polimento.
+**Estado atual:** AUSENTE. **Tipo:** VFX. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento opcional de ação existente
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-HEAL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Brief soft ruby-to-warm-white upward motes close to the hero and a low-opacity foot ring; no poison-like effect.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Player/PlayerCombat.cs](../../../../Assets/_Project/Scripts/Player/PlayerCombat.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Player/PlayerSpecial.cs](../../../../Assets/_Project/Scripts/Player/PlayerSpecial.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Projectile.cs](../../../../Assets/_Project/Scripts/Systems/Projectile.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ICON-ITEM-HEALTH
-
-**Integração técnica pendente:**
-
-- Health.Changed genérico; não há PotionUsed. Distinguir consumo aceito de cura de nível.
-
-**Dimensões/tempo:** 0.35–0.60 s; radius <=0.6 m; <=16 particles
-
-**Entrega:** Prefab visual + fontes; PNG RGBA 128/256 se necessário
-
-**Contrato Unity:** Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#fx-heal) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="fx-loot"></a>
 
 ## FX-LOOT — Coleta aceita
 
-**Categoria:** J — VFX e animações adicionais. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** VFX. **Escopo:** sugestão_polimento.
+**Estado atual:** AUSENTE. **Tipo:** VFX. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento opcional de ação existente
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-LOOT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Small cyan glint for XP, brass for gold, neutral spark for stored gear/potions; restrained size and brightness.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Player/PlayerCombat.cs](../../../../Assets/_Project/Scripts/Player/PlayerCombat.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Player/PlayerSpecial.cs](../../../../Assets/_Project/Scripts/Player/PlayerSpecial.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Projectile.cs](../../../../Assets/_Project/Scripts/Systems/Projectile.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** LOOT-SHARED
-
-**Integração técnica pendente:**
-
-- PlayerProgression.Collected(LootKind) existe, sem quantidade/posição/item completo.
-
-**Dimensões/tempo:** 0.20–0.35 s; radius <=0.35 m; <=8 particles
-
-**Entrega:** Prefab visual + fontes; PNG RGBA 128/256 se necessário
-
-**Contrato Unity:** Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#fx-loot) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="fx-level"></a>
 
 ## FX-LEVEL — Subida de nível
 
-**Categoria:** J — VFX e animações adicionais. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** VFX. **Escopo:** sugestão_polimento.
+**Estado atual:** AUSENTE. **Tipo:** VFX. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento opcional de ação existente
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-LEVEL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** One thin cyan ring rising boots-to-waist, sparse brass motes; combat floor remains visible.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Player/PlayerCombat.cs](../../../../Assets/_Project/Scripts/Player/PlayerCombat.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Player/PlayerSpecial.cs](../../../../Assets/_Project/Scripts/Player/PlayerSpecial.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Projectile.cs](../../../../Assets/_Project/Scripts/Systems/Projectile.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** HUD-PROGRESSION
-
-**Integração técnica pendente:**
-
-- PlayerProgression.LeveledUp(int), sem mudar cura ou fórmula.
-
-**Dimensões/tempo:** 0.60–0.80 s; radius <=0.8 m; <=20 particles
-
-**Entrega:** Prefab visual + fontes; PNG RGBA 128/256 se necessário
-
-**Contrato Unity:** Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#fx-level) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="fx-slam"></a>
 
 ## FX-SLAM — Impacto Slam
 
-**Categoria:** J — VFX e animações adicionais. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** VFX. **Escopo:** sugestão_polimento.
+**Estado atual:** AUSENTE. **Tipo:** VFX. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento opcional de ação existente
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-SLAM]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Low thin shock ring and a few angular stone chips with muted orange edge; no persistent damaging patch.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Player/PlayerCombat.cs](../../../../Assets/_Project/Scripts/Player/PlayerCombat.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Player/PlayerSpecial.cs](../../../../Assets/_Project/Scripts/Player/PlayerSpecial.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Projectile.cs](../../../../Assets/_Project/Scripts/Systems/Projectile.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** FX-TELEGRAPH
-
-**Integração técnica pendente:**
-
-- BossBrain aplica Slam, sem evento público de impacto dedicado.
-
-**Dimensões/tempo:** 0.25–0.45 s; radius 3.5 or 4.55 m from actual phase data; <=24 particles
-
-**Entrega:** Prefab visual + fontes; PNG RGBA 128/256 se necessário
-
-**Contrato Unity:** Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#fx-slam) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="fx-dash"></a>
 
 ## FX-DASH — Rastro do dash
 
-**Categoria:** J — VFX e animações adicionais. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** VFX. **Escopo:** sugestão_polimento.
+**Estado atual:** AUSENTE. **Tipo:** VFX. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento opcional de ação existente
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-DASH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Two or three faint blue cape sweeps or broad dust puffs; never opaque full-character duplicates.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Player/PlayerCombat.cs](../../../../Assets/_Project/Scripts/Player/PlayerCombat.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Player/PlayerSpecial.cs](../../../../Assets/_Project/Scripts/Player/PlayerSpecial.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Projectile.cs](../../../../Assets/_Project/Scripts/Systems/Projectile.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ANIM-HERO-DASH
-
-**Integração técnica pendente:**
-
-- PlayerDash expõe IsDashing, sem evento; ponte atual detecta início por borda.
-
-**Dimensões/tempo:** tail <=0.20 s; <=8 particles; clear on cancellation
-
-**Entrega:** Prefab visual + fontes; PNG RGBA 128/256 se necessário
-
-**Contrato Unity:** Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#fx-dash) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="fx-projectile-trail"></a>
 
 ## FX-PROJECTILE-TRAIL — Cauda do projétil
 
-**Categoria:** J — VFX e animações adicionais. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** VFX. **Escopo:** sugestão_polimento.
+**Estado atual:** AUSENTE. **Tipo:** VFX. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento opcional de ação existente
-
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Compact tapered orange tail on existing hostile orb, clear against stone, no explosion or larger danger radius.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Player/PlayerCombat.cs](../../../../Assets/_Project/Scripts/Player/PlayerCombat.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Player/PlayerSpecial.cs](../../../../Assets/_Project/Scripts/Player/PlayerSpecial.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Projectile.cs](../../../../Assets/_Project/Scripts/Systems/Projectile.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** FX-PROJECTILE
-
-**Integração técnica pendente:**
-
-- Reset OnEnable/retorno do ProjectilePool; não criar nova instância a cada tiro.
-
-**Dimensões/tempo:** tail <=0.15 s and 0.6 m; <=6 particles per projectile
-
-**Entrega:** Prefab visual + fontes; PNG RGBA 128/256 se necessário
-
-**Contrato Unity:** Prefab Unity 6000.6.9f1/URP 17.6.0, fontes e PNG RGBA quando necessários. ParticleSystem/mesh/trail simples, sem pacote novo, collider ou dano. Reset e reuso/pool; respeitar pausa, cancelamento, flash/shake.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#fx-projectile-trail) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=FX-PROJECTILE-TRAIL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.

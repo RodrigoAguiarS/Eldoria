@@ -1,5 +1,7 @@
 # Audio pool — Editor measurement
 
+> Registro histórico da execução indicada. Afirmações de ausência de Git/arte/sistemas e pendências descrevem aquela data; consultar [PROJECT_AUDIT](../../../PROJECT_AUDIT.md) para estado atual. Medições e limites abaixo foram preservados; não são testes reexecutados por esta revisão documental.
+
 Unity 6000.6.9f1, batchmode/nographics. Eight preconfigured SFX sources plus one looping music source; no per-play Instantiate or new AudioSource. PCM clips preload/decompress on load. Music and SFX route to separate exposed mixer gains; zero also mutes sources.
 
 `audio-pool.json`: after 100 warmup plays, 1,000 actual stop/clip/pitch/play operations took 3.036 ms total with 0 GC.Alloc samples. Positive control produced one allocation. The test bypasses cue throttling and checks that all 1,000 calls played, so this is not a measurement of rejected requests.

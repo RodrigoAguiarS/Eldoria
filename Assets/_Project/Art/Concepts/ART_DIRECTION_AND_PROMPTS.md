@@ -1,13 +1,8 @@
-# Direção de Arte e Prompts — Dungeon Crawler (teste de conceitos)
+# Direção de Arte e Prompts — Dungeon Crawler
 
-**Status: NENHUMA IMAGEM FOI GERADA.** A sessão não tem ferramenta de geração de imagens, e conceitos
-não foram simulados nem desenhados à mão. Este arquivo é o pacote de referência: direção de arte, paleta,
-materiais, prompts prontos para uma ferramenta de imagem e o plano de conversão para Unity.
-Quando as imagens existirem, salve-as nesta pasta com os nomes indicados em cada asset.
+Direção visual preservada. Conceitos, cinco personagens Generic e ambiente 3D já existem; procedência e limites em [PROVENANCE](PROVENANCE.md). Materiais atuais usam cores por parte/UV projetada; estudos de superfície não são atlas prontos. As sugestões antigas de atlas/Humanoid não autorizam migração: o produto D-002 preserva rig Generic, malhas e materiais. A parte conflitante permanece bloqueada.
 
-Fontes: AGENTS.md, CLAUDE.md, GAME_DESIGN.md, ARCHITECTURE.md, MVP.md; skills `create-game-assets` (lida a partir
-do repositório baixado; **não instalada** em `.claude/skills`) e `level-design`. O router **não está instalado**
-(decisão anterior), então a seleção das skills foi manual. Nada em `MVP_Arena`, scripts ou prefabs foi alterado.
+As skills estão instaladas em `.claude/skills` (awesome-gamedev-agent-skills); carregar apenas a necessária. Usar [PROMPT_CATALOG](../../../../PROMPT_CATALOG.md) para novas entregas e o manifesto por ID em `../ProductionSpecs/ASSET_MANIFEST.json` antes de encomendar arte. Os prompts abaixo são referências históricas de identidade, não uma ordem de regenerar assets existentes.
 
 ## 1. Quadro técnico (fixo)
 - Unity 6000.6.9f1, URP 17.6, 3D, câmera isométrica fixa a 45° (offset 0,10,-10), jogo para Windows.
@@ -55,9 +50,9 @@ a paleta mantém essa leitura (azul = jogador, vermelho = ameaça).
 **Negative:** `photorealistic, anime, text, logo, extra limbs, copyrighted characters, busy background, thin details, gore`
 - **Materiais URP (Lit):** pele #E3B58F (smoothness 0,2), couro #7A4B2A (0,25), metal #B9C4CF (metallic 0,6, smoothness 0,55), capa #2F6BFF (0,15), detalhes #E0B040 (metallic 0,7).
 - **Conversão para Unity:** modelar em DCC (Blender) em ~3–5 mil triângulos, 1 atlas 512×512 pintado, origem nos pés,
-  escala 2 m; exportar FBX com rig humanoide (Idle, Run, Attack, Dash); capa como malha separada com ossos (ou cloth leve em fase posterior).
+  escala 2 m; exportar FBX; preservar o rig Generic atual (Idle, Run, Attack, Dash); capa como malha separada com ossos (ou cloth leve em fase posterior).
   Importar em `Art/Characters/Hero`, criar prefab variante do `Player` trocando só o visual (`Body`); manter CharacterController,
-  scripts e `DamageFlash` (usa `_BaseColor` do renderer) e o `AttackVisual`.
+  scripts e `DamageFlash` (usa `_BaseColor` do renderer) e manter `AttackVisual` somente como diagnóstico, desligado por padrão.
 - **Tipo do resultado:** conceito 2D (imagem). **Não é sprite nem modelo 3D.**
 
 ### Asset 02 — Inimigo Melee (`SkeletonMelee_Concept_01.png`)
@@ -66,7 +61,7 @@ a paleta mantém essa leitura (azul = jogador, vermelho = ameaça).
 - **Materiais URP:** osso #CFC6A8 (smoothness 0,2), armadura corroída #3E4152 com ferrugem #8A4A22 (metallic 0,4), lâmina enferrujada #8A4A22 (metallic 0,5, smoothness 0,3),
   olhos #FF2A2A com **emissão** (HDR ~3).
 - **Conversão:** ~3–4 mil triângulos, atlas 512, origem nos pés, 2 m de altura (colisão do prefab atual: cápsula raio 0,5/altura 2).
-  Rig humanoide: Idle, Chase (corrida), Attack (windup ~0,4 s alinhado a `EnemyData.attackWindup`) e Death. Trocar apenas o filho `Body` do
+  Rig Generic atual: Idle, Chase (corrida), Attack (windup ~0,4 s alinhado a `EnemyData.attackWindup`) e Death. Trocar apenas o filho `Body` do
   prefab `Enemy_Melee`; o tint de windup do `DamageFlash` continua funcionando. Elite: mesmo modelo escalado 1,4× com ombreiras extras e olhos laranja.
 - **Tipo:** conceito 2D. **Não é sprite nem modelo 3D.**
 
@@ -80,12 +75,6 @@ a paleta mantém essa leitura (azul = jogador, vermelho = ameaça).
   Substituir só os visuais; manter layers (`Ground`, `Obstacle`, `Door`), colliders e o NavMesh. Pós-processamento (Volume URP): Bloom leve, Vignette, Color Adjustments.
 - **Tipo:** conceito 2D. **Não é sprite nem modelo 3D.**
 
-## 5. Próximos passos
-1. Gerar as 3 imagens com os prompts acima (ou entregar prompts a um artista) e salvá-las nesta pasta. Gerar **um** herói aprovado primeiro e usá-lo como referência para o esqueleto e a sala.
-2. Aprovar a direção olhando as imagens sobre um screenshot do jogo (legibilidade na câmera real).
-3. Registrar origem/licença de cada imagem (ferramenta, prompt, data) em `Art/Concepts/PROVENANCE.md`.
-4. Modelagem 3D e rig (DCC), depois um prefab variante em branch própria, sem tocar em `MVP_Arena`.
+## 5. Uso atual e limites
 
-## 6. Limitações
-- Nada foi renderizado, importado ou testado no Unity. Valores de materiais e contagem de triângulos são metas, não medições.
-- `unity-build-size` e `create-game-assets` (scripts de QA de imagem) não estão instaladas; instalar só com autorização.
+Preservar os conceitos/modelos existentes; anexar referências reais ao agente artístico. Consultar PROVENANCE antes de atribuir origem/licença. Validar silhueta a128px e sobre piso real, fonte/malha/escala/pivô/alpha conforme o tipo. Orçamentos de triângulos, atlas e valores de material desta direção são metas históricas, não novas medições nem obrigação de refazer arte aceita. Novas produções são selecionadas pelo catálogo; modelagem/rig/integração têm aceites separados.

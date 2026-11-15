@@ -1,5 +1,7 @@
 # Auditoria técnica de animações
 
+> Consolidação de 14/11/2026: fichas repetidas foram substituídas por índices por ID; os dados e prompts completos permanecem no manifesto, sem alteração. Ler somente o registro necessário. Lotes ANIM-TORCH e ITEMS-COMBAT já foram produzidos/integrados; o diagnóstico introdutório antigo abaixo é histórico onde divergir desses lotes. Novas sugestões prontas para escolha estão em [PROMPT_CATALOG](../../../../PROMPT_CATALOG.md).
+
 Data: 14/11/2026. **NÃO VALIDADO NO EDITOR nesta auditoria.** Clips/importers/controllers/bridges e provas históricas foram cruzados. FBX e GLB não são contados como duas animações. Os `.anim` em SpriteLab são 2D e não suprem animações 3D.
 
 ## Verificação visual ITEMS-COMBAT (14/11/2026)
@@ -90,7 +92,7 @@ Parâmetros e estados reais: Speed e Dead em todos; Hero adiciona ComboSpeed e t
 
 ## Lote adicional permitido como proposta
 
-ANIM-TORCH é o único clip adicional ausente especificado: visual da chama,1,2 s loop,30 fps, envelope pequeno. Não é crítico nem altera iluminação. VFX de slash/giro/dash não substituem os clips 3D existentes. Ficha e prompt em VFX/ASSET_GENERATION_PROMPTS pelo mesmo ID.
+ANIM-TORCH já foi produzido e integrado (loop1,2 s/30 fps). Não encomendar novamente. Aprovação artística é separada da existência/importação; VFX de slash/giro/dash não substituem clips corporais 3D. Ficha e evidências pelo mesmo ID no manifesto.
 
 ## Aceite de animação para futuras entregas
 
@@ -100,1381 +102,434 @@ As provas anteriores de 36 clips não substituem esse aceite visual futuro. Usar
 
 ## Inventário técnico de personagens, rigs e animações
 
+<a id="char-hero-model"></a>
+
 ## CHAR-HERO-MODEL — Hero — modelo
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Personagem de gameplay
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-HERO-MODEL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Capa azul em V, couro, aço e espada curta; 2 m, 2.782 triângulos.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.glb](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.glb) — Chunk JSON lido: geometria, materiais e animations.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Floor release com Hero_Model e encontros Generated.
-
-**Dependências:** CHAR-HERO-RIG, CHAR-HERO-MAT
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-
+<a id="char-hero-rig"></a>
 
 ## CHAR-HERO-RIG — Hero — rig Generic
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Deformação, hierarquia e sockets
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-HERO-RIG]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** 24 transforms/ossos nomeados no manifesto; sockets ['Socket_Hand_L', 'Socket_Hand_R']. Não confundir transforms com ossos efetivamente pesados.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — animationType: 2 = Generic.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedModelPostprocessor.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedModelPostprocessor.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar nomes, pesos, bind poses e sockets; Hero inclui ossos de capa.
-- In-place, applyRootMotion false; não migrar para Humanoid.
-
+<a id="char-hero-mat"></a>
 
 ## CHAR-HERO-MAT — Hero — materiais URP
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** textura. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** textura. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Cor, iluminação e flash
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-HERO-MAT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Materiais por parte/cor, 9 entradas no manifesto. GLB sem texturas embutidas. UVs projetadas/sobrepostas; estudo não é atlas. Capa azul em V, couro, aço e espada curta; 2 m, 2.782 triângulos.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Materials](../../../../Assets/_Project/Art/Models/Generated/Hero/Materials) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.glb](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.glb) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Concepts/PROVENANCE.md](../../../../Assets/_Project/Art/Concepts/PROVENANCE.md) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar URP/Lit e _BaseColor/PropertyBlock.
-- Não acrescentar geometria só para atingir orçamento aproximado; não substituir materiais aprovados.
-
+<a id="anim-hero-idle"></a>
 
 ## ANIM-HERO-IDLE — Hero / Idle
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-IDLE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 2.4 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-walk"></a>
 
 ## ANIM-HERO-WALK — Hero / Walk
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-WALK]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 1 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-run"></a>
 
 ## ANIM-HERO-RUN — Hero / Run
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-RUN]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.64 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-attack"></a>
 
 ## ANIM-HERO-ATTACK — Hero / Attack
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P2. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-ATTACK]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Disponível/importado, legado fora do combo autoritativo; não encomendar novamente.
-
-**Visual:** 0.7 s; one-shot; marcadores referenciais {'hit': 0.32}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-heavyattack"></a>
 
 ## ANIM-HERO-HEAVYATTACK — Hero / HeavyAttack
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P2. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-HEAVYATTACK]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Disponível/importado, legado fora do combo autoritativo; não encomendar novamente.
-
-**Visual:** 1.2 s; one-shot; marcadores referenciais {'hit': 0.7}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-attack-01"></a>
 
 ## ANIM-HERO-ATTACK-01 — Hero / Attack_01
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-ATTACK-01]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.45 s; one-shot; marcadores referenciais {'hit': 0.16}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-attack-02"></a>
 
 ## ANIM-HERO-ATTACK-02 — Hero / Attack_02
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-ATTACK-02]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.5 s; one-shot; marcadores referenciais {'hit': 0.19}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-attack-03"></a>
 
 ## ANIM-HERO-ATTACK-03 — Hero / Attack_03
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-ATTACK-03]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.72 s; one-shot; marcadores referenciais {'hit': 0.32}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-special"></a>
 
 ## ANIM-HERO-SPECIAL — Hero / Special
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-SPECIAL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.9 s; one-shot; marcadores referenciais {'hit': 0.36000000000000004}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-dash"></a>
 
 ## ANIM-HERO-DASH — Hero / Dash
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-DASH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.4 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-hit"></a>
 
 ## ANIM-HERO-HIT — Hero / Hit
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-HIT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.45 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-death"></a>
 
 ## ANIM-HERO-DEATH — Hero / Death
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-DEATH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 1.6 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-hero-victory"></a>
 
 ## ANIM-HERO-VICTORY — Hero / Victory
 
-**Categoria:** A — Personagem principal. **Status:** EXISTENTE. **Prioridade:** P2. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-HERO-VICTORY]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 2 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.controller](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedPlayerAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-HERO-MODEL, CHAR-HERO-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="char-melee-model"></a>
 
 ## CHAR-MELEE-MODEL — SkeletonMelee — modelo
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Personagem de gameplay
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-MELEE-MODEL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Esqueleto curvado, osso marfim, espada enferrujada e olhos vermelhos; ~2 m, 1.998 triângulos.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.glb](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.glb) — Chunk JSON lido: geometria, materiais e animations.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Floor release com Hero_Model e encontros Generated.
-
-**Dependências:** CHAR-MELEE-RIG, CHAR-MELEE-MAT
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-
+<a id="char-melee-rig"></a>
 
 ## CHAR-MELEE-RIG — SkeletonMelee — rig Generic
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Deformação, hierarquia e sockets
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-MELEE-RIG]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** 22 transforms/ossos nomeados no manifesto; sockets ['Socket_Hand_L', 'Socket_Hand_R']. Não confundir transforms com ossos efetivamente pesados.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta) — animationType: 2 = Generic.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedModelPostprocessor.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedModelPostprocessor.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar nomes, pesos, bind poses e sockets; Hero inclui ossos de capa.
-- In-place, applyRootMotion false; não migrar para Humanoid.
-
+<a id="char-melee-mat"></a>
 
 ## CHAR-MELEE-MAT — SkeletonMelee — materiais URP
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** textura. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** textura. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Cor, iluminação e flash
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-MELEE-MAT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Materiais por parte/cor, 6 entradas no manifesto. GLB sem texturas embutidas. UVs projetadas/sobrepostas; estudo não é atlas. Esqueleto curvado, osso marfim, espada enferrujada e olhos vermelhos; ~2 m, 1.998 triângulos.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/Materials](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/Materials) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.glb](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.glb) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Concepts/PROVENANCE.md](../../../../Assets/_Project/Art/Concepts/PROVENANCE.md) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar URP/Lit e _BaseColor/PropertyBlock.
-- Não acrescentar geometria só para atingir orçamento aproximado; não substituir materiais aprovados.
-
+<a id="anim-melee-idle"></a>
 
 ## ANIM-MELEE-IDLE — SkeletonMelee / Idle
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-MELEE-IDLE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 2 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-MELEE-MODEL, CHAR-MELEE-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-melee-chase"></a>
 
 ## ANIM-MELEE-CHASE — SkeletonMelee / Chase
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-MELEE-CHASE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.7 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-MELEE-MODEL, CHAR-MELEE-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-melee-attack"></a>
 
 ## ANIM-MELEE-ATTACK — SkeletonMelee / Attack
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-MELEE-ATTACK]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.95 s; one-shot; marcadores referenciais {'hit': 0.5}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-MELEE-MODEL, CHAR-MELEE-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-melee-hit"></a>
 
 ## ANIM-MELEE-HIT — SkeletonMelee / Hit
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-MELEE-HIT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.4 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-MELEE-MODEL, CHAR-MELEE-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-melee-death"></a>
 
 ## ANIM-MELEE-DEATH — SkeletonMelee / Death
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-MELEE-DEATH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 1.4 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-MELEE-MODEL, CHAR-MELEE-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="char-elite-model"></a>
 
 ## CHAR-ELITE-MODEL — SkeletonElite — modelo
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Personagem de gameplay
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-ELITE-MODEL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Melee 1,4× com ombreiras espinhosas e olhos laranja; 2.116 triângulos.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.glb](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.glb) — Chunk JSON lido: geometria, materiais e animations.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Floor release com Hero_Model e encontros Generated.
-
-**Dependências:** CHAR-ELITE-RIG, CHAR-ELITE-MAT
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-
+<a id="char-elite-rig"></a>
 
 ## CHAR-ELITE-RIG — SkeletonElite — rig Generic
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Deformação, hierarquia e sockets
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-ELITE-RIG]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** 22 transforms/ossos nomeados no manifesto; sockets ['Socket_Hand_L', 'Socket_Hand_R']. Não confundir transforms com ossos efetivamente pesados.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta) — animationType: 2 = Generic.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedModelPostprocessor.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedModelPostprocessor.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar nomes, pesos, bind poses e sockets; Hero inclui ossos de capa.
-- In-place, applyRootMotion false; não migrar para Humanoid.
-
+<a id="char-elite-mat"></a>
 
 ## CHAR-ELITE-MAT — SkeletonElite — materiais URP
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** textura. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** textura. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Cor, iluminação e flash
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-ELITE-MAT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Materiais por parte/cor, 6 entradas no manifesto. GLB sem texturas embutidas. UVs projetadas/sobrepostas; estudo não é atlas. Melee 1,4× com ombreiras espinhosas e olhos laranja; 2.116 triângulos.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/Materials](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/Materials) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.glb](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.glb) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Concepts/PROVENANCE.md](../../../../Assets/_Project/Art/Concepts/PROVENANCE.md) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar URP/Lit e _BaseColor/PropertyBlock.
-- Não acrescentar geometria só para atingir orçamento aproximado; não substituir materiais aprovados.
-
+<a id="anim-elite-idle"></a>
 
 ## ANIM-ELITE-IDLE — SkeletonElite / Idle
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-ELITE-IDLE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 2 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-ELITE-MODEL, CHAR-ELITE-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-elite-chase"></a>
 
 ## ANIM-ELITE-CHASE — SkeletonElite / Chase
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-ELITE-CHASE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.737 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-ELITE-MODEL, CHAR-ELITE-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-elite-attack"></a>
 
 ## ANIM-ELITE-ATTACK — SkeletonElite / Attack
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-ELITE-ATTACK]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 1.1 s; one-shot; marcadores referenciais {'hit': 0.6}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-ELITE-MODEL, CHAR-ELITE-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-elite-hit"></a>
 
 ## ANIM-ELITE-HIT — SkeletonElite / Hit
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-ELITE-HIT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.4 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-ELITE-MODEL, CHAR-ELITE-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-elite-death"></a>
 
 ## ANIM-ELITE-DEATH — SkeletonElite / Death
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-ELITE-DEATH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 1.4 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonElite/SkeletonElite_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-ELITE-MODEL, CHAR-ELITE-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="char-ranged-model"></a>
 
 ## CHAR-RANGED-MODEL — SkeletonRanged — modelo
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Personagem de gameplay
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-RANGED-MODEL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Esqueleto com capuz verde apagado/cajado e orbe vermelho; ~2 m, 2.032 triângulos. Não introduzir arco.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.glb](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.glb) — Chunk JSON lido: geometria, materiais e animations.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Floor release com Hero_Model e encontros Generated.
-
-**Dependências:** CHAR-RANGED-RIG, CHAR-RANGED-MAT
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-
+<a id="char-ranged-rig"></a>
 
 ## CHAR-RANGED-RIG — SkeletonRanged — rig Generic
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Deformação, hierarquia e sockets
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-RANGED-RIG]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** 22 transforms/ossos nomeados no manifesto; sockets ['Socket_Hand_L', 'Socket_Hand_R']. Não confundir transforms com ossos efetivamente pesados.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta) — animationType: 2 = Generic.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedModelPostprocessor.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedModelPostprocessor.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar nomes, pesos, bind poses e sockets; Hero inclui ossos de capa.
-- In-place, applyRootMotion false; não migrar para Humanoid.
-
+<a id="char-ranged-mat"></a>
 
 ## CHAR-RANGED-MAT — SkeletonRanged — materiais URP
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** textura. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** textura. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Cor, iluminação e flash
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-RANGED-MAT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Materiais por parte/cor, 8 entradas no manifesto. GLB sem texturas embutidas. UVs projetadas/sobrepostas; estudo não é atlas. Esqueleto com capuz verde apagado/cajado e orbe vermelho; ~2 m, 2.032 triângulos. Não introduzir arco.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/Materials](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/Materials) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.glb](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.glb) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Concepts/PROVENANCE.md](../../../../Assets/_Project/Art/Concepts/PROVENANCE.md) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar URP/Lit e _BaseColor/PropertyBlock.
-- Não acrescentar geometria só para atingir orçamento aproximado; não substituir materiais aprovados.
-
+<a id="anim-ranged-idle"></a>
 
 ## ANIM-RANGED-IDLE — SkeletonRanged / Idle
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-RANGED-IDLE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 2.2 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-RANGED-MODEL, CHAR-RANGED-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-ranged-chase"></a>
 
 ## ANIM-RANGED-CHASE — SkeletonRanged / Chase
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-RANGED-CHASE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.8 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-RANGED-MODEL, CHAR-RANGED-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-ranged-attack"></a>
 
 ## ANIM-RANGED-ATTACK — SkeletonRanged / Attack
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-RANGED-ATTACK]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 1 s; one-shot; marcadores referenciais {'fire': 0.5}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-RANGED-MODEL, CHAR-RANGED-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-ranged-hit"></a>
 
 ## ANIM-RANGED-HIT — SkeletonRanged / Hit
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-RANGED-HIT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.4 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-RANGED-MODEL, CHAR-RANGED-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-ranged-death"></a>
 
 ## ANIM-RANGED-DEATH — SkeletonRanged / Death
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-RANGED-DEATH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 1.4 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.controller](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedEnemyAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-RANGED-MODEL, CHAR-RANGED-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="char-warden-model"></a>
 
 ## CHAR-WARDEN-MODEL — Warden — modelo
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Personagem de gameplay
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-WARDEN-MODEL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Guardião esquelético, elmo com chifres e marreta; 4,8 m com chifres, 2.790 triângulos; uma malha para ambas as fases.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.fbx](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.fbx) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.glb](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.glb) — Chunk JSON lido: geometria, materiais e animations.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Floor release com Hero_Model e encontros Generated.
-
-**Dependências:** CHAR-WARDEN-RIG, CHAR-WARDEN-MAT
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-
+<a id="char-warden-rig"></a>
 
 ## CHAR-WARDEN-RIG — Warden — rig Generic
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Deformação, hierarquia e sockets
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-WARDEN-RIG]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** 22 transforms/ossos nomeados no manifesto; sockets ['Socket_Hand_L', 'Socket_Hand_R']. Não confundir transforms com ossos efetivamente pesados.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta) — animationType: 2 = Generic.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedModelPostprocessor.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedModelPostprocessor.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar nomes, pesos, bind poses e sockets; Hero inclui ossos de capa.
-- In-place, applyRootMotion false; não migrar para Humanoid.
-
+<a id="char-warden-mat"></a>
 
 ## CHAR-WARDEN-MAT — Warden — materiais URP
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** textura. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** textura. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Cor, iluminação e flash
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=CHAR-WARDEN-MAT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Materiais por parte/cor, 8 entradas no manifesto. GLB sem texturas embutidas. UVs projetadas/sobrepostas; estudo não é atlas. Guardião esquelético, elmo com chifres e marreta; 4,8 m com chifres, 2.790 triângulos; uma malha para ambas as fases.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Materials](../../../../Assets/_Project/Art/Models/Generated/Warden/Materials) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.glb](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.glb) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Concepts/PROVENANCE.md](../../../../Assets/_Project/Art/Concepts/PROVENANCE.md) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar URP/Lit e _BaseColor/PropertyBlock.
-- Não acrescentar geometria só para atingir orçamento aproximado; não substituir materiais aprovados.
-
+<a id="anim-warden-idle"></a>
 
 ## ANIM-WARDEN-IDLE — Warden / Idle
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-WARDEN-IDLE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 2.8 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.controller](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-WARDEN-MODEL, CHAR-WARDEN-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-warden-walk"></a>
 
 ## ANIM-WARDEN-WALK — Warden / Walk
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-WARDEN-WALK]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 1.3 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.controller](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-WARDEN-MODEL, CHAR-WARDEN-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-warden-slamwindup"></a>
 
 ## ANIM-WARDEN-SLAMWINDUP — Warden / SlamWindup
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-WARDEN-SLAMWINDUP]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 1 s; loop; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.controller](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-WARDEN-MODEL, CHAR-WARDEN-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-warden-slam"></a>
 
 ## ANIM-WARDEN-SLAM — Warden / Slam
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-WARDEN-SLAM]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.9 s; one-shot; marcadores referenciais {'impact': 0.18}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.controller](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-WARDEN-MODEL, CHAR-WARDEN-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-warden-volley"></a>
 
 ## ANIM-WARDEN-VOLLEY — Warden / Volley
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-WARDEN-VOLLEY]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 1.5 s; one-shot; marcadores referenciais {'fire': 1.2}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.controller](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-WARDEN-MODEL, CHAR-WARDEN-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-warden-roar"></a>
 
 ## ANIM-WARDEN-ROAR — Warden / Roar
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-WARDEN-ROAR]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 2.4 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.controller](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-WARDEN-MODEL, CHAR-WARDEN-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-warden-hit"></a>
 
 ## ANIM-WARDEN-HIT — Warden / Hit
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-WARDEN-HIT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 0.5 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.controller](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-WARDEN-MODEL, CHAR-WARDEN-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
-
+<a id="anim-warden-death"></a>
 
 ## ANIM-WARDEN-DEATH — Warden / Death
 
-**Categoria:** B — Inimigos e boss. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Locomoção/combate/reação/morte
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-WARDEN-DEATH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Estado/blend tree e ponte presentes; cobertura histórica indicada no guia.
-
-**Visual:** 2.2 s; one-shot; marcadores referenciais {}. Dano não depende desses marcadores.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.fbx.meta) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.controller](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.controller) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/GameBridge/GeneratedBossAnimationBridge.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** CHAR-WARDEN-MODEL, CHAR-WARDEN-RIG
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar take, duração, loop e raiz in-place.
-- Contato visual acompanha timer do domínio; cancelamentos não causam dano tardio.
-- Inspecionar loop, pés, capa e arma na câmera real; sem novo aceite visual nesta sessão.
+<a id="anim-gate"></a>
 
 ## ANIM-GATE — Portão abrir/fechar
 
-**Categoria:** I — Cenários e objetos interativos. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Passagem por conclusão da sala
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-GATE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Movimento procedural MoveTowards; defaults openDepth 2,7 m/speed 8 m/s. Não precisa AnimationClip nem Animator concorrente.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Dungeon/DoorController.cs](../../../../Assets/_Project/Scripts/Dungeon/DoorController.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Prefabs/Rooms/Room_Normal.prefab](../../../../Assets/_Project/Prefabs/Rooms/Room_Normal.prefab) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ENV-GATE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Conferir Open/Close/SetOpenInstant e collider, sem alterar regra de sala.
-
+<a id="anim-torch"></a>
 
 ## ANIM-TORCH — Loop discreto da chama
 
-**Categoria:** J — VFX e animações adicionais. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** animação 3D. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** animação 3D. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento de chama estática
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ANIM-TORCH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Pequena oscilação só do filho visual, suporte/luzes fixos.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedArtApplier.cs](../../../../Assets/_Project/Art/Models/Generated/_Scripts/Editor/GeneratedArtApplier.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ENV-TORCH
-
-**Dimensões/tempo:** Torch_FlameLoop; 1,2 s, loop, 30 fps; escala .98–1.02
-
-**Entrega:** AnimationClip .anim + fonte de autoria; variante visual isolada Support/Flame se necessária, sem rig esquelético
-
-**Contrato Unity:** Animação de Transform de objeto, sem skin, Avatar ou rig esquelético. A tocha atual combina ferro/chama em uma malha com duas submalhas: criar só uma variante isolada com filhos Support/Flame se esse polimento for adotado; preservar GA_Torch original. Entregar fonte e AnimationClip .anim por API Editor, 30 fps, raiz fixa; sem dano, luz animada ou colisão.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#anim-torch) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="proto-spritelab"></a>
 
 ## PROTO-SPRITELAB — Laboratório de sprites Hero
 
-**Categoria:** A — Personagem principal. **Status:** NÃO VERIFICADO. **Prioridade:** P2. **Tipo:** spritesheet. **Escopo:** protótipo_fora_release.
+**Estado atual:** NÃO VERIFICADO. **Tipo:** spritesheet. **Escopo:** protótipo_fora_release.
 
-**Finalidade:** Experimento 2D separado
-
-**Integração:** Protótipo fora das duas cenas de release.
-
-**Visual:** Sprites/8 clips 2D/cenas de teste existem, sem revalidação atual. Não substituir herói 3D.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Sprites/Prototypes/Hero/Sheets/Hero_Spritesheet.png](../../../../Assets/_Project/Art/Sprites/Prototypes/Hero/Sheets/Hero_Spritesheet.png) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Tools/LemoSpriteLab/REPORT.md](../../../../Tools/LemoSpriteLab/REPORT.md) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Hero_Playtest_Floor.unity](../../../../Assets/_Project/Art/Sprites/Prototypes/Hero/Unity/Hero_Playtest_Floor.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=PROTO-SPRITELAB]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.

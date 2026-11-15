@@ -13,7 +13,7 @@ Entrar na sala → portas fecham → inimigos surgem → derrotar todos → port
 - Câmera Cinemachine segue suavemente, sem rotação controlada pelo jogador.
 
 ## Jogador
-Usa CharacterController; atributos HP, recurso (mana/estamina), ataque, defesa, velocidade. Ao receber dano, feedback vermelho temporário e shake leve, sem comprometer legibilidade. Morte encerra combate e permite reiniciar.
+Usa CharacterController; atributos HP, recurso (estamina nesta versão), ataque, defesa, velocidade. Ao receber dano, feedback vermelho temporário e shake leve, sem comprometer legibilidade. Morte encerra combate e permite reiniciar.
 
 ## Inimigos
 Máquina de estados Idle → Chase → Attack → Dead. Melee aproxima e golpeia; ranged mantém distância e dispara; elite tem maior HP/tamanho/dano e concede mais XP. Navegação por NavMeshAgent.
@@ -27,7 +27,7 @@ Salas como prefabs, com pontos de entrada/saída, portas e pontos de spawn defin
 ## Progressão
 Inimigos concedem orbes de XP; ao subir de nível, cura configurável e +10% de dano (multiplicador por nível definido em código de progressão e testado). Drops possíveis: ouro, poção e arma. Itens, raridades e valores são ScriptableObjects.
 
-Inventário interativo e raridades integram o escopo da versão 1.0 por aprovação do usuário; ver [decisão D-001 e fronteira do produto](ROADMAP.md#decisões-de-produto). A implementação deve preservar a fórmula de progressão e definir explicitamente as regras de coleta, capacidade e equipamento.
+Inventário interativo e raridades integram o escopo da versão 1.0 por aprovação do usuário; ver [decisões de produto](#decisões-de-produto). A implementação preserva a fórmula de progressão e as regras de coleta, capacidade e equipamento aprovadas em D-002.
 
 Regras aprovadas para a implementação da 1.0 (D-002): inventário com 16 espaços, equipamento manual em um slot de arma e um de armadura, poções guardadas para consumo com Q e pilhas de até 5 por potência, XP/ouro imediatos e pickup mantido no chão se não houver capacidade. I/Tab abre o inventário e pausa a partida offline. Raridades Comum/Raro/Épico não aplicam multiplicadores ocultos; as armas existentes mantêm bônus +6/+12. Detalhes, valores iniciais e aceite em [regras da 1.0](docs/PRODUCT-1.0-PROPOSAL.md).
 
@@ -41,3 +41,14 @@ Uma arena com jogador, câmera, WASD, mira, ataque básico, dash, um inimigo mel
 
 ## Parâmetros iniciais ajustáveis (não definitivos)
 Vida do jogador 100; inimigo 40; dano do ataque 20; velocidade do jogador 5 unidades/s; cooldown do dash 2 s. Ajustar por playtest, não tratar como valores canônicos.
+
+## Decisões de produto
+
+| ID | Data | Decisão | Alternativa | Motivo e impacto |
+| --- | --- | --- | --- | --- |
+| D-001 | 13/11/2026 | Inventário interativo e raridades entram na 1.0 | Adiar para expansão | Escolha explícita do usuário; não muda retroativamente o primeiro marco. |
+| D-002 | 14/11/2026 | Aprovar integralmente as [regras concretas da 1.0](docs/PRODUCT-1.0-PROPOSAL.md) | Ajustar proposta antes de implementar | Usuário aprovou inventário/pausa/consumo/equipamento/defesa/especial/estamina/menus/opções. Preservar fórmula de dano e armas +6/+12; sem save de campanha nesta versão. |
+
+O loop do andar fixo já está implementado; “após MVP” e “primeiro marco” acima identificam a sequência original de construção, não pendências atuais. Combo de três golpes e segurar para repetir, inventário de 16 slots, três raridades, especial e opções fazem parte do produto existente. Estado/evidências em [MVP](MVP.md). Valores atuais inspecionados e limites do playtest em [BALANCE-1.0](docs/BALANCE-1.0.md).
+
+Novos andares/biomas, arma ranged do jogador, afixos/slots adicionais, geração procedural, save de campanha, quests, coop, lojas e publicação em loja continuam expansões. O [catálogo](PROMPT_CATALOG.md) contém sugestões para escolha futura; esta auditoria não aprova sua implementação nem muda a identidade low-poly/rig Generic da 1.0.

@@ -1,5 +1,7 @@
 # Relatório de qualidade e compatibilidade Unity — Lemo3DGenerator (2026-11-13)
 
+> Registro histórico da execução indicada. Afirmações de ausência de Git/arte/sistemas e pendências descrevem aquela data; consultar [PROJECT_AUDIT](../../PROJECT_AUDIT.md) para estado atual. Medições e limites abaixo foram preservados; não são testes reexecutados por esta revisão documental.
+
 ## 1. O que o Lemo-Opuscar oferece de fato (análise)
 - **three.js r170** em `node_modules/three` (o mesmo que os estilos 3D importam via importmap), incluindo
   `GLTFExporter`, `GLTFLoader`, `ConvexGeometry`, `BufferGeometryUtils`, `OrbitControls`. **Reutilizado** sem modificação.

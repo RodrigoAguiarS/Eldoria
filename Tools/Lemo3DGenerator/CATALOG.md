@@ -1,5 +1,7 @@
 # Catálogo de personagens — estado de produção (2026-11-13)
 
+> Registro histórico da execução indicada. Afirmações de ausência de Git/arte/sistemas e pendências descrevem aquela data; consultar [PROJECT_AUDIT](../../PROJECT_AUDIT.md) para estado atual. Medições e limites abaixo foram preservados; não são testes reexecutados por esta revisão documental.
+
 Fontes: `ART_DIRECTION_AND_PROMPTS.md` (visual), `GAME_DESIGN.md`, dados/prefabs existentes (`EnemyData`, `BossData`,
 `Player`, `Enemy_*`, `Boss_Warden`). Nenhum personagem fora desses documentos/dados foi criado.
 

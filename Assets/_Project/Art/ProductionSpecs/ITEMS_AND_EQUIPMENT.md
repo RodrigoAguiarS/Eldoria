@@ -1,5 +1,7 @@
 # Itens, equipamentos, inventário, poções e loot
 
+> Consolidação de 14/11/2026: fichas repetidas foram substituídas por índices por ID; os dados e prompts completos permanecem no manifesto, sem alteração. Ler somente o registro necessário. Lotes ANIM-TORCH e ITEMS-COMBAT já foram produzidos/integrados; o diagnóstico introdutório antigo abaixo é histórico onde divergir desses lotes. Novas sugestões prontas para escolha estão em [PROMPT_CATALOG](../../../../PROMPT_CATALOG.md).
+
 Data: 14/11/2026. Auditoria estática com provas anteriores da 1.0. **NÃO VALIDADO NO EDITOR nesta sessão.** Layout/estados da bolsa em UI_UX_ASSET_SPECS; prompts em ASSET_GENERATION_PROMPTS e campos estruturados no manifesto.
 
 ## Lote ITEMS-COMBAT — estado em 14/11/2026 (produção, importação, integração e validação)
@@ -78,740 +80,178 @@ Sem baús, quests, arco/machado, escudos, capacetes/acessórios, mana ou drag-an
 
 ## Fichas de produção e reuso
 
+<a id="gear-hero-base"></a>
+
 ## GEAR-HERO-BASE — Espada visual básica
 
-**Categoria:** C — Armas e equipamentos. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Prop do personagem, não definição de item
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=GEAR-HERO-BASE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado ao modelo; não há binding de troca por ItemDefinition.
-
-**Visual:** Malha Hero_Sword em socket da mão; acompanha animações.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Hero/Hero.fbx](../../../../Assets/_Project/Art/Models/Generated/Hero/Hero.fbx) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Arma acompanha a mão sem deslizar/sumir.
-- Cajado/marreta não criam classes jogáveis nem slots extras.
-
+<a id="gear-enemy-sword"></a>
 
 ## GEAR-ENEMY-SWORD — Espada enferrujada melee/elite
 
-**Categoria:** C — Armas e equipamentos. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Prop do personagem, não definição de item
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=GEAR-ENEMY-SWORD]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado ao modelo; não há binding de troca por ItemDefinition.
-
-**Visual:** Malha RustySword em socket da mão; acompanha animações.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx](../../../../Assets/_Project/Art/Models/Generated/SkeletonMelee/SkeletonMelee.fbx) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Arma acompanha a mão sem deslizar/sumir.
-- Cajado/marreta não criam classes jogáveis nem slots extras.
-
+<a id="gear-ranged-staff"></a>
 
 ## GEAR-RANGED-STAFF — Cajado corrompido
 
-**Categoria:** C — Armas e equipamentos. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Prop do personagem, não definição de item
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=GEAR-RANGED-STAFF]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado ao modelo; não há binding de troca por ItemDefinition.
-
-**Visual:** Malha CorruptedStaff em socket da mão; acompanha animações.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx](../../../../Assets/_Project/Art/Models/Generated/SkeletonRanged/SkeletonRanged.fbx) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Arma acompanha a mão sem deslizar/sumir.
-- Cajado/marreta não criam classes jogáveis nem slots extras.
-
+<a id="gear-warden-maul"></a>
 
 ## GEAR-WARDEN-MAUL — Marreta do Guardião
 
-**Categoria:** C — Armas e equipamentos. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Prop do personagem, não definição de item
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=GEAR-WARDEN-MAUL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado ao modelo; não há binding de troca por ItemDefinition.
-
-**Visual:** Malha Maul em socket da mão; acompanha animações.
-
-**Evidências:**
-
-- [Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden_manifest.json) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Art/Models/Generated/Warden/Warden.fbx](../../../../Assets/_Project/Art/Models/Generated/Warden/Warden.fbx) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Arma acompanha a mão sem deslizar/sumir.
-- Cajado/marreta não criam classes jogáveis nem slots extras.
-
+<a id="icon-item-iron"></a>
 
 ## ICON-ITEM-IRON — Espada de Ferro — ícone
 
-**Categoria:** C — Armas e equipamentos. **Status:** AUSENTE. **Prioridade:** P1. **Tipo:** ícone 2D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** ícone 2D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Identidade visual do item em slots e detalhes
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ICON-ITEM-IRON]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Short straight steel sword, simple brass crossguard, dark leather grip, broad readable blade; match the existing Hero_Sword family, no magical glow.
-
-**Evidências:**
-
-- [Assets/_Project/ScriptableObjects/Items/Weapon_IronSword.asset](../../../../Assets/_Project/ScriptableObjects/Items/Weapon_IronSword.asset) — Item real: Comum, valor explícito 6.
-- [Assets/_Project/Scripts/Systems/Inventory/ItemDefinition.cs](../../../../Assets/_Project/Scripts/Systems/Inventory/ItemDefinition.cs) — Sem campo Sprite/ícone.
-- [Assets/_Project/Scripts/UI/InventorySlotView.cs](../../../../Assets/_Project/Scripts/UI/InventorySlotView.cs) — Render textual, sem Image de item.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Integração técnica pendente:**
-
-- Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha.
-
-**Dimensões/tempo:** 512×512; leitura 48 e 32 px
-
-**Entrega:** PNG RGBA + fonte editável
-
-**Contrato Unity:** PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#icon-item-iron) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="model-item-iron"></a>
 
 ## MODEL-ITEM-IRON — Espada de Ferro — malha dedicada
 
-**Categoria:** C — Armas e equipamentos. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Forma no chão; equipamento visível é extensão visual opcional
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=MODEL-ITEM-IRON]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Sugestão; pickup usa esfera e equipar aplica atributos sem trocar malha.
-
-**Visual:** Short straight steel sword, simple brass crossguard, dark leather grip, broad readable blade; match the existing Hero_Sword family, no magical glow.
-
-**Evidências:**
-
-- [Assets/_Project/ScriptableObjects/Items/Weapon_IronSword.asset](../../../../Assets/_Project/ScriptableObjects/Items/Weapon_IronSword.asset) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Prefabs/Items/Pickup.prefab](../../../../Assets/_Project/Prefabs/Items/Pickup.prefab) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs](../../../../Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ICON-ITEM-IRON
-
-**Integração técnica pendente:**
-
-- Seletor visual futuro por LootKind/ItemDefinition; Pickup atual recebe um Renderer/tint.
-- Troca visual futura por referências/eventos nos sockets; não duplicar Hero_Sword fixa.
-
-**Dimensões/tempo:** 0,85×0,16×0,06 m (proposta a ajustar ao Hero); pivô na empunhadura para espada, base para demais
-
-**Entrega:** FBX + .blend; espadas 300–800 tris, colete 500–1200, frasco 150–350; 1–2 materiais
-
-**Contrato Unity:** Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#model-item-iron) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="icon-item-warden"></a>
 
 ## ICON-ITEM-WARDEN — Lâmina do Guardião — ícone
 
-**Categoria:** C — Armas e equipamentos. **Status:** AUSENTE. **Prioridade:** P1. **Tipo:** ícone 2D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** ícone 2D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Identidade visual do item em slots e detalhes
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ICON-ITEM-WARDEN]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Short broad steel sword, heavier angular guard, one restrained cyan inset. Keep it one-handed, distinct from the boss maul.
-
-**Evidências:**
-
-- [Assets/_Project/ScriptableObjects/Items/Weapon_WardenBlade.asset](../../../../Assets/_Project/ScriptableObjects/Items/Weapon_WardenBlade.asset) — Item real: Raro, valor explícito 12.
-- [Assets/_Project/Scripts/Systems/Inventory/ItemDefinition.cs](../../../../Assets/_Project/Scripts/Systems/Inventory/ItemDefinition.cs) — Sem campo Sprite/ícone.
-- [Assets/_Project/Scripts/UI/InventorySlotView.cs](../../../../Assets/_Project/Scripts/UI/InventorySlotView.cs) — Render textual, sem Image de item.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Integração técnica pendente:**
-
-- Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha.
-
-**Dimensões/tempo:** 512×512; leitura 48 e 32 px
-
-**Entrega:** PNG RGBA + fonte editável
-
-**Contrato Unity:** PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#icon-item-warden) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="model-item-warden"></a>
 
 ## MODEL-ITEM-WARDEN — Lâmina do Guardião — malha dedicada
 
-**Categoria:** C — Armas e equipamentos. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Forma no chão; equipamento visível é extensão visual opcional
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=MODEL-ITEM-WARDEN]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Sugestão; pickup usa esfera e equipar aplica atributos sem trocar malha.
-
-**Visual:** Short broad steel sword, heavier angular guard, one restrained cyan inset. Keep it one-handed, distinct from the boss maul.
-
-**Evidências:**
-
-- [Assets/_Project/ScriptableObjects/Items/Weapon_WardenBlade.asset](../../../../Assets/_Project/ScriptableObjects/Items/Weapon_WardenBlade.asset) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Prefabs/Items/Pickup.prefab](../../../../Assets/_Project/Prefabs/Items/Pickup.prefab) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs](../../../../Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ICON-ITEM-WARDEN
-
-**Integração técnica pendente:**
-
-- Seletor visual futuro por LootKind/ItemDefinition; Pickup atual recebe um Renderer/tint.
-- Troca visual futura por referências/eventos nos sockets; não duplicar Hero_Sword fixa.
-
-**Dimensões/tempo:** 0,95×0,22×0,07 m (proposta a ajustar ao Hero); pivô na empunhadura para espada, base para demais
-
-**Entrega:** FBX + .blend; espadas 300–800 tris, colete 500–1200, frasco 150–350; 1–2 materiais
-
-**Contrato Unity:** Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#model-item-warden) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="icon-item-ancient"></a>
 
 ## ICON-ITEM-ANCIENT — Fio Antigo — ícone
 
-**Categoria:** C — Armas e equipamentos. **Status:** AUSENTE. **Prioridade:** P1. **Tipo:** ícone 2D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** ícone 2D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Identidade visual do item em slots e detalhes
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ICON-ITEM-ANCIENT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Short broad ancient steel sword, stepped angular guard, one brass geometric inset and subtle wear. No new element or damage type.
-
-**Evidências:**
-
-- [Assets/_Project/ScriptableObjects/Items/Weapon_AncientEdge.asset](../../../../Assets/_Project/ScriptableObjects/Items/Weapon_AncientEdge.asset) — Item real: Épico, valor explícito 18.
-- [Assets/_Project/Scripts/Systems/Inventory/ItemDefinition.cs](../../../../Assets/_Project/Scripts/Systems/Inventory/ItemDefinition.cs) — Sem campo Sprite/ícone.
-- [Assets/_Project/Scripts/UI/InventorySlotView.cs](../../../../Assets/_Project/Scripts/UI/InventorySlotView.cs) — Render textual, sem Image de item.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Integração técnica pendente:**
-
-- Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha.
-
-**Dimensões/tempo:** 512×512; leitura 48 e 32 px
-
-**Entrega:** PNG RGBA + fonte editável
-
-**Contrato Unity:** PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#icon-item-ancient) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="model-item-ancient"></a>
 
 ## MODEL-ITEM-ANCIENT — Fio Antigo — malha dedicada
 
-**Categoria:** C — Armas e equipamentos. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Forma no chão; equipamento visível é extensão visual opcional
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=MODEL-ITEM-ANCIENT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Sugestão; pickup usa esfera e equipar aplica atributos sem trocar malha.
-
-**Visual:** Short broad ancient steel sword, stepped angular guard, one brass geometric inset and subtle wear. No new element or damage type.
-
-**Evidências:**
-
-- [Assets/_Project/ScriptableObjects/Items/Weapon_AncientEdge.asset](../../../../Assets/_Project/ScriptableObjects/Items/Weapon_AncientEdge.asset) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Prefabs/Items/Pickup.prefab](../../../../Assets/_Project/Prefabs/Items/Pickup.prefab) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs](../../../../Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ICON-ITEM-ANCIENT
-
-**Integração técnica pendente:**
-
-- Seletor visual futuro por LootKind/ItemDefinition; Pickup atual recebe um Renderer/tint.
-- Troca visual futura por referências/eventos nos sockets; não duplicar Hero_Sword fixa.
-
-**Dimensões/tempo:** 0,95×0,24×0,07 m (proposta a ajustar ao Hero); pivô na empunhadura para espada, base para demais
-
-**Entrega:** FBX + .blend; espadas 300–800 tris, colete 500–1200, frasco 150–350; 1–2 materiais
-
-**Contrato Unity:** Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#model-item-ancient) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="icon-item-leather"></a>
 
 ## ICON-ITEM-LEATHER — Colete de couro — ícone
 
-**Categoria:** D — Inventário e itens. **Status:** AUSENTE. **Prioridade:** P1. **Tipo:** ícone 2D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** ícone 2D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Identidade visual do item em slots e detalhes
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ICON-ITEM-LEATHER]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.
-
-**Evidências:**
-
-- [Assets/_Project/ScriptableObjects/Items/Armor_Leather.asset](../../../../Assets/_Project/ScriptableObjects/Items/Armor_Leather.asset) — Item real: Comum, valor explícito 10.
-- [Assets/_Project/Scripts/Systems/Inventory/ItemDefinition.cs](../../../../Assets/_Project/Scripts/Systems/Inventory/ItemDefinition.cs) — Sem campo Sprite/ícone.
-- [Assets/_Project/Scripts/UI/InventorySlotView.cs](../../../../Assets/_Project/Scripts/UI/InventorySlotView.cs) — Render textual, sem Image de item.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Integração técnica pendente:**
-
-- Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha.
-
-**Dimensões/tempo:** 512×512; leitura 48 e 32 px
-
-**Entrega:** PNG RGBA + fonte editável
-
-**Contrato Unity:** PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#icon-item-leather) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="model-item-leather"></a>
 
 ## MODEL-ITEM-LEATHER — Colete de couro — malha dedicada
 
-**Categoria:** D — Inventário e itens. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Forma no chão; equipamento visível é extensão visual opcional
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=MODEL-ITEM-LEATHER]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Sugestão; pickup usa esfera e equipar aplica atributos sem trocar malha.
-
-**Visual:** Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.
-
-**Evidências:**
-
-- [Assets/_Project/ScriptableObjects/Items/Armor_Leather.asset](../../../../Assets/_Project/ScriptableObjects/Items/Armor_Leather.asset) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Prefabs/Items/Pickup.prefab](../../../../Assets/_Project/Prefabs/Items/Pickup.prefab) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs](../../../../Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ICON-ITEM-LEATHER
-
-**Integração técnica pendente:**
-
-- Seletor visual futuro por LootKind/ItemDefinition; Pickup atual recebe um Renderer/tint.
-- Troca visual futura por referências/eventos nos sockets; não duplicar Hero_Sword fixa.
-
-**Dimensões/tempo:** 0,60×0,65×0,25 m (proposta a ajustar ao Hero); pivô na empunhadura para espada, base para demais
-
-**Entrega:** FBX + .blend; espadas 300–800 tris, colete 500–1200, frasco 150–350; 1–2 materiais
-
-**Contrato Unity:** Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#model-item-leather) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="icon-item-health"></a>
 
 ## ICON-ITEM-HEALTH — Poção de vida — ícone
 
-**Categoria:** E — Poções e consumíveis. **Status:** AUSENTE. **Prioridade:** P1. **Tipo:** ícone 2D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** ícone 2D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Identidade visual do item em slots e detalhes
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ICON-ITEM-HEALTH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Squat faceted glass flask, broad round body, short neck, cork and dark leather collar; ruby-red liquid, clear highlight, chunky silhouette.
-
-**Evidências:**
-
-- [Assets/_Project/ScriptableObjects/Items/Potion_Health.asset](../../../../Assets/_Project/ScriptableObjects/Items/Potion_Health.asset) — Item real: Comum, valor explícito 15.
-- [Assets/_Project/Scripts/Systems/Inventory/ItemDefinition.cs](../../../../Assets/_Project/Scripts/Systems/Inventory/ItemDefinition.cs) — Sem campo Sprite/ícone.
-- [Assets/_Project/Scripts/UI/InventorySlotView.cs](../../../../Assets/_Project/Scripts/UI/InventorySlotView.cs) — Render textual, sem Image de item.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Integração técnica pendente:**
-
-- Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha.
-
-**Dimensões/tempo:** 512×512; leitura 48 e 32 px
-
-**Entrega:** PNG RGBA + fonte editável
-
-**Contrato Unity:** PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#icon-item-health) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="model-item-health"></a>
 
 ## MODEL-ITEM-HEALTH — Poção de vida — malha dedicada
 
-**Categoria:** E — Poções e consumíveis. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Forma no chão; equipamento visível é extensão visual opcional
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=MODEL-ITEM-HEALTH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Sugestão; pickup usa esfera e equipar aplica atributos sem trocar malha.
-
-**Visual:** Squat faceted glass flask, broad round body, short neck, cork and dark leather collar; ruby-red liquid, clear highlight, chunky silhouette.
-
-**Evidências:**
-
-- [Assets/_Project/ScriptableObjects/Items/Potion_Health.asset](../../../../Assets/_Project/ScriptableObjects/Items/Potion_Health.asset) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Prefabs/Items/Pickup.prefab](../../../../Assets/_Project/Prefabs/Items/Pickup.prefab) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs](../../../../Assets/_Project/Scripts/Systems/Inventory/PlayerInventory.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ICON-ITEM-HEALTH
-
-**Integração técnica pendente:**
-
-- Seletor visual futuro por LootKind/ItemDefinition; Pickup atual recebe um Renderer/tint.
-- Troca visual futura por referências/eventos nos sockets; não duplicar Hero_Sword fixa.
-
-**Dimensões/tempo:** 0,22×0,32×0,22 m (proposta a ajustar ao Hero); pivô na empunhadura para espada, base para demais
-
-**Entrega:** FBX + .blend; espadas 300–800 tris, colete 500–1200, frasco 150–350; 1–2 materiais
-
-**Contrato Unity:** Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#model-item-health) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="loot-shared"></a>
 
 ## LOOT-SHARED — Pickup compartilhado — esfera e movimento
 
-**Categoria:** H — Loot e recompensas. **Status:** INCOMPLETO. **Prioridade:** P2. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Coleta por trigger, rejeição mantém drop
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=LOOT-SHARED]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado e utilizável como placeholder.
-
-**Visual:** Esfera visual .4 m: cor por tipo/raridade, bob .15 m, giro 120°/s. Lifetime 45 s; rejeição remove expiração. Funcional, sem silhueta por item.
-
-**Evidências:**
-
-- [Assets/_Project/Prefabs/Items/Pickup.prefab](../../../../Assets/_Project/Prefabs/Items/Pickup.prefab) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/Pickup.cs](../../../../Assets/_Project/Scripts/Systems/Pickup.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar trigger e retry .25 s; item rejeitado permanece no chão.
-- Cor não deve ser a única distinção em futuro acabamento.
-
+<a id="model-loot-gold"></a>
 
 ## MODEL-LOOT-GOLD — Ouro — forma dedicada
 
-**Categoria:** H — Loot e recompensas. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Leitura de recompensa imediata
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=MODEL-LOOT-GOLD]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** A small chunky stack of three brass-gold coins, plain broad bevels, bright upper edge, dark underside, no lettering.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Systems/Pickup.cs](../../../../Assets/_Project/Scripts/Systems/Pickup.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** LOOT-SHARED
-
-**Dimensões/tempo:** 0.30 x 0.14 x 0.30 m; pivô base
-
-**Entrega:** FBX + .blend; 100–250 tris, 1 material
-
-**Contrato Unity:** Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#model-loot-gold) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="model-loot-xp"></a>
 
 ## MODEL-LOOT-XP — Orbe de XP — forma dedicada
 
-**Categoria:** H — Loot e recompensas. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
+**Estado atual:** EXISTENTE. **Tipo:** modelo 3D. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Leitura de recompensa imediata
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=MODEL-LOOT-XP]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** A simple faceted cyan orb, dark lower facet and restrained bright core, clearly distinct from an orange hostile projectile.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Systems/Pickup.cs](../../../../Assets/_Project/Scripts/Systems/Pickup.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Systems/PlayerProgression.cs](../../../../Assets/_Project/Scripts/Systems/PlayerProgression.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** LOOT-SHARED
-
-**Dimensões/tempo:** 0.25 m diameter; pivô base
-
-**Entrega:** FBX + .blend; 100–250 tris, 1 material
-
-**Contrato Unity:** Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#model-loot-xp) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="ui-inventory"></a>
 
 ## UI-INVENTORY — Inventário
 
-**Categoria:** D — Inventário e itens. **Status:** INCOMPLETO. **Prioridade:** P1. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-INVENTORY]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado e funcional; apresentação parcial.
-
-**Visual:** Window central 1180×780, título/capacidade, grade 4×4, lateral equipamento/detalhes; ações inferiores. Funcional textual; ícones ausentes.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/InventoryPresenter.cs](../../../../Assets/_Project/Scripts/UI/InventoryPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE, ICON-ITEM-IRON, ICON-ITEM-WARDEN, ICON-ITEM-ANCIENT, ICON-ITEM-LEATHER, ICON-ITEM-HEALTH
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-slots"></a>
 
 ## UI-SLOTS — Slots e estados
 
-**Categoria:** D — Inventário e itens. **Status:** INCOMPLETO. **Prioridade:** P1. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-SLOTS]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado e funcional; apresentação parcial.
-
-**Visual:** 16 slots 188×104, passo 200×116; nome/raridade/quantidade/Equipado; vazio com travessão. Seleção por fundo; Transition.None sem hover/focus distinto.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/InventorySlotView.cs](../../../../Assets/_Project/Scripts/UI/InventorySlotView.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE, ICON-ITEM-IRON, ICON-ITEM-WARDEN, ICON-ITEM-ANCIENT, ICON-ITEM-LEATHER, ICON-ITEM-HEALTH
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-equipment"></a>
 
 ## UI-EQUIPMENT — Equipamentos e status
 
-**Categoria:** D — Inventário e itens. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-EQUIPMENT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Resumo lateral textual: arma/armadura/dano/defesa/HP; não há paper doll nem tela própria.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/InventoryPresenter.cs](../../../../Assets/_Project/Scripts/UI/InventoryPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-details"></a>
 
 ## UI-DETAILS — Detalhes do item selecionado
 
-**Categoria:** D — Inventário e itens. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-DETAILS]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Nome, raridade, atributo, quantidade e ajuda. Painel fixo, não tooltip hover.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/InventoryPresenter.cs](../../../../Assets/_Project/Scripts/UI/InventoryPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="hud-potions"></a>
 
 ## HUD-POTIONS — Atalho/quantidade de poções no HUD
 
-**Categoria:** E — Poções e consumíveis. **Status:** AUSENTE. **Prioridade:** P1. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Leitura de Q sem abrir inventário
-
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Proposta: ícone frasco 48×48, Q e total; zero/HP cheio/morto indisponível, sem sugerir cooldown.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/InventoryPresenter.cs](../../../../Assets/_Project/Scripts/UI/InventoryPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Player/PlayerInventoryInput.cs](../../../../Assets/_Project/Scripts/Player/PlayerInventoryInput.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/UI/PlayerResourcePresenter.cs](../../../../Assets/_Project/Scripts/UI/PlayerResourcePresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ICON-ITEM-HEALTH, HUD-STAMINA
-
-**Integração técnica pendente:**
-
-- Presenter futuro somente leitura em Inventory.Changed/Health.Changed; não mudar escolha de Q nem capacidade.
-
-**Dimensões/tempo:** Componente 160×64 no canvas 1920×1080; âncora superior esquerda/margem 24, proposta y=-180
-
-**Entrega:** UGUI editável; ícone referenciado; textos runtime
-
-**Contrato Unity:** UGUI editável; sprites e texto separados, referência 1920×1080/CanvasScaler match .5. Preservar Text/LegacyRuntime.ttf, InputSystemUIInputModule, pilha de menus e presenters atuais; imagem achatada não é interface funcional.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#hud-potions) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=HUD-POTIONS]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.

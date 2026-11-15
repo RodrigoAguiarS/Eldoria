@@ -1,5 +1,7 @@
 # PERF-001 — pool e controle de alocações
 
+> Registro histórico da execução indicada. Afirmações de ausência de Git/arte/sistemas e pendências descrevem aquela data; consultar [PROJECT_AUDIT](../../../PROJECT_AUDIT.md) para estado atual. Medições e limites abaixo foram preservados; não são testes reexecutados por esta revisão documental.
+
 Unity 6000.6.9f1, Editor Windows batchmode, mesmo projeto/hardware, 16 projéteis por rajada, 200 disparos de aquecimento e 5.000 disparos sequenciais medidos. Tempos por Stopwatch, contagem de alocações pelo ProfilerRecorder `GC.Alloc` no thread atual; controles detectaram uma alocação de byte[4096]. Medições isoladas, sem inferência de FPS ou ganho garantido em build.
 
 | Medida | Antes | Depois |

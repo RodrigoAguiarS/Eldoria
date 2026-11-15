@@ -1,5 +1,7 @@
 # Prompt para o agente de criação de personagens
 
+> Brief histórico preservado por conter ajustes de identidade/proporção. Não executar como instrução atual: personagens 3D já existem, rig é Generic e combo/especial estão integrados. Humanoid/atlas e substituir cápsulas são premissas antigas; mudanças nessa parte exigem resolver o conflito com D-002/ARCHITECTURE. Usar AGENTS e PROMPT_CATALOG por ID para novas tarefas.
+
 > Cole o bloco abaixo no outro agente. Troque `[FERRAMENTA]` pelo nome exato da ferramenta que ele usará
 > (a ferramenta não ficou clara no pedido; o prompt é independente dela).
 > Anexe junto: `Hero_Concept_01.png` (folha) e `Hero_Concept_01_Front.png` desta pasta.

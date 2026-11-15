@@ -1,6 +1,6 @@
 # Regras aprovadas da 1.0 — decisão D-002
 
-Complementa o escopo aprovado em ROADMAP.md. Usuário aprovou a proposta completa em 14/11/2026. Implementação incremental em R3; valores novos são ajustes iniciais em ScriptableObjects, sujeitos a playtest. O nome deste arquivo preserva o caminho apresentado na decisão.
+Detalha as decisões D-001/D-002 de [GAME_DESIGN](../GAME_DESIGN.md#decisões-de-produto). Usuário aprovou a proposta completa em 14/11/2026. Implementação incremental em R3; valores novos são ajustes iniciais em ScriptableObjects, sujeitos a playtest. O nome deste arquivo preserva o caminho apresentado na decisão.
 
 | Sistema | Proposta concreta |
 | --- | --- |

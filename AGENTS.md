@@ -14,7 +14,7 @@ Em conflito, interrompa a alteração afetada e registre a divergência; não in
 - Codex: responsável primário por implementação, integração, testes e scripts de Editor.
 - Claude: design, balanceamento, revisão técnica e direção visual; só altera código após tarefa delegada e com escopo de arquivos explícito.
 - Não editem simultaneamente o mesmo arquivo, cena, prefab ou ProjectSettings. Use branches e commits separados; a integração ocorre após revisão.
-- Antes de editar: leia os quatro documentos, `git status`, versão do Editor (`ProjectSettings/ProjectVersion.txt`), manifesto de pacotes e arquivos envolvidos.
+- Antes de editar: consulte o mapa de leitura abaixo, `git status`, versão do Editor (`ProjectSettings/ProjectVersion.txt`), manifesto/lock de pacotes e arquivos envolvidos. Na primeira tarefa ou ao mudar o escopo, leia os quatro documentos fundamentais; durante a mesma tarefa, releia somente seções afetadas ou alteradas.
 - Não sobrescreva mudanças não commitadas de outro agente. Se houver alterações desconhecidas, pare e relate.
 
 ## Regras obrigatórias
@@ -38,6 +38,20 @@ Em conflito, interrompa a alteração afetada e registre a divergência; não in
 4. Adicionar/atualizar testes EditMode e PlayMode pertinentes.
 5. Validar compilação e testes quando Unity estiver acessível; se não estiver, registrar explicitamente `NÃO VALIDADO NO EDITOR`.
 6. Entregar resumo: arquivos alterados, comportamento, testes executados, limitações e próximo passo.
+
+## Mapa de leitura e continuidade
+- `AGENTS.md`: política compartilhada; ler no início da tarefa. Regras acima prevalecem sobre prompts e skills.
+- `GAME_DESIGN.md`: regras e decisões de produto; consultar o sistema afetado. `docs/PRODUCT-1.0-PROPOSAL.md` detalha D-002; não é uma proposta ainda aguardando aprovação.
+- `ARCHITECTURE.md`: contratos técnicos e composição; consultar os módulos afetados.
+- `MVP.md`: escopo, critérios de aceite e estado resumido; não usar checklists antigos como backlog.
+- `NEXT_STEPS.md`: única fila de próximas entregas e dependências. `PROJECT_AUDIT.md`: diagnóstico/evidências/limites; ler ao auditar ou retomar uma pendência citada.
+- `PROMPT_CATALOG.md`: selecionar somente um ID F01–F15 ou A01–A15. Sugestões não autorizam execução em lote nem alteram o produto aprovado.
+- Arte: começar pela direção em `Assets/_Project/Art/Concepts/ART_DIRECTION_AND_PROMPTS.md`, procedência e pelo ID em `Art/ProductionSpecs/ASSET_MANIFEST.json`. Abrir somente a ficha especializada necessária; status das fichas históricas não prevalece sobre lotes já integrados. Não carregar os sete documentos inteiros em toda tarefa.
+- Distribuição/testes: `docs/BUILD-WINDOWS.md`. Aceite da release antiga: `docs/RELEASE-1.0-VALIDATION.md`. Valores medidos: `docs/BALANCE-1.0.md` e relatório específico em `Reports`; não ler todo o histórico por padrão.
+- Skills locais `awesome-gamedev-agent-skills`: `.claude/skills/<nome>/SKILL.md` (origem/licença em `SOURCE.md`/NOTICE). Selecionar Unity/C#, RPG, UI, arte ou performance conforme a tarefa; não ler bibliotecas de outras engines ou cópias aninhadas. Baseline das skills 6000.3; instalação real prevalece. Ausência de busca textual não prova desuso de asset/pacote.
+- Codex conduz arquitetura, implementação, auditoria e integração. Agente artístico recebe ID, referências reais, formatos, diretório exclusivo e limites; entrega fontes/procedência, sem editar domínio. Unity valida importação, funcionamento e apresentação reais. Claude mantém o papel de revisão definido acima.
+- Handoff curto: commit/base e branch, objetivo, arquivos reservados, decisões, evidência executada, pendência e próximo comando. Não copiar documentos completos no prompt. Fontes em `Tools/*/unity` e cópias instaladas correspondentes devem permanecer sincronizadas; verificar com `Tools/Audit/audit_project.py`.
+- Auditoria e testes produzem relatórios novos em `Reports/ProjectAudit` (ou pasta exclusiva da tarefa); nunca substituir evidências históricas. Definir `DUNGEON_CRAWLER_TEST_REPORT_DIR` para isolar benchmarks. Conferir hashes/diff após testes que executam builders; preservar dados e GUIDs existentes.
 
 ## Automação Unity
 - Para construir cenas/prefabs, crie scripts idempotentes em `Assets/_Project/Scripts/Editor` com menu `Tools/Dungeon Crawler/...`.

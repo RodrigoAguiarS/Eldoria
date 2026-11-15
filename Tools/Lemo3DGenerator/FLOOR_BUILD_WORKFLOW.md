@@ -1,5 +1,7 @@
 # Build do andar com personagens 3D — 2026-11-13
 
+> Registro histórico da execução indicada. Afirmações de ausência de Git/arte/sistemas e pendências descrevem aquela data; consultar [PROJECT_AUDIT](../../PROJECT_AUDIT.md) para estado atual. Medições e limites abaixo foram preservados; não são testes reexecutados por esta revisão documental.
+
 ## Comportamento implementado
 
 `Tools > Dungeon Crawler > Build > Floor Scene (M2)` agora reconstrói a base `Floor_01`,

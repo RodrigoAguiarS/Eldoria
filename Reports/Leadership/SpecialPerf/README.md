@@ -1,5 +1,7 @@
 # Especial — medição e limites
 
+> Registro histórico da execução indicada. Afirmações de ausência de Git/arte/sistemas e pendências descrevem aquela data; consultar [PROJECT_AUDIT](../../../PROJECT_AUDIT.md) para estado atual. Medições e limites abaixo foram preservados; não são testes reexecutados por esta revisão documental.
+
 Unity 6000.6.9f1, Mono no Editor, batchmode/nographics; mesma máquina das medições InventoryUiPerf. Não é perfil de frame/GPU da versão distribuível.
 
 | Consulta | Carga após aquecimento | CPU total | GC.Alloc |

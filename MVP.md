@@ -1,114 +1,31 @@
-# MVP.md — Plano de entregas
+# MVP — escopo, aceite e estado
 
-## Estado atual — Windows 1.0.0 (14/11/2026)
+## Estado e evidências
 
-**Escopo aprovado entregue e validado:** andar fixo de quatro salas + Guardião, combo de três golpes, dash, especial/estamina/defesa, progressão/loot, inventário/raridades, menus, áudio e opções persistentes. Herói, rig Generic, materiais e ambiente preservados; nenhuma imagem alterada.
+A release **Windows 1.0.0 de 14/11/2026** entregou o andar fixo de quatro salas + Guardião, combo/dash/especial, estamina/defesa, progressão/loot, inventário/raridades, menus/opções e áudio. Aceite humano da RC2: vitória 5/5, derrota→reinício, atalhos e áudio/feedback. Evidências e limites em [RELEASE-1.0-VALIDATION](docs/RELEASE-1.0-VALIDATION.md): 93/93 EditMode, 69/69 PlayMode, build sem erros, ZIP extraído e 208 hashes conferidos. Esses resultados pertencem à release, não certificam automaticamente revisões posteriores.
 
-Suítes finais: **93/93 EditMode e 69/69 PlayMode**. Build release x64 1.0.0: Succeeded, zero erros, 496 avisos conhecidos de shaders upstream. Auditoria por APIs do Editor sem referências inválidas. Usuário confirmou na RC2 derrota→reinício, vitória 5/5, controles/inventário/poções e áudio/feedback; a identificação da versão é a única alteração de código posterior. O ZIP final foi extraído, teve 208 hashes conferidos e abriu menu/andar/especial sem erros de runtime.
+Depois da release entraram chama animada, modelos/ícones de itens, equipamento visível, HUD de poções, VFX de combo/giro/acerto e atalhos de teste (`aff1895`). Testes históricos ITEMS-COMBAT: 99 EditMode; PlayMode com 74 aprovados e 1 caso visual explícito ignorado, mais retestes específicos. A revisão artística humana e o visual das armas/colete na build não estão integralmente aprovados. [COMO-TESTAR](COMO-TESTAR.md) identifica o jogo normal e o cenário diagnóstico com itens; diagnóstico não prova vitória normal.
 
-| Entrega | Evidência corrente | Estado |
+Nesta auditoria, 99/99 EditMode passaram antes da interrupção por trabalho externo. Inspeção real de 207 assets via Editor não encontrou referências inválidas; a retomada tem relatório separado. Resultados atuais, alterações preservadas e cobertura exata em [PROJECT_AUDIT](PROJECT_AUDIT.md). Não confundir inspeção estática, Test Runner, revisão visual e confirmação humana.
+
+## Marcos e critérios permanentes
+
+| Marco | Escopo e aceite verificável | Estado da 1.0 / evidência |
 | --- | --- | --- |
-| M0 — Fundação | Git local, versões reais, checkers, Bootstrap e auditoria de assets | Concluído |
-| M1 — Arena | CharacterController/Input, combate, navegação, morte/reinício, builders; PlayMode visual e testes de cena | Concluído; feedback final aprovado no andar Windows |
-| M2 — Salas | Quatro salas, ranged/elite, portas/última morte/reativação; percurso normal | Concluído |
-| M3 — Boss | Duas fases/50%/3 s/telegraph, visual integrado, HUD e vitória 5/5 | Concluído; desfecho Windows confirmado pelo usuário |
-| M4 / R3 — Produto | Progressão, loot, inventário, raridades, especial, menus, áudio e opções | Concluído conforme D-001/D-002 |
-| R4 — Distribuição | CPU/GPU/frame/memória e GC comparáveis, mistura normal/sintética, ZIP/CRC/SHA256 e smoke extraído | Concluído, com limites de hardware/cobertura documentados |
+| M0 — Fundação | Unity/URP/pacotes e layers corretos; Git com metas e exclusões; Bootstrap inicia sem erros | Concluído na release; FoundationValidator/Tests, Bootstrap_LoadsAndInitializesWithoutErrors e histórico Git cf3720d |
+| M1 — Arena | Chão/paredes/luz/câmera fixa ~45°; WASD relativo à câmera com CharacterController.Move; mira mouse em XZ; ataque com alcance/dano/tempo; dash/cooldown/invulnerabilidade; melee NavMeshAgent Idle/Chase/Attack/Dead; HP/HUD/flash/shake; morte e reinício; builder idempotente e testes | Implementado e validado no escopo da release; MvpSceneAcceptanceTests, PlayerInputComboTests, PlayerComboCombatTests, MvpBuilderPreservationTests e aceite humano. Regressão visual futura segue o roteiro de build |
+| M2 — Salas | Prefabs/portas/spawn points; entrar fecha, gera onda, última morte abre; ranged/elite e quatro salas fixas sem softlock | Concluído na release; RoomSystemsPlayModeTests/FloorIntegrationTests e percurso normal. Reativação reconcilia mortes e progresso por referências/eventos |
+| M3 — Boss | Quinta sala, duas fases, transição única a 50%, 3 s invulnerável, padrão diferente, telegraph ≥1 s, HUD só durante luta e vitória 5/5 | Concluído na release; BossTests/BossPlayModeTests/GeneratedBossPresentationTests e confirmação humana Windows. Não atribuir vitória à automação que só observou parte da run |
+| M4 — Progressão/apresentação | XP/nível/cura/+10% de dano; ouro/poção/arma por SO; projéteis pooled e efeitos reutilizados; animação/áudio/legibilidade/balanço; desempenho medido em Windows | Concluído conforme D-001/D-002; Progression/Inventory/Special/GameAudio/GameOptions tests e medições específicas. Não se exige zero GC global nem meta de FPS inventada |
+| R3 — Produto 1.0 | Bolsa 16 slots, equipamento manual, raridades, Q/pilhas por potência/pausa/descarte; especial/recurso/defesa; menu/pausa/opções persistentes | Concluído conforme [regras aprovadas](docs/PRODUCT-1.0-PROPOSAL.md); fórmulas em GAME_DESIGN e baseline em docs/BALANCE-1.0 |
+| R4 — Distribuição | Build x64 reproduzível, logs/limites, medição comparável, pacote CRC/SHA256 e smoke extraído | Concluído para o pacote original; reconstruções posteriores não equivalem ao ZIP antigo. Ver docs/BUILD-WINDOWS |
 
-Pacote: `Builds/Release/DungeonCrawler-1.0.0-windows-x64.zip` (53.496.573 bytes). Relatório por requisito: [RELEASE-1.0-VALIDATION](docs/RELEASE-1.0-VALIDATION.md). Reconstrução: [BUILD-WINDOWS](docs/BUILD-WINDOWS.md). Planejamento e histórico: [ROADMAP](ROADMAP.md), [BACKLOG](BACKLOG.md), [CHANGELOG](CHANGELOG.md), [auditoria](docs/MVP-AUDIT.md).
+## Limites e próximas entregas
 
-Cada marco deve produzir estado executável e verificável. Não confundir testes de componentes com partida completa nem medição sintética com garantia de FPS. Limitações conhecidas constam no relatório de entrega; não há save de campanha nem publicação em loja nesta versão.
+Uma run nova reinicia progressão/inventário; somente opções persistem. Não há campanha salva, lojas, quests, coop, geração procedural ou publicação em loja no produto aprovado. Novidades são propostas do [PROMPT_CATALOG](PROMPT_CATALOG.md), priorizadas em [NEXT_STEPS](NEXT_STEPS.md); não reimplementar combo, inventário, especial, áudio ou arte de itens como ausentes.
 
-## Histórico de validações incrementais
+Histórico incremental permanece em [CHANGELOG](CHANGELOG.md), XML/JSON de `Reports` e Git. Checklists antigos foram consolidados no [roteiro de regressão](docs/BUILD-WINDOWS.md#roteiro-de-regressão); remover caixas históricas contraditórias não amplia o aceite comprovado.
 
-Os registros e checklists abaixo preservam o estado de cada etapa na data da execução. Pendências antigas foram resolvidas em entregas posteriores; o quadro acima descreve o estado atual.
+## Relatório por tarefa
 
-Menus/opções integrados: 90 EditMode e idempotência final 2/2; quatro testes de menus revalidados após corrigir tolerância numérica da fixture e o layout de dropdown encontrado na revisão. Windows abriu menu→andar e executou o especial por direito; ajuste 720p/janela persistiu após sair/reabrir, e 1080p/tela cheia foi restaurado. Layouts observados em ambas as resoluções. Controle de tremor/flash passou no teste; áudio e QA final da 1.0 ainda pendentes.
-
-Especial/estamina implementados com 83/83 EditMode e 60/60 PlayMode aprovados, preservando progressão/arma e clips anteriores do Hero. HUD observado no Editor; revisão visual do giro interrompida pelo usuário e build Windows do especial pendentes. Menus completos, áudio e opções seguem abertos.
-
-R3 — inventário integrado aos três cenários de gameplay: 75/75 EditMode e 49/49 PlayMode passaram, incluindo cliques reais New Input System, equipamento, poções, pausa sem dano pendente e descarte que preserva itens. Layout/raridades observados no Editor em PlayMode com conteúdo de preview; a revisão visual antecedeu o botão Largar, cuja interação passou em teste. Especial, menus completos, áudio e opções ainda estão em desenvolvimento; 1.0 não concluída.
-Cada marco deve produzir estado executável e verificável. Não avançar com erros de compilação ou referências faltantes. Não confundir análise de código com execução no Unity Editor.
-
-Reparo de renderização FIX-002 validado: referências obsoletas e subassets sem script limpos pelas APIs; 19 componentes de volume preservados. Build Windows abre sem os avisos de pós-processamento diagnosticados. Evidências e limites em [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md).
-
-PERF-001 validado com 30 testes PlayMode: pool aquecido com 16 instâncias, rajada sem novas criações e zero alocações nos disparos aquecidos segundo Profiler com controle positivo. O contador de bytes do thread desta instalação não é usado como prova de GC. Medições em [PoolPerf](Reports/Leadership/PoolPerf/README.md).
-
-R1 técnico entregue: armas/render/builders/pool/ciclo de vida reparados; 53 EditMode e 31 PlayMode passaram. Build Windows atual abre e executa ataque sem Missing Script/exceções/avisos Animator. O aceite completo do MVP/andar, incluindo Boss e validação visual de teclado/reinício Windows, permanece aberto em R2.
-
-Atualização posterior: usuário confirmou WASD/dash/R na build Windows. Apresentação da fase 2 do Warden corrigida e observada no Editor (branco → vermelho, modelo visível); suítes atuais com 54 EditMode/32 PlayMode. Na partida do usuário, observados quatro salas concluídas e Boss em fase 2, sem observar a vitória. Revisão visual da arena confirmou perseguição/HP/morte; botão Reiniciar e flash/shake ainda em validação. R2 continua aberto.
-
-Validação mais recente: 54 EditMode/38 PlayMode; integração das cinco ondas, portas/última morte/vitória única, reativação das salas/andar e ranged pelo pool real. Botão Reiniciar passou com clique New Input System. Usuário confirmou a vitória normal do Editor com 5/5; run Windows atual e conferência visual de flash/shake seguem pendentes. Regras concretas de R3 aprovadas em D-002; não são novos critérios retroativos de M1.
-
-Confirmação posterior do usuário: executável Windows atualizado concluído até vitória/5 de 5. Log registra as cinco ondas e nenhuma exceção/Missing Script; ver Reports/Leadership/windows-normal-run.json. A revisão visual de flash/shake e o ciclo de morte/reinício Windows permanecem na QA final. R3 inicia pelos dados/modelos isolados enquanto essas verificações finais ficam rastreadas.
-
-## Histórico — auditoria e condução técnica em 13/11/2026
-
-Auditoria corrente com classificação por requisito e evidências: [docs/MVP-AUDIT.md](docs/MVP-AUDIT.md). Planejamento: [ROADMAP.md](ROADMAP.md); execução: [BACKLOG.md](BACKLOG.md); alterações: [CHANGELOG.md](CHANGELOG.md).
-
-Compilação validada na Unity 6000.6.9f1; 45 testes EditMode passaram. Os 21 testes PlayMode anteriores e seis novos testes de Bootstrap/MVP_Arena passaram (os novos foram reexecutados após corrigir três falhas das fixtures). Movimento, mira, dash/invulnerabilidade, combo, navegação/dano melee e morte/reinício têm provas na cena real. Ainda faltam conferência visual específica da arena, estabilidade dos builders, reparo das armas, integração visual da fase 2 e percurso completo do andar. **O MVP global continua pendente.**
-
-Atualização FIX-001: armas/tabelas reparadas com GUIDs preservados; **51/51 EditMode e 28/28 PlayMode passaram**, incluindo coleta física de arma/XP, cura e aplicação da progressão. Build Windows gerada e iniciada com **0 Missing Script e 0 exceções** no log; quatro avisos URP permanecem. Git local inicializado em cf3720d. O quadro de auditoria anterior abaixo é histórico; [auditoria corrente](docs/MVP-AUDIT.md) contém os deltas por entrega.
-
-## Auditoria anterior — 13/11/2026 (histórico)
-
-**O MVP ainda não está completo.** A revisão dos 26 itens e suas evidências estão em [MVP_AUDIT.md](MVP_AUDIT.md).
-
-| Marco | Situação verificada |
-| --- | --- |
-| M0 | Fundação configurada; falta repositório Git/commit inicial e confirmar o smoke test da Bootstrap. |
-| M1 | Sistemas implementados; aceite manual completo ainda pendente. |
-| M2 | Sistemas implementados; falta comprovar as quatro salas completas sem softlock. |
-| M3 | Lógica implementada; visual da fase 2 precisa integração ao Boss gerado e falta comprovar a vitória no andar. |
-| M4 | Parcial: progressão e projéteis presentes; armas com script inválido e acabamento/desempenho pendentes. |
-
-Testes executados no Unity 6000.6.9f1: **32/32 EditMode e 5/5 PlayMode passaram**. Resultados em `Reports/MVP/`. Os testes atuais não cobrem uma partida completa. As caixas abaixo foram preservadas: presença de código e testes de componentes não substituem o aceite de cada marco.
-
-## M0 — Fundação
-- [x] Criar projeto Unity 6 URP e repositório Git. (commit inicial cf3720d; histórico local)
-- [x] Confirmar versão exata de Unity, Input System, Cinemachine, AI Navigation e Test Framework. (FoundationValidator/EditMode-baseline.xml)
-- [x] Criar pastas e documentos; configurar .gitignore e `.meta`. (inventário, validação e exclusões revisadas)
-- [x] Criar cena bootstrap simples e validar PlayMode sem erros. (Arena-baseline.xml, Bootstrap_LoadsAndInitializesWithoutErrors)
-**Aceite:** Editor abre projeto, Console sem erros, commit inicial reproduzível.
-
-## M1 — Vertical Slice: uma arena jogável
-- [ ] Arena com chão, paredes, luz e câmera Cinemachine a ~45°.
-- [x] Player CharacterController com WASD relativo à tela. (Arena-baseline.xml, WasdMovesOnGroundAndMouseAimsInXZ)
-- [x] Mira pelo mouse via raycast e rotação no plano XZ. (mesmo teste de cena)
-- [x] Ataque básico com alcance, dano e cooldown. (testes de combo/Task02 e morte do melee na arena)
-- [x] Dash com cooldown e invulnerabilidade breve. (Arena-baseline.xml, DashMovesGrantsInvulnerabilityAndRespectsCooldown)
-- [x] Inimigo melee com NavMeshAgent e estados Idle/Chase/Attack/Dead. (testes da arena: navegação, dano e morte/agent/collider)
-- [ ] HP do player e inimigo; barra de vida, feedback de dano.
-- [x] Morte e reinício da cena. (Arena-baseline.xml, DeathDisablesPlayerAndRestartRestoresSavedScene)
-- [ ] Builder de cena idempotente via menu do Editor.
-- [ ] Testes EditMode/PlayMode pertinentes e checklist manual.
-**Aceite:** entrar em PlayMode, mover, mirar, atacar, matar inimigo, receber dano, morrer e reiniciar sem exceções.
-
-## M2 — Loop de salas
-- [ ] Prefab Room, portas e pontos de spawn.
-- [ ] Fechar portas ao entrar, spawnar inimigos, reabrir após último morrer.
-- [ ] Inimigos ranged e elite.
-- [ ] Sequência fixa de quatro salas comuns.
-**Aceite:** completar quatro salas sem softlock, portas só abrem quando sala limpa.
-
-## M3 — Boss e andar
-- [ ] Sala final e Boss com duas fases.
-- [ ] Transição aos 50% HP, invulnerabilidade de 3 s e mudança de padrão.
-- [ ] Telegraph visível 1 s antes de ataques pesados.
-- [ ] Barra de HP de Boss durante luta e tela de vitória.
-**Aceite:** completar andar de cinco salas; fase do Boss ocorre uma única vez.
-
-## M4 — Progressão e acabamento
-- [ ] XP, níveis, cura ao subir e +10% de dano.
-- [ ] Loot de ouro, poção e arma configurado por ScriptableObjects.
-- [ ] Object pooling de projéteis e efeitos repetidos.
-- [ ] Áudio, animações, VFX, ajustes de acessibilidade e balanceamento.
-**Aceite:** progressão consistente, sem erros de console, desempenho medido em build Windows.
-
-## Modelo de relatório por tarefa
-**Marco/tarefa:**
-**Arquivos alterados:**
-**Critérios atendidos:**
-**Validação executada (com evidência):**
-**Validação pendente:**
-**Riscos e próximo passo:**
+Informar objetivo, base/branch, arquivos alterados, comportamento, critérios atendidos com evidência, testes executados, validação pendente, riscos e próximo passo. Se não houve execução na Unity, escrever `NÃO VALIDADO NO EDITOR`. Uma cena jogável, testada e reproduzível precede expansão de escopo.

@@ -1,5 +1,7 @@
 # Modelos 3D ausentes — diagnóstico e correção (2026-11-13)
 
+> Registro histórico da execução indicada. Afirmações de ausência de Git/arte/sistemas e pendências descrevem aquela data; consultar [PROJECT_AUDIT](../../PROJECT_AUDIT.md) para estado atual. Medições e limites abaixo foram preservados; não são testes reexecutados por esta revisão documental.
+
 Relatório da seleção manual inicial da cena. Para a alteração posterior do próprio menu
 Build > Floor Scene (M2), incluindo preservação de GUIDs e validações pendentes, consulte
 [FLOOR_BUILD_WORKFLOW.md](FLOOR_BUILD_WORKFLOW.md). O fluxo descrito ao final deste relatório

@@ -1,5 +1,7 @@
 # Especificações de UI/UX e assets de interface
 
+> Consolidação de 14/11/2026: fichas repetidas foram substituídas por índices por ID; os dados e prompts completos permanecem no manifesto, sem alteração. Ler somente o registro necessário. Lotes ANIM-TORCH e ITEMS-COMBAT já foram produzidos/integrados; o diagnóstico introdutório antigo abaixo é histórico onde divergir desses lotes. Novas sugestões prontas para escolha estão em [PROMPT_CATALOG](../../../../PROMPT_CATALOG.md).
+
 Data: 14/11/2026. A 1.0 já contém menu, opções, pausa, inventário, morte/vitória e HUD. O diagnóstico abaixo distingue funcionamento comprovado anteriormente de acabamento e cobertura visual pendentes. **NÃO VALIDADO NO EDITOR nesta auditoria.**
 
 ## Lote ITEMS-COMBAT — inventário e HUD de poções (14/11/2026)
@@ -68,7 +70,7 @@ Uma composição futura pode ajustar âncoras/containers para preservar essas re
 
 ## Legibilidade, movimento e problemas identificados
 
-- **Confirmado em código:** ausência de binding/ícones de item; slots sem transição; destaque de seleção depende principalmente da cor; sem quantidade de poção no HUD. Detalhes fixos já cumprem a consulta de atributos e não precisam virar tooltip novo.
+- **Estado atual:** ItemVisualCatalog fornece ícones; slots têm quantidade e seleção por moldura/losango; PotionHudPresenter mostra total/estado. Detalhes fixos já cumprem consulta de atributos. Demais tabelas de proposta abaixo são históricas quando divergem do lote ITEMS-COMBAT.
 - **Limite visual:** textos18–24 px no canvas1920 escalam aproximadamente a 12–16 px em 720p; isso não prova ilegibilidade, mas exige conferir acentos, nomes longos como Lâmina do Guardião e linha Raro·Equipado com ícone novo. Não há prova nova de wrap/contraste ou falha de foco em cada tamanho.
 - **Diretriz de validação:** manter texto informativo >=18 px na referência1080p e contraste alvo4,5:1 (texto)/3:1(elementos grandes), sinal redundante além de cor. São metas das skills para QA, não certificação atingida. Medir sobre background final considerando alpha. Ampliação200%/ultrawide são sugestões de acessibilidade a avaliar, sem prometer suporte implementado.
 - **Animações:** transições atuais são imediatas. UI-TRANSITION propõe fade0,10–0,15 s unscaled, sem atrasar foco/click, nem reabrir input abaixo; reduzir movimento pode ser exigido em tarefa futura, não existe opção nova automaticamente.
@@ -81,671 +83,186 @@ Abrir cada superfície com entradas reais, conferir foco inicial/Tab/Enter/Esc e
 
 ## Fichas detalhadas
 
+<a id="ui-main"></a>
+
 ## UI-MAIN — Menu principal
 
-**Categoria:** F — Menus e interfaces. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-MAIN]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** TitlePanel com título, descrição, Jogar/Opções/Sair e controles; Content 1100×820, fonte título 76, botões 500×72.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/MainMenuController.cs](../../../../Assets/_Project/Scripts/UI/MainMenuController.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Scenes/MainMenu.unity](../../../../Assets/_Project/Scenes/MainMenu.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-options"></a>
 
 ## UI-OPTIONS — Configurações
 
-**Categoria:** F — Menus e interfaces. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-OPTIONS]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Window 1040×860: Música/SFX/Tremor/Flash, qualidade, resolução, tela cheia, status, Aplicar e salvar/Voltar. Fontes 22–42.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/GameOptionsPresenter.cs](../../../../Assets/_Project/Scripts/UI/GameOptionsPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Scenes/MainMenu.unity](../../../../Assets/_Project/Scenes/MainMenu.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-pause"></a>
 
 ## UI-PAUSE — Pausa
 
-**Categoria:** F — Menus e interfaces. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-PAUSE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Window 540×630: Continuar, Reiniciar, Opções, Menu, Sair; só topo interativo.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/GameMenuController.cs](../../../../Assets/_Project/Scripts/UI/GameMenuController.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-inventory"></a>
 
 ## UI-INVENTORY — Inventário
 
-**Categoria:** D — Inventário e itens. **Status:** INCOMPLETO. **Prioridade:** P1. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-INVENTORY]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado e funcional; apresentação parcial.
-
-**Visual:** Window central 1180×780, título/capacidade, grade 4×4, lateral equipamento/detalhes; ações inferiores. Funcional textual; ícones ausentes.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/InventoryPresenter.cs](../../../../Assets/_Project/Scripts/UI/InventoryPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE, ICON-ITEM-IRON, ICON-ITEM-WARDEN, ICON-ITEM-ANCIENT, ICON-ITEM-LEATHER, ICON-ITEM-HEALTH
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-slots"></a>
 
 ## UI-SLOTS — Slots e estados
 
-**Categoria:** D — Inventário e itens. **Status:** INCOMPLETO. **Prioridade:** P1. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-SLOTS]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado e funcional; apresentação parcial.
-
-**Visual:** 16 slots 188×104, passo 200×116; nome/raridade/quantidade/Equipado; vazio com travessão. Seleção por fundo; Transition.None sem hover/focus distinto.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/InventorySlotView.cs](../../../../Assets/_Project/Scripts/UI/InventorySlotView.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE, ICON-ITEM-IRON, ICON-ITEM-WARDEN, ICON-ITEM-ANCIENT, ICON-ITEM-LEATHER, ICON-ITEM-HEALTH
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-equipment"></a>
 
 ## UI-EQUIPMENT — Equipamentos e status
 
-**Categoria:** D — Inventário e itens. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-EQUIPMENT]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Resumo lateral textual: arma/armadura/dano/defesa/HP; não há paper doll nem tela própria.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/InventoryPresenter.cs](../../../../Assets/_Project/Scripts/UI/InventoryPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-details"></a>
 
 ## UI-DETAILS — Detalhes do item selecionado
 
-**Categoria:** D — Inventário e itens. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-DETAILS]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Nome, raridade, atributo, quantidade e ajuda. Painel fixo, não tooltip hover.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/InventoryPresenter.cs](../../../../Assets/_Project/Scripts/UI/InventoryPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-death"></a>
 
 ## UI-DEATH — Tela de morte
 
-**Categoria:** F — Menus e interfaces. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-DEATH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** GameOverPanel: Reiniciar/Voltar ao menu; foco inicial no reinício.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/GameOverPresenter.cs](../../../../Assets/_Project/Scripts/UI/GameOverPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-victory"></a>
 
 ## UI-VICTORY — Tela de vitória
 
-**Categoria:** F — Menus e interfaces. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-VICTORY]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** VictoryPanel: jogar novamente/menu; conclusão 5/5.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/VictoryPresenter.cs](../../../../Assets/_Project/Scripts/UI/VictoryPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="hud-hp"></a>
 
 ## HUD-HP — Vida do jogador
 
-**Categoria:** G — HUD e gameplay. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=HUD-HP]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Barra de HP por eventos Health.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/HealthBarPresenter.cs](../../../../Assets/_Project/Scripts/UI/HealthBarPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="hud-dash"></a>
 
 ## HUD-DASH — Cooldown do dash
 
-**Categoria:** G — HUD e gameplay. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=HUD-DASH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Barra cheia = pronto; cooldown default 2 s; ícone ausente.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/DashCooldownPresenter.cs](../../../../Assets/_Project/Scripts/UI/DashCooldownPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="hud-stamina"></a>
 
 ## HUD-STAMINA — Estamina e giro
 
-**Categoria:** G — HUD e gameplay. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=HUD-STAMINA]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** PlayerResource (24,-124), 500×44, fonte 20: valor, barra, cooldown/custo/pronto/sem estamina.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/PlayerResourcePresenter.cs](../../../../Assets/_Project/Scripts/UI/PlayerResourcePresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="hud-progression"></a>
 
 ## HUD-PROGRESSION — XP, nível, ouro e arma
 
-**Categoria:** G — HUD e gameplay. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=HUD-PROGRESSION]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Barra XP e texto Nv/XP/Ouro/Arma; sem moedas novas.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/ProgressionPresenter.cs](../../../../Assets/_Project/Scripts/UI/ProgressionPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="hud-floor"></a>
 
 ## HUD-FLOOR — Progresso das salas
 
-**Categoria:** G — HUD e gameplay. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=HUD-FLOOR]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Contador de salas /5; não é minimapa.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/FloorProgressPresenter.cs](../../../../Assets/_Project/Scripts/UI/FloorProgressPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="hud-boss"></a>
 
 ## HUD-BOSS — Vida do Guardião
 
-**Categoria:** G — HUD e gameplay. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=HUD-BOSS]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Barra só durante encontro e some ao morrer; binding por EnemiesSpawned.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/BossHealthPresenter.cs](../../../../Assets/_Project/Scripts/UI/BossHealthPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="hud-enemy"></a>
 
 ## HUD-ENEMY — HP inimigo na arena de teste
 
-**Categoria:** G — HUD e gameplay. **Status:** EXISTENTE. **Prioridade:** P2. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=HUD-ENEMY]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** HealthBarPresenter adicional na MVP_Arena; não comprova barras individuais da multidão na Floor.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/HealthBarPresenter.cs](../../../../Assets/_Project/Scripts/UI/HealthBarPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Scenes/MVP_Arena.unity](../../../../Assets/_Project/Scenes/MVP_Arena.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="hud-notice"></a>
 
 ## HUD-NOTICE — Avisos de inventário
 
-**Categoria:** G — HUD e gameplay. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=HUD-NOTICE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** Cheio/morto/inválido/item largado, 3 s unscaled; sem toast positivo por item coletado.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/InventoryStatusPresenter.cs](../../../../Assets/_Project/Scripts/UI/InventoryStatusPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="ui-type"></a>
 
 ## UI-TYPE — Tipografia e widgets atuais
 
-**Categoria:** F — Menus e interfaces. **Status:** EXISTENTE. **Prioridade:** P0. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Apresentação da funcionalidade já entregue
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-TYPE]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Integrado; preservar e revalidar após mudanças.
-
-**Visual:** UGUI Text/LegacyRuntime.ttf, fundos azul-preto/botões dourados; nenhuma fonte artística nova licenciada.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Reports/Leadership/asset-audit-current.json](../../../../Reports/Leadership/asset-audit-current.json) — Hierarquias/componentes serializados lidos; não é inspeção visual nova.
-- [Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity](../../../../Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Clique/foco/seleção e retorno da pilha preservados; UI não causa ataque.
-- Sem cortes a 1920×1080/1280×720; medir contraste após mudança.
-- UI solicita comandos, sem calcular dano/consumo/equipamento.
-
+<a id="hud-potions"></a>
 
 ## HUD-POTIONS — Atalho/quantidade de poções no HUD
 
-**Categoria:** E — Poções e consumíveis. **Status:** AUSENTE. **Prioridade:** P1. **Tipo:** interface. **Escopo:** aprovado_1_0.
+**Estado atual:** EXISTENTE. **Tipo:** interface. **Escopo:** aprovado_1_0.
 
-**Finalidade:** Leitura de Q sem abrir inventário
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=HUD-POTIONS]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Proposta: ícone frasco 48×48, Q e total; zero/HP cheio/morto indisponível, sem sugerir cooldown.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/InventoryPresenter.cs](../../../../Assets/_Project/Scripts/UI/InventoryPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Player/PlayerInventoryInput.cs](../../../../Assets/_Project/Scripts/Player/PlayerInventoryInput.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/UI/PlayerResourcePresenter.cs](../../../../Assets/_Project/Scripts/UI/PlayerResourcePresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** ICON-ITEM-HEALTH, HUD-STAMINA
-
-**Integração técnica pendente:**
-
-- Presenter futuro somente leitura em Inventory.Changed/Health.Changed; não mudar escolha de Q nem capacidade.
-
-**Dimensões/tempo:** Componente 160×64 no canvas 1920×1080; âncora superior esquerda/margem 24, proposta y=-180
-
-**Entrega:** UGUI editável; ícone referenciado; textos runtime
-
-**Contrato Unity:** UGUI editável; sprites e texto separados, referência 1920×1080/CanvasScaler match .5. Preservar Text/LegacyRuntime.ttf, InputSystemUIInputModule, pilha de menus e presenters atuais; imagem achatada não é interface funcional.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#hud-potions) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="icon-action-dash"></a>
 
 ## ICON-ACTION-DASH — Dash — ícone
 
-**Categoria:** G — HUD e gameplay. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** ícone 2D. **Escopo:** sugestão_polimento.
+**Estado atual:** AUSENTE. **Tipo:** ícone 2D. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Leitura de comando existente
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ICON-ACTION-DASH]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Blue cape sweep with a broad forward chevron-shaped cutout, no weapon arrow, no text.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/DashCooldownPresenter.cs](../../../../Assets/_Project/Scripts/UI/DashCooldownPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/UI/PlayerResourcePresenter.cs](../../../../Assets/_Project/Scripts/UI/PlayerResourcePresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Dimensões/tempo:** 512×512; leitura 48/32 px
-
-**Entrega:** PNG RGBA + fonte
-
-**Contrato Unity:** PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#icon-action-dash) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="icon-action-special"></a>
 
 ## ICON-ACTION-SPECIAL — Giro de espada — ícone
 
-**Categoria:** G — HUD e gameplay. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** ícone 2D. **Escopo:** sugestão_polimento.
+**Estado atual:** AUSENTE. **Tipo:** ícone 2D. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Leitura de comando existente
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=ICON-ACTION-SPECIAL]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Short steel sword inside a broad cyan circular sweep, open centre, suggesting one complete rotation.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/DashCooldownPresenter.cs](../../../../Assets/_Project/Scripts/UI/DashCooldownPresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/UI/PlayerResourcePresenter.cs](../../../../Assets/_Project/Scripts/UI/PlayerResourcePresenter.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** Nenhuma dependência lógica nova; preservar composição atual.
-
-**Dimensões/tempo:** 512×512; leitura 48/32 px
-
-**Entrega:** PNG RGBA + fonte
-
-**Contrato Unity:** PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#icon-action-special) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="ui-skin"></a>
 
 ## UI-SKIN — Partes modulares da UI
 
-**Categoria:** F — Menus e interfaces. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** interface. **Escopo:** sugestão_polimento.
+**Estado atual:** AUSENTE. **Tipo:** interface. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento opcional preservando telas atuais
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-SKIN]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.
 
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Manter azul-preto/dourado; chanfros discretos e foco por cantos além da cor. Não redesenhar telas.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/InventorySceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs](../../../../Assets/_Project/Scripts/Editor/GameShellSceneBuilder.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-- [Assets/_Project/Scripts/UI/InventorySlotView.cs](../../../../Assets/_Project/Scripts/UI/InventorySlotView.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-TYPE
-
-**Dimensões/tempo:** Painel 128×128/borda16; botão 256×80/borda12; slot192×112/borda8; canto foco32×32
-
-**Entrega:** Sprites RGBA separados 9-slice + fonte e mapa de estados
-
-**Contrato Unity:** UGUI editável; sprites e texto separados, referência 1920×1080/CanvasScaler match .5. Preservar Text/LegacyRuntime.ttf, InputSystemUIInputModule, pilha de menus e presenters atuais; imagem achatada não é interface funcional.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#ui-skin) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
-
+<a id="ui-transition"></a>
 
 ## UI-TRANSITION — Transições discretas
 
-**Categoria:** F — Menus e interfaces. **Status:** AUSENTE. **Prioridade:** P2. **Tipo:** interface. **Escopo:** sugestão_polimento.
+**Estado atual:** AUSENTE. **Tipo:** interface. **Escopo:** sugestão_polimento.
 
-**Finalidade:** Polimento opcional de ação existente
-
-**Integração:** Produção/integração visual pendente.
-
-**Visual:** Short panel opacity fade and subtle focus-corner settle; no panel sliding, no delayed interaction.
-
-**Evidências:**
-
-- [Assets/_Project/Scripts/UI/MenuScreenStack.cs](../../../../Assets/_Project/Scripts/UI/MenuScreenStack.cs) — Arquivo/família inspecionado; existência não equivale a aceite visual individual.
-
-**Dependências:** UI-SKIN
-
-**Integração técnica pendente:**
-
-- MenuScreenStack atual mostra/oculta de imediato; camada de tween ainda ausente.
-
-**Dimensões/tempo:** 0.10–0.15 s unscaled time; no input blocking
-
-**Entrega:** UGUI editável + spec de tween
-
-**Contrato Unity:** UGUI editável; sprites e texto separados, referência 1920×1080/CanvasScaler match .5. Preservar Text/LegacyRuntime.ttf, InputSystemUIInputModule, pilha de menus e presenters atuais; imagem achatada não é interface funcional.
-
-**Condição de produção:** Lote futuro; nenhuma geração autorizada nesta etapa.
-
-**Prompt completo em inglês:** [ASSET_GENERATION_PROMPTS.md](ASSET_GENERATION_PROMPTS.md#ui-transition) — mesmo ID; também disponível em `production.prompt_en` no manifesto.
-
-**Aceite (pendente de execução para mudanças):**
-
-- Preservar identidade e regras atuais.
-- Validar no enquadramento real sem referências faltantes ou regressões.
-- Entregar formatos/dimensões/fonte/procedência da ficha.
-- Concluir QA técnico e PlayMode em contexto antes de marcar aprovado.
+Ficha completa: [ASSET_MANIFEST.json](ASSET_MANIFEST.json), registro `resources[id=UI-TRANSITION]`: descrição, evidências, dependências, aceite e, quando houver, `production` (requisitos, formato e prompt inglês). Conferir `production_state`/`production_batches` antes de produzir; existência não equivale a aprovação artística.

@@ -1,5 +1,7 @@
 # Auditoria completa de assets — Dungeon Crawler
 
+> Estado atualizado da auditoria geral: [PROJECT_AUDIT](../../../../PROJECT_AUDIT.md). O manifesto atual registra 133 recursos: 117 EXISTENTES, 13 AUSENTES, 1 INCOMPLETO e 2 NÃO VERIFICADO; zero ausentes P0. O quadro 96/5/30/2 abaixo é a fotografia anterior aos lotes ANIM-TORCH/ITEMS-COMBAT, não backlog atual. Leitura por ID; fichas/prompts completos consolidados no JSON e índices especializados preservados.
+
 Data local: 14/11/2026, America/Fortaleza. Revisão de referência: `2304c64785d595aa86cfafbc987f1c47468fce03`. Escopo: documentação, sem geração de arte e sem alterações em scripts, sistemas, cenas, prefabs, Packages ou ProjectSettings.
 
 ## Lote ITEMS-COMBAT (14/11/2026)

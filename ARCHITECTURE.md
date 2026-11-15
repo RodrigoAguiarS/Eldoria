@@ -1,19 +1,19 @@
 # ARCHITECTURE.md — Unity Dungeon Crawler
 
 ## Ambiente
-Unity 6 LTS disponível na instalação, projeto template **Universal 3D (URP)**, PC Windows. Fixar a versão exata do Editor após criação e commitar `Packages/manifest.json` e `packages-lock.json`. Usar versões compatíveis de Input System, Cinemachine, AI Navigation e Test Framework. Evitar fixar versões sem consultar Package Manager.
+Unity **6000.6.9f1**, URP **17.6.0**, PC Windows x64. Manifest/lock versionados: Input System 1.20.1, Cinemachine 6.6.0, AI Navigation 2.0.16, UGUI 2.6.0 e Test Framework 1.8.0 (builtin no lock). Preservar essas versões; consultar instalação/Package Manager antes de mudanças. Não aplicar APIs de Cinemachine 2/3 presumindo compatibilidade.
 
 ## Pastas
 `Assets/_Project/{Art,Audio,Animations,Materials,Input,Prefabs/{Player,Enemies,Boss,Rooms},Scenes,ScriptableObjects,Scripts/{Core,Player,Enemies,Boss,Dungeon,Systems,UI,Editor},Settings,Tests/{EditMode,PlayMode}}`.
 
 ## Namespaces e componentes
 - `DungeonCrawler.Core`: `IDamageable`, eventos e contratos comuns.
-- `DungeonCrawler.Player`: `PlayerMovement`, `PlayerAim`, `PlayerCombat`, `PlayerDash`, `PlayerHealth`.
-- `DungeonCrawler.Enemies`: `EnemyBrain`, `EnemyNavigation`, `EnemyCombat`, `EnemyHealth`.
-- `DungeonCrawler.Boss`: `BossPhaseController`, `BossAttackTelegraph` (fase posterior).
-- `DungeonCrawler.Dungeon`: `RoomController`, `DoorController`, `EnemySpawner` (fase posterior).
-- `DungeonCrawler.Systems`: `ExperienceSystem`, `LootSystem`, `ProjectilePool` (fases posteriores).
-- `DungeonCrawler.UI`: `PlayerHealthPresenter`, `BossHealthPresenter`.
+- `DungeonCrawler.Player`: `PlayerMovement`, `PlayerAim`, `PlayerCombat`, `PlayerDash`, `PlayerSpecial`; vida compartilhada em `DungeonCrawler.Core.Health`/`HealthModel`.
+- `DungeonCrawler.Enemies`: `EnemyBrain`, `EnemyNavigation`, `EnemyCombat`, `EnemyData`, `EnemyReward`; usa `Core.Health`.
+- `DungeonCrawler.Boss`: `BossBrain`, `BossPhaseModel`, `BossPhaseController`, `BossAttackTelegraph` (implementados).
+- `DungeonCrawler.Dungeon`: `RoomController`, `DoorController`, `EnemySpawner`, `FloorController`, `EnemyTracker` (implementados).
+- `DungeonCrawler.Systems`: `ExperienceModel`, `PlayerProgression`, `LootTable`/`LootRoller`, `ProjectilePool`, inventário e opções (implementados).
+- `DungeonCrawler.UI`: `HealthBarPresenter`, `BossHealthPresenter`, presenters de inventário/menus/recurso.
 - `DungeonCrawler.Editor`: `DungeonMvpSceneBuilder`.
 
 ## Dependências
@@ -33,10 +33,10 @@ Cinemachine com follow e offset isométrico; confirmar API conforme versão inst
 Player: CharacterController e gravidade explícita se necessário. Ataque inicial melee por overlap/hitbox com máscara de inimigos e janela de acerto controlada. Inimigo: NavMeshAgent, decisões temporizadas, dano com cooldown, parar ataque ao morrer. Evitar alocação por frame e buscas de cena repetidas. NavMesh bake compatível com AI Navigation.
 
 ## Pooling
-Projéteis obrigatoriamente pooled; considerar UnityEngine.Pool.ObjectPool<T> com retorno por colisão, timeout e desativação. Não implementar pool antes de haver projéteis.
+Projéteis usam `UnityEngine.Pool.ObjectPool<Projectile>`, aquecimento real de 16 instâncias na configuração atual e callback de retorno reutilizado; colisão, timeout e desativação devolvem ao pool. Pickups/atores ainda são criados por recompensa/onda; isso não prova gargalo e não autoriza pooling indiscriminado.
 
 ## Automação de cena
-Editor script idempotente com `MenuItem("Tools/Dungeon Crawler/Build MVP Scene")`: criar/atualizar arena, luz, player, inimigo, câmera, HUD e salvar em `Assets/_Project/Scenes/MVP_Arena.unity`. Garantir que reexecutar não duplique objetos. Prefabs devem ser salvos por APIs do Editor, não por texto manual.
+Editor script idempotente com `MenuItem("Tools/Dungeon Crawler/Build/MVP Scene (M1)")`: criar/atualizar arena, luz, player, inimigo, câmera, HUD e salvar em `Assets/_Project/Scenes/MVP_Arena.unity`. Garantir que reexecutar não duplique objetos. Prefabs devem ser salvos por APIs do Editor, não por texto manual.
 
 ## Testes
 EditMode: cálculos de dano, clamp HP, cooldown, transição de estado. PlayMode: movimentação, dano, morte, ataque, dash e reinício quando viável. Relatar explicitamente dependências de teste manual (mouse, câmera, NavMesh).
@@ -73,3 +73,13 @@ Apenas PC está incluído nos níveis nativos do build Windows; por isso as esco
 GameAudioDefinition contém clips e roteamento Music/SFX. GameAudioPool reutiliza oito vozes pré-configuradas, limita prioridade/repetição e aplica ganhos das categorias em dB; mute em zero é explícito. GameplayAudioBridge e EnemyAudioBridge escutam eventos C# com inscrições no ciclo de vida. EnemySpawner injeta o pool nos atores instanciados; progressão emite Collected apenas após coleta aceita. Variação sonora não altera o gerador aleatório do loot.
 
 Sons e loop originais são reproduzíveis em Tools/AudioGenerator. Clips são PCM/precarregados; novas fontes não são criadas durante golpes. Diagnóstico opcional no player registra contadores e pode capturar o DSP do próprio jogo; sem flags, coletores/cenário ficam desativados e o filtro de captura não é instanciado. Limites, flags e fontes das APIs em Tools/AudioGenerator/DIAGNOSTICS.md.
+
+## Apresentação de itens e combate (pós-release)
+
+`ItemVisualCatalog` mapeia definição/LootKind para ícone, prefab de chão e equipamento. `PickupVisualPresenter`, `PlayerEquipmentVisualPresenter` e presenters UGUI só representam estado. Espadas/colete são pré-configurados no Hero; troca visual não muda bônus. `PlayerAttackVfxPresenter` reutiliza trail/anel/ParticleSystem; `PlayerCombat.TargetHit` confirma dano aceito do básico. Especial ainda não publica contato por alvo; não inferir que FX-HIT do básico cobre o giro. Efeitos não causam dano nem consomem o RNG do loot.
+
+Personagens usam rig Generic/in-place e FBX; GLB é fonte/prévia sem importador Unity instalado. Fontes de integração em `Tools/Lemo3DGenerator/unity` e cópias em `Art/Models/Generated/_Scripts` têm funções distintas e devem ficar sincronizadas. SpriteLab e billboard são experimentos preservados fora da release. Os caminhos `_GameTest`/`_GameArt` são legados, mas contêm a cena/arte de produção: não mover por nome sem migrar builders/testes/referências.
+
+## Auditoria reproduzível
+
+`python Tools/Audit/audit_project.py --output <relatorio-novo.json>` inventaria hashes, duplicatas, cópias instaladas e caminhos de links Markdown sem alterar assets. Recusa sobrescrever o relatório. `MvpProjectAudit.InspectCleanupBaseline`/menu Audit abre cenas/prefabs pelas APIs e escreve em `Reports/ProjectAudit/editor-assets.json`; não salva assets. Esses dados não comprovam aceite visual ou ausência de uso dinâmico. Comandos de teste e regressão em `docs/BUILD-WINDOWS.md`.
