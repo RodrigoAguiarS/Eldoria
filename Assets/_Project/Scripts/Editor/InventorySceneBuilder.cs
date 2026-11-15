@@ -188,7 +188,7 @@ namespace DungeonCrawler.Editor
             Get<Outline>(notice.gameObject).effectDistance = new Vector2(1f, -1f);
             var status = Get<InventoryStatusPresenter>(hud); Set(status, "inventory", inventory); Set(status, "label", notice);
             Transform controls = hud.transform.Find("Controls");
-            if (controls != null) controls.GetComponent<Text>().text = "WASD mover | Mouse mirar | Esquerdo atacar | Espaço dash | I/Tab inventário | Q poção | Esc pausa | R reiniciar";
+            if (controls != null) controls.GetComponent<Text>().text = ControlHints.Hud;
             panel.gameObject.SetActive(false); pausePanel.gameObject.SetActive(false);
             GameShellSceneBuilder.ConfigureGameplay(hud, player, menu, panel.gameObject, pausePanel.gameObject, events, resume);
             ConfigureItemVisuals(hud, player);

@@ -185,7 +185,7 @@ namespace DungeonCrawler.Editor
                 var play = Button(content, "Play", "Jogar", new Vector2(300f, -330f), new Vector2(500f, 72f)); Link(play, flow.StartGame);
                 var options = Button(content, "Options", "Opções", new Vector2(300f, -425f), new Vector2(500f, 72f)); Link(options, controller.OpenOptions);
                 var quit = Button(content, "Quit", "Sair", new Vector2(300f, -520f), new Vector2(500f, 72f)); Link(quit, flow.QuitGame);
-                Label(content, "Controls", "WASD · mover   |   Mouse · mirar   |   Esquerdo · combo   |   E / direito · giro\nEspaço · dash   |   I / Tab · inventário   |   Q · poção   |   Esc · pausa", new Vector2(0f, -665f), new Vector2(1100f, 100f), 24).alignment = TextAnchor.MiddleCenter;
+                Label(content, "Controls", ControlHints.MainMenu,new Vector2(0f, -665f), new Vector2(1100f, 100f), 24).alignment = TextAnchor.MiddleCenter;
                 var optionPanel = BuildOptions(hud.transform, out var back, out var first); Link(back, controller.Back);
                 GameAudioSceneBuilder.ConfigureMenu(systems, hud);
                 SetScreens(stack, new[] { MenuScreen.Title, MenuScreen.Options }, new[] { title.gameObject, optionPanel }, new Selectable[] { play, first });

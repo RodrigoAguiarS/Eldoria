@@ -455,7 +455,7 @@ namespace DungeonCrawler.Editor
             SetObj(progressionPresenter, "label", xpLabel.GetComponent<Text>());
 
             // Dica de controles
-            RectTransform hint = CreateLabel(hud.transform, "Controls", "WASD mover  |  Mouse mirar  |  Botão esquerdo atacar  |  Espaço dash  |  R reiniciar",
+            RectTransform hint = CreateLabel(hud.transform, "Controls", ControlHints.MvpHud,
                 20, TextAnchor.UpperLeft, Vector2.zero);
             hint.anchorMin = new Vector2(0f, 1f);
             hint.anchorMax = new Vector2(1f, 1f);
