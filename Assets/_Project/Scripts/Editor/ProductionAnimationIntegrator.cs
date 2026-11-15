@@ -80,7 +80,7 @@ namespace DungeonCrawler.Editor
         [Serializable] private sealed class IntegrationReport
         {
             public string id = "ANIM-TORCH", timestampUtc, scene;
-            public int torches, instancesCreated, instancesKept, duplicatesRemoved, renderersDisabled;
+            public int torches, instancesCreated, instancesKept, duplicatesRemoved, orphansRemoved, renderersDisabled;
             public string[] torchPaths;
         }
         [Serializable] private sealed class ValidationReport
@@ -373,6 +373,9 @@ namespace DungeonCrawler.Editor
                 List<MeshFilter> torches = FindTorches(scene, original);
                 if (torches.Count != ExpectedTorches)
                     throw new InvalidOperationException($"[ANIM-TORCH] Esperava {ExpectedTorches} tochas GA_Torch em {ReleaseFloor}, achou {torches.Count}. Nada salvo.");
+                // Room decor regeneration (GeneratedArtApplier) recreates Torch_N; flame instances added in the scene then lose
+                // their parent and Unity moves them to the room root (local zero = middle of the room). Remove those orphans.
+                report.orphansRemoved = RemoveOrphans(scene, torches, prefab);
                 var paths = new List<string>();
                 foreach (MeshFilter torch in torches)
                 {
@@ -408,7 +411,7 @@ namespace DungeonCrawler.Editor
                 report.torchPaths = paths.ToArray();
             });
             WriteReport("integration.json", report);
-            Debug.Log($"[ANIM-TORCH] {ReleaseFloor}: {report.torches} tochas; {report.instancesCreated} instâncias criadas, {report.instancesKept} mantidas, {report.duplicatesRemoved} duplicatas removidas, {report.renderersDisabled} renderers originais desativados.");
+            Debug.Log($"[ANIM-TORCH] {ReleaseFloor}: {report.torches} tochas; {report.instancesCreated} instâncias criadas, {report.instancesKept} mantidas, {report.duplicatesRemoved} duplicatas e {report.orphansRemoved} órfãs (fora da tocha) removidas, {report.renderersDisabled} renderers originais desativados.");
         }
 
         public static void RevertReleaseFloor()
@@ -432,6 +435,24 @@ namespace DungeonCrawler.Editor
                 }
             });
             Debug.Log($"[ANIM-TORCH] Integração revertida em {ReleaseFloor}: {removed} instâncias removidas, {restored} renderers reativados.");
+        }
+
+        private static List<GameObject> FindOrphans(Scene scene, List<MeshFilter> torches, GameObject prefab)
+        {
+            var torchSet = new HashSet<Transform>(torches.Select(t => t.transform));
+            var list = new List<GameObject>();
+            foreach (GameObject root in scene.GetRootGameObjects())
+                foreach (Transform t in root.GetComponentsInChildren<Transform>(true))
+                    if (t.name == InstanceName && !torchSet.Contains(t.parent) && PrefabUtility.IsAnyPrefabInstanceRoot(t.gameObject) &&
+                        PrefabUtility.GetCorrespondingObjectFromSource(t.gameObject) == prefab) list.Add(t.gameObject);
+            return list;
+        }
+
+        private static int RemoveOrphans(Scene scene, List<MeshFilter> torches, GameObject prefab)
+        {
+            List<GameObject> orphans = FindOrphans(scene, torches, prefab);
+            foreach (GameObject go in orphans) Object.DestroyImmediate(go);
+            return orphans.Count;
         }
 
         private static List<MeshFilter> FindTorches(Scene scene, Mesh original)
@@ -604,6 +625,7 @@ namespace DungeonCrawler.Editor
                     foreach (Light l in torch.GetComponentsInChildren<Light>(true)) if (l.name == "TorchLight") rep.sceneTorchLights++;
                 }
 
+                foreach (GameObject orphan in FindOrphans(scene, torches, prefab)) rep.errors.Add($"{PathOf(orphan.transform)}: chama animada fora da tocha (órfã no meio da sala); rode 2 - Integrate Into Release Floor");
                 if (rep.sceneTorches != ExpectedTorches) rep.errors.Add($"tochas na cena {rep.sceneTorches} ≠ {ExpectedTorches}");
                 if (rep.sceneRenderersDisabled != rep.sceneTorches) rep.errors.Add($"renderers originais desativados {rep.sceneRenderersDisabled}/{rep.sceneTorches}");
                 if (rep.missingReferences > 0) rep.errors.Add($"{rep.missingReferences} referências ausentes nas instâncias");

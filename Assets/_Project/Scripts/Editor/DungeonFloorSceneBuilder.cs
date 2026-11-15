@@ -187,6 +187,8 @@ namespace DungeonCrawler.Editor
             GameShellSceneBuilder.EnsureBuildScenes();
             // ITEMS-COMBAT: equipped visuals, sword VFX and inventory icons on the regenerated release floor.
             if (ProductionVisualIntegrator.LoadCatalog() != null) ProductionVisualIntegrator.IntegrateReleaseFloorScene();
+            // ANIM-TORCH: flame variant per torch on the regenerated decor (removes orphans left by the old decor).
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(ProductionAnimationIntegrator.PrefabPath) != null) ProductionAnimationIntegrator.IntegrateReleaseFloor();
             EditorSceneManager.OpenScene(GeneratedGameTestBuilder.TestScene, OpenSceneMode.Single);
             AssetDatabase.SaveAssets();
             Debug.Log($"[DungeonCrawler] Andar com personagens 3D pronto e aberto: {GeneratedGameTestBuilder.TestScene}. Cena inicial do build configurada.");

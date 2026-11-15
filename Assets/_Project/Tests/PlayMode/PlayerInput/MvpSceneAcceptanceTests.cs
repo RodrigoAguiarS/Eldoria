@@ -92,7 +92,7 @@ namespace DungeonCrawler.Tests.PlayerInput
         }
 
         [UnityTest]
-        public IEnumerator Arena_WasdMovesOnGroundAndMouseAimsInXZ()
+        public IEnumerator Arena_WasdMovesOnGroundAndCharacterFacesMovementNotMouse()
         {
             yield return LoadArena(); StopEnemy();
             var movement = FindInScene<PlayerMovement>();
@@ -106,11 +106,23 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.Greater(movement.transform.position.z - before.z, .7f);
             Assert.AreEqual(before.x, movement.transform.position.x, .1f);
             Assert.Less(Mathf.Abs(movement.transform.position.y), .15f);
+            yield return new WaitForSeconds(.1f);
+            Vector3 up = movement.ComputeWorldDirection(Vector2.up);
+            Assert.Greater(Vector3.Dot(movement.transform.forward, up), .95f, "W: faces up the screen.");
+            // The mouse no longer rotates the character.
             AimAt(movement.transform.position + Vector3.right * 5f);
             yield return new WaitForSeconds(.2f);
-            Assert.Greater(Vector3.Dot(aim.AimDirection, Vector3.right), .95f);
-            Assert.Greater(Vector3.Dot(movement.transform.forward, Vector3.right), .95f);
+            Assert.Greater(Vector3.Dot(movement.transform.forward, up), .95f, "Mouse does not turn the character.");
+            // D: walks and faces right (no sideways strafe while looking forward).
+            Press(keyboard.dKey); InputSystem.Update();
+            yield return new WaitForSeconds(.25f);
+            Release(keyboard.dKey); InputSystem.Update();
+            Vector3 right = movement.ComputeWorldDirection(Vector2.right);
+            Assert.Greater(Vector3.Dot(movement.transform.forward, right), .95f, "D: faces right.");
+            Assert.Greater(Vector3.Dot(aim.AimDirection, right), .95f);
             Assert.AreEqual(0f, aim.AimDirection.y, .001f);
+            yield return new WaitForSeconds(.2f);
+            Assert.Greater(Vector3.Dot(movement.transform.forward, right), .95f, "Keeps facing after stopping.");
         }
 
         [UnityTest]
@@ -119,7 +131,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return LoadArena(); StopEnemy();
             var dash = FindInScene<PlayerDash>();
             var health = dash.GetComponent<Health>();
-            AimAt(dash.transform.position + Vector3.forward * 5f);
+            dash.GetComponent<PlayerAim>().FaceDirection(Vector3.forward);
             yield return new WaitForSeconds(.2f);
             Vector3 before = dash.transform.position;
             // Queue for the next native input phase; manually updating after gameplay Update
@@ -141,7 +153,7 @@ namespace DungeonCrawler.Tests.PlayerInput
         }
 
         [UnityTest]
-        public IEnumerator Arena_MouseComboKillsSavedEnemyAndDisablesItsAgent()
+        public IEnumerator Arena_ClickComboKillsSavedEnemyAndDisablesItsAgent()
         {
             yield return LoadArena(); StopEnemy();
             var combat = FindInScene<PlayerCombat>();
@@ -151,7 +163,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             controller.enabled = false;
             combat.transform.position = brain.transform.position - Vector3.forward * 1.2f;
             controller.enabled = true;
-            AimAt(brain.transform.position);
+            combat.GetComponent<PlayerAim>().FaceDirection(brain.transform.position - combat.transform.position);
             yield return new WaitForSeconds(.2f);
             int deaths = 0; enemyHealth.Died += () => deaths++;
             Click(); yield return new WaitForSeconds(.27f);
