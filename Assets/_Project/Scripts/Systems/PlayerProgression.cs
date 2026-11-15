@@ -27,6 +27,10 @@ namespace DungeonCrawler.Systems
         public int Gold { get; private set; }
         public WeaponData Weapon { get; private set; }
 
+        /// <summary>Previews a weapon with the combat configuration and current level, without equipping it.</summary>
+        public float GetBaseDamage(WeaponData weapon) => combat != null
+            ? combat.CalculateBaseDamage(weapon != null ? weapon.damageBonus : 0f) : 0f;
+
         /// <summary>Qualquer mudança de estado (XP, nível, ouro, arma) para o HUD.</summary>
         public event Action Changed;
         public event Action<int> LeveledUp;

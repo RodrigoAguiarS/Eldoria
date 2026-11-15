@@ -20,6 +20,7 @@ namespace DungeonCrawler.UI
         [SerializeField] private Text title;
         [SerializeField] private Text details;
         [SerializeField] private Text equipment;
+        [SerializeField] private Text comparison;
         [SerializeField] private Button equip;
         [SerializeField] private Button unequip;
         [SerializeField] private Button use;
@@ -81,6 +82,7 @@ namespace DungeonCrawler.UI
             ShowIcon(equippedArmorIcon, inventory.EquippedArmorIndex >= 0 ? Icon(inventory.Slots[inventory.EquippedArmorIndex].Definition) : null);
             equipment.text = $"ARMA\n{weapon}\n\nARMADURA\n{armor}\n\nDano {combat.CurrentDamage:0.#}   Defesa {health.Defense:0.#}\nHP {health.Current:0}/{health.Max:0}";
             InventoryStack item = selected < inventory.Slots.Count ? inventory.Slots[selected] : default;
+            RefreshComparison();
             bool selectedEquipped = selected == inventory.EquippedWeaponIndex || selected == inventory.EquippedArmorIndex;
             bool gear = !item.IsEmpty && item.Definition.Kind != InventoryItemKind.Potion;
             equip.interactable = health.IsAlive && gear && !selectedEquipped;
@@ -90,13 +92,28 @@ namespace DungeonCrawler.UI
             ShowIcon(detailsIcon, item.IsEmpty ? null : Icon(item.Definition));
             if (item.IsEmpty) { details.text = "Selecione um item.\n\nPoções ficam guardadas.\nUse Q para beber uma poção.\n\nA partida está pausada."; return; }
             string rarity = item.Definition.rarity != null ? item.Definition.rarity.displayName : "Comum";
-            string stat = item.Definition is WeaponData blade ? $"+{blade.damageBonus:0.#} de dano" :
+            string stat = item.Definition is WeaponData blade ? $"Bônus plano de dano +{blade.damageBonus:0.#}\nAntes do bônus de nível." :
                 item.Definition is ArmorData armorData ? $"+{armorData.defense:0.#} de defesa" : $"Restaura {item.Potency} HP";
             string help = item.Definition is PotionData ? "Use quando estiver ferido. Q bebe uma poção guardada." :
                 item.Definition is ArmorData ? "Reduz o dano recebido enquanto estiver equipada." : "Troque de arma sem perder a anterior.";
             details.text = item.Definition.DisplayName + "\n" + rarity + (selectedEquipped ? " · Equipado" : "") + "\n\n" + stat +
                 (item.Count > 1 ? "\nQuantidade: " + item.Count : "") + "\n\n" + help;
         }
+
+        private void RefreshComparison()
+        {
+            if (comparison == null) return;
+            bool hasComparison = inventory.TryGetEquipmentComparison(selected, out EquipmentComparison value);
+            comparison.gameObject.SetActive(hasComparison);
+            if (!hasComparison) { comparison.text = ""; return; }
+            const string heading = "COMPARAÇÃO · Atual → Selecionado (diferença)\n";
+            comparison.text = value.Kind == InventoryItemKind.Weapon
+                ? heading + $"Bônus plano da arma: +{value.CurrentBonus:0.#} → +{value.SelectedBonus:0.#} ({Signed(value.BonusDifference)})\n" +
+                    $"Dano base no nível {value.Level}: {value.CurrentValue:0.#} → {value.SelectedValue:0.#} ({Signed(value.Difference)})"
+                : heading + $"Defesa: {value.CurrentValue:0.#} → {value.SelectedValue:0.#} ({Signed(value.Difference)})";
+        }
+
+        private static string Signed(float value) => value.ToString("+0.#;-0.#;0");
 
         private Sprite Icon(ItemDefinition item) => catalog != null ? catalog.GetIcon(item) : null;
         private static void ShowIcon(Image image, Sprite sprite)

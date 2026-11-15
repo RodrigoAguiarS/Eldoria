@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-15 03:56:57Z" end-time="2026-11-15 03:56:58Z" duration="1,0936059">
+  <test-suite type="TestSuite" id="1116" name="My project" fullname="My project" runstate="Runnable" testcasecount="81" result="Failed" site="Child" start-time="2026-11-15 03:56:57Z" end-time="2026-11-15 03:56:58Z" duration="1.093606" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1161" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="36" result="Failed" site="Child" start-time="2026-11-15 03:56:57Z" end-time="2026-11-15 03:56:58Z" duration="1.080061" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="4388" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1162" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="36" result="Failed" site="Child" start-time="2026-11-15 03:56:57Z" end-time="2026-11-15 03:56:58Z" duration="1.076433" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1163" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="36" result="Failed" site="Child" start-time="2026-11-15 03:56:57Z" end-time="2026-11-15 03:56:58Z" duration="1.073209" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1164" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="36" result="Failed" site="Child" start-time="2026-11-15 03:56:57Z" end-time="2026-11-15 03:56:58Z" duration="1.062757" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1131" name="InventorySceneUiTests" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Runnable" testcasecount="4" result="Failed" site="Child" start-time="2026-11-15 03:56:57Z" end-time="2026-11-15 03:56:58Z" duration="1.049967" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1134" name="Capture_EquipmentComparison720pAnd1080p" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests.Capture_EquipmentComparison720pAnd1080p" methodname="Capture_EquipmentComparison720pAnd1080p" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Explicit" seed="1161742385" result="Failed" start-time="2026-11-15 03:56:57Z" end-time="2026-11-15 03:56:58Z" duration="1.026685" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Visual capture needs a windowed Editor and rendering Game view (no -batchmode)." />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[Unhandled log message: '[Error] Invalid index 0 7 1'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+                  <stack-trace><![CDATA[System.Reflection.MethodBase:Invoke (object,object[])
+DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests/FixedGameView:Dispose () (at Assets/_Project/Tests/PlayMode/PlayerInput/InventorySceneUiTests.cs:246)
+DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests/<Capture_EquipmentComparison720pAnd1080p>d__9:<>m__Finally1 ()
+DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests/<Capture_EquipmentComparison720pAnd1080p>d__9:MoveNext () (at Assets/_Project/Tests/PlayMode/PlayerInput/InventorySceneUiTests.cs:195)
+UnityEditor.GUIView:ProcessEvent (UnityEngine.EntityId,intptr,bool&)
+
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[Invalid index 0 7 1
+Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/My project\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

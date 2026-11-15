@@ -192,7 +192,44 @@ namespace DungeonCrawler.Editor
             panel.gameObject.SetActive(false); pausePanel.gameObject.SetActive(false);
             GameShellSceneBuilder.ConfigureGameplay(hud, player, menu, panel.gameObject, pausePanel.gameObject, events, resume);
             ConfigureItemVisuals(hud, player);
+            ConfigureEquipmentComparison(hud);
             root.SetAsLastSibling();
+        }
+
+        [MenuItem("Tools/Dungeon Crawler/Inventory/Integrate Equipment Comparison (F01)")]
+        public static void IntegrateEquipmentComparison()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Saia do PlayMode.");
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+                if (SceneManager.GetSceneAt(i).isDirty) throw new InvalidOperationException("Salve a cena antes de integrar.");
+            Scene original = SceneManager.GetActiveScene();
+            foreach (string path in Scenes)
+            {
+                Scene scene = SceneManager.GetSceneByPath(path);
+                bool opened = !scene.IsValid() || !scene.isLoaded;
+                if (opened) scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
+                try
+                {
+                    ConfigureEquipmentComparison(scene.GetRootGameObjects().Single(root => root.name == "HUD"));
+                    EditorSceneManager.MarkSceneDirty(scene);
+                    EditorSceneManager.SaveScene(scene);
+                }
+                finally { if (opened) EditorSceneManager.CloseScene(scene, true); }
+            }
+            if (original.IsValid() && original.isLoaded) SceneManager.SetActiveScene(original);
+        }
+
+        /// <summary>Updates only the comparison area in an existing inventory; preserves items, art and commands.</summary>
+        public static void ConfigureEquipmentComparison(GameObject hud)
+        {
+            Transform window = hud.transform.Find("InventoryUI/InventoryPanel/Window");
+            if (window == null) throw new InvalidOperationException("Inventory window missing; integrate the inventory first.");
+            Label(window, "Instructions", "Selecione um item · Enter confirma · Q usa poção", new Vector2(32f, -78f), new Vector2(790f, 30f), 20);
+            Text comparison = Label(window, "Comparison", "", new Vector2(32f, -588f), new Vector2(790f, 76f), 20);
+            comparison.alignment = TextAnchor.UpperLeft;
+            comparison.horizontalOverflow = HorizontalWrapMode.Wrap;
+            comparison.verticalOverflow = VerticalWrapMode.Truncate;
+            Set(window.parent.GetComponent<InventoryPresenter>(), "comparison", comparison);
         }
 
         /// <summary>

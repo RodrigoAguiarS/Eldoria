@@ -25,10 +25,11 @@ namespace DungeonCrawler.Tests.PlayMode
             var asset = ScriptableObject.CreateInstance<T>(); created.Add(asset); return asset;
         }
 
-        private void CreatePlayer(int capacity = 16, bool collider = false)
+        private void CreatePlayer(int capacity = 16, bool collider = false, float baseDefense = 0f)
         {
             var definition = Asset<InventoryDefinition>();
             definition.capacity = capacity;
+            definition.baseDefense = baseDefense;
             definition.healthPotion = Asset<PotionData>();
             player = new GameObject("InventoryPlayer"); created.Add(player);
             player.SetActive(false);
@@ -52,6 +53,103 @@ namespace DungeonCrawler.Tests.PlayMode
         {
             for (int i = created.Count - 1; i >= 0; i--) if (created[i] != null) Object.DestroyImmediate(created[i]);
             created.Clear();
+        }
+
+        [Test]
+        public void Comparison_UsesFlatBonusAndRealLevelDamageWithoutChangingEquipment()
+        {
+            CreatePlayer();
+            var iron = Asset<WeaponData>(); iron.damageBonus = 6f;
+            var blade = Asset<WeaponData>(); blade.damageBonus = 12f;
+            blade.rarity = Asset<ItemRarityDefinition>(); blade.rarity.rank = 2;
+            progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron));
+            progression.TryCollect(new LootDrop(LootKind.Weapon, 0, blade));
+            progression.TryCollect(new LootDrop(LootKind.Xp, 71));
+            int changes = 0;
+            inventory.Changed += () => changes++;
+            progression.Changed += () => changes++;
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(1, out var preview));
+            Assert.AreEqual(InventoryItemKind.Weapon, preview.Kind);
+            Assert.AreEqual(6f, preview.CurrentBonus);
+            Assert.AreEqual(12f, preview.SelectedBonus);
+            Assert.AreEqual(6f, preview.BonusDifference);
+            Assert.AreEqual(3, preview.Level);
+            Assert.AreEqual(combat.CurrentDamage, preview.CurrentValue);
+            Assert.AreEqual(38.4f, preview.SelectedValue, .001f);
+            Assert.AreEqual(7.2f, preview.Difference, .001f);
+            Assert.AreEqual(0, changes, "Preview must be read-only, including events.");
+            Assert.AreEqual(0, inventory.EquippedWeaponIndex);
+            Assert.AreSame(iron, progression.Weapon);
+            Assert.IsTrue(inventory.TryEquip(1));
+            Assert.AreEqual(preview.SelectedValue, combat.CurrentDamage);
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(0, out var downgrade));
+            Assert.AreEqual(-6f, downgrade.BonusDifference);
+            Assert.AreEqual(-7.2f, downgrade.Difference, .001f);
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(1, out var same));
+            Assert.AreEqual(0f, same.Difference);
+            Assert.IsTrue(inventory.TryUnequip(InventoryItemKind.Weapon));
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(1, out var baseline));
+            Assert.AreEqual(0f, baseline.CurrentBonus);
+            Assert.AreEqual(24f, baseline.CurrentValue, .001f);
+            Assert.AreEqual(14.4f, baseline.Difference, .001f);
+        }
+
+        [Test]
+        public void Comparison_ArmorIncludesConfiguredBaselineAndMatchesEquippedDefense()
+        {
+            CreatePlayer(baseDefense: 7f);
+            var armor = Asset<ArmorData>(); armor.defense = 10f;
+            var better = Asset<ArmorData>(); better.defense = 25f;
+            progression.TryCollect(new LootDrop(LootKind.Armor, 0, armor: armor));
+            progression.TryCollect(new LootDrop(LootKind.Armor, 0, armor: better));
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(0, out var baseline));
+            Assert.AreEqual(InventoryItemKind.Armor, baseline.Kind);
+            Assert.AreEqual(7f, baseline.CurrentValue);
+            Assert.AreEqual(17f, baseline.SelectedValue);
+            Assert.AreEqual(10f, baseline.Difference);
+            inventory.TryEquip(0);
+            Assert.AreEqual(baseline.SelectedValue, health.Defense);
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(1, out var upgrade));
+            Assert.AreEqual(17f, upgrade.CurrentValue);
+            Assert.AreEqual(32f, upgrade.SelectedValue);
+            Assert.AreEqual(15f, upgrade.Difference);
+            inventory.TryEquip(1);
+            Assert.AreEqual(upgrade.SelectedValue, health.Defense);
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(0, out var downgrade));
+            Assert.AreEqual(-15f, downgrade.Difference);
+            inventory.TryUnequip(InventoryItemKind.Armor);
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(0, out var unequipped));
+            Assert.AreEqual(health.Defense, unequipped.CurrentValue);
+            Assert.AreEqual(7f, unequipped.CurrentValue);
+        }
+
+        [Test]
+        public void Comparison_EmptyPotionFullAndDeadPreserveSlotsAndRejectInvalidSelection()
+        {
+            CreatePlayer();
+            Assert.IsFalse(inventory.TryGetEquipmentComparison(0, out _));
+            Assert.IsFalse(inventory.TryGetEquipmentComparison(-1, out _));
+            Assert.IsFalse(inventory.TryGetEquipmentComparison(16, out _));
+            var sword = Asset<WeaponData>(); sword.damageBonus = 6f;
+            progression.TryCollect(new LootDrop(LootKind.Potion, 30));
+            for (int i = 1; i < 16; i++) Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Weapon, 0, sword)));
+            Assert.IsFalse(inventory.TryGetEquipmentComparison(0, out _), "Potions never compare weapon stats.");
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(15, out var full));
+            Assert.AreEqual(0f, full.Difference);
+            Assert.IsFalse(progression.TryCollect(new LootDrop(LootKind.Weapon, 0, sword)));
+            health.TakeDamage(1000f, Vector3.zero);
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(15, out var dead));
+            Assert.AreEqual(full.SelectedValue, dead.SelectedValue);
+            Assert.IsFalse(inventory.TryEquip(15));
+            Assert.IsFalse(inventory.TryUnequip(InventoryItemKind.Weapon));
+            Assert.AreEqual(1, inventory.EquippedWeaponIndex);
+            Assert.AreEqual(16, inventory.Slots.Count);
+            Assert.AreEqual(30, inventory.Slots[0].Potency);
+            for (int i = 1; i < 16; i++)
+            {
+                Assert.AreSame(sword, inventory.Slots[i].Definition);
+                Assert.AreEqual(1, inventory.Slots[i].Count);
+            }
         }
 
         [Test]

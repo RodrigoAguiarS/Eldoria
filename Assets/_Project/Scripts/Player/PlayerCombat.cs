@@ -60,7 +60,10 @@ namespace DungeonCrawler.Player
         /// <summary>Bônus plano da arma equipada, somado ao dano base antes do multiplicador.</summary>
         public float WeaponDamageBonus { get; set; }
 
-        public float CurrentDamage => (damage + WeaponDamageBonus) * DamageMultiplier;
+        public float CurrentDamage => CalculateBaseDamage(WeaponDamageBonus);
+
+        /// <summary>Base hit damage with a candidate flat bonus, before combo/special multipliers.</summary>
+        public float CalculateBaseDamage(float weaponDamageBonus) => (damage + weaponDamageBonus) * DamageMultiplier;
 
         private void OnEnable()
         {

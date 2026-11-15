@@ -52,6 +52,8 @@ PlayerInventory valida comandos com Health e aplica equipamento via PlayerProgre
 
 InventoryPresenter/SlotView apresentam estado e solicitam comandos; assinaturas acompanham OnEnable/OnDisable. Builders configuram os três cenários de gameplay e o prefab compartilhado pelas APIs do Editor, sem regenerar arte ou salas.
 
+F01: `PlayerInventory.TryGetEquipmentComparison` consulta o equipamento sem mutar slots ou emitir eventos; poção/slot vazio não têm comparação. O snapshot separa bônus plano da arma do dano base no nível atual, antes dos multiplicadores de combo/especial. `PlayerProgression.GetBaseDamage` usa o mesmo cálculo de `PlayerCombat.CurrentDamage`; defesa usa a mesma composição de baseline e armadura aplicada ao Health. O presenter só formata atual → selecionado e diferença. `InventorySceneBuilder.IntegrateEquipmentComparison` atualiza somente a área correspondente nas três cenas existentes, preservando comandos e referências.
+
 ## Pausa e atalhos (1.0 / D-002)
 
 GameplayPauseController suspende o mapa Gameplay, cancela controles explicitamente referenciados e congela Time.timeScale. Ao sair, restaura apenas controles previamente habilitados e jogador vivo; destruir/desativar o controlador restaura o tempo. Timers de combate/IA/spawn/projéteis respeitam a pausa, inclusive na janela de impacto. PlayerInventoryInput mantém I/Tab/Q/Esc em ações separadas, disponíveis durante o menu. GameMenuController apresenta os painéis e solicita pausa; não decide dano, cura ou progressão.

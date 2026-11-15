@@ -76,6 +76,31 @@ namespace DungeonCrawler.Systems
         }
 
         public bool TryEquip(int index) => CanUseCommands && model.TryEquip(index);
+
+        /// <summary>Queries only: no item movement, equipment changes or events, including when dead.</summary>
+        public bool TryGetEquipmentComparison(int index, out EquipmentComparison comparison)
+        {
+            comparison = default;
+            if (model == null || index < 0 || index >= model.Capacity || model.Slots[index].IsEmpty) return false;
+            if (model.Slots[index].Definition is WeaponData weapon)
+            {
+                WeaponData current = model.EquippedWeapon;
+                comparison = new EquipmentComparison(InventoryItemKind.Weapon,
+                    current != null ? current.damageBonus : 0f, weapon.damageBonus,
+                    progression.GetBaseDamage(current), progression.GetBaseDamage(weapon), progression.Level);
+                return true;
+            }
+            if (model.Slots[index].Definition is ArmorData armor)
+            {
+                ArmorData current = model.EquippedArmor;
+                comparison = new EquipmentComparison(InventoryItemKind.Armor,
+                    current != null ? current.defense : 0f, armor.defense,
+                    DefenseWith(current), DefenseWith(armor), progression.Level);
+                return true;
+            }
+            return false;
+        }
+
         public bool TryUnequip(InventoryItemKind kind) => CanUseCommands && model.TryUnequip(kind);
         public bool TryUseFirstPotion() => model != null && TryUsePotion(model.FirstPotionIndex);
         public bool TryUsePotion(int index)
@@ -121,8 +146,10 @@ namespace DungeonCrawler.Systems
         private void OnChanged()
         {
             progression.SetEquippedWeapon(model.EquippedWeapon);
-            health.SetDefense(definition.baseDefense + (model.EquippedArmor != null ? model.EquippedArmor.defense : 0f));
+            health.SetDefense(DefenseWith(model.EquippedArmor));
             Changed?.Invoke();
         }
+
+        private float DefenseWith(ArmorData armor) => Mathf.Max(0f, definition.baseDefense + (armor != null ? armor.defense : 0f));
     }
 }
