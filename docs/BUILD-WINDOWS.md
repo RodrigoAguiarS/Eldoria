@@ -94,6 +94,24 @@ gráfica da correção: `RoomRewardChestTests.Capture_AllRoomsAndTorchPositions`
 Editor sem `-batchmode`/`-nographics`. XML e captura diagnóstica são distintos do
 aceite de uma run normal completa. Evidências atuais em [Reports/F08-AllRooms](../Reports/F08-AllRooms/README.md); a primeira entrega permanece em [Reports/F08](../Reports/F08/README.md).
 
+### Regressão F09 — Vasos destrutíveis
+
+Builder: **Tools / Dungeon Crawler / Environment / Integrate Destructible Vases
+(F09)**, `DungeonCrawler.Editor.DestructiblePropSceneBuilder.Integrate`.
+Um vaso de 40 HP por sala de release; básico de 20 causa dois acertos, giro de
+40 quebra em um no estado inicial. Equipamento/nível/combo mantêm o cálculo
+existente. Conferir destroços estáticos, sem drops e sem impedir saída/vitória
+com vasos intactos. Portas, centro e spawns ficam livres; os vasos não bloqueiam
+movimento, projéteis ou visão ranged. Toggle não restaura HP e reinício cria novos.
+
+Testes: `DestructiblePropAssetTests`, `DestructiblePropTests` e
+`FloorIntegrationTests.SavedFloor_AllWavesCloseDoorsAndOnlyLastDeathCompletesVictoryOnce`.
+Captura gráfica explícita: `DestructiblePropTests.Capture_ReleaseVaseBeforeAndAfterActualAttacks`,
+sem `-batchmode`/`-nographics`, com `DUNGEON_CRAWLER_TEST_REPORT_DIR` exclusivo.
+As imagens usam dano pelos impactos reais; posicionamento/invulnerabilidade são
+diagnósticos, distintos do aceite de uma run normal. Evidências em
+[Reports/F09](../Reports/F09/README.md).
+
 ## Reconstrução da composição
 
 Os assets necessários já estão versionados. Não é necessário regenerar personagens, cenário ou imagens para construir o jogo.

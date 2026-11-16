@@ -46,6 +46,27 @@ F07: `EnemyCombat.HasLineOfSight` compartilha cache por alvo com relógio escala
 
 `PlayerInputReader.InteractPressed` solicita abertura pelo domínio; `RoomRewardPresenter` só apresenta bloqueio/proximidade, binding efetivo e tampa. Usa primitivas sem colisão para não mudar cobertura/NavMesh. O builder `RoomRewardSceneBuilder.Integrate` mantém um baú em cada uma das cinco salas de release pelas APIs do Editor, preserva tabelas antigas e usa o remapeamento F04 já integrado. Cada presenter tem aviso próprio, evitando sobrescrita pelos baús distantes. VictoryPresenter.ContinueExploring fecha a apresentação de vitória e GameMenuController.LeaveTerminal libera a bolsa/pausa sem alterar FloorController.IsCompleted. A composição chama ProductionAnimationIntegrator.RepairScene para restaurar o vínculo das chamas às tochas, sem modificar posição/intensidade das luzes nem gravar relatórios históricos. F08 acrescenta `Interact/0` ao fim dos treze slots F04, sem renumerar IDs/índices anteriores nem trocar a chave/schema v1. Carga de documento anterior que já ocupa F mantém o binding antigo e atribui uma tecla livre à interação; colisões explícitas novas continuam recusadas. O asset `.inputactions` compartilhado permanece intacto, e a ação nasce na cópia runtime.
 
+## Props destrutíveis (F09)
+
+`DestructiblePropDefinition` guarda somente HP máximo; `DestructibleProp`
+implementa `IDamageable` com HP por instância e eventos `Damaged`/`Broken`.
+Não usa Health de inimigo, EnemyTracker ou loot. Confirma HP/estado terminal
+antes de notificar e recusa reentrada durante a transação; toggle não reseta.
+Recusa dano inválido, pausa e componente/objeto desativado. Morte do jogador
+continua cancelando os ataques pelos contratos existentes.
+`DestructiblePropPresenter` assina no ciclo de vida, reconcilia o estado ao
+reativar e reutiliza DamageFlash e visuais intacto/destroços pré-compostos.
+
+`DestructiblePropSceneBuilder.Integrate` cria a layer Destructible em slot livre,
+sem colisão física com outras layers. Os colliders não são triggers: básico e
+giro consultam `enemyMask | destructibleMask`, preservando máscaras de inimigo,
+deduplicação por IDamageable e expansão do buffer antes do dano. Visão/projéteis
+e NavMesh não incluem a layer. Integra máscaras no prefab/jogadores existentes
+e um vaso lateral por sala de release, sem reconstruir salas, luzes ou bake.
+Reexecutar preserva GUIDs, definição e posição já existentes. O Editor 6000.6
+resserializa DynamicsManager para schema 24 ao persistir a matriz; os pares
+anteriores entre outras layers devem permanecer iguais.
+
 ## Pooling
 Projéteis usam `UnityEngine.Pool.ObjectPool<Projectile>`, aquecimento real de 16 instâncias na configuração atual e callback de retorno reutilizado; colisão, timeout e desativação devolvem ao pool. Pickups/atores ainda são criados por recompensa/onda; isso não prova gargalo e não autoriza pooling indiscriminado.
 

@@ -81,6 +81,9 @@ namespace DungeonCrawler.Tests.PlayerInput
             var floor = InScene<FloorController>();
             var rooms = Field<RoomController[]>(floor, "rooms");
             Assert.AreEqual(5, rooms.Length);
+            var props = new List<DestructibleProp>();
+            foreach (var room in rooms) props.AddRange(room.GetComponentsInChildren<DestructibleProp>(true));
+            Assert.AreEqual(5, props.Count, "F09 release composition.");
             Assert.AreEqual(16, InScene<ProjectilePool>().InactiveCount);
             int completed = 0;
             floor.Completed += () => completed++;
@@ -109,6 +112,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             }
             Assert.IsTrue(floor.IsCompleted);
             Assert.AreEqual(1, completed);
+            foreach (var prop in props) Assert.IsTrue(prop.IsAlive, "Intact props must not prevent room/floor completion.");
             yield return new WaitForSeconds(1.7f);
             Assert.IsTrue(Field<GameObject>(InScene<VictoryPresenter>(), "panel").activeSelf);
             LogAssert.NoUnexpectedReceived();

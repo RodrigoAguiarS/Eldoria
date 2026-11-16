@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-11-16 — F09: vasos destrutíveis simples
+
+- Um tipo de vaso de primitivas, 40 HP em SO, um por sala de release. Básico/giro
+  deduplicam múltiplos colliders; quebra única sob dano reentrante ou no mesmo
+  frame. Pausa/desativação recusam dano; toggle não revive. Sem drops/XP/estilhaços
+  físicos ou registro como inimigo.
+- Builder idempotente compõe layer/máscaras explícitas e apresentação com
+  DamageFlash/destroços estáticos. Sem bloqueio físico/cobertura; centro, portas,
+  spawns, prefabs de sala, dados e NavMesh preservados.
+- 163 EditMode e 146 PlayMode aprovados, zero falhas; 10 capturas explícitas
+  ignoradas em batch; captura gráfica 1/1 inspecionada em 2560×1440.
+  Evidências e limites em [Reports/F09](Reports/F09/README.md).
+  Merge depende da revisão do usuário.
+
 ## 2026-11-16 — F08: cinco salas e reparo das tochas
 
 - Um baú independente em cada uma das cinco salas; aviso próprio, F após limpar a própria sala e coleta do Boss acessível pelo botão Coletar recompensas após vitória. Bolsa, remapeamento, coleta recusada e sorteio único preservados.
