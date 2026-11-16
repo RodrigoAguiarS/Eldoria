@@ -69,9 +69,9 @@ Build isolada: `RangedLineOfSightBuilder.BuildWindowsValidation`, saída `Builds
 ### Regressão F08 — Baú de sala fixa
 
 Builder: **Tools / Dungeon Crawler / Rewards / Integrate Room Chest (F08)**,
-`DungeonCrawler.Editor.RoomRewardSceneBuilder.Integrate`. Integra apenas um baú na
-primeira sala da cena de release e acrescenta Interagir com baú aos painéis de
-Controles existentes. Preserva tabelas de inimigos; os dados exclusivos ficam em
+`DungeonCrawler.Editor.RoomRewardSceneBuilder.Integrate`. Integra um baú independente em
+cada uma das cinco salas de release e usa Interagir com baú nos Controles já
+integrados. Repara as chamas órfãs sem reposicionar tochas ou luzes. Preserva tabelas de inimigos; os dados exclusivos ficam em
 `RoomReward_F08.asset`/`Loot_Chest_F08.asset`. Reexecutar preserva ajustes nesses SOs.
 
 Tentar F perto antes da limpeza: bloqueado. Depois da última morte: aviso de
@@ -83,13 +83,16 @@ reinício cria run nova com sala/baú bloqueados. No menu Controles, F deve conf
 com outra atribuição; remapear Interagir atualiza o aviso. Preferência v1 antiga
 que já usa F preserva esse controle e atribui tecla livre à interação.
 
-Build isolada: `RoomRewardSceneBuilder.BuildWindowsValidation`, saída
-`Builds/F08/Eldoria.exe`, relatório novo `Reports/F08/windows-build.json` (recusa
-sobrescrita). Testes: `RoomRewardAssetTests`, `InputBindingTests`,
+Após a vitória, **Coletar recompensas** fecha o painel, permitindo acessar a
+bolsa e o baú do Boss. Testar todas as salas e confirmar cinco aberturas independentes.
+
+Build isolada da correção: `RoomRewardSceneBuilder.BuildAllRoomsValidation`, saída
+`Builds/F08-AllRooms/Eldoria.exe`, relatório novo `Reports/F08-AllRooms/windows-build.json`
+(recusa sobrescrita). O método antigo BuildWindowsValidation mantém o destino histórico F08. Testes: `RoomRewardAssetTests`, `InputBindingTests`,
 `RoomRewardChestTests` e regressões de controles/salas/inventário. Captura explícita
-gráfica: `RoomRewardChestTests.Capture_ReleaseChestLockedReadyAndOpened`; requer
+gráfica da correção: `RoomRewardChestTests.Capture_AllRoomsAndTorchPositions`; requer
 Editor sem `-batchmode`/`-nographics`. XML e captura diagnóstica são distintos do
-aceite de uma run normal completa. Evidências e limites em [Reports/F08](../Reports/F08/README.md).
+aceite de uma run normal completa. Evidências atuais em [Reports/F08-AllRooms](../Reports/F08-AllRooms/README.md); a primeira entrega permanece em [Reports/F08](../Reports/F08/README.md).
 
 ## Reconstrução da composição
 

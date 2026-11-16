@@ -29,8 +29,6 @@ namespace DungeonCrawler.Editor
             for (int i = 0; i < SceneManager.sceneCount; i++)
                 if (SceneManager.GetSceneAt(i).isDirty) throw new InvalidOperationException("Salve as cenas antes de integrar.");
             EnsureDefinition();
-            // The added editable slot must be available in every existing controls panel.
-            ControlBindingsSceneBuilder.Integrate();
             var original = SceneManager.GetActiveScene();
             var scene = SceneManager.GetSceneByPath(MvpReleaseBuild.Floor);
             bool opened = !scene.IsValid() || !scene.isLoaded;
@@ -43,7 +41,7 @@ namespace DungeonCrawler.Editor
             finally { if (opened) EditorSceneManager.CloseScene(scene, true); }
             if (original.IsValid() && original.isLoaded) SceneManager.SetActiveScene(original);
             AssetDatabase.SaveAssets();
-            Debug.Log("[F08] One experimental chest integrated in the first fixed release room.");
+            Debug.Log("[F08] One reward chest per fixed release room; torch flame parents repaired.");
         }
 
         public static RoomRewardDefinition EnsureDefinition()
@@ -75,8 +73,23 @@ namespace DungeonCrawler.Editor
             var roots = scene.GetRootGameObjects();
             var player = roots.SelectMany(root => root.GetComponentsInChildren<PlayerInputReader>(true)).Single();
             var floor = roots.SelectMany(root => root.GetComponentsInChildren<FloorController>(true)).Single();
-            var room = (RoomController)new SerializedObject(floor).FindProperty("rooms").GetArrayElementAtIndex(0).objectReferenceValue;
-            var root = EditorBuildUtility.GetOrCreateRoot(scene, ChestName, out bool created);
+            var rooms = new SerializedObject(floor).FindProperty("rooms");
+            ProductionAnimationIntegrator.RepairScene(scene);
+            for (int i = 0; i < rooms.arraySize; i++)
+                ConfigureRoom(scene, player, (RoomController)rooms.GetArrayElementAtIndex(i).objectReferenceValue, i);
+            var hud = roots.Single(go => go.name == "HUD");
+            var victory = hud.GetComponent<VictoryPresenter>();
+            var panel = hud.transform.Find("VictoryPanel");
+            var collect = Button(panel, "CollectRewards", "Coletar recompensas", new Vector2(0f, -160f), new Vector2(460f, 70f));
+            var rect = (RectTransform)collect.transform;
+            rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(.5f, .5f);
+            collect.transform.Find("Label").GetComponent<Text>().alignment = TextAnchor.MiddleCenter;
+            Link(collect, victory.ContinueExploring);
+        }
+
+        private static void ConfigureRoom(Scene scene, PlayerInputReader player, RoomController room, int index)
+        {
+            var root = EditorBuildUtility.GetOrCreateRoot(scene, index == 0 ? ChestName : ChestName + "_Room_" + (index + 1), out bool created);
             if (created) root.transform.position = room.transform.position + new Vector3(3.5f, 0f, 2f);
             var chest = Get<RoomRewardChest>(root);
             Set(chest, "room", room); Set(chest, "player", player.GetComponent<Health>()); Set(chest, "input", player);
@@ -91,13 +104,14 @@ namespace DungeonCrawler.Editor
             lid.localPosition = new Vector3(0f, .8f, .425f);
             Block(lid, "Lid", new Vector3(0f, .1f, -.425f), new Vector3(1.48f, .2f, .93f), metal);
             Block(root.transform, "Latch", new Vector3(0f, .65f, -.46f), new Vector3(.18f, .3f, .08f), metal);
-            var hud = roots.Single(go => go.name == "HUD");
-            var hint = Label(hud.transform, "RoomRewardHint", "", new Vector2(0f, 250f), new Vector2(700f, 48f), 27);
+            var hud = scene.GetRootGameObjects().Single(go => go.name == "HUD");
+            var hint = Label(hud.transform, index == 0 ? "RoomRewardHint" : "RoomRewardHint_Room_" + (index + 1), "", new Vector2(0f, 250f), new Vector2(700f, 48f), 27);
             hint.rectTransform.anchorMin = hint.rectTransform.anchorMax = hint.rectTransform.pivot = new Vector2(.5f, 0f);
             hint.alignment = TextAnchor.MiddleCenter; hint.enabled = false;
             Get<Outline>(hint.gameObject).effectDistance = new Vector2(1f, -1f);
             var presenter = Get<RoomRewardPresenter>(root);
             Set(presenter, "chest", chest); Set(presenter, "bindings", player.GetComponent<RuntimeInputBindings>());
+            Set(presenter, "menu", hud.GetComponentInChildren<GameMenuController>(true));
             Set(presenter, "hint", hint); Set(presenter, "lid", lid);
             var overlay = hud.transform.Find("InventoryUI"); if (overlay != null) overlay.SetAsLastSibling();
         }
@@ -123,18 +137,23 @@ namespace DungeonCrawler.Editor
             public double seconds;
         }
         [MenuItem("Tools/Dungeon Crawler/Rewards/Build Windows Validation (F08)")]
-        public static void BuildWindowsValidation()
+        public static void BuildWindowsValidation() => BuildValidation("F08");
+
+        [MenuItem("Tools/Dungeon Crawler/Rewards/Build All Rooms Validation (F08)")]
+        public static void BuildAllRoomsValidation() => BuildValidation("F08-AllRooms");
+
+        private static void BuildValidation(string id)
         {
-            const string path = "Reports/F08/windows-build.json";
+            string path = "Reports/" + id + "/windows-build.json";
             if (File.Exists(path)) throw new InvalidOperationException("Preserve evidence: " + path);
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
                 scenes = new[] { GameShellSceneBuilder.MenuScene, MvpReleaseBuild.Floor },
-                locationPathName = "Builds/F08/Eldoria.exe", target = BuildTarget.StandaloneWindows64, options = BuildOptions.None
+                locationPathName = "Builds/" + id + "/Eldoria.exe", target = BuildTarget.StandaloneWindows64, options = BuildOptions.None
             });
-            Directory.CreateDirectory("Reports/F08");
+            Directory.CreateDirectory("Reports/" + id);
             File.WriteAllText(path, JsonUtility.ToJson(new BuildEvidence { result = report.summary.result.ToString(),
-                unityVersion = Application.unityVersion, executable = "Builds/F08/Eldoria.exe", errors = report.summary.totalErrors,
+                unityVersion = Application.unityVersion, executable = "Builds/" + id + "/Eldoria.exe", errors = report.summary.totalErrors,
                 warnings = report.summary.totalWarnings, seconds = report.summary.totalTime.TotalSeconds }, true));
             if (report.summary.result != BuildResult.Succeeded) throw new InvalidOperationException("F08 Windows build failed.");
         }

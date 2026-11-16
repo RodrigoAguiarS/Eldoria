@@ -10,6 +10,7 @@ namespace DungeonCrawler.UI
     {
         [SerializeField] private RoomRewardChest chest;
         [SerializeField] private RuntimeInputBindings bindings;
+        [SerializeField] private GameMenuController menu;
         [SerializeField] private Text hint;
         [SerializeField] private Transform lid;
         private string interactionLabel;
@@ -32,7 +33,8 @@ namespace DungeonCrawler.UI
             if (chest == null) return;
             if (lid != null) lid.localRotation = Quaternion.Euler(chest.IsOpened ? -105f : 0f, 0f, 0f);
             if (hint == null) return;
-            hint.enabled = chest.CanShowHint && (bindings == null || (!bindings.InputBlocked && !bindings.OverlayOpen));
+            hint.enabled = chest.CanShowHint && (menu == null || !menu.TerminalVisible) &&
+                (bindings == null || (!bindings.InputBlocked && !bindings.OverlayOpen));
             string text = chest.IsUnlocked ? interactionLabel : "Baú bloqueado · limpe a sala";
             if (hint.text != text) hint.text = text;
         }

@@ -363,55 +363,62 @@ namespace DungeonCrawler.Editor
 
         public static void IntegrateReleaseFloor()
         {
+            IntegrationReport report = null;
+            WithScene(ReleaseFloor, true, scene => report = ConfigureScene(scene));
+            WriteReport("integration.json", report);
+            Debug.Log($"[ANIM-TORCH] {report.torches} torches; {report.orphansRemoved} orphan flames repaired.");
+        }
+
+        /// <summary>Repair flame parenting in the supplied scene without saving or touching reports/lights.</summary>
+        public static void RepairScene(Scene scene) => ConfigureScene(scene);
+
+        private static IntegrationReport ConfigureScene(Scene scene)
+        {
             var prefab = LoadRequired<GameObject>(PrefabPath);
             Mesh original = LoadRequired<Mesh>(OriginalMeshPath);
             SourceData data = LoadSource();
             var controllers = Enumerable.Range(0, data.phases.Length).Select(i => LoadRequired<RuntimeAnimatorController>(string.Format(ControllerPathFormat, i))).ToArray();
-            var report = new IntegrationReport { timestampUtc = DateTime.UtcNow.ToString("o"), scene = ReleaseFloor };
-            WithScene(ReleaseFloor, true, scene =>
+            var report = new IntegrationReport { timestampUtc = DateTime.UtcNow.ToString("o"), scene = scene.path };
+            List<MeshFilter> torches = FindTorches(scene, original);
+            if (torches.Count != ExpectedTorches)
+                throw new InvalidOperationException($"[ANIM-TORCH] Esperava {ExpectedTorches} tochas GA_Torch em {ReleaseFloor}, achou {torches.Count}. Nada salvo.");
+            // Room decor regeneration (GeneratedArtApplier) recreates Torch_N; flame instances added in the scene then lose
+            // their parent and Unity moves them to the room root (local zero = middle of the room). Remove those orphans.
+            report.orphansRemoved = RemoveOrphans(scene, torches, prefab);
+            var paths = new List<string>();
+            foreach (MeshFilter torch in torches)
             {
-                List<MeshFilter> torches = FindTorches(scene, original);
-                if (torches.Count != ExpectedTorches)
-                    throw new InvalidOperationException($"[ANIM-TORCH] Esperava {ExpectedTorches} tochas GA_Torch em {ReleaseFloor}, achou {torches.Count}. Nada salvo.");
-                // Room decor regeneration (GeneratedArtApplier) recreates Torch_N; flame instances added in the scene then lose
-                // their parent and Unity moves them to the room root (local zero = middle of the room). Remove those orphans.
-                report.orphansRemoved = RemoveOrphans(scene, torches, prefab);
-                var paths = new List<string>();
-                foreach (MeshFilter torch in torches)
+                Transform t = torch.transform;
+                List<GameObject> found = OwnInstances(t, prefab);
+                foreach (Transform stray in t.Cast<Transform>().Where(c => c.name == InstanceName && !found.Contains(c.gameObject)).ToArray())
                 {
-                    Transform t = torch.transform;
-                    List<GameObject> found = OwnInstances(t, prefab);
-                    foreach (Transform stray in t.Cast<Transform>().Where(c => c.name == InstanceName && !found.Contains(c.gameObject)).ToArray())
-                    {
-                        // objetos que vêm do prefab da sala nunca são removidos; só sobras adicionadas na cena
-                        if (PrefabUtility.IsPartOfPrefabInstance(stray.gameObject) && !PrefabUtility.IsAddedGameObjectOverride(stray.gameObject)) continue;
-                        Object.DestroyImmediate(stray.gameObject); report.duplicatesRemoved++;
-                    }
-
-                    while (found.Count > 1) { Object.DestroyImmediate(found[found.Count - 1]); found.RemoveAt(found.Count - 1); report.duplicatesRemoved++; }
-                    GameObject instance;
-                    if (found.Count == 1) { instance = found[0]; report.instancesKept++; }
-                    else
-                    {
-                        instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, t);
-                        report.instancesCreated++;
-                    }
-
-                    instance.name = InstanceName;
-                    ResetLocal(instance.transform, Vector3.zero);
-                    int phase = PhaseIndex(t, controllers.Length);
-                    var animator = instance.GetComponent<Animator>();
-                    if (animator.runtimeAnimatorController != controllers[phase]) animator.runtimeAnimatorController = controllers[phase];
-                    var renderer = torch.GetComponent<MeshRenderer>();
-                    if (renderer != null && renderer.enabled) { renderer.enabled = false; report.renderersDisabled++; }
-                    paths.Add(PathOf(t));
+                    // objetos que vêm do prefab da sala nunca são removidos; só sobras adicionadas na cena
+                    if (PrefabUtility.IsPartOfPrefabInstance(stray.gameObject) && !PrefabUtility.IsAddedGameObjectOverride(stray.gameObject)) continue;
+                    Object.DestroyImmediate(stray.gameObject); report.duplicatesRemoved++;
                 }
 
-                report.torches = torches.Count;
-                report.torchPaths = paths.ToArray();
-            });
-            WriteReport("integration.json", report);
-            Debug.Log($"[ANIM-TORCH] {ReleaseFloor}: {report.torches} tochas; {report.instancesCreated} instâncias criadas, {report.instancesKept} mantidas, {report.duplicatesRemoved} duplicatas e {report.orphansRemoved} órfãs (fora da tocha) removidas, {report.renderersDisabled} renderers originais desativados.");
+                while (found.Count > 1) { Object.DestroyImmediate(found[found.Count - 1]); found.RemoveAt(found.Count - 1); report.duplicatesRemoved++; }
+                GameObject instance;
+                if (found.Count == 1) { instance = found[0]; report.instancesKept++; }
+                else
+                {
+                    instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, t);
+                    report.instancesCreated++;
+                }
+
+                instance.name = InstanceName;
+                ResetLocal(instance.transform, Vector3.zero);
+                int phase = PhaseIndex(t, controllers.Length);
+                var animator = instance.GetComponent<Animator>();
+                if (animator.runtimeAnimatorController != controllers[phase]) animator.runtimeAnimatorController = controllers[phase];
+                var renderer = torch.GetComponent<MeshRenderer>();
+                if (renderer != null && renderer.enabled) { renderer.enabled = false; report.renderersDisabled++; }
+                paths.Add(PathOf(t));
+            }
+
+            report.torches = torches.Count;
+            report.torchPaths = paths.ToArray();
+            return report;
         }
 
         public static void RevertReleaseFloor()

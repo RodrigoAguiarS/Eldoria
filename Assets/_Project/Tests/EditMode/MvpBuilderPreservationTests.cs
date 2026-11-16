@@ -30,6 +30,10 @@ namespace DungeonCrawler.Tests.EditMode
                 for (int i = 0; i < 2; i++)
                 {
                     DungeonMvpSceneBuilder.Build();
+                    CollectionAssert.AreEqual(fixtureFiles[MvpReleaseBuild.Floor], File.ReadAllBytes(MvpReleaseBuild.Floor),
+                        "Rebuilding M1 must never rewrite the release floor or orphan its torch overrides.");
+                    foreach (var pair in fixtureFiles.Where(pair => pair.Key.StartsWith(ProjectPaths.PrefabsRooms + "/")))
+                        CollectionAssert.AreEqual(pair.Value, File.ReadAllBytes(pair.Key), pair.Key);
                     var scene = EditorSceneManager.OpenScene(ProjectPaths.MvpArenaScene);
                     int players = 0;
                     int enemies = 0;
@@ -66,7 +70,8 @@ namespace DungeonCrawler.Tests.EditMode
             ProjectPaths.PrefabsRooms, ProjectPaths.Scenes,
             "Assets/_Project/Art/Models/Generated/_GameArt"
         }.SelectMany(folder => Directory.GetFiles(folder, "*", SearchOption.AllDirectories))
-            .Select(path => path.Replace('\\', '/'));
+            .Select(path => path.Replace('\\', '/'))
+            .Concat(new[] { MvpReleaseBuild.Floor, MvpReleaseBuild.Floor + ".meta" });
 
         private static Dictionary<string, byte[]> CaptureFixtureFiles() =>
             FixturePaths().ToDictionary(path => path, File.ReadAllBytes);

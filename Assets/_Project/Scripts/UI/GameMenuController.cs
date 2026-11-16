@@ -19,6 +19,7 @@ namespace DungeonCrawler.UI
         [SerializeField] private MenuScreenStack screens;
         [SerializeField] private RuntimeInputBindings bindings;
         private bool terminalVisible;
+        public bool TerminalVisible => terminalVisible;
         public bool InventoryOpen => inventoryPanel.activeSelf;
 
         private void Awake() { inventoryPanel.SetActive(false); pausePanel.SetActive(false); }
@@ -63,6 +64,7 @@ namespace DungeonCrawler.UI
         public void OpenControls() => screens.Push(MenuScreen.Controls);
         public void CloseOptions() => screens.Pop();
         public void ShowTerminal() { Resume(); terminalVisible = true; }
+        public void LeaveTerminal() { terminalVisible = false; Resume(); }
         private void OnScreenChanged()
         {
             if (bindings == null) return;
