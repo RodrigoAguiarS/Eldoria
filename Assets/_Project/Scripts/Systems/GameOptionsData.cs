@@ -6,7 +6,9 @@ namespace DungeonCrawler.Systems
     [Serializable]
     public sealed class GameOptionsData
     {
-        public int version = 2;
+        public const int CurrentVersion = 3;
+        public int version = CurrentVersion;
+        public QuickPotionPolicy quickPotionPolicy = QuickPotionPolicy.First;
         public float music = .55f;
         public float effects = .75f;
         public float shake = 1f;
@@ -21,6 +23,8 @@ namespace DungeonCrawler.Systems
             music = Unit(music, .55f); effects = Unit(effects, .75f);
             shake = Unit(shake, 1f); flash = Unit(flash, 1f);
             quality = Math.Max(-1, quality);
+            if (quickPotionPolicy != QuickPotionPolicy.LowestPotency && quickPotionPolicy != QuickPotionPolicy.HighestPotency)
+                quickPotionPolicy = QuickPotionPolicy.First;
             if (width < 640 || width > 16384 || height < 360 || height > 16384) width = height = 0;
         }
         private static float Unit(float value, float fallback) => float.IsNaN(value) || float.IsInfinity(value) ? fallback : Mathf.Clamp01(value);
@@ -28,11 +32,26 @@ namespace DungeonCrawler.Systems
         {
             value = null;
             if (string.IsNullOrEmpty(json)) return false;
-            try { value = JsonUtility.FromJson<GameOptionsData>(json); }
+            try
+            {
+                // A missing version must not be mistaken for the field initializer of the current schema.
+                var header = JsonUtility.FromJson<VersionHeader>(json);
+                if (header == null || header.version < 1 || header.version > CurrentVersion) return false;
+                value = JsonUtility.FromJson<GameOptionsData>(json);
+            }
             catch (ArgumentException) { return false; }
-            if (value == null || (value.version != 1 && value.version != 2)) { value = null; return false; }
-            if (value.version == 1) { value.version = 2; value.quality = -1; } // Old native quality indices were platform-dependent.
+            if (value == null) return false;
+            Migrate(value);
             value.Validate(); return true;
         }
+
+        internal static void Migrate(GameOptionsData value)
+        {
+            if (value.version < 2) value.quality = -1; // Old native quality indices were platform-dependent.
+            if (value.version < 3) value.quickPotionPolicy = QuickPotionPolicy.First;
+            value.version = CurrentVersion;
+        }
+
+        [Serializable] private sealed class VersionHeader { public int version = 0; }
     }
 }

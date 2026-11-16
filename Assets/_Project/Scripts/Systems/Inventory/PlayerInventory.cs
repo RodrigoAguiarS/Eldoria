@@ -11,6 +11,7 @@ namespace DungeonCrawler.Systems
     public sealed class PlayerInventory : MonoBehaviour
     {
         [SerializeField] private InventoryDefinition definition;
+        [SerializeField] private GameOptionsDefinition options;
         [SerializeField] private Health health;
         [SerializeField] private PlayerProgression progression;
         [SerializeField] private Pickup pickupPrefab;
@@ -22,6 +23,7 @@ namespace DungeonCrawler.Systems
         public int Capacity => model?.Capacity ?? 0;
         public int EquippedWeaponIndex => model?.EquippedWeaponIndex ?? -1;
         public int EquippedArmorIndex => model?.EquippedArmorIndex ?? -1;
+        public int QuickPotionIndex => model?.GetPotionIndex(options != null ? options.Current.quickPotionPolicy : QuickPotionPolicy.First) ?? -1;
         public event Action Changed;
         public event Action<InventoryCollectionFailure> CollectionDenied;
         public event Action<Pickup> ItemDropped;
@@ -46,12 +48,14 @@ namespace DungeonCrawler.Systems
         {
             if (model == null) return;
             model.Changed += OnChanged;
+            if (options != null) options.Changed += OnOptionsChanged;
             OnChanged();
         }
 
         private void OnDisable()
         {
             if (model != null) model.Changed -= OnChanged;
+            if (options != null) options.Changed -= OnOptionsChanged;
         }
 
         public bool TryStore(in LootDrop drop, bool notifyFailure = true)
@@ -110,6 +114,7 @@ namespace DungeonCrawler.Systems
             return CanUseCommands && model.TrySort(out newIndexOf);
         }
         public bool TryUseFirstPotion() => model != null && TryUsePotion(model.FirstPotionIndex);
+        public bool TryUseQuickPotion() => TryUsePotion(QuickPotionIndex);
         public bool TryUsePotion(int index)
         {
             if (!CanUseCommands || health.Current >= health.Max || !model.TryConsumePotion(index, out int healing)) return false;
@@ -144,6 +149,7 @@ namespace DungeonCrawler.Systems
         }
 
         private bool CanUseCommands => isActiveAndEnabled && model != null && health.IsAlive;
+        private void OnOptionsChanged() => Changed?.Invoke();
         private bool Deny(InventoryCollectionFailure reason, bool notify)
         {
             if (notify) CollectionDenied?.Invoke(reason);

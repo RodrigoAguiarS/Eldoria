@@ -39,22 +39,23 @@ namespace DungeonCrawler.UI
 
         public void Refresh()
         {
-            int total = 0, firstPotency = 0;
+            int total = 0;
             if (inventory != null)
                 for (int i = 0; i < inventory.Slots.Count; i++)
                 {
                     InventoryStack stack = inventory.Slots[i];
                     if (stack.IsEmpty || stack.Definition.Kind != InventoryItemKind.Potion) continue;
-                    if (firstPotency == 0) firstPotency = stack.Potency;
                     total += stack.Count;
                 }
             bool alive = health == null || health.IsAlive;
+            int selected = inventory != null ? inventory.QuickPotionIndex : -1;
+            int potency = selected >= 0 ? inventory.Slots[selected].Potency : 0;
             bool wounded = health != null && health.Current < health.Max;
             Total = total;
-            Available = alive && total > 0 && wounded;
+            Available = alive && selected >= 0 && wounded;
             if (count != null) count.text = "× " + total;
             if (status != null)
-                status.text = !alive ? "Indisponível" : total == 0 ? "Sem poções" : !wounded ? "HP cheio" : "Pronto · +" + firstPotency + " HP";
+                status.text = !alive ? "Indisponível" : selected < 0 ? "Sem poções" : !wounded ? "HP cheio" : "Pronto · +" + potency + " HP";
             if (group != null) group.alpha = Available ? 1f : .55f;
             if (icon != null) icon.color = total > 0 ? Color.white : new Color(1f, 1f, 1f, .35f);
         }

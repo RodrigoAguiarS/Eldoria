@@ -221,6 +221,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Player.PlayerAim
   input: {fileID: 1226147028800101914}
   aimCamera: {fileID: 0}
+  movement: {fileID: 0}
+  faceMouse: 0
   turnSpeedDegrees: 1080
 --- !u!114 &871491815960337618
 MonoBehaviour:
@@ -400,6 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Systems.PlayerInventory
   definition: {fileID: 11400000, guid: be3e0690ed66d0e47acb5858a002ca13, type: 2}
+  options: {fileID: 11400000, guid: 021e71f74c70eab41b0ff139b4a764b6, type: 2}
   health: {fileID: 8531932573774126635}
   progression: {fileID: 6832286219411081236}
   pickupPrefab: {fileID: 3495455061051880951, guid: 89e14e6489b6dc9488686542f11bbf9a, type: 3}

@@ -14,7 +14,7 @@ Fila única após a auditoria de 14/11/2026. Escopo existente em [MVP](MVP.md), 
 | 6 / P1 | Onboarding contextual — F06 | Menus e input existentes | Ensinar WASD/mira/combate/dash/E/I/Q sem prender o jogador nem repetir em toda run |
 | 7 / P1 | Ranged com linha de visão — F07 | EnemyBrain/Combat/Navigation, pool e NavMesh | Parede bloqueia tentativa de disparo; decisão temporizada; alvo móvel, pausa, morte e perda de visão testados |
 | 8 / P2 | Escolher uma expansão curta | F08 baú **ou** F09 destrutíveis; A11/A12 | Primeiro uma sala fixa; definir regras antes de alterar loot/colisão. Não iniciar todos os sistemas |
-| 9 / P2 | Acessibilidade/input e legibilidade | F03, F04, F10; A01–A03 | Opções validadas/persistentes, conflitos resolvidos, layouts em 720p/1080p e tamanhos adicionais documentados |
+| 9 / P2 | Acessibilidade/input e legibilidade | F03 entregue em 15/11/2026; F04, F10; A01–A03 | F03: Primeira/Menor/Maior potência no Q, HUD consistente e JSON v3; 52 EditMode e 39 PlayMode distintos aprovados; [evidências e limites](Reports/F03/README.md). Demais opções/input e escalas seguem como próximas entregas |
 | 10 / P2–P3 | Conteúdo/progressão de longo prazo | F11–F15 conforme escolha; A13–A15 | Especificação curta aprovada, primeiro incremento isolado; sem geração procedural ou migração Humanoid implícita |
 
 As cinco primeiras funcionalidades sugeridas para escolha são **F01 comparação**, **F02 ordenação**, **F05 feedback**, **F06 onboarding** e **F07 linha de visão**. Dash/giro já existem; seus ícones A01/A02 são polimento. Cinco assets iniciais: A01, A02, A03, A04 e A05. Arte de baú/inimigo/Boss/área depende primeiro da funcionalidade correspondente.
