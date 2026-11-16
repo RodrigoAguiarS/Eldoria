@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-16 — F08: baú experimental de sala
+
+- Primeira sala fixa de release recebe baú de primitivas, bloqueado até limpar, com F próximo e abertura/sorteio únicos; E continua giro. Dados novos em SOs, pickups normais persistentes e recusa por capacidade preservando identidade; reativação/reset de HP não renovam loot. Sem loja/chaves/procedural.
+- Builder idempotente integra a cena e o 14º slot runtime de controles, preservando os IDs anteriores e migrando preferências v1 que já usavam F. Tabelas antigas, GUIDs, pacotes e ProjectSettings preservados ao fim da validação.
+- 161/161 EditMode, composição/Missing Script adicional 1/1, 131 PlayMode aprovados (8 explícitos ignorados), captura gráfica 1/1 em 2560×1440 e build Windows sem erros (496 avisos de shader). Evidências, tentativas e limites em [Reports/F08](Reports/F08/README.md). Captura diagnóstica não certifica run normal completa; merge depende da revisão do usuário.
+
 ## 2026-11-14 — Auditoria, consolidação e catálogo
 
 - 14 documentos históricos consolidados/removidos; 5 guias de produção compactados após conferir 145 fichas e 30 prompts contra o manifesto preservado. Decisões no GDD, estado/aceite no MVP, regressão no guia de build e fila única NEXT_STEPS. PROJECT_AUDIT registra motivos, limites e destino de cada documento; PROMPT_CATALOG contém 15 funcionalidades e 15 briefs artísticos, sem execução.

@@ -66,6 +66,31 @@ Usar **Tools / Dungeon Crawler / Enemies / Integrate Ranged Line Of Sight (F07)*
 
 Build isolada: `RangedLineOfSightBuilder.BuildWindowsValidation`, saída `Builds/F07/Eldoria.exe` e relatório novo `Reports/F07/windows-build.json`. Captura explícita gráfica: `RangedLineOfSightReleaseTests.Capture_ReleaseRangedBehindDoorAndFiring`, na cena real de release, com ator/porta diagnósticos. Evidências, reprodução e limites em [Reports/F07](../Reports/F07/README.md); essa captura não substitui uma run normal Windows.
 
+### Regressão F08 — Baú de sala fixa
+
+Builder: **Tools / Dungeon Crawler / Rewards / Integrate Room Chest (F08)**,
+`DungeonCrawler.Editor.RoomRewardSceneBuilder.Integrate`. Integra apenas um baú na
+primeira sala da cena de release e acrescenta Interagir com baú aos painéis de
+Controles existentes. Preserva tabelas de inimigos; os dados exclusivos ficam em
+`RoomReward_F08.asset`/`Loot_Chest_F08.asset`. Reexecutar preserva ajustes nesses SOs.
+
+Tentar F perto antes da limpeza: bloqueado. Depois da última morte: aviso de
+abertura, F solta ouro/espada uma única vez e abre a tampa. E continua giro.
+Conferir distância de 2,5 m, pausa/bolsa/captura de input, repetição/segurar F,
+desativação/reativação e morte. Com bolsa cheia, tocar na espada mantém o mesmo
+pickup; liberar um espaço permite coleta sem reroll. Drops do baú não expiram;
+reinício cria run nova com sala/baú bloqueados. No menu Controles, F deve conflitar
+com outra atribuição; remapear Interagir atualiza o aviso. Preferência v1 antiga
+que já usa F preserva esse controle e atribui tecla livre à interação.
+
+Build isolada: `RoomRewardSceneBuilder.BuildWindowsValidation`, saída
+`Builds/F08/Eldoria.exe`, relatório novo `Reports/F08/windows-build.json` (recusa
+sobrescrita). Testes: `RoomRewardAssetTests`, `InputBindingTests`,
+`RoomRewardChestTests` e regressões de controles/salas/inventário. Captura explícita
+gráfica: `RoomRewardChestTests.Capture_ReleaseChestLockedReadyAndOpened`; requer
+Editor sem `-batchmode`/`-nographics`. XML e captura diagnóstica são distintos do
+aceite de uma run normal completa. Evidências e limites em [Reports/F08](../Reports/F08/README.md).
+
 ## Reconstrução da composição
 
 Os assets necessários já estão versionados. Não é necessário regenerar personagens, cenário ou imagens para construir o jogo.

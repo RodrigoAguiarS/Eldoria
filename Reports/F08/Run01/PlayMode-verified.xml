@@ -1,0 +1,1147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="139" result="Failed(Child)" total="139" passed="130" failed="1" inconclusive="0" skipped="8" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-16 16:57:05Z" end-time="2026-11-16 16:58:33Z" duration="87,3501744">
+  <test-suite type="TestSuite" id="1182" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="139" result="Failed" site="Child" start-time="2026-11-16 16:57:05Z" end-time="2026-11-16 16:58:33Z" duration="87.350174" total="139" passed="130" failed="1" inconclusive="0" skipped="8" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1256" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="61" result="Passed" start-time="2026-11-16 16:57:05Z" end-time="2026-11-16 16:58:12Z" duration="66.816354" total="61" passed="53" failed="0" inconclusive="0" skipped="8" asserts="0">
+      <properties>
+        <property name="_PID" value="22456" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1257" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="61" result="Passed" start-time="2026-11-16 16:57:05Z" end-time="2026-11-16 16:58:12Z" duration="66.814953" total="61" passed="53" failed="0" inconclusive="0" skipped="8" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1258" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="61" result="Passed" start-time="2026-11-16 16:57:05Z" end-time="2026-11-16 16:58:12Z" duration="66.814048" total="61" passed="53" failed="0" inconclusive="0" skipped="8" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1259" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="61" result="Passed" start-time="2026-11-16 16:57:05Z" end-time="2026-11-16 16:58:12Z" duration="66.813099" total="61" passed="53" failed="0" inconclusive="0" skipped="8" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1183" name="ControlRebindingInputTests" fullname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests" classname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-11-16 16:57:05Z" end-time="2026-11-16 16:57:20Z" duration="14.274065" total="9" passed="8" failed="0" inconclusive="0" skipped="1" asserts="0">
+              <properties />
+              <test-case id="1192" name="Capture_Controls720pAnd1080p" fullname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests.Capture_Controls720pAnd1080p" methodname="Capture_Controls720pAnd1080p" classname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests" runstate="Explicit" seed="2033728052" result="Skipped" label="Explicit" start-time="2026-11-16 16:57:05Z" end-time="2026-11-16 16:57:05Z" duration="0.000862" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Opens real Game view and writes screenshots; run with graphics." />
+                </properties>
+                <reason>
+                  <message><![CDATA[Opens real Game view and writes screenshots; run with graphics.]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1184" name="CaptureCancelConflictApplyReloadReset_ThroughRealButtonsAndInput" fullname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests.CaptureCancelConflictApplyReloadReset_ThroughRealButtonsAndInput" methodname="CaptureCancelConflictApplyReloadReset_ThroughRealButtonsAndInput" classname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests" runstate="Runnable" seed="2027096699" result="Passed" start-time="2026-11-16 16:57:05Z" end-time="2026-11-16 16:57:06Z" duration="1.097107" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1188" name="CaptureSuppressesShortcuts_AndUiClickNeverAttacksWhenResuming" fullname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests.CaptureSuppressesShortcuts_AndUiClickNeverAttacksWhenResuming" methodname="CaptureSuppressesShortcuts_AndUiClickNeverAttacksWhenResuming" classname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests" runstate="Runnable" seed="1657849847" result="Passed" start-time="2026-11-16 16:57:06Z" end-time="2026-11-16 16:57:07Z" duration="0.187534" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1191" name="CaptureTimesOutWhilePaused_AndGamepadCannotBind" fullname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests.CaptureTimesOutWhilePaused_AndGamepadCannotBind" methodname="CaptureTimesOutWhilePaused_AndGamepadCannotBind" classname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests" runstate="Runnable" seed="1885504661" result="Passed" start-time="2026-11-16 16:57:07Z" end-time="2026-11-16 16:57:17Z" duration="10.473682" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1189" name="DeathAndRemappedRestart_StartFreshRunKeepBindingsAndUpdateDeathLabel" fullname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests.DeathAndRemappedRestart_StartFreshRunKeepBindingsAndUpdateDeathLabel" methodname="DeathAndRemappedRestart_StartFreshRunKeepBindingsAndUpdateDeathLabel" classname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests" runstate="Runnable" seed="1301624981" result="Passed" start-time="2026-11-16 16:57:17Z" end-time="2026-11-16 16:57:17Z" duration="0.229836" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1186" name="MouseButtonCapture_IsAppliedWithoutChangingKeyboardOrGamepadSupport" fullname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests.MouseButtonCapture_IsAppliedWithoutChangingKeyboardOrGamepadSupport" methodname="MouseButtonCapture_IsAppliedWithoutChangingKeyboardOrGamepadSupport" classname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests" runstate="Runnable" seed="716252798" result="Passed" start-time="2026-11-16 16:57:17Z" end-time="2026-11-16 16:57:17Z" duration="0.081851" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1185" name="MouseCancelBackAndPanelDisable_PreserveBindingsAndReleaseCapture" fullname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests.MouseCancelBackAndPanelDisable_PreserveBindingsAndReleaseCapture" methodname="MouseCancelBackAndPanelDisable_PreserveBindingsAndReleaseCapture" classname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests" runstate="Runnable" seed="1270651861" result="Passed" start-time="2026-11-16 16:57:17Z" end-time="2026-11-16 16:57:18Z" duration="0.088332" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1187" name="RemappedBagPotionPauseAndEscape_WorkWhilePausedAndOptionsDoNotConsume" fullname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests.RemappedBagPotionPauseAndEscape_WorkWhilePausedAndOptionsDoNotConsume" methodname="RemappedBagPotionPauseAndEscape_WorkWhilePausedAndOptionsDoNotConsume" classname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests" runstate="Runnable" seed="1760985541" result="Passed" start-time="2026-11-16 16:57:18Z" end-time="2026-11-16 16:57:18Z" duration="0.184917" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1190" name="RemappedMovementDashAndCombat_AreReadByGameplayOwners" fullname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests.RemappedMovementDashAndCombat_AreReadByGameplayOwners" methodname="RemappedMovementDashAndCombat_AreReadByGameplayOwners" classname="DungeonCrawler.Tests.PlayerInput.ControlRebindingInputTests" runstate="Runnable" seed="293815092" result="Passed" start-time="2026-11-16 16:57:18Z" end-time="2026-11-16 16:57:20Z" duration="1.909285" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1193" name="FloorIntegrationTests" fullname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests" classname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-16 16:57:20Z" end-time="2026-11-16 16:57:33Z" duration="13.108961" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1198" name="FloorReenable_ReconcilesMissedRoomClearWithoutDuplicatingProgress" fullname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests.FloorReenable_ReconcilesMissedRoomClearWithoutDuplicatingProgress" methodname="FloorReenable_ReconcilesMissedRoomClearWithoutDuplicatingProgress" classname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests" runstate="Runnable" seed="187230210" result="Passed" start-time="2026-11-16 16:57:20Z" end-time="2026-11-16 16:57:24Z" duration="4.074164" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+[RoomController] 'Room_2': 3 inimigo(s) instanciado(s) do encounter 'Encounter_Room2_Generated'.
+[RoomController] 'Room_3': 3 inimigo(s) instanciado(s) do encounter 'Encounter_Room3_Generated'.
+[RoomController] 'Room_4': 4 inimigo(s) instanciado(s) do encounter 'Encounter_Room4_Generated'.
+[RoomController] 'Room_5_Boss': 1 inimigo(s) instanciado(s) do encounter 'Encounter_Boss_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1195" name="RoomReenable_ReconcilesDeathsWhileDisabledAndTracksRemainingEnemies" fullname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests.RoomReenable_ReconcilesDeathsWhileDisabledAndTracksRemainingEnemies" methodname="RoomReenable_ReconcilesDeathsWhileDisabledAndTracksRemainingEnemies" classname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests" runstate="Runnable" seed="1774356645" result="Passed" start-time="2026-11-16 16:57:24Z" end-time="2026-11-16 16:57:25Z" duration="0.868970" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1197" name="RoomReenable_WhenEntireWaveDiedWhileDisabledCompletesOnce" fullname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests.RoomReenable_WhenEntireWaveDiedWhileDisabledCompletesOnce" methodname="RoomReenable_WhenEntireWaveDiedWhileDisabledCompletesOnce" classname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests" runstate="Runnable" seed="1402076789" result="Passed" start-time="2026-11-16 16:57:25Z" end-time="2026-11-16 16:57:25Z" duration="0.872812" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1194" name="SavedFloor_AllWavesCloseDoorsAndOnlyLastDeathCompletesVictoryOnce" fullname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests.SavedFloor_AllWavesCloseDoorsAndOnlyLastDeathCompletesVictoryOnce" methodname="SavedFloor_AllWavesCloseDoorsAndOnlyLastDeathCompletesVictoryOnce" classname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests" runstate="Runnable" seed="1796270076" result="Passed" start-time="2026-11-16 16:57:25Z" end-time="2026-11-16 16:57:31Z" duration="5.773841" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+[RoomController] 'Room_2': 3 inimigo(s) instanciado(s) do encounter 'Encounter_Room2_Generated'.
+[RoomController] 'Room_3': 3 inimigo(s) instanciado(s) do encounter 'Encounter_Room3_Generated'.
+[RoomController] 'Room_4': 4 inimigo(s) instanciado(s) do encounter 'Encounter_Room4_Generated'.
+[RoomController] 'Room_5_Boss': 1 inimigo(s) instanciado(s) do encounter 'Encounter_Boss_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1196" name="SavedRangedEnemy_FiresWarmedProjectileAndDamagesActualPlayer" fullname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests.SavedRangedEnemy_FiresWarmedProjectileAndDamagesActualPlayer" methodname="SavedRangedEnemy_FiresWarmedProjectileAndDamagesActualPlayer" classname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests" runstate="Runnable" seed="276157824" result="Passed" start-time="2026-11-16 16:57:31Z" end-time="2026-11-16 16:57:33Z" duration="1.517202" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1199" name="GameMenusInputTests" fullname="DungeonCrawler.Tests.PlayerInput.GameMenusInputTests" classname="DungeonCrawler.Tests.PlayerInput.GameMenusInputTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-16 16:57:33Z" end-time="2026-11-16 16:57:34Z" duration="0.879518" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1203" name="FlashOptionZero_RestoresGeneratedHeroMaterialsAndDeathFocusesRestart" fullname="DungeonCrawler.Tests.PlayerInput.GameMenusInputTests.FlashOptionZero_RestoresGeneratedHeroMaterialsAndDeathFocusesRestart" methodname="FlashOptionZero_RestoresGeneratedHeroMaterialsAndDeathFocusesRestart" classname="DungeonCrawler.Tests.PlayerInput.GameMenusInputTests" runstate="Runnable" seed="1000123770" result="Passed" start-time="2026-11-16 16:57:33Z" end-time="2026-11-16 16:57:33Z" duration="0.187892" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1202" name="OptionsApplyAndReload_PersistVolumeFlashShakeAndDisplayDraft" fullname="DungeonCrawler.Tests.PlayerInput.GameMenusInputTests.OptionsApplyAndReload_PersistVolumeFlashShakeAndDisplayDraft" methodname="OptionsApplyAndReload_PersistVolumeFlashShakeAndDisplayDraft" classname="DungeonCrawler.Tests.PlayerInput.GameMenusInputTests" runstate="Runnable" seed="29769141" result="Passed" start-time="2026-11-16 16:57:33Z" end-time="2026-11-16 16:57:33Z" duration="0.086415" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1200" name="ResolutionDropdown_RendersReadableRowsAndSelectsWithRealClick" fullname="DungeonCrawler.Tests.PlayerInput.GameMenusInputTests.ResolutionDropdown_RendersReadableRowsAndSelectsWithRealClick" methodname="ResolutionDropdown_RendersReadableRowsAndSelectsWithRealClick" classname="DungeonCrawler.Tests.PlayerInput.GameMenusInputTests" runstate="Runnable" seed="299067253" result="Passed" start-time="2026-11-16 16:57:33Z" end-time="2026-11-16 16:57:33Z" duration="0.316891" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1201" name="TitleOptionsPlayPauseAndReturn_RealButtonsKeepFocusAndStartFreshRun" fullname="DungeonCrawler.Tests.PlayerInput.GameMenusInputTests.TitleOptionsPlayPauseAndReturn_RealButtonsKeepFocusAndStartFreshRun" methodname="TitleOptionsPlayPauseAndReturn_RealButtonsKeepFocusAndStartFreshRun" classname="DungeonCrawler.Tests.PlayerInput.GameMenusInputTests" runstate="Runnable" seed="426575711" result="Passed" start-time="2026-11-16 16:57:33Z" end-time="2026-11-16 16:57:34Z" duration="0.284647" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1204" name="InventoryPauseInputTests" fullname="DungeonCrawler.Tests.PlayerInput.InventoryPauseInputTests" classname="DungeonCrawler.Tests.PlayerInput.InventoryPauseInputTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-16 16:57:34Z" end-time="2026-11-16 16:57:35Z" duration="1.553835" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1206" name="InventoryShortcuts_StayAvailableWhileGameplayMapIsPausedAndDoNotDuplicate" fullname="DungeonCrawler.Tests.PlayerInput.InventoryPauseInputTests.InventoryShortcuts_StayAvailableWhileGameplayMapIsPausedAndDoNotDuplicate" methodname="InventoryShortcuts_StayAvailableWhileGameplayMapIsPausedAndDoNotDuplicate" classname="DungeonCrawler.Tests.PlayerInput.InventoryPauseInputTests" runstate="Runnable" seed="2023076527" result="Passed" start-time="2026-11-16 16:57:34Z" end-time="2026-11-16 16:57:34Z" duration="0.168073" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1205" name="PauseDuringWindup_FreezesDamageAndRestoresOnlyPreviouslyEnabledControls" fullname="DungeonCrawler.Tests.PlayerInput.InventoryPauseInputTests.PauseDuringWindup_FreezesDamageAndRestoresOnlyPreviouslyEnabledControls" methodname="PauseDuringWindup_FreezesDamageAndRestoresOnlyPreviouslyEnabledControls" classname="DungeonCrawler.Tests.PlayerInput.InventoryPauseInputTests" runstate="Runnable" seed="608504165" result="Passed" start-time="2026-11-16 16:57:34Z" end-time="2026-11-16 16:57:35Z" duration="1.382879" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1207" name="InventorySceneUiTests" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-11-16 16:57:35Z" end-time="2026-11-16 16:57:37Z" duration="1.683285" total="10" passed="7" failed="0" inconclusive="0" skipped="3" asserts="0">
+              <properties />
+              <test-case id="1216" name="Capture_EquipmentComparison720pAnd1080p" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests.Capture_EquipmentComparison720pAnd1080p" methodname="Capture_EquipmentComparison720pAnd1080p" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Explicit" seed="395868773" result="Skipped" label="Explicit" start-time="2026-11-16 16:57:35Z" end-time="2026-11-16 16:57:35Z" duration="0.000002" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Visual capture needs a windowed Editor and rendering Game view (no -batchmode)." />
+                </properties>
+                <reason>
+                  <message><![CDATA[Visual capture needs a windowed Editor and rendering Game view (no -batchmode).]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1215" name="Capture_InventorySort720pAnd1080p" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests.Capture_InventorySort720pAnd1080p" methodname="Capture_InventorySort720pAnd1080p" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Explicit" seed="458164470" result="Skipped" label="Explicit" start-time="2026-11-16 16:57:35Z" end-time="2026-11-16 16:57:35Z" duration="0.000001" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Visual capture needs a windowed Editor and rendering Game view (no -batchmode)." />
+                </properties>
+                <reason>
+                  <message><![CDATA[Visual capture needs a windowed Editor and rendering Game view (no -batchmode).]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1210" name="Capture_QuickPotionOptionsAndHud720pAnd1080p" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests.Capture_QuickPotionOptionsAndHud720pAnd1080p" methodname="Capture_QuickPotionOptionsAndHud720pAnd1080p" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Explicit" seed="1648264251" result="Skipped" label="Explicit" start-time="2026-11-16 16:57:35Z" end-time="2026-11-16 16:57:35Z" duration="0.000001" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Visual capture needs a windowed Editor and rendering Game view (no -batchmode)." />
+                </properties>
+                <reason>
+                  <message><![CDATA[Visual capture needs a windowed Editor and rendering Game view (no -batchmode).]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1208" name="QuickPotion_QFullAndDeadDoesNotConsumeAndHudExplainsWhy" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests.QuickPotion_QFullAndDeadDoesNotConsumeAndHudExplainsWhy" methodname="QuickPotion_QFullAndDeadDoesNotConsumeAndHudExplainsWhy" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Runnable" seed="1536935214" result="Passed" start-time="2026-11-16 16:57:35Z" end-time="2026-11-16 16:57:35Z" duration="0.128569" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1209" name="QuickPotion_RealOptionsApplyDiscardPausedQHudAndFreshRun" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests.QuickPotion_RealOptionsApplyDiscardPausedQHudAndFreshRun" methodname="QuickPotion_RealOptionsApplyDiscardPausedQHudAndFreshRun" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Runnable" seed="909607366" result="Passed" start-time="2026-11-16 16:57:35Z" end-time="2026-11-16 16:57:36Z" duration="1.004332" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1217" name="SavedArena_EscapeAndResumeButtonRestoreSimulationWithoutLosingInventory" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests.SavedArena_EscapeAndResumeButtonRestoreSimulationWithoutLosingInventory" methodname="SavedArena_EscapeAndResumeButtonRestoreSimulationWithoutLosingInventory" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Runnable" seed="1343086027" result="Passed" start-time="2026-11-16 16:57:36Z" end-time="2026-11-16 16:57:36Z" duration="0.073758" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1212" name="SavedFloor_EmptyAndFullBagKeepSelectionIndicesAndDeadCommandsAreRejected" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests.SavedFloor_EmptyAndFullBagKeepSelectionIndicesAndDeadCommandsAreRejected" methodname="SavedFloor_EmptyAndFullBagKeepSelectionIndicesAndDeadCommandsAreRejected" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Runnable" seed="1949357940" result="Passed" start-time="2026-11-16 16:57:36Z" end-time="2026-11-16 16:57:36Z" duration="0.143957" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1211" name="SavedFloor_InventoryPausesAndRealButtonsEquipWeaponArmorThenQConsumesPotion" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests.SavedFloor_InventoryPausesAndRealButtonsEquipWeaponArmorThenQConsumesPotion" methodname="SavedFloor_InventoryPausesAndRealButtonsEquipWeaponArmorThenQConsumesPotion" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Runnable" seed="1353024004" result="Passed" start-time="2026-11-16 16:57:36Z" end-time="2026-11-16 16:57:37Z" duration="0.127718" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1213" name="SavedFloor_SortButtonReordersPausedBagKeepingEquippedInstanceAndSelection" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests.SavedFloor_SortButtonReordersPausedBagKeepingEquippedInstanceAndSelection" methodname="SavedFloor_SortButtonReordersPausedBagKeepingEquippedInstanceAndSelection" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Runnable" seed="1561102786" result="Passed" start-time="2026-11-16 16:57:37Z" end-time="2026-11-16 16:57:37Z" duration="0.111966" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1214" name="SavedFloor_SortIsRejectedWhenDead" fullname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests.SavedFloor_SortIsRejectedWhenDead" methodname="SavedFloor_SortIsRejectedWhenDead" classname="DungeonCrawler.Tests.PlayerInput.InventorySceneUiTests" runstate="Runnable" seed="77793799" result="Passed" start-time="2026-11-16 16:57:37Z" end-time="2026-11-16 16:57:37Z" duration="0.090459" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1218" name="ItemsCombatSceneTests" fullname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests" classname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-11-16 16:57:37Z" end-time="2026-11-16 16:57:42Z" duration="5.002914" total="7" passed="6" failed="0" inconclusive="0" skipped="1" asserts="0">
+              <properties />
+              <test-case id="1225" name="Capture_ReleaseFloorEvidence" fullname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests.Capture_ReleaseFloorEvidence" methodname="Capture_ReleaseFloorEvidence" classname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests" runstate="Explicit" seed="596188437" result="Skipped" label="Explicit" start-time="2026-11-16 16:57:37Z" end-time="2026-11-16 16:57:37Z" duration="0.000002" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Visual capture; needs a rendering Game view." />
+                </properties>
+                <reason>
+                  <message><![CDATA[Visual capture; needs a rendering Game view.]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1221" name="ReleaseFloor_AttackUsesSwordTrail_NoWhiteMarker_HitBurstOnlyOnAcceptedHits" fullname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests.ReleaseFloor_AttackUsesSwordTrail_NoWhiteMarker_HitBurstOnlyOnAcceptedHits" methodname="ReleaseFloor_AttackUsesSwordTrail_NoWhiteMarker_HitBurstOnlyOnAcceptedHits" classname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests" runstate="Runnable" seed="1060808267" result="Passed" start-time="2026-11-16 16:57:37Z" end-time="2026-11-16 16:57:39Z" duration="1.778267" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1220" name="ReleaseFloor_EquipSwapUnequipShowsOneWeaponAndWearableVest" fullname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests.ReleaseFloor_EquipSwapUnequipShowsOneWeaponAndWearableVest" methodname="ReleaseFloor_EquipSwapUnequipShowsOneWeaponAndWearableVest" classname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests" runstate="Runnable" seed="1000332816" result="Passed" start-time="2026-11-16 16:57:39Z" end-time="2026-11-16 16:57:39Z" duration="0.092363" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1223" name="ReleaseFloor_InventoryShowsIconsQuantityAndSelectionShape_PotionHudCounts" fullname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests.ReleaseFloor_InventoryShowsIconsQuantityAndSelectionShape_PotionHudCounts" methodname="ReleaseFloor_InventoryShowsIconsQuantityAndSelectionShape_PotionHudCounts" classname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests" runstate="Runnable" seed="885987819" result="Passed" start-time="2026-11-16 16:57:39Z" end-time="2026-11-16 16:57:39Z" duration="0.095765" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1224" name="ReleaseFloor_ItemShowcaseShortcutGivesEquippedItemsAndSpawnsEachPickup" fullname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests.ReleaseFloor_ItemShowcaseShortcutGivesEquippedItemsAndSpawnsEachPickup" methodname="ReleaseFloor_ItemShowcaseShortcutGivesEquippedItemsAndSpawnsEachPickup" classname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests" runstate="Runnable" seed="218337136" result="Passed" start-time="2026-11-16 16:57:39Z" end-time="2026-11-16 16:57:39Z" duration="0.092912" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[Showcase] Itens de teste entregues e um pickup de cada tipo à frente (atalho de teste, não é loot normal).
+]]></output>
+              </test-case>
+              <test-case id="1222" name="ReleaseFloor_PauseAndDeathClearPendingSlash_SpecialShowsRingWithinRange" fullname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests.ReleaseFloor_PauseAndDeathClearPendingSlash_SpecialShowsRingWithinRange" methodname="ReleaseFloor_PauseAndDeathClearPendingSlash_SpecialShowsRingWithinRange" classname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests" runstate="Runnable" seed="362163019" result="Passed" start-time="2026-11-16 16:57:39Z" end-time="2026-11-16 16:57:42Z" duration="2.731049" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1219" name="ReleaseFloor_PickupsShowOwnModels_RejectionKeepsItAndDropRecreatesIt" fullname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests.ReleaseFloor_PickupsShowOwnModels_RejectionKeepsItAndDropRecreatesIt" methodname="ReleaseFloor_PickupsShowOwnModels_RejectionKeepsItAndDropRecreatesIt" classname="DungeonCrawler.Tests.PlayerInput.ItemsCombatSceneTests" runstate="Runnable" seed="1016529420" result="Passed" start-time="2026-11-16 16:57:42Z" end-time="2026-11-16 16:57:42Z" duration="0.209391" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1226" name="MvpSceneAcceptanceTests" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-11-16 16:57:42Z" end-time="2026-11-16 16:57:50Z" duration="8.293713" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1230" name="Arena_ClickComboKillsSavedEnemyAndDisablesItsAgent" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests.Arena_ClickComboKillsSavedEnemyAndDisablesItsAgent" methodname="Arena_ClickComboKillsSavedEnemyAndDisablesItsAgent" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" seed="1334445447" result="Passed" start-time="2026-11-16 16:57:42Z" end-time="2026-11-16 16:57:43Z" duration="1.028617" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1229" name="Arena_DashMovesGrantsInvulnerabilityAndRespectsCooldown" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests.Arena_DashMovesGrantsInvulnerabilityAndRespectsCooldown" methodname="Arena_DashMovesGrantsInvulnerabilityAndRespectsCooldown" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" seed="2105211686" result="Passed" start-time="2026-11-16 16:57:43Z" end-time="2026-11-16 16:57:43Z" duration="0.498280" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1233" name="Arena_DeathDisablesPlayerAndRestartRestoresSavedScene" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests.Arena_DeathDisablesPlayerAndRestartRestoresSavedScene" methodname="Arena_DeathDisablesPlayerAndRestartRestoresSavedScene" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" seed="1408789608" result="Passed" start-time="2026-11-16 16:57:43Z" end-time="2026-11-16 16:57:43Z" duration="0.136729" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1232" name="Arena_EnemyNavigatesChasesAndDealsDamage" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests.Arena_EnemyNavigatesChasesAndDealsDamage" methodname="Arena_EnemyNavigatesChasesAndDealsDamage" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" seed="1704090859" result="Passed" start-time="2026-11-16 16:57:43Z" end-time="2026-11-16 16:57:46Z" duration="2.854000" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1231" name="Arena_RealMouseClickOnRestartButtonReloadsAfterDeath" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests.Arena_RealMouseClickOnRestartButtonReloadsAfterDeath" methodname="Arena_RealMouseClickOnRestartButtonReloadsAfterDeath" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" seed="1654310031" result="Passed" start-time="2026-11-16 16:57:46Z" end-time="2026-11-16 16:57:46Z" duration="0.128917" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1235" name="Arena_RealWeaponAndXpPickupsCollectThroughPhysics" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests.Arena_RealWeaponAndXpPickupsCollectThroughPhysics" methodname="Arena_RealWeaponAndXpPickupsCollectThroughPhysics" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" seed="1521707572" result="Passed" start-time="2026-11-16 16:57:46Z" end-time="2026-11-16 16:57:47Z" duration="0.075176" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1228" name="Arena_WasdMovesOnGroundAndCharacterFacesMovementNotMouse" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests.Arena_WasdMovesOnGroundAndCharacterFacesMovementNotMouse" methodname="Arena_WasdMovesOnGroundAndCharacterFacesMovementNotMouse" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" seed="148167259" result="Passed" start-time="2026-11-16 16:57:47Z" end-time="2026-11-16 16:57:48Z" duration="1.058648" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1227" name="Bootstrap_LoadsAndInitializesWithoutErrors" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests.Bootstrap_LoadsAndInitializesWithoutErrors" methodname="Bootstrap_LoadsAndInitializesWithoutErrors" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" seed="680461065" result="Passed" start-time="2026-11-16 16:57:48Z" end-time="2026-11-16 16:57:48Z" duration="0.048897" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[Bootstrap] OK. Mapa 'Gameplay' com 6 ações.
+]]></output>
+              </test-case>
+              <test-case id="1234" name="GeneratedFloor_CancellationAndInactiveAnimatorKeepCombatAuthority" fullname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests.GeneratedFloor_CancellationAndInactiveAnimatorKeepCombatAuthority" methodname="GeneratedFloor_CancellationAndInactiveAnimatorKeepCombatAuthority" classname="DungeonCrawler.Tests.PlayerInput.MvpSceneAcceptanceTests" runstate="Runnable" seed="815849711" result="Passed" start-time="2026-11-16 16:57:48Z" end-time="2026-11-16 16:57:50Z" duration="2.461599" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1236" name="PlayerInputComboTests" fullname="DungeonCrawler.Tests.PlayerInput.PlayerInputComboTests" classname="DungeonCrawler.Tests.PlayerInput.PlayerInputComboTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-16 16:57:50Z" end-time="2026-11-16 16:57:58Z" duration="7.776188" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1240" name="HeldMouse_RepeatsThreeStepsWithFinalRecovery" fullname="DungeonCrawler.Tests.PlayerInput.PlayerInputComboTests.HeldMouse_RepeatsThreeStepsWithFinalRecovery" methodname="HeldMouse_RepeatsThreeStepsWithFinalRecovery" classname="DungeonCrawler.Tests.PlayerInput.PlayerInputComboTests" runstate="Runnable" seed="319643028" result="Passed" start-time="2026-11-16 16:57:50Z" end-time="2026-11-16 16:57:52Z" duration="2.208511" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1237" name="OneClick_ThroughNewInputSystem" fullname="DungeonCrawler.Tests.PlayerInput.PlayerInputComboTests.OneClick_ThroughNewInputSystem" methodname="OneClick_ThroughNewInputSystem" classname="DungeonCrawler.Tests.PlayerInput.PlayerInputComboTests" runstate="Runnable" seed="1551255925" result="Passed" start-time="2026-11-16 16:57:52Z" end-time="2026-11-16 16:57:54Z" duration="1.854852" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1239" name="ThreeClicks_ThroughNewInputSystem" fullname="DungeonCrawler.Tests.PlayerInput.PlayerInputComboTests.ThreeClicks_ThroughNewInputSystem" methodname="ThreeClicks_ThroughNewInputSystem" classname="DungeonCrawler.Tests.PlayerInput.PlayerInputComboTests" runstate="Runnable" seed="512907257" result="Passed" start-time="2026-11-16 16:57:54Z" end-time="2026-11-16 16:57:56Z" duration="1.854912" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1238" name="TwoClicks_ThroughNewInputSystem" fullname="DungeonCrawler.Tests.PlayerInput.PlayerInputComboTests.TwoClicks_ThroughNewInputSystem" methodname="TwoClicks_ThroughNewInputSystem" classname="DungeonCrawler.Tests.PlayerInput.PlayerInputComboTests" runstate="Runnable" seed="557461881" result="Passed" start-time="2026-11-16 16:57:56Z" end-time="2026-11-16 16:57:58Z" duration="1.855106" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1241" name="PlayerSpecialInputTests" fullname="DungeonCrawler.Tests.PlayerInput.PlayerSpecialInputTests" classname="DungeonCrawler.Tests.PlayerInput.PlayerSpecialInputTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-16 16:57:58Z" end-time="2026-11-16 16:58:05Z" duration="7.130088" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1242" name="EAndRightClick_OneCastPerPress_NoHoldRepeat_AndPauseCancelsImpact" fullname="DungeonCrawler.Tests.PlayerInput.PlayerSpecialInputTests.EAndRightClick_OneCastPerPress_NoHoldRepeat_AndPauseCancelsImpact" methodname="EAndRightClick_OneCastPerPress_NoHoldRepeat_AndPauseCancelsImpact" classname="DungeonCrawler.Tests.PlayerInput.PlayerSpecialInputTests" runstate="Runnable" seed="1120885355" result="Passed" start-time="2026-11-16 16:57:58Z" end-time="2026-11-16 16:58:05Z" duration="7.129166" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1243" name="RangedLineOfSightReleaseTests" fullname="DungeonCrawler.Tests.PlayerInput.RangedLineOfSightReleaseTests" classname="DungeonCrawler.Tests.PlayerInput.RangedLineOfSightReleaseTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-16 16:58:05Z" end-time="2026-11-16 16:58:05Z" duration="0.000537" total="1" passed="0" failed="0" inconclusive="0" skipped="1" asserts="0">
+              <properties />
+              <test-case id="1244" name="Capture_ReleaseRangedBehindDoorAndFiring" fullname="DungeonCrawler.Tests.PlayerInput.RangedLineOfSightReleaseTests.Capture_ReleaseRangedBehindDoorAndFiring" methodname="Capture_ReleaseRangedBehindDoorAndFiring" classname="DungeonCrawler.Tests.PlayerInput.RangedLineOfSightReleaseTests" runstate="Explicit" seed="1058388598" result="Skipped" label="Explicit" start-time="2026-11-16 16:58:05Z" end-time="2026-11-16 16:58:05Z" duration="0.000001" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Graphical diagnostic in the actual release scene; not a normal run." />
+                </properties>
+                <reason>
+                  <message><![CDATA[Graphical diagnostic in the actual release scene; not a normal run.]]></message>
+                </reason>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1245" name="RewardFeedbackVisualTests" fullname="DungeonCrawler.Tests.PlayerInput.RewardFeedbackVisualTests" classname="DungeonCrawler.Tests.PlayerInput.RewardFeedbackVisualTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-16 16:58:05Z" end-time="2026-11-16 16:58:05Z" duration="0.000600" total="1" passed="0" failed="0" inconclusive="0" skipped="1" asserts="0">
+              <properties />
+              <test-case id="1246" name="Capture_ReleaseFeedback720pAnd1080p" fullname="DungeonCrawler.Tests.PlayerInput.RewardFeedbackVisualTests.Capture_ReleaseFeedback720pAnd1080p" methodname="Capture_ReleaseFeedback720pAnd1080p" classname="DungeonCrawler.Tests.PlayerInput.RewardFeedbackVisualTests" runstate="Explicit" seed="855743395" result="Skipped" label="Explicit" start-time="2026-11-16 16:58:05Z" end-time="2026-11-16 16:58:05Z" duration="0.000001" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Opens the release scene in graphical PlayMode and writes screenshots." />
+                </properties>
+                <reason>
+                  <message><![CDATA[Opens the release scene in graphical PlayMode and writes screenshots.]]></message>
+                </reason>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1247" name="RoomRewardChestTests" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-16 16:58:05Z" end-time="2026-11-16 16:58:12Z" duration="7.105600" total="8" passed="7" failed="0" inconclusive="0" skipped="1" asserts="0">
+              <properties />
+              <test-case id="1255" name="Capture_ReleaseChestLockedReadyAndOpened" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.Capture_ReleaseChestLockedReadyAndOpened" methodname="Capture_ReleaseChestLockedReadyAndOpened" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Explicit" seed="931612994" result="Skipped" label="Explicit" start-time="2026-11-16 16:58:05Z" end-time="2026-11-16 16:58:05Z" duration="0.000001" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Graphical diagnostic of the actual release room; not full-run acceptance." />
+                </properties>
+                <reason>
+                  <message><![CDATA[Graphical diagnostic of the actual release room; not full-run acceptance.]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1251" name="DeathPreventsOpen_AndReloadCreatesNewLockedInstance" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.DeathPreventsOpen_AndReloadCreatesNewLockedInstance" methodname="DeathPreventsOpen_AndReloadCreatesNewLockedInstance" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="1856601980" result="Passed" start-time="2026-11-16 16:58:05Z" end-time="2026-11-16 16:58:06Z" duration="0.990788" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1250" name="DisabledDuringClear_ReconcilesOnEnable_AndOpenedNeverResets" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.DisabledDuringClear_ReconcilesOnEnable_AndOpenedNeverResets" methodname="DisabledDuringClear_ReconcilesOnEnable_AndOpenedNeverResets" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="1506815037" result="Passed" start-time="2026-11-16 16:58:06Z" end-time="2026-11-16 16:58:07Z" duration="0.905464" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1253" name="FullBag_RefusedWeaponKeepsIdentityAndRetryCollectsExactlyOnce" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.FullBag_RefusedWeaponKeepsIdentityAndRetryCollectsExactlyOnce" methodname="FullBag_RefusedWeaponKeepsIdentityAndRetryCollectsExactlyOnce" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="1802917138" result="Passed" start-time="2026-11-16 16:58:07Z" end-time="2026-11-16 16:58:09Z" duration="1.996250" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1248" name="LockedRoom_FDoesNotOpenOrRoll_AndEStillRequestsSpecial" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.LockedRoom_FDoesNotOpenOrRoll_AndEStillRequestsSpecial" methodname="LockedRoom_FDoesNotOpenOrRoll_AndEStillRequestsSpecial" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="193924057" result="Passed" start-time="2026-11-16 16:58:09Z" end-time="2026-11-16 16:58:09Z" duration="0.092823" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1252" name="OpenedThenDeathAndHealthReset_DoNotRenewReward" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.OpenedThenDeathAndHealthReset_DoNotRenewReward" methodname="OpenedThenDeathAndHealthReset_DoNotRenewReward" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="1050619895" result="Passed" start-time="2026-11-16 16:58:09Z" end-time="2026-11-16 16:58:10Z" duration="0.990939" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1249" name="RangeAndPause_AreAuthoritative_ThenFWorksOnceWithoutSpecial" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.RangeAndPause_AreAuthoritative_ThenFWorksOnceWithoutSpecial" methodname="RangeAndPause_AreAuthoritative_ThenFWorksOnceWithoutSpecial" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="343097798" result="Passed" start-time="2026-11-16 16:58:10Z" end-time="2026-11-16 16:58:11Z" duration="1.211579" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1254" name="UncollectedRewardHasNoTimeout_AndRemappedInteractionUsesSameCommand" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.UncollectedRewardHasNoTimeout_AndRemappedInteractionUsesSameCommand" methodname="UncollectedRewardHasNoTimeout_AndRemappedInteractionUsesSameCommand" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="548376705" result="Passed" start-time="2026-11-16 16:58:11Z" end-time="2026-11-16 16:58:12Z" duration="0.915428" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1357" name="DungeonCrawler.Tests.PlayMode.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayMode.dll" runstate="Runnable" testcasecount="78" result="Failed" site="Child" start-time="2026-11-16 16:58:12Z" end-time="2026-11-16 16:58:33Z" duration="20.524407" total="78" passed="77" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="22456" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1358" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="78" result="Failed" site="Child" start-time="2026-11-16 16:58:12Z" end-time="2026-11-16 16:58:33Z" duration="20.522354" total="78" passed="77" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1359" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="78" result="Failed" site="Child" start-time="2026-11-16 16:58:12Z" end-time="2026-11-16 16:58:33Z" duration="20.521281" total="78" passed="77" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1360" name="PlayMode" fullname="DungeonCrawler.Tests.PlayMode" runstate="Runnable" testcasecount="78" result="Failed" site="Child" start-time="2026-11-16 16:58:12Z" end-time="2026-11-16 16:58:33Z" duration="20.520085" total="78" passed="77" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1260" name="BossPlayModeTests" fullname="DungeonCrawler.Tests.PlayMode.BossPlayModeTests" classname="DungeonCrawler.Tests.PlayMode.BossPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-16 16:58:12Z" end-time="2026-11-16 16:58:13Z" duration="0.502458" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1261" name="Telegraph_EnforcesMinimumOneSecond_AndFillsOverTime" fullname="DungeonCrawler.Tests.PlayMode.BossPlayModeTests.Telegraph_EnforcesMinimumOneSecond_AndFillsOverTime" methodname="Telegraph_EnforcesMinimumOneSecond_AndFillsOverTime" classname="DungeonCrawler.Tests.PlayMode.BossPlayModeTests" runstate="Runnable" seed="65627216" result="Passed" start-time="2026-11-16 16:58:12Z" end-time="2026-11-16 16:58:13Z" duration="0.501724" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1262" name="CombatPlayModeTests" fullname="DungeonCrawler.Tests.PlayMode.CombatPlayModeTests" classname="DungeonCrawler.Tests.PlayMode.CombatPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-16 16:58:13Z" end-time="2026-11-16 16:58:13Z" duration="0.303728" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1264" name="Health_Death_RaisesDiedOnce" fullname="DungeonCrawler.Tests.PlayMode.CombatPlayModeTests.Health_Death_RaisesDiedOnce" methodname="Health_Death_RaisesDiedOnce" classname="DungeonCrawler.Tests.PlayMode.CombatPlayModeTests" runstate="Runnable" seed="1441329100" result="Passed" start-time="2026-11-16 16:58:13Z" end-time="2026-11-16 16:58:13Z" duration="0.001458" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1263" name="Health_Invulnerability_BlocksDamageUntilExpired" fullname="DungeonCrawler.Tests.PlayMode.CombatPlayModeTests.Health_Invulnerability_BlocksDamageUntilExpired" methodname="Health_Invulnerability_BlocksDamageUntilExpired" classname="DungeonCrawler.Tests.PlayMode.CombatPlayModeTests" runstate="Runnable" seed="1156753386" result="Passed" start-time="2026-11-16 16:58:13Z" end-time="2026-11-16 16:58:13Z" duration="0.301495" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1265" name="GameAudioPlayModeTests" fullname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests" classname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-16 16:58:13Z" end-time="2026-11-16 16:58:13Z" duration="0.536978" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1269" name="ActualSpawner_InjectsAudioIntoGeneratedEnemies_AndBossTransitionRoars" fullname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests.ActualSpawner_InjectsAudioIntoGeneratedEnemies_AndBossTransitionRoars" methodname="ActualSpawner_InjectsAudioIntoGeneratedEnemies_AndBossTransitionRoars" classname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests" runstate="Runnable" seed="868323600" result="Passed" start-time="2026-11-16 16:58:13Z" end-time="2026-11-16 16:58:13Z" duration="0.108618" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1268" name="HealingAndLevel_UseExistingPoolOnlyAfterAcceptance" fullname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests.HealingAndLevel_UseExistingPoolOnlyAfterAcceptance" methodname="HealingAndLevel_UseExistingPoolOnlyAfterAcceptance" classname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests" runstate="Runnable" seed="479572555" result="Passed" start-time="2026-11-16 16:58:13Z" end-time="2026-11-16 16:58:13Z" duration="0.101854" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1267" name="PlayerDomainEvents_ProduceOneCue_AndUnsubscribeWhenDisabled" fullname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests.PlayerDomainEvents_ProduceOneCue_AndUnsubscribeWhenDisabled" methodname="PlayerDomainEvents_ProduceOneCue_AndUnsubscribeWhenDisabled" classname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests" runstate="Runnable" seed="167569824" result="Passed" start-time="2026-11-16 16:58:13Z" end-time="2026-11-16 16:58:13Z" duration="0.111346" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1266" name="Pool_ReusesFixedSources_MutesImmediately_AndResumesAfterDisable" fullname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests.Pool_ReusesFixedSources_MutesImmediately_AndResumesAfterDisable" methodname="Pool_ReusesFixedSources_MutesImmediately_AndResumesAfterDisable" classname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests" runstate="Runnable" seed="1066197739" result="Passed" start-time="2026-11-16 16:58:13Z" end-time="2026-11-16 16:58:13Z" duration="0.108517" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1270" name="WarmAudioPlayback_NoRecurringGCAllocations_WithPositiveControl" fullname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests.WarmAudioPlayback_NoRecurringGCAllocations_WithPositiveControl" methodname="WarmAudioPlayback_NoRecurringGCAllocations_WithPositiveControl" classname="DungeonCrawler.Tests.PlayMode.GameAudioPlayModeTests" runstate="Runnable" seed="1753143957" result="Passed" start-time="2026-11-16 16:58:13Z" end-time="2026-11-16 16:58:13Z" duration="0.105178" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1271" name="GeneratedBossPresentationTests" fullname="DungeonCrawler.Tests.PlayMode.GeneratedBossPresentationTests" classname="DungeonCrawler.Tests.PlayMode.GeneratedBossPresentationTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-16 16:58:13Z" end-time="2026-11-16 16:58:17Z" duration="3.406541" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1272" name="RealWarden_PhasePulseAndTintAffectVisibleModelAndSurviveDamageAndReenable" fullname="DungeonCrawler.Tests.PlayMode.GeneratedBossPresentationTests.RealWarden_PhasePulseAndTintAffectVisibleModelAndSurviveDamageAndReenable" methodname="RealWarden_PhasePulseAndTintAffectVisibleModelAndSurviveDamageAndReenable" classname="DungeonCrawler.Tests.PlayMode.GeneratedBossPresentationTests" runstate="Runnable" seed="378008968" result="Passed" start-time="2026-11-16 16:58:13Z" end-time="2026-11-16 16:58:17Z" duration="3.404678" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1273" name="GraphicsOptionsPlayModeTests" fullname="DungeonCrawler.Tests.PlayMode.GraphicsOptionsPlayModeTests" classname="DungeonCrawler.Tests.PlayMode.GraphicsOptionsPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-16 16:58:17Z" end-time="2026-11-16 16:58:17Z" duration="0.067020" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1274" name="RuntimePresets_ChangeRenderScaleAndShadows_WithoutMutatingTheProjectAsset" fullname="DungeonCrawler.Tests.PlayMode.GraphicsOptionsPlayModeTests.RuntimePresets_ChangeRenderScaleAndShadows_WithoutMutatingTheProjectAsset" methodname="RuntimePresets_ChangeRenderScaleAndShadows_WithoutMutatingTheProjectAsset" classname="DungeonCrawler.Tests.PlayMode.GraphicsOptionsPlayModeTests" runstate="Runnable" seed="1627980584" result="Passed" start-time="2026-11-16 16:58:17Z" end-time="2026-11-16 16:58:17Z" duration="0.066416" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1275" name="PlayerCombatPerformanceTests" fullname="DungeonCrawler.Tests.PlayMode.PlayerCombatPerformanceTests" classname="DungeonCrawler.Tests.PlayMode.PlayerCombatPerformanceTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-16 16:58:17Z" end-time="2026-11-16 16:58:18Z" duration="0.615273" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1276" name="WarmMeleeQuery_SameCrowd_RecordsCpuAndAllocations" fullname="DungeonCrawler.Tests.PlayMode.PlayerCombatPerformanceTests.WarmMeleeQuery_SameCrowd_RecordsCpuAndAllocations" methodname="WarmMeleeQuery_SameCrowd_RecordsCpuAndAllocations" classname="DungeonCrawler.Tests.PlayMode.PlayerCombatPerformanceTests" runstate="Runnable" seed="991383125" result="Passed" start-time="2026-11-16 16:58:17Z" end-time="2026-11-16 16:58:18Z" duration="0.614138" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1277" name="PlayerComboCombatTests" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:20Z" duration="2.038587" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="1288" name="CancellationBeforeImpact_PreventsDelayedDamage" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.CancellationBeforeImpact_PreventsDelayedDamage" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.004854" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1285" name="CancellationBeforeImpact_PreventsDelayedDamage(&quot;death&quot;)" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.CancellationBeforeImpact_PreventsDelayedDamage(&quot;death&quot;)" methodname="CancellationBeforeImpact_PreventsDelayedDamage" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" seed="1679801057" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.003470" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1286" name="CancellationBeforeImpact_PreventsDelayedDamage(&quot;disable&quot;)" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.CancellationBeforeImpact_PreventsDelayedDamage(&quot;disable&quot;)" methodname="CancellationBeforeImpact_PreventsDelayedDamage" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" seed="568590561" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.000293" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1287" name="CancellationBeforeImpact_PreventsDelayedDamage(&quot;dash&quot;)" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.CancellationBeforeImpact_PreventsDelayedDamage(&quot;dash&quot;)" methodname="CancellationBeforeImpact_PreventsDelayedDamage" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" seed="1762437941" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.000287" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1284" name="ComboDamage_PreservesProgressionAndWeaponCalculation" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.ComboDamage_PreservesProgressionAndWeaponCalculation" methodname="ComboDamage_PreservesProgressionAndWeaponCalculation" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" seed="1445348563" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.000590" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1283" name="ConeRangeMaskAndTriggers_FilterTargets" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.ConeRangeMaskAndTriggers_FilterTargets" methodname="ConeRangeMaskAndTriggers_FilterTargets" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" seed="2072434622" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.000813" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1282" name="CrowdAndMultiCollider_AllTargetsReceiveOneHit" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.CrowdAndMultiCollider_AllTargetsReceiveOneHit" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.010843" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1278" name="CrowdAndMultiCollider_AllTargetsReceiveOneHit(8)" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.CrowdAndMultiCollider_AllTargetsReceiveOneHit(8)" methodname="CrowdAndMultiCollider_AllTargetsReceiveOneHit" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" seed="1315730893" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.001054" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1279" name="CrowdAndMultiCollider_AllTargetsReceiveOneHit(9)" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.CrowdAndMultiCollider_AllTargetsReceiveOneHit(9)" methodname="CrowdAndMultiCollider_AllTargetsReceiveOneHit" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" seed="567163121" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.000596" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1280" name="CrowdAndMultiCollider_AllTargetsReceiveOneHit(32)" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.CrowdAndMultiCollider_AllTargetsReceiveOneHit(32)" methodname="CrowdAndMultiCollider_AllTargetsReceiveOneHit" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" seed="2044104394" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.001504" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1281" name="CrowdAndMultiCollider_AllTargetsReceiveOneHit(150)" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.CrowdAndMultiCollider_AllTargetsReceiveOneHit(150)" methodname="CrowdAndMultiCollider_AllTargetsReceiveOneHit" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" seed="1212258426" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.006308" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1289" name="DisableAndReenable_ResetSequenceAndSubscriptions" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.DisableAndReenable_ResetSequenceAndSubscriptions" methodname="DisableAndReenable_ResetSequenceAndSubscriptions" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" seed="689015941" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:18Z" duration="0.000522" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1290" name="GeneratedFloor_ThreeStatesFollowCombatEvents" fullname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests.GeneratedFloor_ThreeStatesFollowCombatEvents" methodname="GeneratedFloor_ThreeStatesFollowCombatEvents" classname="DungeonCrawler.Tests.PlayMode.PlayerComboCombatTests" runstate="Runnable" seed="1300243813" result="Passed" start-time="2026-11-16 16:58:18Z" end-time="2026-11-16 16:58:20Z" duration="2.018324" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[Bootstrap] OK. Mapa 'Gameplay' com 6 ações.
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1291" name="PlayerInventoryPlayModeTests" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:21Z" duration="1.756665" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1302" name="Armor_ChangesReceivedDamageAndReenableDoesNotDuplicateSubscriptions" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.Armor_ChangesReceivedDamageAndReenableDoesNotDuplicateSubscriptions" methodname="Armor_ChangesReceivedDamageAndReenableDoesNotDuplicateSubscriptions" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="1565593347" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.001738" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1293" name="Comparison_ArmorIncludesConfiguredBaselineAndMatchesEquippedDefense" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.Comparison_ArmorIncludesConfiguredBaselineAndMatchesEquippedDefense" methodname="Comparison_ArmorIncludesConfiguredBaselineAndMatchesEquippedDefense" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="887670590" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.000821" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1294" name="Comparison_EmptyPotionFullAndDeadPreserveSlotsAndRejectInvalidSelection" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.Comparison_EmptyPotionFullAndDeadPreserveSlotsAndRejectInvalidSelection" methodname="Comparison_EmptyPotionFullAndDeadPreserveSlotsAndRejectInvalidSelection" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="1537657894" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.000854" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1292" name="Comparison_UsesFlatBonusAndRealLevelDamageWithoutChangingEquipment" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.Comparison_UsesFlatBonusAndRealLevelDamageWithoutChangingEquipment" methodname="Comparison_UsesFlatBonusAndRealLevelDamageWithoutChangingEquipment" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="1818724863" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.001258" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1305" name="DroppingEquippedWeapon_KeepsWorldItemOutsideCollectionRadiusAndCanRecoverIt" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.DroppingEquippedWeapon_KeepsWorldItemOutsideCollectionRadiusAndCanRecoverIt" methodname="DroppingEquippedWeapon_KeepsWorldItemOutsideCollectionRadiusAndCanRecoverIt" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="2089362876" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.402496" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1304" name="DroppingWithAllDirectionsBlocked_LeavesEquipmentAndItemIntact" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.DroppingWithAllDirectionsBlocked_LeavesEquipmentAndItemIntact" methodname="DroppingWithAllDirectionsBlocked_LeavesEquipmentAndItemIntact" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="898798725" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.001281" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1303" name="FullInventory_RejectsGearButXpAndGoldRemainImmediate" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.FullInventory_RejectsGearButXpAndGoldRemainImmediate" methodname="FullInventory_RejectsGearButXpAndGoldRemainImmediate" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="766625291" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.000759" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1301" name="ManualEquipment_KeepsProgressionWeaponBonusAndLevelHealing" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.ManualEquipment_KeepsProgressionWeaponBonusAndLevelHealing" methodname="ManualEquipment_KeepsProgressionWeaponBonusAndLevelHealing" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="1076495699" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.000674" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1300" name="Potions_AreStoredAndOnlyConsumedWhenAliveAndInjured" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.Potions_AreStoredAndOnlyConsumedWhenAliveAndInjured" methodname="Potions_AreStoredAndOnlyConsumedWhenAliveAndInjured" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="1457713696" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.000655" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1299" name="QuickPotion_FullOrDeadNeverConsumes" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.QuickPotion_FullOrDeadNeverConsumes" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.002743" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1296" name="QuickPotion_FullOrDeadNeverConsumes(First)" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.QuickPotion_FullOrDeadNeverConsumes(First)" methodname="QuickPotion_FullOrDeadNeverConsumes" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="609022971" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.000765" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1297" name="QuickPotion_FullOrDeadNeverConsumes(LowestPotency)" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.QuickPotion_FullOrDeadNeverConsumes(LowestPotency)" methodname="QuickPotion_FullOrDeadNeverConsumes" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="8619598" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.000337" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1298" name="QuickPotion_FullOrDeadNeverConsumes(HighestPotency)" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.QuickPotion_FullOrDeadNeverConsumes(HighestPotency)" methodname="QuickPotion_FullOrDeadNeverConsumes" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="1713927491" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.000365" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1295" name="QuickPotion_UsesAppliedPolicyWhileSelectedUseIgnoresPolicyAndLifecycleDoesNotDuplicateEvents" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.QuickPotion_UsesAppliedPolicyWhileSelectedUseIgnoresPolicyAndLifecycleDoesNotDuplicateEvents" methodname="QuickPotion_UsesAppliedPolicyWhileSelectedUseIgnoresPolicyAndLifecycleDoesNotDuplicateEvents" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="2045352195" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:20Z" duration="0.001189" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1306" name="SavedPickup_StaysWhenFullAndRetriesAfterSpaceIsFreed" fullname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests.SavedPickup_StaysWhenFullAndRetriesAfterSpaceIsFreed" methodname="SavedPickup_StaysWhenFullAndRetriesAfterSpaceIsFreed" classname="DungeonCrawler.Tests.PlayMode.PlayerInventoryPlayModeTests" runstate="Runnable" seed="2109699629" result="Passed" start-time="2026-11-16 16:58:20Z" end-time="2026-11-16 16:58:21Z" duration="1.315432" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1307" name="PlayerSpecialCombatTests" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.048818" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1317" name="BasicAndSpecial_ExcludeEachOther_AndReenableDoesNotDuplicateEvents" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.BasicAndSpecial_ExcludeEachOther_AndReenableDoesNotDuplicateEvents" methodname="BasicAndSpecial_ExcludeEachOther_AndReenableDoesNotDuplicateEvents" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" seed="1775758063" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.001324" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1316" name="Cancellation_PreventsPendingImpact" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.Cancellation_PreventsPendingImpact" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.002703" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1312" name="Cancellation_PreventsPendingImpact(&quot;disable&quot;)" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.Cancellation_PreventsPendingImpact(&quot;disable&quot;)" methodname="Cancellation_PreventsPendingImpact" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" seed="946320319" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.000904" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1313" name="Cancellation_PreventsPendingImpact(&quot;death&quot;)" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.Cancellation_PreventsPendingImpact(&quot;death&quot;)" methodname="Cancellation_PreventsPendingImpact" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" seed="358892020" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.000306" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1314" name="Cancellation_PreventsPendingImpact(&quot;dash&quot;)" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.Cancellation_PreventsPendingImpact(&quot;dash&quot;)" methodname="Cancellation_PreventsPendingImpact" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" seed="1226672810" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.000290" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1315" name="Cancellation_PreventsPendingImpact(&quot;pause&quot;)" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.Cancellation_PreventsPendingImpact(&quot;pause&quot;)" methodname="Cancellation_PreventsPendingImpact" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" seed="629920387" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.000262" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1311" name="FullCircleAndSaturatedBuffer_AllTargetsHitOnceWithProgression" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.FullCircleAndSaturatedBuffer_AllTargetsHitOnceWithProgression" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.010865" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1308" name="FullCircleAndSaturatedBuffer_AllTargetsHitOnceWithProgression(8)" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.FullCircleAndSaturatedBuffer_AllTargetsHitOnceWithProgression(8)" methodname="FullCircleAndSaturatedBuffer_AllTargetsHitOnceWithProgression" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" seed="1919388853" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.001278" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1309" name="FullCircleAndSaturatedBuffer_AllTargetsHitOnceWithProgression(32)" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.FullCircleAndSaturatedBuffer_AllTargetsHitOnceWithProgression(32)" methodname="FullCircleAndSaturatedBuffer_AllTargetsHitOnceWithProgression" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" seed="905947041" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.001791" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1310" name="FullCircleAndSaturatedBuffer_AllTargetsHitOnceWithProgression(150)" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.FullCircleAndSaturatedBuffer_AllTargetsHitOnceWithProgression(150)" methodname="FullCircleAndSaturatedBuffer_AllTargetsHitOnceWithProgression" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" seed="539854117" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.006791" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1318" name="ReentrantDeathDuringDamage_StopsRemainingTargets" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.ReentrantDeathDuringDamage_StopsRemainingTargets" methodname="ReentrantDeathDuringDamage_StopsRemainingTargets" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" seed="1842504588" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.000708" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1319" name="WarmSpecialQuery_NoRecurringAllocations_WithPositiveControl" fullname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests.WarmSpecialQuery_NoRecurringAllocations_WithPositiveControl" methodname="WarmSpecialQuery_NoRecurringAllocations_WithPositiveControl" classname="DungeonCrawler.Tests.PlayMode.PlayerSpecialCombatTests" runstate="Runnable" seed="949445859" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.032043" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1320" name="ProjectilePoolPerformanceTests" fullname="DungeonCrawler.Tests.PlayMode.ProjectilePoolPerformanceTests" classname="DungeonCrawler.Tests.PlayMode.ProjectilePoolPerformanceTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.015992" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1321" name="SameLoad_RecordsInitializationFirstBurstAndWarmFiring" fullname="DungeonCrawler.Tests.PlayMode.ProjectilePoolPerformanceTests.SameLoad_RecordsInitializationFirstBurstAndWarmFiring" methodname="SameLoad_RecordsInitializationFirstBurstAndWarmFiring" classname="DungeonCrawler.Tests.PlayMode.ProjectilePoolPerformanceTests" runstate="Runnable" seed="835580712" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:21Z" duration="0.014502" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1322" name="RangedLineOfSightTests" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" testcasecount="18" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:31Z" duration="9.496108" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1340" name="Brain_EnemyKilledWhileBrainDisabled_ReconcilesDeathOnEnable" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.Brain_EnemyKilledWhileBrainDisabled_ReconcilesDeathOnEnable" methodname="Brain_EnemyKilledWhileBrainDisabled_ReconcilesDeathOnEnable" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="342346956" result="Passed" start-time="2026-11-16 16:58:21Z" end-time="2026-11-16 16:58:22Z" duration="0.303131" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1341" name="Brain_OccludedChase_RepathsOnlyOnThink_AndNavigatesAroundWallToAttack" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.Brain_OccludedChase_RepathsOnlyOnThink_AndNavigatesAroundWallToAttack" methodname="Brain_OccludedChase_RepathsOnlyOnThink_AndNavigatesAroundWallToAttack" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="1697852668" result="Passed" start-time="2026-11-16 16:58:22Z" end-time="2026-11-16 16:58:24Z" duration="2.106747" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1339" name="Brain_TargetReplacementAndEnemyDeath_CancelPendingShot" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.Brain_TargetReplacementAndEnemyDeath_CancelPendingShot" methodname="Brain_TargetReplacementAndEnemyDeath_CancelPendingShot" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="2057856804" result="Passed" start-time="2026-11-16 16:58:24Z" end-time="2026-11-16 16:58:25Z" duration="1.152699" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1323" name="ClearSight_IgnoresOwnCompoundColliderAndTrigger_ReusesProjectileFromCorrectOrigin" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.ClearSight_IgnoresOwnCompoundColliderAndTrigger_ReusesProjectileFromCorrectOrigin" methodname="ClearSight_IgnoresOwnCompoundColliderAndTrigger_ReusesProjectileFromCorrectOrigin" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="646905859" result="Passed" start-time="2026-11-16 16:58:25Z" end-time="2026-11-16 16:58:26Z" duration="0.702010" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1335" name="CombatDisableOrGameObjectDisable_ClearsPendingShotOnReactivation" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.CombatDisableOrGameObjectDisable_ClearsPendingShotOnReactivation" methodname="CombatDisableOrGameObjectDisable_ClearsPendingShotOnReactivation" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="1744900001" result="Passed" start-time="2026-11-16 16:58:26Z" end-time="2026-11-16 16:58:27Z" duration="1.152319" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1330" name="CoverDuringWindup_CancelsPermanentlyUntilNewAttackAndPreservesCooldown" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.CoverDuringWindup_CancelsPermanentlyUntilNewAttackAndPreservesCooldown" methodname="CoverDuringWindup_CancelsPermanentlyUntilNewAttackAndPreservesCooldown" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="1770779092" result="Passed" start-time="2026-11-16 16:58:27Z" end-time="2026-11-16 16:58:28Z" duration="0.712328" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1331" name="CoverOnImpactFrame_RefreshesEvenWithCachedClearSight" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.CoverOnImpactFrame_RefreshesEvenWithCachedClearSight" methodname="CoverOnImpactFrame_RefreshesEvenWithCachedClearSight" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="8464000" result="Passed" start-time="2026-11-16 16:58:28Z" end-time="2026-11-16 16:58:28Z" duration="0.251986" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1334" name="DeadOrDestroyedTarget_CannotReleasePendingShot" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.DeadOrDestroyedTarget_CannotReleasePendingShot" methodname="DeadOrDestroyedTarget_CannotReleasePendingShot" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="2009009991" result="Passed" start-time="2026-11-16 16:58:28Z" end-time="2026-11-16 16:58:29Z" duration="0.702258" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1328" name="DoorOpening_AllowsFreshWindup" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.DoorOpening_AllowsFreshWindup" methodname="DoorOpening_AllowsFreshWindup" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="1747322062" result="Passed" start-time="2026-11-16 16:58:29Z" end-time="2026-11-16 16:58:29Z" duration="0.312525" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1338" name="Melee_StillStrikesThroughItsExistingRangeRule_AndCooldownIsUnchanged" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.Melee_StillStrikesThroughItsExistingRangeRule_AndCooldownIsUnchanged" methodname="Melee_StillStrikesThroughItsExistingRangeRule_AndCooldownIsUnchanged" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="1347738281" result="Passed" start-time="2026-11-16 16:58:29Z" end-time="2026-11-16 16:58:29Z" duration="0.252236" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1332" name="MovingTarget_UsesCurrentAimPointAtRelease" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.MovingTarget_UsesCurrentAimPointAtRelease" methodname="MovingTarget_UsesCurrentAimPointAtRelease" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="1050702701" result="Passed" start-time="2026-11-16 16:58:29Z" end-time="2026-11-16 16:58:29Z" duration="0.252160" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1333" name="MovingTargetBehindCover_CancelsWindup" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.MovingTargetBehindCover_CancelsWindup" methodname="MovingTargetBehindCover_CancelsWindup" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="1548641410" result="Passed" start-time="2026-11-16 16:58:29Z" end-time="2026-11-16 16:58:30Z" duration="0.252092" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1336" name="Pause_FreezesWindup_ThenRechecksDoorBeforeRelease" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.Pause_FreezesWindup_ThenRechecksDoorBeforeRelease" methodname="Pause_FreezesWindup_ThenRechecksDoorBeforeRelease" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="821785505" result="Passed" start-time="2026-11-16 16:58:30Z" end-time="2026-11-16 16:58:30Z" duration="0.552353" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1337" name="PauseWithClearSight_ResumesRemainingWindup_AndCannotBeginWhilePaused" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.PauseWithClearSight_ResumesRemainingWindup_AndCannotBeginWhilePaused" methodname="PauseWithClearSight_ResumesRemainingWindup_AndCannotBeginWhilePaused" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="606065034" result="Passed" start-time="2026-11-16 16:58:30Z" end-time="2026-11-16 16:58:31Z" duration="0.552330" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1327" name="SightRay_UsesConfiguredProjectileHeightRatherThanGroundOrEyeOffset" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.SightRay_UsesConfiguredProjectileHeightRatherThanGroundOrEyeOffset" methodname="SightRay_UsesConfiguredProjectileHeightRatherThanGroundOrEyeOffset" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="274801965" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.000933" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1329" name="SightSamples_AreCachedUntilConfiguredInterval" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.SightSamples_AreCachedUntilConfiguredInterval" methodname="SightSamples_AreCachedUntilConfiguredInterval" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="1550047788" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.232089" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1326" name="SolidCover_RejectsWindup" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.SolidCover_RejectsWindup" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.001999" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1324" name="SolidCover_RejectsWindup(&quot;Obstacle&quot;)" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.SolidCover_RejectsWindup(&quot;Obstacle&quot;)" methodname="SolidCover_RejectsWindup" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="1928349872" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.000887" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1325" name="SolidCover_RejectsWindup(&quot;Door&quot;)" fullname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests.SolidCover_RejectsWindup(&quot;Door&quot;)" methodname="SolidCover_RejectsWindup" classname="DungeonCrawler.Tests.PlayMode.RangedLineOfSightTests" runstate="Runnable" seed="789868758" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.000512" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestFixture" id="1342" name="RewardFeedbackPlayModeTests" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" testcasecount="10" result="Failed" site="Child" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.515838" total="10" passed="9" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1345" name="AcceptedCollection_PayloadAndLegacyAudioEventExactlyOnce" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.AcceptedCollection_PayloadAndLegacyAudioEventExactlyOnce" methodname="AcceptedCollection_PayloadAndLegacyAudioEventExactlyOnce" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="1009871682" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.003247" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1347" name="Collection_ReentrantCallbacksCannotRepeatRewardsOrLevels" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.Collection_ReentrantCallbacksCannotRepeatRewardsOrLevels" methodname="Collection_ReentrantCallbacksCannotRepeatRewardsOrLevels" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="1516102680" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.000983" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1349" name="DeathResetDisableAndReactivation_ClearAndNeverDuplicateSubscriptions" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.DeathResetDisableAndReactivation_ClearAndNeverDuplicateSubscriptions" methodname="DeathResetDisableAndReactivation_ClearAndNeverDuplicateSubscriptions" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="1843110433" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.000972" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1351" name="FlashZero_SuppressesOptionalEffectsButKeepsMessages" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.FlashZero_SuppressesOptionalEffectsButKeepsMessages" methodname="FlashZero_SuppressesOptionalEffectsButKeepsMessages" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="937181356" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.000638" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1343" name="FullAndDeadPotion_RejectedWithoutConsumptionOrSuccess" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.FullAndDeadPotion_RejectedWithoutConsumptionOrSuccess" methodname="FullAndDeadPotion_RejectedWithoutConsumptionOrSuccess" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="1651827689" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.000674" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1344" name="FullBag_PreservesPickupUntilRetryAccepted" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.FullBag_PreservesPickupUntilRetryAccepted" methodname="FullBag_PreservesPickupUntilRetryAccepted" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="788120238" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.304812" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1348" name="PauseFreezesMessagesAndParticles_ThenResumes" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.PauseFreezesMessagesAndParticles_ThenResumes" methodname="PauseFreezesMessagesAndParticles_ThenResumes" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="1201786189" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.153160" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1346" name="Potion_ReentrantChangedAndHealedCannotConsumeAgain" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.Potion_ReentrantChangedAndHealedCannotConsumeAgain" methodname="Potion_ReentrantChangedAndHealedCannotConsumeAgain" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="1084558905" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.001182" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1350" name="SaturatedQueueAndEffects_AreBoundedWithoutNewObjectsOrGameplayRng" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.SaturatedQueueAndEffects_AreBoundedWithoutNewObjectsOrGameplayRng" methodname="SaturatedQueueAndEffects_AreBoundedWithoutNewObjectsOrGameplayRng" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="851875671" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.001180" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1352" name="WarmCallbacksAndEffects_RecordAllocationsWithPositiveControl" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.WarmCallbacksAndEffects_RecordAllocationsWithPositiveControl" methodname="WarmCallbacksAndEffects_RecordAllocationsWithPositiveControl" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="183507547" result="Failed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:31Z" duration="0.046797" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Preserve existing measurements.
+  Expected: False
+  But was:  True
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests+<WarmCallbacksAndEffects_RecordAllocationsWithPositiveControl>d__26.MoveNext () [0x00303] in G:\DungeonCrawler\My project\Assets\_Project\Tests\PlayMode\RewardFeedbackPlayModeTests.cs:223
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+                </failure>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1353" name="RoomSystemsPlayModeTests" fullname="DungeonCrawler.Tests.PlayMode.RoomSystemsPlayModeTests" classname="DungeonCrawler.Tests.PlayMode.RoomSystemsPlayModeTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:33Z" duration="1.213556" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1354" name="Door_OpenDisablesCollider_CloseEnablesIt" fullname="DungeonCrawler.Tests.PlayMode.RoomSystemsPlayModeTests.Door_OpenDisablesCollider_CloseEnablesIt" methodname="Door_OpenDisablesCollider_CloseEnablesIt" classname="DungeonCrawler.Tests.PlayMode.RoomSystemsPlayModeTests" runstate="Runnable" seed="121570667" result="Passed" start-time="2026-11-16 16:58:31Z" end-time="2026-11-16 16:58:33Z" duration="1.201955" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1356" name="ProjectilePool_ReusesReleasedInstance" fullname="DungeonCrawler.Tests.PlayMode.RoomSystemsPlayModeTests.ProjectilePool_ReusesReleasedInstance" methodname="ProjectilePool_ReusesReleasedInstance" classname="DungeonCrawler.Tests.PlayMode.RoomSystemsPlayModeTests" runstate="Runnable" seed="1020616616" result="Passed" start-time="2026-11-16 16:58:33Z" end-time="2026-11-16 16:58:33Z" duration="0.001660" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1355" name="ProjectilePool_WarmsBurstAndCancelsAllShotsOnDisable" fullname="DungeonCrawler.Tests.PlayMode.RoomSystemsPlayModeTests.ProjectilePool_WarmsBurstAndCancelsAllShotsOnDisable" methodname="ProjectilePool_WarmsBurstAndCancelsAllShotsOnDisable" classname="DungeonCrawler.Tests.PlayMode.RoomSystemsPlayModeTests" runstate="Runnable" seed="1996921993" result="Passed" start-time="2026-11-16 16:58:33Z" end-time="2026-11-16 16:58:33Z" duration="0.002907" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

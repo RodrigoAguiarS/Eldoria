@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="8" result="Skipped:Ignored" total="8" passed="7" failed="0" inconclusive="0" skipped="1" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-16 16:56:30Z" end-time="2026-11-16 16:56:38Z" duration="7,7795412">
+  <test-suite type="TestSuite" id="1182" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="139" result="Skipped" label="Ignored" start-time="2026-11-16 16:56:30Z" end-time="2026-11-16 16:56:38Z" duration="7.779541" total="8" passed="7" failed="0" inconclusive="0" skipped="1" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <reason>
+      <message><![CDATA[One or more child tests were ignored]]></message>
+    </reason>
+    <test-suite type="Assembly" id="1256" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="61" result="Skipped" label="Ignored" start-time="2026-11-16 16:56:30Z" end-time="2026-11-16 16:56:38Z" duration="7.768050" total="8" passed="7" failed="0" inconclusive="0" skipped="1" asserts="0">
+      <properties>
+        <property name="_PID" value="24272" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <reason>
+        <message><![CDATA[One or more child tests were ignored]]></message>
+      </reason>
+      <test-suite type="TestSuite" id="1257" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="61" result="Skipped" label="Ignored" start-time="2026-11-16 16:56:30Z" end-time="2026-11-16 16:56:38Z" duration="7.766093" total="8" passed="7" failed="0" inconclusive="0" skipped="1" asserts="0">
+        <properties />
+        <reason>
+          <message><![CDATA[One or more child tests were ignored]]></message>
+        </reason>
+        <test-suite type="TestSuite" id="1258" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="61" result="Skipped" label="Ignored" start-time="2026-11-16 16:56:30Z" end-time="2026-11-16 16:56:38Z" duration="7.764593" total="8" passed="7" failed="0" inconclusive="0" skipped="1" asserts="0">
+          <properties />
+          <reason>
+            <message><![CDATA[One or more child tests were ignored]]></message>
+          </reason>
+          <test-suite type="TestSuite" id="1259" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="61" result="Skipped" label="Ignored" start-time="2026-11-16 16:56:30Z" end-time="2026-11-16 16:56:38Z" duration="7.762593" total="8" passed="7" failed="0" inconclusive="0" skipped="1" asserts="0">
+            <properties />
+            <reason>
+              <message><![CDATA[One or more child tests were ignored]]></message>
+            </reason>
+            <test-suite type="TestFixture" id="1247" name="RoomRewardChestTests" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" testcasecount="8" result="Skipped" label="Ignored" start-time="2026-11-16 16:56:30Z" end-time="2026-11-16 16:56:38Z" duration="7.759083" total="8" passed="7" failed="0" inconclusive="0" skipped="1" asserts="0">
+              <properties />
+              <reason>
+                <message><![CDATA[One or more child tests were ignored]]></message>
+              </reason>
+              <test-case id="1255" name="Capture_ReleaseChestLockedReadyAndOpened" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.Capture_ReleaseChestLockedReadyAndOpened" methodname="Capture_ReleaseChestLockedReadyAndOpened" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Explicit" seed="65045896" result="Skipped" label="Ignored" start-time="2026-11-16 16:56:30Z" end-time="2026-11-16 16:56:31Z" duration="0.562234" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Graphical diagnostic of the actual release room; not full-run acceptance." />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Requires graphical Editor.]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1251" name="DeathPreventsOpen_AndReloadCreatesNewLockedInstance" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.DeathPreventsOpen_AndReloadCreatesNewLockedInstance" methodname="DeathPreventsOpen_AndReloadCreatesNewLockedInstance" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="1993302370" result="Passed" start-time="2026-11-16 16:56:31Z" end-time="2026-11-16 16:56:32Z" duration="1.059007" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1250" name="DisabledDuringClear_ReconcilesOnEnable_AndOpenedNeverResets" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.DisabledDuringClear_ReconcilesOnEnable_AndOpenedNeverResets" methodname="DisabledDuringClear_ReconcilesOnEnable_AndOpenedNeverResets" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="1605616504" result="Passed" start-time="2026-11-16 16:56:32Z" end-time="2026-11-16 16:56:33Z" duration="0.908323" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1253" name="FullBag_RefusedWeaponKeepsIdentityAndRetryCollectsExactlyOnce" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.FullBag_RefusedWeaponKeepsIdentityAndRetryCollectsExactlyOnce" methodname="FullBag_RefusedWeaponKeepsIdentityAndRetryCollectsExactlyOnce" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="125886397" result="Passed" start-time="2026-11-16 16:56:33Z" end-time="2026-11-16 16:56:35Z" duration="2.011870" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1248" name="LockedRoom_FDoesNotOpenOrRoll_AndEStillRequestsSpecial" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.LockedRoom_FDoesNotOpenOrRoll_AndEStillRequestsSpecial" methodname="LockedRoom_FDoesNotOpenOrRoll_AndEStillRequestsSpecial" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="43789727" result="Passed" start-time="2026-11-16 16:56:35Z" end-time="2026-11-16 16:56:35Z" duration="0.091693" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1252" name="OpenedThenDeathAndHealthReset_DoNotRenewReward" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.OpenedThenDeathAndHealthReset_DoNotRenewReward" methodname="OpenedThenDeathAndHealthReset_DoNotRenewReward" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="816114963" result="Passed" start-time="2026-11-16 16:56:35Z" end-time="2026-11-16 16:56:36Z" duration="0.978516" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1249" name="RangeAndPause_AreAuthoritative_ThenFWorksOnceWithoutSpecial" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.RangeAndPause_AreAuthoritative_ThenFWorksOnceWithoutSpecial" methodname="RangeAndPause_AreAuthoritative_ThenFWorksOnceWithoutSpecial" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="685004531" result="Passed" start-time="2026-11-16 16:56:36Z" end-time="2026-11-16 16:56:37Z" duration="1.207381" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1254" name="UncollectedRewardHasNoTimeout_AndRemappedInteractionUsesSameCommand" fullname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests.UncollectedRewardHasNoTimeout_AndRemappedInteractionUsesSameCommand" methodname="UncollectedRewardHasNoTimeout_AndRemappedInteractionUsesSameCommand" classname="DungeonCrawler.Tests.PlayerInput.RoomRewardChestTests" runstate="Runnable" seed="1137429115" result="Passed" start-time="2026-11-16 16:56:37Z" end-time="2026-11-16 16:56:38Z" duration="0.919460" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
