@@ -20,6 +20,7 @@ namespace DungeonCrawler.Systems
         [SerializeField, Min(1)] private int maxLevel = 10;
 
         private ExperienceModel model;
+        private bool collecting;
 
         public int Level => Model.Level;
         public int Xp => Model.Xp;
@@ -35,6 +36,8 @@ namespace DungeonCrawler.Systems
         public event Action Changed;
         public event Action<int> LeveledUp;
         public event Action<LootKind> Collected;
+        /// <summary>One accepted command, retaining the drop payload for presentation. Never rolls loot.</summary>
+        public event Action<LootDrop> CollectionAccepted;
 
         private ExperienceModel Model => model ??= new ExperienceModel(baseXpToLevel, xpGrowth, maxLevel);
 
@@ -48,18 +51,25 @@ namespace DungeonCrawler.Systems
 
         public bool TryCollect(in LootDrop drop, bool notifyRejection = true)
         {
-            if (health == null || !health.IsAlive) return false;
+            if (collecting || health == null || !health.IsAlive) return false;
+            collecting = true;
+            try { return CollectAccepted(drop, notifyRejection); }
+            finally { collecting = false; }
+        }
+
+        private bool CollectAccepted(LootDrop drop, bool notifyRejection)
+        {
             if (inventory != null && (drop.Kind == LootKind.Weapon || drop.Kind == LootKind.Potion || drop.Kind == LootKind.Armor))
             {
                 bool stored = inventory.TryStore(drop, notifyRejection);
-                if (stored) Collected?.Invoke(drop.Kind);
+                if (stored) NotifyCollected(drop);
                 return stored;
             }
             switch (drop.Kind)
             {
-                case LootKind.Xp: AddXp(drop.Amount); Collected?.Invoke(drop.Kind); return true;
+                case LootKind.Xp: AddXp(drop.Amount); NotifyCollected(drop); return true;
                 case LootKind.Gold: Gold += drop.Amount; break;
-                case LootKind.Potion: health.Heal(drop.Amount); break;
+                case LootKind.Potion: health.Heal(drop.Amount, HealingSource.Potion); break;
                 case LootKind.Weapon:
                     if (drop.Weapon == null) return false;
                     Equip(drop.Weapon); break;
@@ -67,8 +77,15 @@ namespace DungeonCrawler.Systems
             }
 
             Changed?.Invoke();
-            Collected?.Invoke(drop.Kind);
+            NotifyCollected(drop);
             return true;
+        }
+
+        private void NotifyCollected(in LootDrop drop)
+        {
+            // Both channels describe the same committed operation. The legacy audio hook stays single.
+            Collected?.Invoke(drop.Kind);
+            CollectionAccepted?.Invoke(drop);
         }
 
         public void SetEquippedWeapon(WeaponData weapon)
@@ -84,9 +101,10 @@ namespace DungeonCrawler.Systems
             int gained = Model.AddXp(amount);
             if (gained > 0)
             {
+                int acceptedLevel = Model.Level;
                 ApplyCombatStats();
-                health.Heal(health.Max * healFractionOnLevelUp * gained);
-                LeveledUp?.Invoke(Model.Level);
+                health.Heal(health.Max * healFractionOnLevelUp * gained, HealingSource.LevelUp);
+                LeveledUp?.Invoke(acceptedLevel);
             }
 
             Changed?.Invoke();

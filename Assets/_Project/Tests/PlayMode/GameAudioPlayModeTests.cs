@@ -79,6 +79,25 @@ namespace DungeonCrawler.Tests.PlayMode
             Assert.IsFalse(progression.TryCollect(new LootDrop(LootKind.Weapon, 0))); Assert.AreEqual(1, pool.GetPlayedCount(SoundCue.Pickup));
             health.TakeDamage(1000f, player.transform.position); Assert.AreEqual(1, pool.GetPlayedCount(SoundCue.Death));
         }
+        [UnityTest] public IEnumerator HealingAndLevel_UseExistingPoolOnlyAfterAcceptance()
+        {
+            yield return Load(); var player = InScene<PlayerProgression>(); var health = player.GetComponent<Health>();
+            var inventory = player.GetComponent<PlayerInventory>(); var bridge = player.GetComponent<GameplayAudioBridge>();
+            for (int i = 0; i < 4; i++) { bridge.enabled = false; bridge.enabled = true; }
+            int ui = pool.GetPlayedCount(SoundCue.Ui);
+            player.TryCollect(new LootDrop(LootKind.Potion, 25));
+            Assert.IsFalse(inventory.TryUseQuickPotion()); Assert.AreEqual(ui, pool.GetPlayedCount(SoundCue.Ui));
+            health.TakeDamage(50f, player.transform.position); Assert.IsTrue(inventory.TryUseQuickPotion());
+            Assert.AreEqual(ui + 1, pool.GetPlayedCount(SoundCue.Ui));
+            player.TryCollect(new LootDrop(LootKind.Xp, 71)); Assert.AreEqual(ui + 2, pool.GetPlayedCount(SoundCue.Ui));
+            Assert.AreEqual(2, pool.GetPlayedCount(SoundCue.Pickup)); Assert.AreEqual(8, pool.VoiceCount);
+            bridge.enabled = false; health.TakeDamage(20f, player.transform.position); health.Heal(5f);
+            Assert.AreEqual(ui + 2, pool.GetPlayedCount(SoundCue.Ui));
+            bridge.enabled = true; var value = options.Current.Copy(); value.effects = 0f; options.Apply(value);
+            health.Heal(5f); Assert.AreEqual(ui + 2, pool.GetPlayedCount(SoundCue.Ui));
+            health.TakeDamage(1000f, player.transform.position); Assert.IsFalse(inventory.TryUseQuickPotion());
+            Assert.AreEqual(ui + 2, pool.GetPlayedCount(SoundCue.Ui));
+        }
         [UnityTest] public IEnumerator ActualSpawner_InjectsAudioIntoGeneratedEnemies_AndBossTransitionRoars()
         {
             yield return Load(); var player = InScene<PlayerCombat>(); var spawner = InScene<EnemySpawner>();

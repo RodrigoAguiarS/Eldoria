@@ -128,6 +128,7 @@ namespace DungeonCrawler.Editor
             SetArray(pause, "gameplayControls", new Object[] { root.GetComponent<PlayerMovement>(), root.GetComponent<PlayerAim>(),
                 root.GetComponent<PlayerCombat>(), root.GetComponent<PlayerDash>(), root.GetComponent<PlayerSpecial>() });
             ControlBindingsSceneBuilder.ConfigurePlayer(root);
+            RewardFeedbackSceneBuilder.ConfigurePlayer(root);
         }
 
         public static void ConfigureHud(Scene scene, GameObject player, GameRestarter restarter)
@@ -198,6 +199,7 @@ namespace DungeonCrawler.Editor
             ConfigureInventorySort(hud);
             root.SetAsLastSibling();
             ControlBindingsSceneBuilder.ConfigureScene(scene);
+            RewardFeedbackSceneBuilder.ConfigureHud(hud, player);
         }
 
         [MenuItem("Tools/Dungeon Crawler/Inventory/Integrate Equipment Comparison (F01)")]

@@ -92,6 +92,14 @@ Sons e loop originais são reproduzíveis em Tools/AudioGenerator. Clips são PC
 
 Personagens usam rig Generic/in-place e FBX; GLB é fonte/prévia sem importador Unity instalado. Fontes de integração em `Tools/Lemo3DGenerator/unity` e cópias em `Art/Models/Generated/_Scripts` têm funções distintas e devem ficar sincronizadas. SpriteLab e billboard são experimentos preservados fora da release. Os caminhos `_GameTest`/`_GameArt` são legados, mas contêm a cena/arte de produção: não mover por nome sem migrar builders/testes/referências.
 
+## Feedback de recompensas (F05)
+
+`HealthModel.Healed`/`Health.Healed` publicam `HealingAccepted` com quantidade efetiva, HP atual/máximo capturados e `HealingSource` (Other/Potion/LevelUp), depois de `Changed`. Reset não emite cura e cancela confirmação pendente; `ResetPerformed` limpa apresentação. `PlayerInventory` protege consumo contra reentrada durante Changed/Healed. `PlayerProgression.CollectionAccepted` conserva o `LootDrop` aceito, sem outro sorteio; `Collected` continua sendo a única confirmação de coleta usada pelo áudio. Uma chamada reentrante de coleta no mesmo jogador é recusada durante a transação e suas notificações. `LeveledUp` mantém uma notificação com snapshot do nível final, sem alterar fórmula/quantidade de cura.
+
+`PlayerRewardFeedback` observa esses eventos, sem inferir cura por HP Changed, com três ParticleSystems previamente compostos e reutilizados, sem fontes/objetos novos por operação ou uso do RNG do loot. Cura de nível usa somente a apresentação de nível. Fila fixa de quatro avisos pendentes mais um visível; texto/quantidades são formatados somente ao exibir, com alocação de string limitada a essa troca. Temporizadores e partículas usam tempo escalado; morte/reset/desativação limpam fila/texto/partículas e OnEnable/OnDisable gerem inscrições. Opção flash controla as partículas, sem alterar o flash de dano ou o shake. GameplayAudioBridge reutiliza o tom Ui para cura/nível pelo pool/mixer SFX e conserva Pickup para coleta.
+
+`RewardFeedbackSceneBuilder.Integrate` integra somente o prefab Player e as três cenas de gameplay pelas APIs do Editor. A integração geral de inventário também recompõe essas referências. Preserva VFX de combo/giro/acerto, áudio e dados existentes. Evidência e limites em [Reports/F05](Reports/F05/README.md).
+
 ## Auditoria reproduzível
 
 `python Tools/Audit/audit_project.py --output <relatorio-novo.json>` inventaria hashes, duplicatas, cópias instaladas e caminhos de links Markdown sem alterar assets. Recusa sobrescrever o relatório. `MvpProjectAudit.InspectCleanupBaseline`/menu Audit abre cenas/prefabs pelas APIs e escreve em `Reports/ProjectAudit/editor-assets.json`; não salva assets. Esses dados não comprovam aceite visual ou ausência de uso dinâmico. Comandos de teste e regressão em `docs/BUILD-WINDOWS.md`.

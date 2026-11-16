@@ -37,6 +37,8 @@ O especial aprovado é um giro de espada em 360° (botão direito/E), alcance in
 
 F03: a opção **Poção rápida (Q)** escolhe **Primeira** (padrão, menor índice), **Menor potência** ou **Maior potência**, com desempate pelo menor índice atual da bolsa. O HUD mostra a potência escolhida; HP cheio ou jogador morto não consomem. Q permanece disponível na bolsa pausada; **Usar** continua consumindo o item selecionado. Somente a preferência persiste entre runs.
 
+F05: cura efetiva mostra `+HP` e motes rubi; coleta aceita mostra mensagem e glints ciano (XP), latão (ouro) ou marfim (itens); subida de nível mostra o nível final e um anel baixo dourado. Múltiplos níveis numa coleta mantêm a cura e o dano existentes, com uma confirmação do nível final. HP cheio/morto ou bolsa cheia não geram confirmação de cura/coleta rejeitada. Até quatro mensagens aguardam exibição; saturação descarta a pendente mais antiga. Efeitos e mensagens congelam na pausa, inclusive quando Q é aceito na bolsa, e retomam ao continuar. Morte, reset de HP e desativação limpam a apresentação. Flash em zero remove as partículas opcionais; mensagens continuam. Sem hit-stop ou novo shake.
+
 ## Direção visual
 Low-poly estilizado, silhuetas legíveis na câmera isométrica, cores vivas e contraste adequado entre personagem, inimigos, perigos e cenário. Pedra, tochas e obstáculos destrutíveis no escopo posterior. Não copiar assets ou personagens de jogos existentes.
 
