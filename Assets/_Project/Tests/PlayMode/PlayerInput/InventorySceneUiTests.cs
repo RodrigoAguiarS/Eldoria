@@ -318,13 +318,13 @@ namespace DungeonCrawler.Tests.PlayerInput
             var views = presenter.GetComponentsInChildren<InventorySlotView>(true);
             var window = presenter.transform.Find("Window");
             var sort = window.Find("Sort").GetComponent<Button>();
-            var details = window.Find("Details").GetComponent<Text>();
+            var details = window.Find("ItemReading/Viewport/Content/Details").GetComponent<Text>();
             var title = window.Find("Title").GetComponent<Text>();
 
             Canvas.ForceUpdateCanvases();
             Rect sortRect = ScreenRect((RectTransform)sort.transform);
             Assert.IsTrue(ScreenRect((RectTransform)window).Contains(sortRect.min) && ScreenRect((RectTransform)window).Contains(sortRect.max));
-            foreach (string other in new[] { "Hint", "Instructions", "Slot_03", "Equipment" })
+            foreach (string other in new[] { "Hint", "Instructions", "Slots/Slot_03", "ItemReading/Viewport/Content/Equipment" })
                 Assert.IsFalse(sortRect.Overlaps(ScreenRect((RectTransform)window.Find(other))), "Sort overlaps " + other);
             Rect titleRect = ScreenRect(title.rectTransform);
             Assert.Less(titleRect.xMin + title.preferredWidth * title.rectTransform.lossyScale.x, sortRect.xMin, "Title text reaches the Sort button.");

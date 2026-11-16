@@ -14,6 +14,14 @@ Entrar na sala → portas fecham → inimigos surgem → derrotar todos → port
 
 F04: **Opções → Controles** permite remapear as quatro direções, ataque, dash, as duas alternativas do giro e da bolsa, poção, pausa/voltar e reinício para teclas ou botões do mouse. Os controles acima são os padrões. Conflitos são recusados e identificam a ação já atribuída; o binding anterior permanece. Escape cancela a captura e sempre permite voltar, mesmo com pausa remapeada; Enter permanece reservado para confirmar na UI. Cancelar, Voltar e Restaurar padrão têm botões próprios. Captura expira em 10 s e cancela ao perder foco ou fechar o painel. Alterações aceitas e restauração são salvas imediatamente por usuário, separadas das opções gerais e da progressão. Rótulos acompanham as ações efetivas. Mira/posição do ponteiro e navegação da UI permanecem fixas; esta entrega não adiciona suporte gamepad completo.
 
+F10: **Opções → Texto e HUD** oferece 100% (padrão), 125% e 150% como faixa
+inicial. Aplicar e salvar persiste a preferência; Voltar descarta o rascunho.
+Restaurar padrões das opções gerais também exige Aplicar. Dados antigos ou
+escala ausente/inválida usam 100%. A fonte e o UGUI permanecem. Botões não
+encolhem com o texto; bolsa mantém 16 slots, com equipamento/detalhes roláveis.
+Nomes extensos são resumidos com reticências no slot/HUD e completos nos
+detalhes da bolsa. Escala não muda combate, inventário ou controles.
+
 ## Jogador
 Usa CharacterController; atributos HP, recurso (estamina nesta versão), ataque, defesa, velocidade. Ao receber dano, feedback vermelho temporário e shake leve, sem comprometer legibilidade. Morte encerra combate e permite reiniciar.
 

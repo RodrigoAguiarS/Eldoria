@@ -23,7 +23,7 @@ namespace DungeonCrawler.Tests.EditMode
         [Test] public void VersionOne_MigratesNativeQualityIndexWithoutLosingOtherOptions()
         {
             Assert.IsTrue(GameOptionsData.TryParse("{\"version\":1,\"music\":0.23,\"effects\":0.61,\"quality\":1,\"width\":1280,\"height\":720,\"fullscreen\":true}", out var value));
-            Assert.AreEqual(3, value.version); Assert.AreEqual(-1, value.quality);
+            Assert.AreEqual(GameOptionsData.CurrentVersion, value.version); Assert.AreEqual(-1, value.quality);
             Assert.AreEqual(.23f, value.music, .001f); Assert.AreEqual(.61f, value.effects, .001f);
             Assert.AreEqual(1280, value.width); Assert.AreEqual(720, value.height); Assert.IsTrue(value.fullscreen);
         }
@@ -55,7 +55,7 @@ namespace DungeonCrawler.Tests.EditMode
         public void QuickPotionPolicy_RoundTrips(QuickPotionPolicy policy)
         {
             Assert.IsTrue(GameOptionsData.TryParse(JsonUtility.ToJson(new GameOptionsData { quickPotionPolicy = policy }), out var value));
-            Assert.AreEqual(3, value.version); Assert.AreEqual(policy, value.quickPotionPolicy);
+            Assert.AreEqual(GameOptionsData.CurrentVersion, value.version); Assert.AreEqual(policy, value.quickPotionPolicy);
         }
 
         [TestCase("{\"version\":1,\"quickPotionPolicy\":2}")]
@@ -67,7 +67,7 @@ namespace DungeonCrawler.Tests.EditMode
         {
             Assert.IsTrue(GameOptionsData.TryParse(json, out var value));
             Assert.AreEqual(QuickPotionPolicy.First, value.quickPotionPolicy);
-            Assert.AreEqual(3, value.version);
+            Assert.AreEqual(GameOptionsData.CurrentVersion, value.version);
         }
 
         [TestCase("{}")] [TestCase("{\"quickPotionPolicy\":2}")] [TestCase("{\"version\":0}")]

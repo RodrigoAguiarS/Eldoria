@@ -40,6 +40,13 @@ falhas (10 capturas explícitas ignoradas no batch), mais captura gráfica 1/1
 inspecionada em 2560×1440. Reprodução e limites em
 [Reports/F09](Reports/F09/README.md); merge depende de revisão do usuário.
 
+F10 acrescenta escala de texto/HUD 100/125/150%, fallback 100 e JSON v4,
+com rascunho/Aplicar/Voltar/reset e bolsa rolável. 41 EditMode pertinentes
+aprovados, mais reteste final de 13 F10; 23 PlayMode funcionais e matriz gráfica
+1/1 com 66 capturas em 720p/1080p/ultrawide emulado. Geometria/alvos medidos;
+sem certificação de contraste ou acessibilidade completa. [Evidências e limites](Reports/F10/README.md);
+merge depende da revisão do usuário.
+
 Uma run nova reinicia progressão/inventário; somente opções persistem. Não há campanha salva, lojas, quests, coop, geração procedural ou publicação em loja no produto aprovado. Novidades são propostas do [PROMPT_CATALOG](PROMPT_CATALOG.md), priorizadas em [NEXT_STEPS](NEXT_STEPS.md); não reimplementar combo, inventário, especial, áudio ou arte de itens como ausentes.
 
 Histórico incremental permanece em [CHANGELOG](CHANGELOG.md), XML/JSON de `Reports` e Git. Checklists antigos foram consolidados no [roteiro de regressão](docs/BUILD-WINDOWS.md#roteiro-de-regressão); remover caixas históricas contraditórias não amplia o aceite comprovado.

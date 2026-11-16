@@ -171,6 +171,7 @@ namespace DungeonCrawler.Editor
                         foreach (var inventory in root.GetComponentsInChildren<PlayerInventory>(true)) Set(inventory, "options", options);
                         foreach (var presenter in root.GetComponentsInChildren<GameOptionsPresenter>(true)) ConfigureQuickPotionOptions(presenter.gameObject);
                     }
+                    TextScaleSceneBuilder.ConfigureScene(scene);
                     EditorSceneManager.SaveScene(scene);
                 }
                 finally { if (opened) EditorSceneManager.CloseScene(scene, true); }

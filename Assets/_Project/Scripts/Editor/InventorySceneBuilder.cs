@@ -135,6 +135,7 @@ namespace DungeonCrawler.Editor
         {
             ConfigurePlayer(player);
             var hud = scene.GetRootGameObjects().Single(root => root.name == "HUD");
+            TextScaleSceneBuilder.PrepareInventoryRebuild(hud);
             PlayerSpecialSceneBuilder.ConfigureHud(hud, player);
             var events = scene.GetRootGameObjects().Select(root => root.GetComponent<EventSystem>()).First(value => value != null);
             RectTransform root = Node(hud.transform, "InventoryUI"); Stretch(root); root.SetAsLastSibling();
@@ -200,6 +201,7 @@ namespace DungeonCrawler.Editor
             root.SetAsLastSibling();
             ControlBindingsSceneBuilder.ConfigureScene(scene);
             RewardFeedbackSceneBuilder.ConfigureHud(hud, player);
+            TextScaleSceneBuilder.ConfigureScene(scene);
         }
 
         [MenuItem("Tools/Dungeon Crawler/Inventory/Integrate Equipment Comparison (F01)")]
@@ -223,6 +225,7 @@ namespace DungeonCrawler.Editor
                 try
                 {
                     configure(scene.GetRootGameObjects().Single(root => root.name == "HUD"));
+                    TextScaleSceneBuilder.ConfigureScene(scene);
                     EditorSceneManager.MarkSceneDirty(scene);
                     EditorSceneManager.SaveScene(scene);
                 }

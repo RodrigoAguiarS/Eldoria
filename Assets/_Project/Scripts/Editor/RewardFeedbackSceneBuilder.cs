@@ -62,6 +62,7 @@ namespace DungeonCrawler.Editor
                     var player = scene.GetRootGameObjects().SelectMany(root => root.GetComponentsInChildren<PlayerProgression>(true)).Single().gameObject;
                     var hud = scene.GetRootGameObjects().Single(root => root.name == "HUD");
                     ConfigureHud(hud, player);
+                    TextScaleSceneBuilder.ConfigureScene(scene);
                     EditorSceneManager.MarkSceneDirty(scene); EditorSceneManager.SaveScene(scene);
                 }
                 finally { if (opened) EditorSceneManager.CloseScene(scene, true); }

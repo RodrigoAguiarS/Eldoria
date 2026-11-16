@@ -156,6 +156,7 @@ namespace DungeonCrawler.Editor
                 else if (label.name == "Label" && parent == "PlayAgainButton") Hint(label, source, "Jogar de novo ({Restart})");
                 else if (label.name == "Hint" && parent == "GameOverPanel") Hint(label, source, "{Restart} reinicia a partida");
             }
+            TextScaleSceneBuilder.ConfigureScene(scene);
         }
         private static BindingHintPresenter Hint(Text label, RuntimeInputBindings source, string format)
         {
