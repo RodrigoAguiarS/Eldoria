@@ -40,6 +40,7 @@ namespace DungeonCrawler.Editor
             var serialized = new SerializedObject(special); serialized.FindProperty("enemyMask").intValue = LayerMask.GetMask("Enemy");
             serialized.ApplyModifiedPropertiesWithoutUndo(); PrefabUtility.RecordPrefabInstancePropertyModifications(special);
             Set(player.GetComponent<PlayerCombat>(), "special", special);
+            DestructiblePropSceneBuilder.ConfigurePlayer(player);
             var bridge = player.GetComponent<GeneratedPlayerAnimationBridge>();
             if (bridge != null) Set(bridge, "special", special);
             var lifecycle = player.GetComponent<PlayerController>();

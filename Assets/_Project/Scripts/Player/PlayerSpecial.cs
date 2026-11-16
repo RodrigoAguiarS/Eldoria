@@ -16,6 +16,7 @@ namespace DungeonCrawler.Player
         [SerializeField] private PlayerDash dash;
         [SerializeField] private Health health;
         [SerializeField] private LayerMask enemyMask;
+        [SerializeField] private LayerMask destructibleMask;
         private PlayerSpecialModel model;
         private Collider[] hitBuffer = new Collider[16];
         private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>(16);
@@ -93,7 +94,7 @@ namespace DungeonCrawler.Player
             Vector3 origin = transform.position;
             int count;
             while ((count = Physics.OverlapSphereNonAlloc(origin, definition.Motion.Range, hitBuffer,
-                       enemyMask, QueryTriggerInteraction.Ignore)) == hitBuffer.Length)
+                       enemyMask | destructibleMask, QueryTriggerInteraction.Ignore)) == hitBuffer.Length)
                 Array.Resize(ref hitBuffer, checked(hitBuffer.Length * 2));
             hitTargets.Clear();
             float damage = combat.CurrentDamage * definition.Motion.DamageMultiplier;

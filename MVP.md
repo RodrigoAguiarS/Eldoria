@@ -32,6 +32,14 @@ A entrega inicial F08 acrescentou um baú experimental à primeira sala fixa de 
 
 Revisão F08 solicitada pelo usuário: um baú independente em cada uma das cinco salas, incluindo Boss. Coletar recompensas na vitória devolve acesso à sala/bolsa sem desfazer 5/5. Trinta chamas órfãs foram reparadas mantendo exatamente os transforms das tochas e as onze luzes existentes. Rebuild M1 agora aplica arte somente na arena e é coberto contra alterações nas salas/release. Evidências atuais: 161/161 EditMode e 132 PlayMode aprovados, zero falhas (9 explícitos ignorados); retestes finais 3 EditMode + 20 PlayMode, captura gráfica 1/1 e build Windows sem erros (496 avisos de shader). Evidências e limites em [Reports/F08-AllRooms](Reports/F08-AllRooms/README.md).
 
+F09 acrescenta um tipo de vaso de 40 HP em SO, um por sala de release. Básico/giro
+deduplicam os dois colliders; quebra única, destroços estáticos, sem drops/XP ou
+dependência da limpeza. Layer própria sem bloqueio físico, centro/portas/spawns e
+NavMesh preservados. Evidência: 163/163 EditMode e 146 PlayMode aprovados, zero
+falhas (10 capturas explícitas ignoradas no batch), mais captura gráfica 1/1
+inspecionada em 2560×1440. Reprodução e limites em
+[Reports/F09](Reports/F09/README.md); merge depende de revisão do usuário.
+
 Uma run nova reinicia progressão/inventário; somente opções persistem. Não há campanha salva, lojas, quests, coop, geração procedural ou publicação em loja no produto aprovado. Novidades são propostas do [PROMPT_CATALOG](PROMPT_CATALOG.md), priorizadas em [NEXT_STEPS](NEXT_STEPS.md); não reimplementar combo, inventário, especial, áudio ou arte de itens como ausentes.
 
 Histórico incremental permanece em [CHANGELOG](CHANGELOG.md), XML/JSON de `Reports` e Git. Checklists antigos foram consolidados no [roteiro de regressão](docs/BUILD-WINDOWS.md#roteiro-de-regressão); remover caixas históricas contraditórias não amplia o aceite comprovado.

@@ -19,6 +19,11 @@ Fila única após a auditoria de 14/11/2026. Escopo existente em [MVP](MVP.md), 
 
 As cinco primeiras funcionalidades sugeridas para escolha são **F01 comparação**, **F02 ordenação**, **F05 feedback**, **F06 onboarding** e **F07 linha de visão**. Dash/giro já existem; seus ícones A01/A02 são polimento. Cinco assets iniciais: A01, A02, A03, A04 e A05. Arte de baú/inimigo/Boss/área depende primeiro da funcionalidade correspondente.
 
+F09 implementado em 16/11/2026: vasos destrutíveis simples, sem drops, um por sala
+de release, quebra única e sem interferir na limpeza/NavMesh. 163 EditMode e
+146 PlayMode aprovados; [evidências e limites](Reports/F09/README.md). Integração
+na main aguarda revisão do usuário; A12 continua opcional e não foi executado.
+
 ## Melhorias de arquitetura propostas
 
 - Manter domínio puro separado de presenters. InventoryModel depende de índices estáveis: ordenação exige remapeamento explícito; não ordenar apenas o array apresentado na UI.

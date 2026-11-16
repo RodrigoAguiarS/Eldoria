@@ -17,6 +17,7 @@ namespace DungeonCrawler.Player
         [SerializeField] private PlayerSpecial special;
         [SerializeField] private PlayerComboDefinition comboDefinition;
         [SerializeField] private LayerMask enemyMask;
+        [SerializeField] private LayerMask destructibleMask;
         [SerializeField, Min(0f)] private float damage = 20f;
         [Tooltip("Marcador de diagnóstico (não é a hitbox). Fica oculto na apresentação normal; a autoridade é a consulta física.")]
         [SerializeField] private GameObject attackVisual;
@@ -128,7 +129,7 @@ namespace DungeonCrawler.Player
             Vector3 origin = transform.position;
             int count;
             // A full buffer may be truncated: retry BEFORE dealing damage; retain grown storage.
-            while ((count = Physics.OverlapSphereNonAlloc(origin, step.Range, hitBuffer, enemyMask,
+            while ((count = Physics.OverlapSphereNonAlloc(origin, step.Range, hitBuffer, enemyMask | destructibleMask,
                        QueryTriggerInteraction.Ignore)) == hitBuffer.Length)
             {
                 Array.Resize(ref hitBuffer, checked(hitBuffer.Length * 2));

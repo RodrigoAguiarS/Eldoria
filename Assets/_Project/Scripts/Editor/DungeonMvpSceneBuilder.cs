@@ -161,6 +161,7 @@ namespace DungeonCrawler.Editor
             SetObj(combat, "input", reader);
             SetInt(combat, "enemyMask", 1 << LayerMask.NameToLayer("Enemy"));
             SetObj(combat, "attackVisual", attackVisual.gameObject);
+            DestructiblePropSceneBuilder.ConfigurePlayer(root);
 
             var progression = root.AddComponent<PlayerProgression>();
             SetObj(progression, "health", health);

@@ -30,6 +30,14 @@ Salas como prefabs, com pontos de entrada/saída, portas e pontos de spawn defin
 
 F08 — o experimento inicial está registrado em [PROPOSAL](Reports/F08/PROPOSAL.md). Por revisão solicitada pelo usuário, cada uma das cinco salas fixas da cena de release, incluindo Boss, tem um baú de primitivas independente. F próximo (2,5 m por padrão) abre somente após limpar a sala; E/direito continuam giro. Jogador morto, pausa, sala ou baú desativado impedem abertura. Abre/sorteia uma vez por instância da run: repetição, desativação/reativação e reset isolado de HP não renovam a recompensa. Reiniciar carrega sala e baú novos. Tabela exclusiva do baú concede 10–20 ouro e uma espada de ferro pelos pickups normais; não muda tabelas de inimigos. Drops do baú não expiram; bolsa cheia preserva a mesma recompensa até coleta aceita ou fim da run. Após a vitória, **Coletar recompensas** fecha a tela para acessar o baú do Boss e liberar espaço na bolsa, mantendo o andar concluído. Sem chaves, loja ou geração procedural. F pode ser remapeado em Controles; uma preferência anterior que já usava F é preservada, com tecla livre atribuída à interação e indicada no aviso.
 
+F09: um tipo de vaso destrutível de primitivas, com 40 HP configuráveis em SO e
+uma instância lateral em cada sala de release. Básico e giro causam dano uma vez
+por alvo em cada impacto, mesmo com vários colliders. Quebra uma única vez e
+mostra destroços estáticos; desativar/reativar não restaura HP. Reiniciar cria
+vasos novos. Sem drops/XP, física de estilhaços ou participação na limpeza da
+sala. São alvos de ambiente sem bloqueio físico/cobertura, fora do centro,
+portas e spawns; não alteram o NavMesh. Recompensas futuras exigem dados próprios.
+
 ## Progressão
 Inimigos concedem orbes de XP; ao subir de nível, cura configurável e +10% de dano (multiplicador por nível definido em código de progressão e testado). Drops possíveis: ouro, poção e arma. Itens, raridades e valores são ScriptableObjects.
 
