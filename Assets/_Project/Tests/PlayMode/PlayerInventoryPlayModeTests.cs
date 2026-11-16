@@ -18,6 +18,8 @@ namespace DungeonCrawler.Tests.PlayMode
         private PlayerProgression progression;
         private PlayerInventory inventory;
         private GameObject player;
+        private GameOptionsDefinition options;
+        private string optionsKey;
         private static void Field(object target, string name, object value) => target.GetType()
             .GetField(name, BindingFlags.Instance | BindingFlags.NonPublic).SetValue(target, value);
         private T Asset<T>() where T : ScriptableObject
@@ -43,6 +45,8 @@ namespace DungeonCrawler.Tests.PlayMode
             combat = player.AddComponent<PlayerCombat>();
             progression = player.AddComponent<PlayerProgression>();
             inventory = player.AddComponent<PlayerInventory>();
+            options = Asset<GameOptionsDefinition>(); optionsKey = "DungeonCrawler.Tests.F03." + System.Guid.NewGuid().ToString("N");
+            Field(options, "preferencesKey", optionsKey); Field(inventory, "options", options);
             Field(progression, "health", health); Field(progression, "combat", combat); Field(progression, "inventory", inventory);
             Field(inventory, "definition", definition); Field(inventory, "health", health); Field(inventory, "progression", progression);
             player.SetActive(true);
@@ -53,6 +57,7 @@ namespace DungeonCrawler.Tests.PlayMode
         {
             for (int i = created.Count - 1; i >= 0; i--) if (created[i] != null) Object.DestroyImmediate(created[i]);
             created.Clear();
+            if (optionsKey != null) { PlayerPrefs.DeleteKey(optionsKey); PlayerPrefs.Save(); }
         }
 
         [Test]
@@ -150,6 +155,43 @@ namespace DungeonCrawler.Tests.PlayMode
                 Assert.AreSame(sword, inventory.Slots[i].Definition);
                 Assert.AreEqual(1, inventory.Slots[i].Count);
             }
+        }
+
+        [Test]
+        public void QuickPotion_UsesAppliedPolicyWhileSelectedUseIgnoresPolicyAndLifecycleDoesNotDuplicateEvents()
+        {
+            CreatePlayer();
+            foreach (int potency in new[] { 30, 20, 40, 15 }) progression.TryCollect(new LootDrop(LootKind.Potion, potency));
+            Assert.AreEqual(0, inventory.QuickPotionIndex);
+            var value = options.Current.Copy(); value.quickPotionPolicy = QuickPotionPolicy.LowestPotency;
+            int changes = 0; inventory.Changed += () => changes++;
+            for (int i = 0; i < 3; i++) { inventory.enabled = false; inventory.enabled = true; }
+            changes = 0; options.Apply(value);
+            Assert.AreEqual(1, changes); Assert.AreEqual(3, inventory.QuickPotionIndex);
+            health.TakeDamage(99, Vector3.zero);
+            Assert.IsTrue(inventory.TryUseQuickPotion()); Assert.AreEqual(16, health.Current);
+            Assert.AreEqual(1, inventory.QuickPotionIndex);
+            value.quickPotionPolicy = QuickPotionPolicy.HighestPotency; options.Apply(value);
+            Assert.AreEqual(2, inventory.QuickPotionIndex);
+            Assert.IsTrue(inventory.TryUsePotion(1)); Assert.AreEqual(36, health.Current, "Use selected still drinks the explicitly selected 20 HP potion.");
+            Assert.IsTrue(inventory.TryUseQuickPotion()); Assert.AreEqual(76, health.Current);
+            Assert.AreEqual(0, inventory.QuickPotionIndex);
+            inventory.enabled = false; changes = 0; options.Apply(value); Assert.AreEqual(0, changes);
+            Assert.IsFalse(inventory.TryUseQuickPotion());
+        }
+
+        [TestCase(QuickPotionPolicy.First)] [TestCase(QuickPotionPolicy.LowestPotency)] [TestCase(QuickPotionPolicy.HighestPotency)]
+        public void QuickPotion_FullOrDeadNeverConsumes(QuickPotionPolicy policy)
+        {
+            CreatePlayer();
+            foreach (int potency in new[] { 30, 20, 40, 15 }) progression.TryCollect(new LootDrop(LootKind.Potion, potency));
+            var value = options.Current.Copy(); value.quickPotionPolicy = policy; options.Apply(value);
+            int changes = 0; inventory.Changed += () => changes++;
+            Assert.IsFalse(inventory.TryUseQuickPotion());
+            health.TakeDamage(1000, Vector3.zero);
+            Assert.IsFalse(inventory.TryUseQuickPotion()); Assert.IsFalse(inventory.TryUsePotion(0));
+            Assert.AreEqual(0, changes);
+            for (int i = 0; i < 4; i++) Assert.AreEqual(1, inventory.Slots[i].Count);
         }
 
         [Test]

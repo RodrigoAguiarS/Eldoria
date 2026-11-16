@@ -9,7 +9,7 @@ namespace DungeonCrawler.UI
     {
         [SerializeField] private GameOptionsDefinition options;
         [SerializeField] private Slider music, effects, shake, flash;
-        [SerializeField] private Dropdown quality, resolution;
+        [SerializeField] private Dropdown quality, resolution, quickPotionPolicy;
         [SerializeField] private Toggle fullscreen;
         [SerializeField] private Text status;
         [SerializeField] private Text[] valueLabels;
@@ -18,6 +18,9 @@ namespace DungeonCrawler.UI
         private void OnEnable()
         {
             draft = options.Current.Copy();
+            quickPotionPolicy.ClearOptions();
+            quickPotionPolicy.AddOptions(new List<string> { "Primeira", "Menor potência", "Maior potência" });
+            quickPotionPolicy.SetValueWithoutNotify((int)draft.quickPotionPolicy);
             music.SetValueWithoutNotify(draft.music); effects.SetValueWithoutNotify(draft.effects);
             shake.SetValueWithoutNotify(draft.shake); flash.SetValueWithoutNotify(draft.flash);
             var qualityNames = new List<string> { "Padrão" };
@@ -58,6 +61,7 @@ namespace DungeonCrawler.UI
             draft.music = music.value; draft.effects = effects.value; draft.shake = shake.value; draft.flash = flash.value;
             draft.quality = quality.value - 1; Vector2Int size = sizes[resolution.value];
             draft.width = size.x; draft.height = size.y; draft.fullscreen = fullscreen.isOn;
+            draft.quickPotionPolicy = (QuickPotionPolicy)quickPotionPolicy.value;
             options.Apply(draft); status.text = "Opções salvas.";
         }
     }

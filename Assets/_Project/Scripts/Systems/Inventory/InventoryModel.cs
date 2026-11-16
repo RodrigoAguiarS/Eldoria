@@ -114,14 +114,21 @@ namespace DungeonCrawler.Systems
             return true;
         }
 
-        public int FirstPotionIndex
+        public int FirstPotionIndex => GetPotionIndex(QuickPotionPolicy.First);
+
+        /// <summary>Read-only choice; equal potencies keep the lowest slot index. Unknown policies use First.</summary>
+        public int GetPotionIndex(QuickPotionPolicy policy)
         {
-            get
+            int selected = -1;
+            for (int i = 0; i < slots.Length; i++)
             {
-                for (int i = 0; i < slots.Length; i++)
-                    if (!slots[i].IsEmpty && slots[i].Definition.Kind == InventoryItemKind.Potion) return i;
-                return -1;
+                if (slots[i].IsEmpty || slots[i].Definition.Kind != InventoryItemKind.Potion) continue;
+                if (selected < 0) selected = i;
+                else if (policy == QuickPotionPolicy.LowestPotency && slots[i].Potency < slots[selected].Potency ||
+                         policy == QuickPotionPolicy.HighestPotency && slots[i].Potency > slots[selected].Potency) selected = i;
+                if (policy != QuickPotionPolicy.LowestPotency && policy != QuickPotionPolicy.HighestPotency) break;
             }
+            return selected;
         }
 
         public bool TryTakeOne(int index, out InventoryStack taken)

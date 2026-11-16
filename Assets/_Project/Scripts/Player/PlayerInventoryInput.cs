@@ -35,7 +35,7 @@ namespace DungeonCrawler.Player
             if (pause != null) { pause.performed -= OnPause; pause.Dispose(); }
         }
         private void OnInventory(InputAction.CallbackContext _) => InventoryToggleRequested?.Invoke();
-        private void OnPotion(InputAction.CallbackContext _) { if (inventory != null) inventory.TryUseFirstPotion(); }
+        private void OnPotion(InputAction.CallbackContext _) { if (inventory != null) inventory.TryUseQuickPotion(); }
         private void OnPause(InputAction.CallbackContext _) => PauseRequested?.Invoke();
     }
 }

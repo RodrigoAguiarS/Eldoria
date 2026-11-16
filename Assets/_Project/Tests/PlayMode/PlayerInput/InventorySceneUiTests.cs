@@ -18,6 +18,8 @@ namespace DungeonCrawler.Tests.PlayerInput
     {
         private Keyboard keyboard;
         private Mouse mouse;
+        private const string OptionsKey = "DungeonCrawler.Options.v1";
+        private string previousPreferences;
         private static T InScene<T>() where T : Component
         {
             foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
@@ -27,11 +29,25 @@ namespace DungeonCrawler.Tests.PlayerInput
             }
             return null;
         }
-        public override void Setup() { base.Setup(); keyboard = InputSystem.AddDevice<Keyboard>(); mouse = InputSystem.AddDevice<Mouse>(); }
+        public override void Setup()
+        {
+            base.Setup(); keyboard = InputSystem.AddDevice<Keyboard>(); mouse = InputSystem.AddDevice<Mouse>();
+            previousPreferences = PlayerPrefs.HasKey(OptionsKey) ? PlayerPrefs.GetString(OptionsKey) : null;
+            PlayerPrefs.DeleteKey(OptionsKey);
+#if UNITY_EDITOR
+            UnityEditor.AssetDatabase.LoadAssetAtPath<GameOptionsDefinition>("Assets/_Project/ScriptableObjects/GameOptions.asset").Reload();
+#endif
+        }
         public override void TearDown()
         {
             foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects()) Object.DestroyImmediate(root);
-            Time.timeScale = 1f; base.TearDown();
+            Time.timeScale = 1f;
+            if (previousPreferences == null) PlayerPrefs.DeleteKey(OptionsKey); else PlayerPrefs.SetString(OptionsKey, previousPreferences);
+            PlayerPrefs.Save();
+#if UNITY_EDITOR
+            UnityEditor.AssetDatabase.LoadAssetAtPath<GameOptionsDefinition>("Assets/_Project/ScriptableObjects/GameOptions.asset").Reload();
+#endif
+            base.TearDown();
         }
         private IEnumerator Key(UnityEngine.InputSystem.Controls.KeyControl key)
         { Press(key); yield return null; Release(key); yield return null; }
@@ -44,6 +60,127 @@ namespace DungeonCrawler.Tests.PlayerInput
         }
 
 #if UNITY_EDITOR
+        private static GameOptionsDefinition Options => UnityEditor.AssetDatabase.LoadAssetAtPath<GameOptionsDefinition>("Assets/_Project/ScriptableObjects/GameOptions.asset");
+        private IEnumerator FillQuickPotions()
+        {
+            yield return SceneManager.LoadSceneAsync("Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity");
+            yield return null;
+            var inventory = InScene<PlayerInventory>();
+            foreach (int potency in new[] { 30, 20, 40, 15 }) inventory.GetComponent<PlayerProgression>().TryCollect(new LootDrop(LootKind.Potion, potency));
+            inventory.GetComponent<Health>().TakeDamage(99f, Vector3.zero);
+            InScene<GameMenuController>().TogglePause();
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator QuickPotion_QFullAndDeadDoesNotConsumeAndHudExplainsWhy()
+        {
+            yield return FillQuickPotions();
+            var health = InScene<PlayerInventory>().GetComponent<Health>(); var hud = InScene<PotionHudPresenter>();
+            health.Heal(health.Max);
+            Assert.AreEqual("HP cheio", hud.StatusText); Assert.IsFalse(hud.Available);
+            yield return Key(keyboard.qKey); Assert.AreEqual(4, hud.Total);
+            InScene<GameMenuController>().Resume();
+            health.TakeDamage(1000f, Vector3.zero); yield return null;
+            Assert.AreEqual("Indisponível", hud.StatusText); Assert.IsFalse(hud.Available);
+            yield return Key(keyboard.qKey); Assert.AreEqual(4, hud.Total);
+        }
+
+        private IEnumerator ChooseQuickPolicy(Dropdown dropdown, int policy)
+        {
+            Canvas.ForceUpdateCanvases();
+            Set(mouse.position, RectTransformUtility.WorldToScreenPoint(null, dropdown.transform.TransformPoint(((RectTransform)dropdown.transform).rect.center)));
+            yield return null; Press(mouse.leftButton); yield return null; Release(mouse.leftButton);
+            yield return new WaitForSecondsRealtime(.2f);
+            var rows = dropdown.transform.Find("Dropdown List").GetComponentsInChildren<Toggle>();
+            Assert.AreEqual(3, rows.Length);
+            var rect = (RectTransform)rows[policy].transform;
+            Set(mouse.position, RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center)));
+            yield return null; Press(mouse.leftButton); yield return null; Release(mouse.leftButton);
+            yield return new WaitForSecondsRealtime(.2f);
+            Assert.AreEqual(policy, dropdown.value);
+        }
+
+        [UnityTest]
+        public IEnumerator QuickPotion_RealOptionsApplyDiscardPausedQHudAndFreshRun()
+        {
+            yield return FillQuickPotions();
+            var inventory = InScene<PlayerInventory>(); var health = inventory.GetComponent<Health>();
+            var hud = InScene<PotionHudPresenter>(); var menu = InScene<GameMenuController>();
+            StringAssert.Contains("+30 HP", hud.StatusText); Assert.AreEqual(4, hud.Total);
+            menu.OpenOptions(); yield return null;
+            var presenter = InScene<GameOptionsPresenter>(); var window = presenter.transform.Find("Window");
+            var dropdown = window.Find("QuickPotionPolicy").GetComponent<Dropdown>();
+            yield return ChooseQuickPolicy(dropdown, 1);
+            Assert.AreEqual(0, inventory.QuickPotionIndex, "Draft cannot affect gameplay.");
+            menu.CloseOptions(); menu.OpenOptions(); yield return null;
+            Assert.AreEqual(0, dropdown.value, "Back discards unapplied policy.");
+            yield return ChooseQuickPolicy(dropdown, 2);
+            yield return Click(window.Find("Apply").GetComponent<Button>());
+            Assert.AreEqual(2, inventory.QuickPotionIndex); StringAssert.Contains("+40 HP", hud.StatusText);
+            Options.Reload(); Assert.AreEqual(QuickPotionPolicy.HighestPotency, Options.Current.quickPotionPolicy);
+            menu.CloseOptions(); menu.TogglePause(); menu.ToggleInventory(); yield return null;
+            Assert.AreEqual(0f, Time.timeScale); Assert.IsTrue(menu.InventoryOpen);
+            yield return Key(keyboard.qKey);
+            Assert.AreEqual(41f, health.Current); Assert.IsTrue(inventory.Slots[2].IsEmpty);
+            Assert.AreEqual(3, hud.Total); StringAssert.Contains("+30 HP", hud.StatusText);
+            // Explicit selected item remains independent of the quick policy.
+            var bag = InScene<InventoryPresenter>();
+            yield return Click(bag.GetComponentsInChildren<InventorySlotView>(true)[1].Button);
+            yield return Click(bag.transform.Find("Window/Use").GetComponent<Button>());
+            Assert.AreEqual(61f, health.Current); Assert.IsTrue(inventory.Slots[1].IsEmpty);
+            Assert.AreEqual(2, hud.Total);
+            menu.ToggleInventory();
+            yield return SceneManager.LoadSceneAsync("Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity"); yield return null;
+            inventory = InScene<PlayerInventory>(); Assert.AreEqual(QuickPotionPolicy.HighestPotency, Options.Current.quickPotionPolicy);
+            Assert.AreEqual(-1, inventory.QuickPotionIndex, "Restart creates a fresh bag, not a progress save.");
+            foreach (int potency in new[] { 30, 20, 40, 15 }) inventory.GetComponent<PlayerProgression>().TryCollect(new LootDrop(LootKind.Potion, potency));
+            Assert.AreEqual(2, inventory.QuickPotionIndex);
+            inventory.GetComponent<Health>().TakeDamage(99f, Vector3.zero); InScene<GameMenuController>().ToggleInventory();
+            var value = Options.Current.Copy(); value.quickPotionPolicy = QuickPotionPolicy.LowestPotency; Options.Apply(value);
+            StringAssert.Contains("+15 HP", InScene<PotionHudPresenter>().StatusText);
+            yield return Key(keyboard.qKey);
+            Assert.AreEqual(16f, inventory.GetComponent<Health>().Current);
+            StringAssert.Contains("+20 HP", InScene<PotionHudPresenter>().StatusText);
+        }
+
+        [UnityTest, Explicit("Visual capture needs a windowed Editor and rendering Game view (no -batchmode).")]
+        public IEnumerator Capture_QuickPotionOptionsAndHud720pAnd1080p()
+        {
+            if (Application.isBatchMode) Assert.Ignore("Game view capture requires a windowed Editor.");
+            string output = System.Environment.GetEnvironmentVariable("DUNGEON_CRAWLER_TEST_REPORT_DIR");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(output)); output = Path.Combine(output, "Captures"); Directory.CreateDirectory(output);
+            foreach (int width in new[] { 1280, 1920 })
+            {
+                yield return FillQuickPotions();
+                int height = width == 1280 ? 720 : 1080;
+                using (var gameView = new FixedGameView(width, height))
+                {
+                    yield return null; yield return null;
+                    Assert.AreEqual(width, Screen.width); Assert.AreEqual(height, Screen.height);
+                    var menu = InScene<GameMenuController>(); menu.OpenOptions(); yield return null;
+                    var window = InScene<GameOptionsPresenter>().transform.Find("Window");
+                    var dropdown = window.Find("QuickPotionPolicy").GetComponent<Dropdown>();
+                    foreach (int policy in new[] { 0, 1, 2 })
+                    {
+                        yield return ChooseQuickPolicy(dropdown, policy);
+                        yield return Click(window.Find("Apply").GetComponent<Button>());
+                        yield return CaptureComparison(output, width + "-options-" + policy);
+                        menu.CloseOptions(); menu.TogglePause(); // Show the real HUD, then freeze simulation without an overlay.
+                        InScene<GameplayPauseController>().SetPaused(true);
+                        Assert.AreEqual(new[] { 0, 3, 2 }[policy], InScene<PlayerInventory>().QuickPotionIndex);
+                        yield return CaptureComparison(output, width + "-hud-" + policy);
+                        InScene<GameplayPauseController>().SetPaused(false); menu.TogglePause(); menu.OpenOptions(); yield return null;
+                    }
+                    // Keep the expanded real dropdown visible for layout review.
+                    Set(mouse.position, RectTransformUtility.WorldToScreenPoint(null, dropdown.transform.TransformPoint(((RectTransform)dropdown.transform).rect.center)));
+                    yield return null; Press(mouse.leftButton); yield return null; Release(mouse.leftButton); yield return new WaitForSecondsRealtime(.2f);
+                    yield return CaptureComparison(output, width + "-dropdown");
+                }
+                Time.timeScale = 1f;
+            }
+        }
+
         [UnityTest]
         public IEnumerator SavedFloor_InventoryPausesAndRealButtonsEquipWeaponArmorThenQConsumesPotion()
         {

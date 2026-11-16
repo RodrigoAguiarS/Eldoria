@@ -29,6 +29,47 @@ namespace DungeonCrawler.Tests.EditMode
             Assert.Throws<System.ArgumentOutOfRangeException>(() => new InventoryModel(capacity));
 
         [Test]
+        public void QuickPotionPolicies_SelectPotencyAndLowestIndexWithoutMutation()
+        {
+            var model = new InventoryModel();
+            var potion = Asset<PotionData>();
+            model.TryAdd(Asset<WeaponData>());
+            foreach (int potency in new[] { 30, 20, 40, 15 }) model.TryAdd(potion, 1, potency);
+            model.TryAdd(Asset<PotionData>(), 1, 15);
+            model.TryAdd(Asset<PotionData>(), 1, 40);
+            int changes = 0; model.Changed += () => changes++;
+            Assert.AreEqual(1, model.GetPotionIndex(QuickPotionPolicy.First));
+            Assert.AreEqual(4, model.GetPotionIndex(QuickPotionPolicy.LowestPotency));
+            Assert.AreEqual(3, model.GetPotionIndex(QuickPotionPolicy.HighestPotency));
+            Assert.AreEqual(1, model.GetPotionIndex((QuickPotionPolicy)99));
+            Assert.AreEqual(0, changes, "Queries must not change the inventory or publish events.");
+            Assert.AreEqual(0, model.EquippedWeaponIndex);
+            model.TryConsumePotion(4, out _);
+            Assert.AreEqual(5, model.GetPotionIndex(QuickPotionPolicy.LowestPotency));
+            model.TryConsumePotion(3, out _);
+            Assert.AreEqual(6, model.GetPotionIndex(QuickPotionPolicy.HighestPotency));
+        }
+
+        [TestCase(QuickPotionPolicy.First)]
+        [TestCase(QuickPotionPolicy.LowestPotency)]
+        [TestCase(QuickPotionPolicy.HighestPotency)]
+        public void QuickPotionPolicies_KeepStackUntilEmptyThenAdvance(QuickPotionPolicy policy)
+        {
+            var model = new InventoryModel(); var potion = Asset<PotionData>();
+            Assert.AreEqual(-1, model.GetPotionIndex(policy));
+            model.TryAdd(potion, 6, 20);
+            for (int i = 0; i < 5; i++)
+            {
+                Assert.AreEqual(0, model.GetPotionIndex(policy));
+                Assert.IsTrue(model.TryConsumePotion(model.GetPotionIndex(policy), out int healing));
+                Assert.AreEqual(20, healing);
+            }
+            Assert.AreEqual(1, model.GetPotionIndex(policy));
+            model.TryConsumePotion(1, out _);
+            Assert.AreEqual(-1, model.GetPotionIndex(policy));
+        }
+
+        [Test]
         public void PotionStacks_RespectLimitDefinitionAndHealingPotency()
         {
             var potion = Asset<PotionData>();

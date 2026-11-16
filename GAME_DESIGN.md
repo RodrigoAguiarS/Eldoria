@@ -33,6 +33,8 @@ Regras aprovadas para a implementação da 1.0 (D-002): inventário com 16 espa�
 
 O especial aprovado é um giro de espada em 360° (botão direito/E), alcance inicial 3 m, dano 2× o básico calculado, custo 30 de estamina e cooldown 6 s. Estamina inicial máxima 100, regeneração 20/s após 0,8 s sem especial; básico/dash mantêm suas regras. Defesa base 0, fornecida por armadura; dano recebido positivo = max(1, dano × 100/(100 + defesa)). Esses valores novos são configuráveis e sujeitos a playtest, sem alterar a progressão por nível.
 
+F03: a opção **Poção rápida (Q)** escolhe **Primeira** (padrão, menor índice), **Menor potência** ou **Maior potência**, com desempate pelo menor índice atual da bolsa. O HUD mostra a potência escolhida; HP cheio ou jogador morto não consomem. Q permanece disponível na bolsa pausada; **Usar** continua consumindo o item selecionado. Somente a preferência persiste entre runs.
+
 ## Direção visual
 Low-poly estilizado, silhuetas legíveis na câmera isométrica, cores vivas e contraste adequado entre personagem, inimigos, perigos e cenário. Pedra, tochas e obstáculos destrutíveis no escopo posterior. Não copiar assets ou personagens de jogos existentes.
 

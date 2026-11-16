@@ -116,6 +116,7 @@ namespace DungeonCrawler.Editor
             var health = root.GetComponent<Health>(); var progression = root.GetComponent<PlayerProgression>();
             var input = root.GetComponent<PlayerInputReader>();
             Set(inventory, "definition", EnsureDefinition()); Set(inventory, "health", health); Set(inventory, "progression", progression);
+            Set(inventory, "options", GameShellSceneBuilder.EnsureOptions());
             var pickup = AssetDatabase.LoadAssetAtPath<GameObject>(ProjectPaths.Root + "/Prefabs/Items/Pickup.prefab");
             if (pickup == null) throw new InvalidOperationException("Pickup prefab missing.");
             Set(inventory, "pickupPrefab", pickup.GetComponent<Pickup>());

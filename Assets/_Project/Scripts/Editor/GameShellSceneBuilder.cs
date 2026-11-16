@@ -129,7 +129,54 @@ namespace DungeonCrawler.Editor
             var status = Label(window, "Status", "", new Vector2(48f, -650f), new Vector2(940f, 72f), 22); Set(presenter, "status", status);
             var apply = Button(window, "Apply", "Aplicar e salvar", new Vector2(48f, -750f), new Vector2(440f, 62f)); Link(apply, presenter.Apply);
             back = Button(window, "Back", "Voltar", new Vector2(550f, -750f), new Vector2(440f, 62f));
+            ConfigureQuickPotionOptions(panel.gameObject);
             panel.gameObject.SetActive(false); return panel.gameObject;
+        }
+
+        public static void ConfigureQuickPotionOptions(GameObject panel)
+        {
+            var window = (RectTransform)panel.transform.Find("Window");
+            window.sizeDelta = new Vector2(1040f, 920f);
+            Label(window, "QuickPotionLabel", "Poção rápida (Q)", new Vector2(48f, -630f), new Vector2(400f, 48f), 26);
+            var policy = Widget<Dropdown>(window, "QuickPotionPolicy", () => DefaultControls.CreateDropdown(new DefaultControls.Resources()),
+                new Vector2(520f, -630f), new Vector2(450f, 48f));
+            Set(panel.GetComponent<GameOptionsPresenter>(), "quickPotionPolicy", policy);
+            ((RectTransform)window.Find("Status")).anchoredPosition = new Vector2(48f, -700f);
+            ((RectTransform)window.Find("Apply")).anchoredPosition = new Vector2(48f, -810f);
+            ((RectTransform)window.Find("Back")).anchoredPosition = new Vector2(550f, -810f);
+        }
+
+        [MenuItem("Tools/Dungeon Crawler/Inventory/Integrate Quick Potion Policy (F03)")]
+        public static void IntegrateQuickPotionPolicy()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Saia do PlayMode.");
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+                if (SceneManager.GetSceneAt(i).isDirty) throw new InvalidOperationException("Salve a cena antes de integrar.");
+            var options = AssetDatabase.LoadAssetAtPath<GameOptionsDefinition>(OptionsPath);
+            if (options == null) throw new InvalidOperationException("Expected existing options asset.");
+            string prefab = ProjectPaths.PrefabsPlayer + "/Player.prefab";
+            var contents = PrefabUtility.LoadPrefabContents(prefab);
+            try { Set(contents.GetComponent<PlayerInventory>(), "options", options); PrefabUtility.SaveAsPrefabAsset(contents, prefab); }
+            finally { PrefabUtility.UnloadPrefabContents(contents); }
+            Scene original = SceneManager.GetActiveScene();
+            foreach (string path in new[] { MenuScene, ProjectPaths.MvpArenaScene, ProjectPaths.FloorScene, MvpReleaseBuild.Floor })
+            {
+                Scene scene = SceneManager.GetSceneByPath(path);
+                bool opened = !scene.IsValid() || !scene.isLoaded;
+                if (opened) scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
+                try
+                {
+                    foreach (var root in scene.GetRootGameObjects())
+                    {
+                        foreach (var inventory in root.GetComponentsInChildren<PlayerInventory>(true)) Set(inventory, "options", options);
+                        foreach (var presenter in root.GetComponentsInChildren<GameOptionsPresenter>(true)) ConfigureQuickPotionOptions(presenter.gameObject);
+                    }
+                    EditorSceneManager.SaveScene(scene);
+                }
+                finally { if (opened) EditorSceneManager.CloseScene(scene, true); }
+            }
+            if (original.IsValid() && original.isLoaded) SceneManager.SetActiveScene(original);
+            AssetDatabase.SaveAssets();
         }
         private static T Widget<T>(Transform parent, string name, Func<GameObject> create, Vector2 position, Vector2 size) where T : Component
         {
