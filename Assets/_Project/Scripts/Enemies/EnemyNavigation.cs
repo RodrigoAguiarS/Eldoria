@@ -8,6 +8,7 @@ namespace DungeonCrawler.Enemies
     public sealed class EnemyNavigation : MonoBehaviour
     {
         private NavMeshAgent cachedAgent;
+        private float stoppingDistance;
 
         // Lazy: EnemyBrain.Awake pode rodar antes do Awake deste componente.
         private NavMeshAgent agent => cachedAgent != null ? cachedAgent : (cachedAgent = GetComponent<NavMeshAgent>());
@@ -16,11 +17,17 @@ namespace DungeonCrawler.Enemies
 
         public void SetSpeed(float speed) => agent.speed = speed;
 
-        public void SetStoppingDistance(float distance) => agent.stoppingDistance = distance;
+        public void SetStoppingDistance(float distance)
+        {
+            stoppingDistance = distance;
+            agent.stoppingDistance = distance;
+        }
 
-        public void MoveTo(Vector3 destination)
+        public void MoveTo(Vector3 destination, bool approachCover = false)
         {
             if (!IsOnNavMesh) return;
+            // While occluded, do not stop at the ranged attack radius behind the wall.
+            agent.stoppingDistance = approachCover ? agent.radius : stoppingDistance;
             agent.isStopped = false;
             agent.SetDestination(destination);
         }
@@ -45,8 +52,8 @@ namespace DungeonCrawler.Enemies
         public void Stop()
         {
             if (!IsOnNavMesh) return;
-            agent.isStopped = true;
             agent.ResetPath();
+            agent.isStopped = true;
         }
 
         public void Disable()

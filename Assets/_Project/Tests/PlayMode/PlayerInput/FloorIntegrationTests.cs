@@ -158,8 +158,19 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.IsNotNull(prefab);
             var player = Field<Health>(rooms[0], "player");
             var pool = InScene<ProjectilePool>();
-            var enemy = Object.Instantiate(prefab, player.transform.position + Vector3.forward * 5f, Quaternion.identity);
+            // F07 requires an explicitly open, physically clear firing lane in this fixture.
+            Field<DoorController>(rooms[0], "entryDoor").SetOpenInstant(true);
+            Physics.SyncTransforms();
+            // Stay inside the attack band, away from the keepDistance boundary after NavMesh placement.
+            float firingDistance = (data.keepDistance + data.attackRange) * .5f;
+            var enemy = Object.Instantiate(prefab, player.transform.position + Vector3.forward * firingDistance, Quaternion.identity);
             enemy.GetComponent<EnemyBrain>().Inject(player, pool);
+            Physics.SyncTransforms();
+            Vector3 origin = enemy.GetComponent<EnemyCombat>().ProjectileOrigin;
+            Vector3 lane = player.transform.position + Vector3.up * data.projectileHeight - origin;
+            var blockers = Physics.RaycastAll(origin, lane.normalized, lane.magnitude, data.lineOfSightMask, QueryTriggerInteraction.Ignore);
+            Assert.IsEmpty(blockers, "Fixture requires clear sight: " + string.Join(", ", System.Array.ConvertAll(blockers,
+                value => value.collider.name + " at " + value.point)));
             float before = player.Current;
             bool sawProjectile = false;
             float deadline = Time.time + 6f;
@@ -168,7 +179,9 @@ namespace DungeonCrawler.Tests.PlayerInput
                 sawProjectile |= pool.ActiveCount > 0;
                 yield return null;
             }
-            Assert.IsTrue(sawProjectile, "The saved ranged enemy must launch through the actual pool.");
+            Assert.IsTrue(sawProjectile, "The saved ranged enemy must launch through the actual pool. " +
+                "State=" + enemy.GetComponent<EnemyBrain>().State + ", position=" + enemy.transform.position +
+                ", target=" + player.transform.position + ", sight=" + enemy.GetComponent<EnemyCombat>().HasLineOfSight(player.transform, true));
             Assert.AreEqual(before - data.attackDamage, player.Current, .001f);
             Assert.AreEqual(16, pool.TotalCount);
             LogAssert.NoUnexpectedReceived();
