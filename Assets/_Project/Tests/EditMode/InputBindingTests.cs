@@ -32,13 +32,26 @@ namespace DungeonCrawler.Tests.EditMode
             if (previous == null) PlayerPrefs.DeleteKey(InputBindingSet.PreferencesKey); else PlayerPrefs.SetString(InputBindingSet.PreferencesKey, previous);
             PlayerPrefs.Save();
         }
-        [Test] public void OwnersUseOneIsolatedSet_WithThirteenEditableSlotsAndImmutableEscape()
+        [Test] public void OwnersUseOneIsolatedSet_WithFourteenEditableSlotsAndImmutableEscape()
         {
-            Assert.AreEqual(13, bindings.Slots.Count);
+            Assert.AreEqual(14, bindings.Slots.Count);
             Assert.AreNotSame(template, bindings.Actions);
             Assert.IsNull(bindings.Actions.FindAction("Gameplay/Restart"));
             Assert.AreEqual(2, bindings.Find("Pause").bindings.Count);
             Assert.AreEqual("<Keyboard>/escape", bindings.Find("Pause").bindings[1].effectivePath);
+        }
+        [Test] public void LegacyV1UsingF_PreservesOldBindingAndAssignsFreeInteractKey()
+        {
+            const string legacy = "{\"version\":1,\"overrides\":[{\"id\":\"Dash/0\",\"path\":\"<Keyboard>/f\"}]}";
+            Assert.AreEqual("<Keyboard>/f", bindings.GetSlot("Interact/0").Path);
+            Assert.IsFalse(bindings.TryOverride("Dash/0", "<Keyboard>/f", out string conflict, false));
+            StringAssert.Contains("baú", conflict);
+            Assert.IsTrue(bindings.TryLoad(legacy, out _));
+            Assert.AreEqual("<Keyboard>/f", bindings.GetSlot("Dash/0").Path);
+            Assert.AreEqual("<Keyboard>/g", bindings.GetSlot("Interact/0").Path);
+            using var copy = new InputBindingSet(template, false);
+            Assert.IsTrue(copy.TryLoad(bindings.ToJson(), out _));
+            Assert.AreEqual("<Keyboard>/g", copy.GetSlot("Interact/0").Path);
         }
         [TestCase("<Keyboard>/notAKey")]
         [TestCase("<Keyboard>/*")]
@@ -71,11 +84,11 @@ namespace DungeonCrawler.Tests.EditMode
         [Test] public void OverrideReloadAndReset_PersistOnlyBindingsAndNeverChangeTemplate()
         {
             string json = template.ToJson(); byte[] file = File.ReadAllBytes(AssetPath);
-            Assert.IsTrue(bindings.TryOverride("UsePotion/0", "<Keyboard>/f", out _));
+            Assert.IsTrue(bindings.TryOverride("UsePotion/0", "<Keyboard>/g", out _));
             Assert.IsTrue(bindings.TryOverride("Inventory/0", "<Mouse>/middleButton", out _));
             Assert.IsTrue(bindings.TryOverride("Pause/0", "<Keyboard>/p", out _));
             using var reloaded = new InputBindingSet(template);
-            Assert.AreEqual("<Keyboard>/f", reloaded.GetSlot("UsePotion/0").Path);
+            Assert.AreEqual("<Keyboard>/g", reloaded.GetSlot("UsePotion/0").Path);
             Assert.AreEqual("<Mouse>/middleButton", reloaded.GetSlot("Inventory/0").Path);
             StringAssert.Contains("P", reloaded.Display("Pause"));
             Assert.AreEqual("<Keyboard>/escape", reloaded.Find("Pause").bindings[1].effectivePath);
@@ -91,12 +104,12 @@ namespace DungeonCrawler.Tests.EditMode
         [TestCase("{\"version\":2,\"overrides\":[]}")]
         [TestCase("{\"version\":0,\"overrides\":[]}")]
         [TestCase("{\"version\":1}")]
-        [TestCase("{\"version\":1,\"overrides\":[{\"id\":\"unknown\",\"path\":\"<Keyboard>/f\"}]}")]
+        [TestCase("{\"version\":1,\"overrides\":[{\"id\":\"unknown\",\"path\":\"<Keyboard>/g\"}]}")]
         [TestCase("{\"version\":1,\"overrides\":[{\"id\":\"Dash/0\",\"path\":\"<Keyboard>/q\"}]}")]
-        [TestCase("{\"version\":1,\"overrides\":[{\"id\":\"Dash/0\",\"path\":\"<Keyboard>/f\"},{\"id\":\"Dash/0\",\"path\":\"<Keyboard>/g\"}]}")]
+        [TestCase("{\"version\":1,\"overrides\":[{\"id\":\"Dash/0\",\"path\":\"<Keyboard>/g\"},{\"id\":\"Dash/0\",\"path\":\"<Keyboard>/g\"}]}")]
         public void InvalidDocumentsRejectAtomicallyAndPreserveStoredData(string json)
         {
-            Assert.IsTrue(bindings.TryOverride("Dash/0", "<Keyboard>/f", out _));
+            Assert.IsTrue(bindings.TryOverride("Dash/0", "<Keyboard>/g", out _));
             string before = bindings.ToJson();
             Assert.IsFalse(bindings.TryLoad(json, out _)); Assert.AreEqual(before, bindings.ToJson());
             PlayerPrefs.SetString(InputBindingSet.PreferencesKey, json);

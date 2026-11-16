@@ -20,6 +20,7 @@ namespace DungeonCrawler.Player
         private InputAction attack;
         private InputAction dash;
         private InputAction special;
+        private InputAction interact;
         private InputActionMap gameplayMap;
         private bool gameplaySuppressed;
         private bool waitForRelease;
@@ -31,6 +32,7 @@ namespace DungeonCrawler.Player
         public bool AttackHeld => attack != null && attack.IsPressed() && ButtonsAllowed;
         public event Action AttackPressed;
         public event Action SpecialPressed;
+        public event Action InteractPressed;
         public bool DashPressedThisFrame => dash != null && dash.WasPressedThisFrame() && ButtonsAllowed;
 
         private void Awake()
@@ -53,6 +55,8 @@ namespace DungeonCrawler.Player
             dash = map.FindAction("Dash", true);
             special = map.FindAction("Special", true);
             special.performed += OnSpecialPerformed;
+            interact = map.FindAction("Interact", true);
+            interact.performed += OnInteractPerformed;
         }
 
         private void OnEnable() { if (!gameplaySuppressed) gameplayMap?.Enable(); }
@@ -71,14 +75,16 @@ namespace DungeonCrawler.Player
         {
             if (attack != null) attack.performed -= OnAttackPerformed;
             if (special != null) special.performed -= OnSpecialPerformed;
+            if (interact != null) interact.performed -= OnInteractPerformed;
             ownedBindings?.Dispose();
         }
 
         private void Update()
         {
-            if (waitForRelease && !attack.IsPressed() && !special.IsPressed() && !dash.IsPressed()) waitForRelease = false;
+            if (waitForRelease && !attack.IsPressed() && !special.IsPressed() && !dash.IsPressed() && !interact.IsPressed()) waitForRelease = false;
         }
         private void OnAttackPerformed(InputAction.CallbackContext context) { if (ButtonsAllowed) AttackPressed?.Invoke(); }
         private void OnSpecialPerformed(InputAction.CallbackContext context) { if (ButtonsAllowed) SpecialPressed?.Invoke(); }
+        private void OnInteractPerformed(InputAction.CallbackContext context) { if (ButtonsAllowed) InteractPressed?.Invoke(); }
     }
 }

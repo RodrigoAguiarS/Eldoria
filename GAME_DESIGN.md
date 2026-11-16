@@ -28,6 +28,8 @@ Duas fases. Aos 50% HP: transição única, invulnerável por 3 segundos, rugido
 ## Dungeon
 Salas como prefabs, com pontos de entrada/saída, portas e pontos de spawn definidos. Inicialmente sequência fixa; aleatoriedade só após estabilização. Inimigos da sala são rastreados por referências/eventos, não por busca global.
 
+F08 — experimento registrado em [PROPOSAL](Reports/F08/PROPOSAL.md): a primeira sala fixa da cena de release tem um baú de primitivas. F próximo (2,5 m por padrão) abre somente após limpar a sala; E/direito continuam giro. Jogador morto, pausa, sala ou baú desativado impedem abertura. Abre/sorteia uma vez por instância da run: repetição, desativação/reativação e reset isolado de HP não renovam a recompensa. Reiniciar carrega sala e baú novos. Tabela exclusiva do baú concede 10–20 ouro e uma espada de ferro pelos pickups normais; não muda tabelas de inimigos. Drops do baú não expiram; bolsa cheia preserva a mesma recompensa até coleta aceita ou fim da run. Sem chaves, loja ou geração procedural. F pode ser remapeado em Controles; uma preferência anterior que já usava F é preservada, com tecla livre atribuída à interação e indicada no aviso.
+
 ## Progressão
 Inimigos concedem orbes de XP; ao subir de nível, cura configurável e +10% de dano (multiplicador por nível definido em código de progressão e testado). Drops possíveis: ouro, poção e arma. Itens, raridades e valores são ScriptableObjects.
 

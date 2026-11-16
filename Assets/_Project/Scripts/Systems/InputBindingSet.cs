@@ -34,12 +34,15 @@ namespace DungeonCrawler.Systems
             // Restart in the historical Gameplay map was never consumed. Give its single runtime owner a shortcut action.
             var oldRestart = Actions.FindAction("Gameplay/Restart");
             if (oldRestart != null) oldRestart.RemoveAction();
+            var gameplay = Actions.FindActionMap("Gameplay");
+            if (gameplay != null && gameplay.FindAction("Interact") == null)
+                gameplay.AddAction("Interact", InputActionType.Button, "<Keyboard>/f");
             var shortcuts = Actions.AddActionMap("Shortcuts");
             shortcuts.AddAction("Inventory", InputActionType.Button, "<Keyboard>/i").AddBinding("<Keyboard>/tab");
             shortcuts.AddAction("UsePotion", InputActionType.Button, "<Keyboard>/q");
             shortcuts.AddAction("Pause", InputActionType.Button, "<Keyboard>/escape");
             shortcuts.AddAction("Restart", InputActionType.Button, "<Keyboard>/r");
-            foreach (string name in new[] { "Move", "Attack", "Dash", "Special", "Inventory", "UsePotion", "Pause", "Restart" })
+            foreach (string name in new[] { "Move", "Attack", "Dash", "Special", "Inventory", "UsePotion", "Pause", "Restart", "Interact" })
             {
                 var action = Find(name);
                 if (action == null) continue;
@@ -114,6 +117,21 @@ namespace DungeonCrawler.Systems
                 if (slot == null || !TryNormalize(entry.path, out string path) || IsReserved(slot, path)) return false;
                 paths[slot.Id] = path;
             }
+            // Pre-F08 v1 documents may already assign F. Keep that assignment and give the
+            // new slot a free default; never silently discard the user's older controls.
+            const string interactId = "Interact/0";
+            if (paths.ContainsKey(interactId) && !seen.Contains(interactId))
+            {
+                var occupied = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                foreach (var pair in paths) if (pair.Key != interactId) occupied.Add(pair.Value);
+                foreach (char key in "fghjkluyopbnmvczxt1234567890")
+                {
+                    string candidate = "<Keyboard>/" + key;
+                    if (occupied.Contains(candidate)) continue;
+                    paths[interactId] = candidate;
+                    break;
+                }
+            }
             var unique = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (string path in paths.Values) if (!unique.Add(path)) return false;
             foreach (var slot in slots) slot.Action.ApplyBindingOverride(slot.Index, paths[slot.Id]);
@@ -159,6 +177,7 @@ namespace DungeonCrawler.Systems
                 case "Inventory": return "Bolsa" + (index > 0 ? " (alternativo)" : "");
                 case "UsePotion": return "Poção rápida";
                 case "Pause": return "Pausa / voltar";
+                case "Interact": return "Interagir com baú";
                 default: return "Reiniciar partida";
             }
         }

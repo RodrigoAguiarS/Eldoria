@@ -27,11 +27,11 @@ namespace DungeonCrawler.Systems
         public LootDrop Drop => drop;
         public PickupVisualPresenter Presenter => presenter;
 
-        public void Setup(in LootDrop lootDrop)
+        public void Setup(in LootDrop lootDrop, bool persistUntilCollected = false)
         {
             drop = lootDrop;
             baseY = transform.position.y;
-            expireAt = Time.time + lifetime;
+            expireAt = persistUntilCollected ? float.PositiveInfinity : Time.time + lifetime;
             if (presenter != null && presenter.Present(lootDrop)) return;
             ItemDefinition item = lootDrop.Kind == LootKind.Weapon ? lootDrop.Weapon : lootDrop.Armor;
             Tint(item != null && item.rarity != null ? item.rarity.color : ColorFor(lootDrop.Kind));

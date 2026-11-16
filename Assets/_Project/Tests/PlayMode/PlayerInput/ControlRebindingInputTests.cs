@@ -76,14 +76,14 @@ namespace DungeonCrawler.Tests.PlayerInput
             StringAssert.Contains("Conflito", source.Status); Assert.AreEqual(original, source.Bindings.ToJson());
             yield return Click(ControlButton("Binding_5")); yield return Key(keyboard.enterKey);
             StringAssert.Contains("inválido", source.Status); Assert.AreEqual(original, source.Bindings.ToJson());
-            yield return Click(ControlButton("Binding_5")); yield return Key(keyboard.fKey);
-            Assert.AreEqual("<Keyboard>/f", source.Bindings.GetSlot("Dash/0").Path);
+            yield return Click(ControlButton("Binding_5")); yield return Key(keyboard.gKey);
+            Assert.AreEqual("<Keyboard>/g", source.Bindings.GetSlot("Dash/0").Path);
             yield return Key(keyboard.escapeKey); Assert.AreEqual(MenuScreen.Options, InScene<MenuScreenStack>().Current);
             yield return Key(keyboard.escapeKey); Assert.AreEqual(MenuScreen.Title, InScene<MenuScreenStack>().Current);
             var controlsHint = InScene<MenuScreenStack>().transform.Find("TitlePanel/Content/Controls").GetComponent<Text>();
-            StringAssert.Contains("F · dash", controlsHint.text);
+            StringAssert.Contains("G · dash", controlsHint.text);
             yield return OpenControlsFromTitle(); source = InScene<RuntimeInputBindings>();
-            Assert.AreEqual("<Keyboard>/f", source.Bindings.GetSlot("Dash/0").Path);
+            Assert.AreEqual("<Keyboard>/g", source.Bindings.GetSlot("Dash/0").Path);
             yield return Click(ControlButton("Reset")); Assert.AreEqual("<Keyboard>/space", source.Bindings.GetSlot("Dash/0").Path);
             yield return SceneManager.LoadSceneAsync(Floor); yield return null;
             Assert.AreEqual("<Keyboard>/space", InScene<RuntimeInputBindings>().Bindings.GetSlot("Dash/0").Path);
@@ -116,19 +116,19 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return SceneManager.LoadSceneAsync(Floor); yield return null;
             var source = InScene<RuntimeInputBindings>(); var inventory = InScene<PlayerInventory>();
             var health = inventory.GetComponent<Health>();
-            Assert.IsTrue(source.Bindings.TryOverride("Inventory/0", "<Keyboard>/f", out _));
-            Assert.IsTrue(source.Bindings.TryOverride("UsePotion/0", "<Keyboard>/g", out _));
+            Assert.IsTrue(source.Bindings.TryOverride("Inventory/0", "<Keyboard>/g", out _));
+            Assert.IsTrue(source.Bindings.TryOverride("UsePotion/0", "<Keyboard>/h", out _));
             Assert.IsTrue(source.Bindings.TryOverride("Pause/0", "<Keyboard>/p", out _));
             inventory.GetComponent<PlayerProgression>().TryCollect(new LootDrop(LootKind.Potion, 15));
             health.TakeDamage(40f, Vector3.zero); float before = health.Current;
-            yield return Key(keyboard.fKey); Assert.AreEqual(0f, Time.timeScale); Assert.IsTrue(InScene<GameMenuController>().InventoryOpen);
+            yield return Key(keyboard.gKey); Assert.AreEqual(0f, Time.timeScale); Assert.IsTrue(InScene<GameMenuController>().InventoryOpen);
             yield return Key(keyboard.qKey); Assert.AreEqual(before, health.Current);
-            yield return Key(keyboard.gKey); Assert.AreEqual(before + 15f, health.Current);
+            yield return Key(keyboard.hKey); Assert.AreEqual(before + 15f, health.Current);
             yield return Key(keyboard.escapeKey); Assert.AreEqual(1f, Time.timeScale);
             yield return Key(keyboard.pKey); Assert.AreEqual(0f, Time.timeScale);
             inventory.GetComponent<PlayerProgression>().TryCollect(new LootDrop(LootKind.Potion, 15));
             InScene<GameMenuController>().OpenOptions(); yield return null;
-            yield return Key(keyboard.gKey); Assert.AreEqual(before + 15f, health.Current);
+            yield return Key(keyboard.hKey); Assert.AreEqual(before + 15f, health.Current);
             yield return Key(keyboard.escapeKey); Assert.AreEqual(MenuScreen.Pause, InScene<MenuScreenStack>().Current);
             yield return Key(keyboard.escapeKey); Assert.AreEqual(1f, Time.timeScale);
         }
@@ -153,7 +153,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return SceneManager.LoadSceneAsync(Floor); yield return null;
             var source = InScene<RuntimeInputBindings>();
             Assert.IsTrue(source.Bindings.TryOverride("Restart/0", "<Keyboard>/t", out _));
-            Assert.IsTrue(source.Bindings.TryOverride("Dash/0", "<Keyboard>/f", out _));
+            Assert.IsTrue(source.Bindings.TryOverride("Dash/0", "<Keyboard>/g", out _));
             var player = InScene<PlayerInventory>(); var health = player.GetComponent<Health>();
             player.GetComponent<PlayerProgression>().TryCollect(new LootDrop(LootKind.Potion, 15));
             health.TakeDamage(10000f, Vector3.zero); yield return null;
@@ -163,7 +163,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return Key(keyboard.tKey); yield return null;
             Assert.AreNotSame(source, InScene<RuntimeInputBindings>());
             Assert.AreEqual("<Keyboard>/t", InScene<RuntimeInputBindings>().Bindings.GetSlot("Restart/0").Path);
-            Assert.AreEqual("<Keyboard>/f", InScene<RuntimeInputBindings>().Bindings.GetSlot("Dash/0").Path);
+            Assert.AreEqual("<Keyboard>/g", InScene<RuntimeInputBindings>().Bindings.GetSlot("Dash/0").Path);
             Assert.AreEqual(-1, InScene<PlayerInventory>().QuickPotionIndex); Assert.IsTrue(InScene<PlayerCombat>().GetComponent<Health>().IsAlive);
         }
 
@@ -173,7 +173,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             var source = InScene<RuntimeInputBindings>(); var reader = InScene<PlayerInputReader>();
             Assert.IsTrue(source.Bindings.TryOverride("Move/up", "<Keyboard>/t", out _));
             Assert.IsTrue(source.Bindings.TryOverride("Dash/0", "<Keyboard>/v", out _));
-            Assert.IsTrue(source.Bindings.TryOverride("Attack/0", "<Keyboard>/f", out _));
+            Assert.IsTrue(source.Bindings.TryOverride("Attack/0", "<Keyboard>/g", out _));
             Assert.IsTrue(source.Bindings.TryOverride("Special/1", "<Keyboard>/b", out _));
             Set(mouse.position, new Vector2(Screen.width * .6f, Screen.height * .6f)); InputSystem.Update();
             Press(keyboard.wKey); yield return null; Assert.AreEqual(Vector2.zero, reader.Move); Release(keyboard.wKey);
@@ -181,7 +181,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             Press(keyboard.vKey); yield return null; Assert.Greater(reader.GetComponent<PlayerDash>().CooldownFraction, .9f); Release(keyboard.vKey);
             yield return new WaitForSeconds(.3f);
             int attacks = 0, specials = 0; reader.AttackPressed += () => attacks++; reader.SpecialPressed += () => specials++;
-            yield return Key(keyboard.fKey); Assert.AreEqual(1, attacks); Assert.IsTrue(reader.GetComponent<PlayerCombat>().IsBusy);
+            yield return Key(keyboard.gKey); Assert.AreEqual(1, attacks); Assert.IsTrue(reader.GetComponent<PlayerCombat>().IsBusy);
             yield return Key(keyboard.eKey); Assert.AreEqual(0, specials);
             yield return new WaitForSeconds(1.5f);
             yield return Key(keyboard.bKey); Assert.AreEqual(1, specials);
