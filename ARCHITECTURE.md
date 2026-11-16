@@ -26,6 +26,12 @@ Unity **6000.6.9f1**, URP **17.6.0**, PC Windows x64. Manifest/lock versionados:
 ## Input e movimento
 Asset `.inputactions` com mapa `Gameplay`: `Move` (Vector2 WASD), `Point` (mouse position), `Attack` (left click), `Dash` (space), `Special` (right click/E). Utilizar callbacks ou leitura de `InputActionReference`; nunca Input legado. Projetar forward/right da câmera no plano XZ e normalizar. Mira: raio da câmera para chão/collider, fallback a plano horizontal quando apropriado.
 
+F04: cada cena oficial compõe uma única `RuntimeInputBindings`, explicitamente referenciada por PlayerInputReader, PlayerInventoryInput, GameRestarter e menus. `InputBindingSet` clona o template e acrescenta `Shortcuts` (Inventory/UsePotion/Pause/Restart); remove somente da cópia o Restart de Gameplay, anteriormente sem consumidor. O leitor habilita/suspende Gameplay; os demais donos habilitam suas ações de Shortcuts, preservando pausa e reinício após morte. Atores isolados antigos podem criar um set privado; cenas e prefab oficiais têm referências explícitas. O asset compartilhado e o mapa UI não recebem overrides.
+
+Treze slots estáveis (`Move/up`, `Dash/0`, etc.) formam o schema v1 de `DungeonCrawler.Bindings.v1` no PlayerPrefs. A carga valida o documento inteiro antes de aplicar: versão desconhecida, ID repetido/desconhecido, caminho inválido e colisão entre slots rejeitam a carga sem apagar a preferência. Somente teclas físicas canônicas e cinco botões de mouse são aceitos; agregadores/curingas/eixos/gamepad são recusados. Escape é reservado, com fallback imutável na ação Pause; Enter/numpadEnter ficam na UI. Conflitos não são trocas automáticas. Reset remove overrides e salva defaults; não toca opções gerais nem inventário/progressão.
+
+`RuntimeInputBindings` controla `RebindingOperation`, timeout não escalado, cancelamento por Escape/botão/perda de foco/desativação, suspensão dos donos e retomada após um frame neutro. O clique em Cancelar/Voltar não pode virar binding. `GameMenuController` informa o contexto: poção disponível no gameplay/bolsa; reinício por atalho suspenso nos overlays, com botões ainda funcionais. Raycast por EventSystem explicitamente injetado filtra cliques de UI; PlayerInputReader exige soltar botões ao retomar a pausa para evitar ataque pelo clique de Continuar. `BindingHintPresenter` e os presenters de recurso/avisos consultam as ações efetivas. `ControlBindingsSceneBuilder.Integrate` integra prefab e quatro cenas idempotentemente, sem reconstruir arte, salas, dados ou `.inputactions`.
+
 ## Câmera
 Cinemachine com follow e offset isométrico; confirmar API conforme versão instalada. Configurar smoothing e orientação fixa; tremor somente via componente/efeito compatível, não manipular transform da câmera principal de forma conflitante.
 
@@ -60,7 +66,7 @@ F03: `InventoryModel.GetPotionIndex(QuickPotionPolicy)` seleciona por ordem/pot�
 
 ## Pausa e atalhos (1.0 / D-002)
 
-GameplayPauseController suspende o mapa Gameplay, cancela controles explicitamente referenciados e congela Time.timeScale. Ao sair, restaura apenas controles previamente habilitados e jogador vivo; destruir/desativar o controlador restaura o tempo. Timers de combate/IA/spawn/projéteis respeitam a pausa, inclusive na janela de impacto. PlayerInventoryInput mantém I/Tab/Q/Esc em ações separadas, disponíveis durante o menu. GameMenuController apresenta os painéis e solicita pausa; não decide dano, cura ou progressão.
+GameplayPauseController suspende o mapa Gameplay, cancela controles explicitamente referenciados e congela Time.timeScale. Ao sair, restaura apenas controles previamente habilitados e jogador vivo; destruir/desativar o controlador restaura o tempo. Timers de combate/IA/spawn/projéteis respeitam a pausa, inclusive na janela de impacto. PlayerInventoryInput usa as ações de Shortcuts da fonte runtime (padrões I/Tab/Q/Esc), disponíveis conforme contexto durante o menu e suspensas na captura. GameMenuController apresenta os painéis e solicita pausa; não decide dano, cura ou progressão.
 
 ## Especial e estamina (1.0 / D-002)
 

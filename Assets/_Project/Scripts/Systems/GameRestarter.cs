@@ -6,15 +6,18 @@ namespace DungeonCrawler.Systems
 {
     /// <summary>
     /// Reinicia a cena ativa (tecla R ou botão da UI chamando Restart()).
-    /// A ação é criada em código, sem depender de asset serializado na cena.
+    /// A ação pertence à fonte runtime de bindings; o botão continua disponível nos menus.
     /// </summary>
     public sealed class GameRestarter : MonoBehaviour
     {
         private InputAction restart;
+        [SerializeField] private RuntimeInputBindings bindings;
+        private InputBindingSet ownedBindings;
 
         private void Awake()
         {
-            restart = new InputAction("Restart", InputActionType.Button, "<Keyboard>/r");
+            var runtime = bindings != null ? bindings.Bindings : (ownedBindings = new InputBindingSet(null));
+            restart = runtime.Find("Restart");
         }
 
         private void OnEnable()
@@ -29,9 +32,10 @@ namespace DungeonCrawler.Systems
             restart.Disable();
         }
 
-        private void OnDestroy() => restart?.Dispose();
+        private void OnDestroy() => ownedBindings?.Dispose();
 
-        private void OnRestartPerformed(InputAction.CallbackContext context) => Restart();
+        private void OnRestartPerformed(InputAction.CallbackContext context)
+        { if (bindings == null || (!bindings.OverlayOpen && bindings.AllowShortcut(context))) Restart(); }
 
         public void Restart()
         {

@@ -9,6 +9,8 @@ namespace DungeonCrawler.Player
     public sealed class PlayerInventoryInput : MonoBehaviour
     {
         [SerializeField] private PlayerInventory inventory;
+        [SerializeField] private RuntimeInputBindings bindings;
+        private InputBindingSet ownedBindings;
         private InputAction toggleInventory;
         private InputAction usePotion;
         private InputAction pause;
@@ -17,10 +19,10 @@ namespace DungeonCrawler.Player
 
         private void Awake()
         {
-            toggleInventory = new InputAction("Inventory", InputActionType.Button, "<Keyboard>/i");
-            toggleInventory.AddBinding("<Keyboard>/tab");
-            usePotion = new InputAction("UsePotion", InputActionType.Button, "<Keyboard>/q");
-            pause = new InputAction("Pause", InputActionType.Button, "<Keyboard>/escape");
+            var runtime = bindings != null ? bindings.Bindings : (ownedBindings = new InputBindingSet(null));
+            toggleInventory = runtime.Find("Inventory");
+            usePotion = runtime.Find("UsePotion");
+            pause = runtime.Find("Pause");
             toggleInventory.performed += OnInventory;
             usePotion.performed += OnPotion;
             pause.performed += OnPause;
@@ -30,12 +32,15 @@ namespace DungeonCrawler.Player
         private void OnDisable() { toggleInventory?.Disable(); usePotion?.Disable(); pause?.Disable(); }
         private void OnDestroy()
         {
-            if (toggleInventory != null) { toggleInventory.performed -= OnInventory; toggleInventory.Dispose(); }
-            if (usePotion != null) { usePotion.performed -= OnPotion; usePotion.Dispose(); }
-            if (pause != null) { pause.performed -= OnPause; pause.Dispose(); }
+            if (toggleInventory != null) toggleInventory.performed -= OnInventory;
+            if (usePotion != null) usePotion.performed -= OnPotion;
+            if (pause != null) pause.performed -= OnPause;
+            ownedBindings?.Dispose();
         }
-        private void OnInventory(InputAction.CallbackContext _) => InventoryToggleRequested?.Invoke();
-        private void OnPotion(InputAction.CallbackContext _) { if (inventory != null) inventory.TryUseQuickPotion(); }
-        private void OnPause(InputAction.CallbackContext _) => PauseRequested?.Invoke();
+        private bool Allowed(InputAction.CallbackContext context) => bindings == null || bindings.AllowShortcut(context);
+        private void OnInventory(InputAction.CallbackContext context) { if (Allowed(context)) InventoryToggleRequested?.Invoke(); }
+        private void OnPotion(InputAction.CallbackContext context)
+        { if (Allowed(context) && (bindings == null || bindings.PotionAllowed) && inventory != null) inventory.TryUseQuickPotion(); }
+        private void OnPause(InputAction.CallbackContext context) { if (Allowed(context)) PauseRequested?.Invoke(); }
     }
 }

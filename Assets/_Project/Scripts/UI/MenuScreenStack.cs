@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace DungeonCrawler.UI
 {
-    public enum MenuScreen { Title, Pause, Inventory, Options }
+    public enum MenuScreen { Title, Pause, Inventory, Options, Controls }
     public sealed class MenuScreenStack : MonoBehaviour
     {
         [Serializable] private struct ScreenEntry { public MenuScreen id; public GameObject root; public Selectable firstFocus; }
@@ -14,6 +14,7 @@ namespace DungeonCrawler.UI
         private readonly MenuScreen[] stack = new MenuScreen[4];
         private int count;
         public bool IsEmpty => count == 0;
+        public event Action Changed;
         public MenuScreen Current => count > 0 ? stack[count - 1] : throw new InvalidOperationException("No menu open.");
         private void Awake() { foreach (var screen in screens) if (screen.root != null) screen.root.SetActive(false); }
         public void Push(MenuScreen id)
@@ -21,7 +22,7 @@ namespace DungeonCrawler.UI
             if (count > 0 && Current == id) return;
             if (count == stack.Length) throw new InvalidOperationException("Menu stack capacity exceeded.");
             if (count > 0) Show(Current, false);
-            stack[count++] = id; Show(id, true);
+            stack[count++] = id; Show(id, true); Changed?.Invoke();
         }
         public void Pop()
         {
@@ -29,6 +30,7 @@ namespace DungeonCrawler.UI
             Show(stack[--count], false);
             if (count > 0) Show(Current, true);
             else if (eventSystem != null) eventSystem.SetSelectedGameObject(null);
+            Changed?.Invoke();
         }
         public void Clear() { while (count > 0) Pop(); }
         private void Show(MenuScreen id, bool active)

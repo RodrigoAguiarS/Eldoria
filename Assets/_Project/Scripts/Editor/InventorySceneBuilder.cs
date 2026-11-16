@@ -127,6 +127,7 @@ namespace DungeonCrawler.Editor
             var pause = Get<GameplayPauseController>(root); Set(pause, "health", health); Set(pause, "input", input);
             SetArray(pause, "gameplayControls", new Object[] { root.GetComponent<PlayerMovement>(), root.GetComponent<PlayerAim>(),
                 root.GetComponent<PlayerCombat>(), root.GetComponent<PlayerDash>(), root.GetComponent<PlayerSpecial>() });
+            ControlBindingsSceneBuilder.ConfigurePlayer(root);
         }
 
         public static void ConfigureHud(Scene scene, GameObject player, GameRestarter restarter)
@@ -196,6 +197,7 @@ namespace DungeonCrawler.Editor
             ConfigureEquipmentComparison(hud);
             ConfigureInventorySort(hud);
             root.SetAsLastSibling();
+            ControlBindingsSceneBuilder.ConfigureScene(scene);
         }
 
         [MenuItem("Tools/Dungeon Crawler/Inventory/Integrate Equipment Comparison (F01)")]
@@ -236,6 +238,8 @@ namespace DungeonCrawler.Editor
             // Title keeps its position; its rect ends before the button (text "INVENTÁRIO 16/16" is ~350 px at size 32).
             Label(window, "Title", window.Find("Title").GetComponent<Text>().text, new Vector2(32f, -24f), new Vector2(580f, 50f), 32);
             Button sort = Button(window, "Sort", "Ordenar", new Vector2(632f, -26f), new Vector2(188f, 46f));
+            // This builder owns the sole command. Recompose it even after a full shell/prefab reconstruction.
+            sort.onClick = new Button.ButtonClickedEvent();
             Link(sort, presenter.SortSelected);
         }
 

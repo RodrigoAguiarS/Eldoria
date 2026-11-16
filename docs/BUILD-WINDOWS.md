@@ -48,6 +48,12 @@ Este roteiro consolida M1–M4 e a QA do candidato. Registrar commit, build/vers
 
 Aceite humano complementa testes automatizados. Se não abriu a cena e observou PlayMode, a revisão visual permanece `NÃO VALIDADO NO EDITOR`.
 
+### Regressão F04 — Controles
+
+Em Opções → Controles, testar captura de tecla e botão do mouse, conflito (por exemplo dash em Q), Escape/Cancelar/Voltar, timeout de 10 s com partida pausada e perda de foco. Binding rejeitado/cancelado preserva o anterior. Remapear bolsa, poção, pausa e reinício; Escape continua voltando, poção funciona na bolsa e os cliques nos menus não atacam nem consomem. Conferir rótulos do título/HUD/bolsa/opções/derrota, morte→reinício com a tecla nova, run nova sem inventário e overrides preservados após relançar. Restaurar padrão deve persistir após outro relançamento. Navegação UI/mira continuam fixas; sem suporte gamepad completo.
+
+Builder específico: `DungeonCrawler.Editor.ControlBindingsSceneBuilder.Integrate`, menu **Tools / Dungeon Crawler / Input / Integrate Control Remapping (F04)**. Build isolada de validação: `ControlBindingsSceneBuilder.BuildWindowsValidation` gera `Builds/F04/Eldoria.exe` e `Reports/F04/windows-build.json`, recusando sobrescrever esse relatório; não modifica o pacote histórico. Para execuções posteriores, escolher novos destinos. Testes, comandos e limites da entrega em [Reports/F04](../Reports/F04/README.md).
+
 ## Reconstrução da composição
 
 Os assets necessários já estão versionados. Não é necessário regenerar personagens, cenário ou imagens para construir o jogo.
