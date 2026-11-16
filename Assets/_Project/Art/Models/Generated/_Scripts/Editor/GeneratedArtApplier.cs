@@ -51,6 +51,17 @@ namespace DungeonCrawler.CharacterArt.Editor
         /// Os PERSONAGENS já chegam ao jogo pelas variantes de GeneratedGameTestBuilder (cena inicial do build), por isso
         /// aqui só o cenário é aplicado: prefabs de sala + geometria solta das cenas.
         /// </summary>
+        /// <summary>Dress one existing scene without rebuilding shared room prefabs or other scenes.</summary>
+        public static void ApplySceneEnvironment(string scenePath)
+        {
+            Ensure(GeneratedCharacterManifest.Root, "_GameArt");
+            Ensure(ArtRoot, "Materials");
+            Ensure(ArtRoot, "Meshes");
+            mats = BuildMaterials();
+            ApplyScene(scenePath);
+            AssetDatabase.SaveAssets();
+        }
+
         public static void ApplyEnvironment()
         {
             Ensure(GeneratedCharacterManifest.Root, "_GameArt");

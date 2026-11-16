@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-16 — F08: cinco salas e reparo das tochas
+
+- Um baú independente em cada uma das cinco salas; aviso próprio, F após limpar a própria sala e coleta do Boss acessível pelo botão Coletar recompensas após vitória. Bolsa, remapeamento, coleta recusada e sorteio único preservados.
+- Reparadas 30 chamas órfãs no centro das salas. Os transforms das 30 tochas e as 11 luzes ficaram idênticos. Rebuild M1 agora aplica arte só na arena; teste verifica que prefabs de salas/cena de release não mudam e restaura também a cena gerada.
+- 161 EditMode e 132 PlayMode aprovados (9 explícitos ignorados), retestes finais 3 EditMode + 20 PlayMode e captura gráfica 1/1 em 2560×1440. Build Windows final sem erros, 496 avisos de shader. Validação isolada, transferência por hashes e limites em [Reports/F08-AllRooms](Reports/F08-AllRooms/README.md). Sem merge sem aprovação.
+
 ## 2026-11-16 — F08: baú experimental de sala
 
 - Primeira sala fixa de release recebe baú de primitivas, bloqueado até limpar, com F próximo e abertura/sorteio únicos; E continua giro. Dados novos em SOs, pickups normais persistentes e recusa por capacidade preservando identidade; reativação/reset de HP não renovam loot. Sem loja/chaves/procedural.

@@ -33,6 +33,14 @@ namespace DungeonCrawler.UI
             showAt = Time.time + delaySeconds;
         }
 
+        public void ContinueExploring()
+        {
+            pending = false;
+            panel.SetActive(false);
+            if (menu != null) menu.LeaveTerminal();
+            if (eventSystem != null) eventSystem.SetSelectedGameObject(null);
+        }
+
         private void Update()
         {
             if (!pending || Time.time < showAt) return;

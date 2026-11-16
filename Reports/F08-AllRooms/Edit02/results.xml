@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="3" result="Passed" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-16 21:32:37Z" end-time="2026-11-16 21:32:45Z" duration="7,2311579">
+  <test-suite type="TestSuite" id="1000" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="161" result="Passed" start-time="2026-11-16 21:32:37Z" end-time="2026-11-16 21:32:45Z" duration="7.231158" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1203" name="DungeonCrawler.Tests.EditMode.dll" fullname="G:/DungeonCrawler/F08AllRoomsValidation/Library/ScriptAssemblies/DungeonCrawler.Tests.EditMode.dll" runstate="Runnable" testcasecount="161" result="Passed" start-time="2026-11-16 21:32:37Z" end-time="2026-11-16 21:32:45Z" duration="7.220895" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="28744" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1204" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="161" result="Passed" start-time="2026-11-16 21:32:37Z" end-time="2026-11-16 21:32:45Z" duration="7.218314" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1205" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="161" result="Passed" start-time="2026-11-16 21:32:37Z" end-time="2026-11-16 21:32:45Z" duration="7.215960" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1206" name="EditMode" fullname="DungeonCrawler.Tests.EditMode" runstate="Runnable" testcasecount="161" result="Passed" start-time="2026-11-16 21:32:37Z" end-time="2026-11-16 21:32:45Z" duration="7.213607" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1146" name="MvpBuilderPreservationTests" fullname="DungeonCrawler.Tests.EditMode.MvpBuilderPreservationTests" classname="DungeonCrawler.Tests.EditMode.MvpBuilderPreservationTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-16 21:32:38Z" end-time="2026-11-16 21:32:42Z" duration="4.724437" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1147" name="M1FullRebuildTwice_KeepsSingleActorsRewardsAndSharedPrefabBytes" fullname="DungeonCrawler.Tests.EditMode.MvpBuilderPreservationTests.M1FullRebuildTwice_KeepsSingleActorsRewardsAndSharedPrefabBytes" methodname="M1FullRebuildTwice_KeepsSingleActorsRewardsAndSharedPrefabBytes" classname="DungeonCrawler.Tests.EditMode.MvpBuilderPreservationTests" runstate="Runnable" seed="710756902" result="Passed" start-time="2026-11-16 21:32:38Z" end-time="2026-11-16 21:32:42Z" duration="4.588480" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[DungeonCrawler] Pastas e layers garantidos (nada foi removido).
+[DungeonCrawler] MVP_Arena pronta em Assets/_Project/Scenes/MVP_Arena.unity.
+[DungeonCrawler] Pastas e layers garantidos (nada foi removido).
+[DungeonCrawler] MVP_Arena pronta em Assets/_Project/Scenes/MVP_Arena.unity.
+]]></output>
+              </test-case>
+              <test-case id="1148" name="M1PrefabPreparation_PreservesRewardsComboAndSharedAssetBytesOnRepeatedRuns" fullname="DungeonCrawler.Tests.EditMode.MvpBuilderPreservationTests.M1PrefabPreparation_PreservesRewardsComboAndSharedAssetBytesOnRepeatedRuns" methodname="M1PrefabPreparation_PreservesRewardsComboAndSharedAssetBytesOnRepeatedRuns" classname="DungeonCrawler.Tests.EditMode.MvpBuilderPreservationTests" runstate="Runnable" seed="1442556834" result="Passed" start-time="2026-11-16 21:32:42Z" end-time="2026-11-16 21:32:42Z" duration="0.118007" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1192" name="RoomRewardAssetTests" fullname="DungeonCrawler.Tests.EditMode.RoomRewardAssetTests" classname="DungeonCrawler.Tests.EditMode.RoomRewardAssetTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-16 21:32:42Z" end-time="2026-11-16 21:32:45Z" duration="2.472308" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1193" name="Composition_IsUniqueIdempotentAndPreservesOldLootAndGuids" fullname="DungeonCrawler.Tests.EditMode.RoomRewardAssetTests.Composition_IsUniqueIdempotentAndPreservesOldLootAndGuids" methodname="Composition_IsUniqueIdempotentAndPreservesOldLootAndGuids" classname="DungeonCrawler.Tests.EditMode.RoomRewardAssetTests" runstate="Runnable" seed="277796495" result="Passed" start-time="2026-11-16 21:32:42Z" end-time="2026-11-16 21:32:45Z" duration="2.446845" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[F08] One reward chest per fixed release room; torch flame parents repaired.
+[F08] One reward chest per fixed release room; torch flame parents repaired.
+Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -30,6 +30,9 @@ Os `.bat` usam a última build gerada. Depois de mudar algo no Unity, gere de no
 - **Personagem:** a espada equipada aparece na mão e o colete no corpo. Desequipar volta à espada básica.
 - **Golpes** (botão esquerdo): rastro na espada nos 3 golpes, faíscas só quando acerta. Giro (E ou botão direito): anel ciano. Não deve aparecer retângulo branco.
 
+- **Baús:** um em cada uma das cinco salas. F próximo abre após limpar a própria sala; E continua giro. Na vitória, **Coletar recompensas** volta à sala para abrir o baú do Boss e usar a bolsa. Uma coleta recusada fica no chão.
+- **Tochas:** chamas nas tochas das paredes, sem tochas soltas no centro das salas. O rebuild da arena M1 deve preservar as salas do andar.
+
 ## O que NÃO usar para ver o jogo
 
 - **Tools › Dungeon Crawler › Sprite Lab › Build Hero Playtest...** não gera o jogo. Esse menu cria um

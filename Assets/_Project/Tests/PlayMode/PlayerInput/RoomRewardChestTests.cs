@@ -34,6 +34,8 @@ namespace DungeonCrawler.Tests.PlayerInput
         private static void SetField(object owner, string name, object value) => owner.GetType().GetField(name, Private).SetValue(owner, value);
         private static T InScene<T>() where T : Component => SceneManager.GetActiveScene().GetRootGameObjects()
             .SelectMany(root => root.GetComponentsInChildren<T>(true)).Single();
+        private static RoomRewardChest[] Chests() => SceneManager.GetActiveScene().GetRootGameObjects()
+            .SelectMany(root => root.GetComponentsInChildren<RoomRewardChest>(true)).OrderBy(chest => chest.transform.position.z).ToArray();
         private static Pickup[] Pickups() => SceneManager.GetActiveScene().GetRootGameObjects()
             .SelectMany(root => root.GetComponentsInChildren<Pickup>(true)).ToArray();
 
@@ -55,7 +57,7 @@ namespace DungeonCrawler.Tests.PlayerInput
         {
             yield return SceneManager.LoadSceneAsync(Floor);
             yield return null;
-            chest = InScene<RoomRewardChest>(); room = Field<RoomController>(chest, "room");
+            chest = Chests()[0]; room = Field<RoomController>(chest, "room");
             health = Field<Health>(chest, "player"); reader = health.GetComponent<PlayerInputReader>();
             bindings = health.GetComponent<RuntimeInputBindings>(); health.SetInvulnerableFor(1000f);
             health.GetComponent<PlayerMovement>().enabled = false; health.GetComponent<PlayerAim>().enabled = false;
@@ -70,6 +72,33 @@ namespace DungeonCrawler.Tests.PlayerInput
         private IEnumerator F()
         {
             Press(keyboard.fKey); yield return null; Release(keyboard.fKey); yield return null;
+        }
+        private IEnumerator Click(Button button)
+        {
+            var rect = (RectTransform)button.transform;
+            Set(mouse.position, RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center)));
+            yield return null; Press(mouse.leftButton); yield return null; Release(mouse.leftButton);
+            yield return null; yield return null;
+        }
+
+        private IEnumerator DismissVictory()
+        {
+            yield return new WaitForSeconds(1.7f);
+            var victory = InScene<VictoryPresenter>();
+            var panel = Field<GameObject>(victory, "panel");
+            Assert.IsTrue(panel.activeSelf);
+            Assert.IsFalse(Chests().Any(c => Field<Text>(c.GetComponent<RoomRewardPresenter>(), "hint").enabled),
+                "Chest hints must not paint over the victory controls.");
+            var collect = panel.transform.Find("CollectRewards").GetComponent<Button>();
+            var collectCorners = new Vector3[4]; var menuCorners = new Vector3[4];
+            ((RectTransform)collect.transform).GetWorldCorners(collectCorners);
+            ((RectTransform)panel.transform.Find("MainMenu")).GetWorldCorners(menuCorners);
+            Assert.IsFalse(Rect.MinMaxRect(collectCorners[0].x, collectCorners[0].y, collectCorners[2].x, collectCorners[2].y)
+                .Overlaps(Rect.MinMaxRect(menuCorners[0].x, menuCorners[0].y, menuCorners[2].x, menuCorners[2].y)), "Victory buttons must not overlap.");
+            yield return Click(collect);
+            Assert.IsFalse(panel.activeSelf);
+            Set(mouse.position, new Vector2(Screen.width * .5f, Screen.height * .5f));
+            yield return null;
         }
         private IEnumerator ClearRoom()
         {
@@ -90,6 +119,36 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.IsTrue(chest.TryOpen());
             var rewards = Pickups().Where(pickup => !before.Contains(pickup)).ToArray();
             Assert.AreEqual(2, rewards.Length); return rewards;
+        }
+
+        [UnityTest] public IEnumerator AllFiveRooms_OpenIndependently_AndBossRewardRemainsAccessibleAfterVictory()
+        {
+            yield return Load();
+            var all = Chests(); Assert.AreEqual(5, all.Length);
+            for (int i = 0; i < all.Length; i++)
+            {
+                chest = all[i]; room = Field<RoomController>(chest, "room");
+                Assert.IsFalse(chest.IsOpened); Assert.IsFalse(chest.TryOpen());
+                yield return ClearRoom();
+                yield return null;
+                if (i == all.Length - 1)
+                {
+                    yield return DismissVictory();
+                    Press(keyboard.iKey); yield return null; Release(keyboard.iKey); yield return null;
+                    Assert.IsTrue(InScene<GameMenuController>().InventoryOpen, "Bag must remain available to free room for the Boss reward.");
+                    Assert.IsFalse(chest.TryOpen());
+                    Press(keyboard.escapeKey); yield return null; Release(keyboard.escapeKey); yield return null; yield return null;
+                }
+                var hints = all.Select(c => Field<Text>(c.GetComponent<RoomRewardPresenter>(), "hint")).Where(t => t.enabled).ToArray();
+                Assert.AreEqual(1, hints.Length, "Distant chest presenters cannot hide the nearby hint.");
+                StringAssert.Contains("Abrir baú", hints[0].text);
+                Assert.IsTrue(chest.CanInteract);
+                yield return F(); Assert.IsTrue(chest.IsOpened);
+                Assert.AreEqual(i + 1, all.Count(c => c.IsOpened), "F may open only its own room chest.");
+                chest.gameObject.SetActive(false); chest.gameObject.SetActive(true);
+                Assert.IsTrue(chest.IsOpened); Assert.IsFalse(chest.TryOpen());
+            }
+            Assert.IsTrue(InScene<FloorController>().IsCompleted);
         }
 
         [UnityTest] public IEnumerator LockedRoom_FDoesNotOpenOrRoll_AndEStillRequestsSpecial()
@@ -145,7 +204,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return F(); Assert.IsFalse(chest.TryOpen()); Assert.IsFalse(chest.IsOpened);
             Time.timeScale = 1f;
             yield return SceneManager.LoadSceneAsync(Floor); yield return null;
-            var fresh = InScene<RoomRewardChest>(); Assert.IsFalse(fresh.IsOpened); Assert.IsFalse(fresh.IsUnlocked);
+            var fresh = Chests()[0]; Assert.IsFalse(fresh.IsOpened); Assert.IsFalse(fresh.IsUnlocked);
             Assert.AreEqual(0, InScene<PlayerProgression>().Gold);
         }
         [UnityTest] public IEnumerator OpenedThenDeathAndHealthReset_DoNotRenewReward()
@@ -158,7 +217,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.IsTrue(chest.IsOpened); Assert.IsFalse(chest.TryOpen());
             foreach (var drop in drops) Assert.IsNotNull(drop);
             yield return SceneManager.LoadSceneAsync(Floor); yield return null;
-            Assert.IsFalse(InScene<RoomRewardChest>().IsOpened);
+            Assert.IsFalse(Chests()[0].IsOpened);
         }
         [UnityTest] public IEnumerator FullBag_RefusedWeaponKeepsIdentityAndRetryCollectsExactlyOnce()
         {
@@ -225,6 +284,41 @@ namespace DungeonCrawler.Tests.PlayerInput
         {
             Assert.IsFalse(File.Exists(path), "Preserve evidence.");
             yield return new WaitForEndOfFrame(); ScreenCapture.CaptureScreenshot(path); yield return null;
+        }
+
+        [UnityTest, Explicit("Graphical diagnostic: five room chests, wall torches and Boss reward access.")]
+        public IEnumerator Capture_AllRoomsAndTorchPositions()
+        {
+            yield return Load();
+            if (Application.isBatchMode) Assert.Ignore("Requires graphical Editor.");
+            bool previousAsync = UnityEditor.EditorSettings.asyncShaderCompilation;
+            try
+            {
+                UnityEditor.EditorSettings.asyncShaderCompilation = false;
+                UnityEditor.EditorWindow.GetWindow(typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameView", true)).Focus();
+                string directory = System.Environment.GetEnvironmentVariable("DUNGEON_CRAWLER_TEST_REPORT_DIR") ?? "Reports/F08-AllRooms/Visual";
+                Directory.CreateDirectory(directory);
+                var all = Chests(); Assert.AreEqual(5, all.Length);
+                for (int i = 0; i < all.Length; i++)
+                {
+                    chest = all[i]; room = Field<RoomController>(chest, "room");
+                    yield return ClearRoom();
+                    if (i == all.Length - 1)
+                    {
+                        yield return new WaitForSeconds(1.7f);
+                        yield return Capture(directory + "/boss-victory.png");
+                        yield return DismissVictory();
+                    }
+                    yield return new WaitForSeconds(.5f);
+                    Assert.IsTrue(chest.CanInteract);
+                    yield return Capture(directory + "/room-" + (i + 1) + "-ready.png");
+                    yield return F(); Assert.IsTrue(chest.IsOpened);
+                }
+                yield return Capture(directory + "/boss-opened.png");
+                File.WriteAllText(directory + "/context.txt", "Actual release scene, five rooms including Boss; diagnostic wave damage, invulnerable player, actual F and victory button click. Wall torch parents checked by Editor/PlayMode. " +
+                    "Resolution: " + Screen.width + "x" + Screen.height + ". Not a normal-run acceptance.");
+            }
+            finally { UnityEditor.EditorSettings.asyncShaderCompilation = previousAsync; }
         }
     }
 }

@@ -79,7 +79,7 @@ namespace DungeonCrawler.Editor
             EditorBuildUtility.EnsureSceneInBuildSettings(ProjectPaths.MvpArenaScene);
             AssetDatabase.SaveAssets();
             // Arte do cenário sobre a arena recém-gerada (após o bake do NavMesh; só troca malha/material).
-            DungeonCrawler.CharacterArt.Editor.GeneratedArtApplier.ApplyEnvironment();
+            DungeonCrawler.CharacterArt.Editor.GeneratedArtApplier.ApplySceneEnvironment(ProjectPaths.MvpArenaScene);
             Debug.Log($"[DungeonCrawler] MVP_Arena pronta em {ProjectPaths.MvpArenaScene}.");
         }
 
