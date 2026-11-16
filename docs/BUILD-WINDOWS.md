@@ -112,6 +112,33 @@ As imagens usam dano pelos impactos reais; posicionamento/invulnerabilidade são
 diagnósticos, distintos do aceite de uma run normal. Evidências em
 [Reports/F09](../Reports/F09/README.md).
 
+### Regressão F10 — Escala de texto/HUD
+
+Builder: **Tools / Dungeon Crawler / UI / Integrate Text And HUD Scale (F10)**,
+`DungeonCrawler.Editor.TextScaleSceneBuilder.Integrate`. Atualiza as quatro
+cenas oficiais; não exige regenerar personagens, salas ou dados de itens.
+
+Em Opções, escolher 100/125/150%: o rascunho não altera o HUD até **Aplicar e
+salvar**. Voltar descarta; **Restaurar padrões** também é rascunho até Aplicar.
+Fechar/reabrir e reiniciar mantêm a preferência aplicada. JSON v1–v3 ou escala
+inválida/ausente voltam a 100%; documento futuro usa os defaults.
+
+Conferir bolsa 16/16, poções com quantidade, comparação, equipamento e nomes
+extensos na coluna rolável; reticências nos resumos não alteram o nome integral.
+Rolar com roda/barra, focar a barra e selecionar outro slot deve retornar ao topo.
+Abrir os dropdowns de qualidade/resolução/poção/escala e selecionar com mouse e
+teclado; clique no fundo do dropdown deve fechar a lista sem acionar o botão
+encoberto. Opções/bolsa/pausa não devem atacar nem deixar foco em painel oculto.
+Conferir HP, Boss, recursos, avisos e terminais na maior escala.
+
+Captura explícita: `TextScaleInputTests.Capture_LayoutsAtAllScalesAndResolutions`,
+Editor gráfico sem `-batchmode`/`-nographics`, com
+`DUNGEON_CRAWLER_TEST_REPORT_DIR` exclusivo. Verifica 1280×720, 1920×1080 e
+2560×1080 **emulado**, nas três escalas; mede encaixe/alvos e gera imagens para
+inspeção. Não comprova monitor ultrawide físico, contraste, gamepad completo,
+leitor de tela, outras fontes/idiomas ou escalas acima de 150%. Evidências e
+limites em [Reports/F10](../Reports/F10/README.md).
+
 ## Reconstrução da composição
 
 Os assets necessários já estão versionados. Não é necessário regenerar personagens, cenário ou imagens para construir o jogo.

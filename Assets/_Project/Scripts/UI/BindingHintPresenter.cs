@@ -27,6 +27,7 @@ namespace DungeonCrawler.UI
             container.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
             text.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
         }
+        public void RefitBadge() { if (badge != null) FitBadge(badge, label); }
         public static string Format(string template, InputBindingSet bindings)
         {
             foreach (string name in new[] { "Move", "Attack", "Dash", "Special", "Inventory", "UsePotion", "Pause", "Restart" })

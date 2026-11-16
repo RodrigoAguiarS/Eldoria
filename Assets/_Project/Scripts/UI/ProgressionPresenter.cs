@@ -25,6 +25,7 @@ namespace DungeonCrawler.UI
             xpFill.anchorMax = new Vector2(Mathf.Clamp01(normalized), 1f);
 
             string weapon = progression.Weapon != null ? progression.Weapon.displayName : "Básica";
+            if (weapon.Length > 48) weapon = weapon.Substring(0, 47) + "…";
             label.text = $"Nv {progression.Level}   XP {progression.Xp}/{progression.XpToNext}   Ouro {progression.Gold}   Arma: {weapon}";
         }
     }

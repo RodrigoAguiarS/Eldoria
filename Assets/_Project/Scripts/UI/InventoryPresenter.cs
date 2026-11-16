@@ -21,6 +21,7 @@ namespace DungeonCrawler.UI
         [SerializeField] private Text details;
         [SerializeField] private Text equipment;
         [SerializeField] private Text comparison;
+        [SerializeField] private ScrollRect readingScroll;
         [SerializeField] private Button equip;
         [SerializeField] private Button unequip;
         [SerializeField] private Button use;
@@ -43,6 +44,7 @@ namespace DungeonCrawler.UI
             progression.Changed += Refresh;
             health.Changed += OnHealthChanged;
             Refresh();
+            if (readingScroll != null) readingScroll.verticalNormalizedPosition = 1f;
             if (eventSystem != null && slots.Length > 0) eventSystem.SetSelectedGameObject(slots[selected].Button.gameObject);
         }
         private void OnDisable()
@@ -52,7 +54,12 @@ namespace DungeonCrawler.UI
             health.Changed -= OnHealthChanged;
         }
         private void OnHealthChanged(float _, float __) => Refresh();
-        private void Select(int index) { if (selected == index) return; selected = index; Refresh(); }
+        private void Select(int index)
+        {
+            if (selected == index) return;
+            selected = index; Refresh();
+            if (readingScroll != null) readingScroll.verticalNormalizedPosition = 1f;
+        }
         public void EquipSelected() => inventory.TryEquip(selected);
         public void UnequipSelected()
         {

@@ -109,6 +109,26 @@ GameOptionsDefinition compartilha defaults serializados e estado de sessão não
 
 Apenas PC está incluído nos níveis nativos do build Windows; por isso as escolhas Leve/Equilibrada/Alta usam presets de escala/sombras no SO, além de Padrão. GameOptionsApplier altera uma cópia temporária do pipeline URP e restaura a referência ao sair, sem editar o asset do projeto. Opções v1 migram para v2 preservando volumes/legibilidade/tela e trocando o índice nativo dependente da plataforma por Padrão.
 
+F10: opções gerais usam JSON **v4**, mantendo `DungeonCrawler.Options.v1`.
+`textScalePercent` aceita 100/125/150, com fallback 100; v1–v3 migram para 100
+sem descartar as demais migrações. `GameOptionsPresenter` mantém o rascunho,
+inclusive ao restaurar padrões; somente Aplicar persiste e notifica.
+`UiTextScale` recebe opções e baselines de Text explicitamente serializadas
+pelo builder, assina/desassina no ciclo de vida e aplica tamanho absoluto,
+sem acumulação ou alteração de transform/targets. Templates de Dropdown
+herdam a fonte atual e usam linhas de 64 unidades.
+
+`TextScaleSceneBuilder` integra as quatro cenas sem reconstruir domínio/arte.
+Janelas reservam espaço para 150%, slots usam GridLayoutGroup; a coluna de
+equipamento/detalhes usa ScrollRect, VerticalLayoutGroup e ContentSizeFitter,
+com barra de rolagem focável. Selecionar outro slot retorna ao topo. Os nomes
+completos ficam nos detalhes; resumo visual não altera dados. O CanvasScaler
+reserva a referência 1920×1080 e expande o espaço disponível. A preferência
+altera somente fontes; HUD usa containers e âncoras próprios. Builders de
+shell/controles/inventário/avisos reaplicam a composição, preservando baselines.
+Faixa inicial limitada a 150%; não implica suporte gamepad completo, medição
+de contraste ou cobertura de monitores físicos ultrawide.
+
 ## Áudio e diagnóstico (1.0)
 
 GameAudioDefinition contém clips e roteamento Music/SFX. GameAudioPool reutiliza oito vozes pré-configuradas, limita prioridade/repetição e aplica ganhos das categorias em dB; mute em zero é explícito. GameplayAudioBridge e EnemyAudioBridge escutam eventos C# com inscrições no ciclo de vida. EnemySpawner injeta o pool nos atores instanciados; progressão emite Collected apenas após coleta aceita. Variação sonora não altera o gerador aleatório do loot.

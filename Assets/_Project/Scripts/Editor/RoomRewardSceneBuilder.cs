@@ -36,6 +36,7 @@ namespace DungeonCrawler.Editor
             try
             {
                 Configure(scene);
+                TextScaleSceneBuilder.ConfigureScene(scene);
                 EditorSceneManager.MarkSceneDirty(scene); EditorSceneManager.SaveScene(scene);
             }
             finally { if (opened) EditorSceneManager.CloseScene(scene, true); }

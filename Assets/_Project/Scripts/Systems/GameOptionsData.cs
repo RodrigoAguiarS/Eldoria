@@ -6,8 +6,10 @@ namespace DungeonCrawler.Systems
     [Serializable]
     public sealed class GameOptionsData
     {
-        public const int CurrentVersion = 3;
+        public const int CurrentVersion = 4;
         public int version = CurrentVersion;
+        public int textScalePercent = 100;
+        public static readonly int[] TextScaleChoices = { 100, 125, 150 };
         public QuickPotionPolicy quickPotionPolicy = QuickPotionPolicy.First;
         public float music = .55f;
         public float effects = .75f;
@@ -20,6 +22,7 @@ namespace DungeonCrawler.Systems
         public GameOptionsData Copy() => (GameOptionsData)MemberwiseClone();
         public void Validate()
         {
+            if (textScalePercent != 125 && textScalePercent != 150) textScalePercent = 100;
             music = Unit(music, .55f); effects = Unit(effects, .75f);
             shake = Unit(shake, 1f); flash = Unit(flash, 1f);
             quality = Math.Max(-1, quality);
@@ -49,6 +52,7 @@ namespace DungeonCrawler.Systems
         {
             if (value.version < 2) value.quality = -1; // Old native quality indices were platform-dependent.
             if (value.version < 3) value.quickPotionPolicy = QuickPotionPolicy.First;
+            if (value.version < 4) value.textScalePercent = 100;
             value.version = CurrentVersion;
         }
 

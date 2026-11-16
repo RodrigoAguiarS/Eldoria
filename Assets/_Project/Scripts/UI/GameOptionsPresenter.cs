@@ -9,7 +9,7 @@ namespace DungeonCrawler.UI
     {
         [SerializeField] private GameOptionsDefinition options;
         [SerializeField] private Slider music, effects, shake, flash;
-        [SerializeField] private Dropdown quality, resolution, quickPotionPolicy;
+        [SerializeField] private Dropdown quality, resolution, quickPotionPolicy, textScale;
         [SerializeField] private Toggle fullscreen;
         [SerializeField] private Text status;
         [SerializeField] private Text[] valueLabels;
@@ -18,6 +18,17 @@ namespace DungeonCrawler.UI
         private void OnEnable()
         {
             draft = options.Current.Copy();
+            Populate();
+            music.onValueChanged.AddListener(RefreshValues); effects.onValueChanged.AddListener(RefreshValues);
+            shake.onValueChanged.AddListener(RefreshValues); flash.onValueChanged.AddListener(RefreshValues);
+        }
+        private void Populate()
+        {
+            textScale.ClearOptions();
+            var scaleLabels = new List<string>();
+            foreach (int percent in GameOptionsData.TextScaleChoices) scaleLabels.Add(percent + "%");
+            textScale.AddOptions(scaleLabels);
+            textScale.SetValueWithoutNotify(System.Array.IndexOf(GameOptionsData.TextScaleChoices, draft.textScalePercent));
             quickPotionPolicy.ClearOptions();
             quickPotionPolicy.AddOptions(new List<string> { "Primeira", "Menor potência", "Maior potência" });
             quickPotionPolicy.SetValueWithoutNotify((int)draft.quickPotionPolicy);
@@ -39,9 +50,9 @@ namespace DungeonCrawler.UI
             resolution.ClearOptions(); resolution.AddOptions(labels); resolution.SetValueWithoutNotify(selected);
             fullscreen.SetIsOnWithoutNotify(draft.width > 0 ? draft.fullscreen : Screen.fullScreen);
             status.text = "0% desliga flash e tremor. Aplicar salva; Voltar descarta ajustes não aplicados.";
-            music.onValueChanged.AddListener(RefreshValues); effects.onValueChanged.AddListener(RefreshValues);
-            shake.onValueChanged.AddListener(RefreshValues); flash.onValueChanged.AddListener(RefreshValues); RefreshValues(0f);
+            RefreshValues(0f);
         }
+        public void RestoreDefaults() { draft = options.Defaults; Populate(); status.text = "Padrões no rascunho. Aplicar salva; Voltar descarta."; }
         private void OnDisable()
         {
             music.onValueChanged.RemoveListener(RefreshValues); effects.onValueChanged.RemoveListener(RefreshValues);
@@ -62,6 +73,7 @@ namespace DungeonCrawler.UI
             draft.quality = quality.value - 1; Vector2Int size = sizes[resolution.value];
             draft.width = size.x; draft.height = size.y; draft.fullscreen = fullscreen.isOn;
             draft.quickPotionPolicy = (QuickPotionPolicy)quickPotionPolicy.value;
+            draft.textScalePercent = GameOptionsData.TextScaleChoices[textScale.value];
             options.Apply(draft); status.text = "Opções salvas.";
         }
     }
