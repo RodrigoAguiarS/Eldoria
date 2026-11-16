@@ -12,6 +12,8 @@ Entrar na sala → portas fecham → inimigos surgem → derrotar todos → port
 - Botão esquerdo: ataque básico; espaço: dash com cooldown e janela curta de invulnerabilidade; botão direito ou E: especial (pós-MVP inicial).
 - Câmera Cinemachine segue suavemente, sem rotação controlada pelo jogador.
 
+F04: **Opções → Controles** permite remapear as quatro direções, ataque, dash, as duas alternativas do giro e da bolsa, poção, pausa/voltar e reinício para teclas ou botões do mouse. Os controles acima são os padrões. Conflitos são recusados e identificam a ação já atribuída; o binding anterior permanece. Escape cancela a captura e sempre permite voltar, mesmo com pausa remapeada; Enter permanece reservado para confirmar na UI. Cancelar, Voltar e Restaurar padrão têm botões próprios. Captura expira em 10 s e cancela ao perder foco ou fechar o painel. Alterações aceitas e restauração são salvas imediatamente por usuário, separadas das opções gerais e da progressão. Rótulos acompanham as ações efetivas. Mira/posição do ponteiro e navegação da UI permanecem fixas; esta entrega não adiciona suporte gamepad completo.
+
 ## Jogador
 Usa CharacterController; atributos HP, recurso (estamina nesta versão), ataque, defesa, velocidade. Ao receber dano, feedback vermelho temporário e shake leve, sem comprometer legibilidade. Morte encerra combate e permite reiniciar.
 

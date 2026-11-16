@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DungeonCrawler.Systems;
 
 namespace DungeonCrawler.Player
 {
@@ -11,8 +12,9 @@ namespace DungeonCrawler.Player
     public sealed class PlayerInputReader : MonoBehaviour
     {
         [SerializeField] private InputActionAsset inputActions;
+        [SerializeField] private RuntimeInputBindings bindings;
 
-        private InputActionAsset runtimeActions;
+        private InputBindingSet ownedBindings;
         private InputAction move;
         private InputAction point;
         private InputAction attack;
@@ -20,25 +22,29 @@ namespace DungeonCrawler.Player
         private InputAction special;
         private InputActionMap gameplayMap;
         private bool gameplaySuppressed;
+        private bool waitForRelease;
+        private bool ButtonsAllowed => !gameplaySuppressed && !waitForRelease &&
+            (bindings == null || (!bindings.InputBlocked && !bindings.PointerOverUI()));
 
         public Vector2 Move => move != null ? move.ReadValue<Vector2>() : Vector2.zero;
         public Vector2 PointerPosition => point != null ? point.ReadValue<Vector2>() : Vector2.zero;
-        public bool AttackHeld => attack != null && attack.IsPressed();
+        public bool AttackHeld => attack != null && attack.IsPressed() && ButtonsAllowed;
         public event Action AttackPressed;
         public event Action SpecialPressed;
-        public bool DashPressedThisFrame => dash != null && dash.WasPressedThisFrame();
+        public bool DashPressedThisFrame => dash != null && dash.WasPressedThisFrame() && ButtonsAllowed;
 
         private void Awake()
         {
-            if (inputActions == null)
+            if (inputActions == null && bindings == null)
             {
                 Debug.LogError("[PlayerInputReader] InputActionAsset não atribuído.", this);
                 enabled = false;
                 return;
             }
 
-            runtimeActions = Instantiate(inputActions);
-            InputActionMap map = runtimeActions.FindActionMap("Gameplay", true);
+            // Legacy isolated test actors can still supply just the template. Saved scenes use the explicit source.
+            var runtime = bindings != null ? bindings.Bindings : (ownedBindings = new InputBindingSet(inputActions));
+            InputActionMap map = runtime.Actions.FindActionMap("Gameplay", true);
             gameplayMap = map;
             move = map.FindAction("Move", true);
             point = map.FindAction("Point", true);
@@ -55,6 +61,7 @@ namespace DungeonCrawler.Player
 
         public void SetGameplayEnabled(bool enabled)
         {
+            if (enabled && gameplaySuppressed) waitForRelease = true;
             gameplaySuppressed = !enabled;
             if (enabled && isActiveAndEnabled) gameplayMap?.Enable();
             else gameplayMap?.Disable();
@@ -64,10 +71,14 @@ namespace DungeonCrawler.Player
         {
             if (attack != null) attack.performed -= OnAttackPerformed;
             if (special != null) special.performed -= OnSpecialPerformed;
-            if (runtimeActions != null) Destroy(runtimeActions);
+            ownedBindings?.Dispose();
         }
 
-        private void OnAttackPerformed(InputAction.CallbackContext context) => AttackPressed?.Invoke();
-        private void OnSpecialPerformed(InputAction.CallbackContext context) => SpecialPressed?.Invoke();
+        private void Update()
+        {
+            if (waitForRelease && !attack.IsPressed() && !special.IsPressed() && !dash.IsPressed()) waitForRelease = false;
+        }
+        private void OnAttackPerformed(InputAction.CallbackContext context) { if (ButtonsAllowed) AttackPressed?.Invoke(); }
+        private void OnSpecialPerformed(InputAction.CallbackContext context) { if (ButtonsAllowed) SpecialPressed?.Invoke(); }
     }
 }

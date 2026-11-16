@@ -22,6 +22,8 @@ Nesta auditoria, 99/99 EditMode passaram antes da interrupção por trabalho ext
 
 ## Limites e próximas entregas
 
+F04 acrescenta remapeamento de teclado/botões do mouse em Opções → Controles, com conflitos recusados, cancelamento/retorno seguro por Escape, reset, rótulos derivados das ações e persistência própria de bindings. Fonte runtime explícita cobre gameplay, bolsa/poção, menus e reinício sem editar o `.inputactions` compartilhado. Evidência desta revisão: 153/153 EditMode, 35/35 PlayMode funcionais/de regressão e uma captura PlayMode explícita em 720p/1080p; build/smoke e limites em [Reports/F04](Reports/F04/README.md). Esses resultados não substituem o aceite da run normal ou a revisão artística pós-release.
+
 Uma run nova reinicia progressão/inventário; somente opções persistem. Não há campanha salva, lojas, quests, coop, geração procedural ou publicação em loja no produto aprovado. Novidades são propostas do [PROMPT_CATALOG](PROMPT_CATALOG.md), priorizadas em [NEXT_STEPS](NEXT_STEPS.md); não reimplementar combo, inventário, especial, áudio ou arte de itens como ausentes.
 
 Histórico incremental permanece em [CHANGELOG](CHANGELOG.md), XML/JSON de `Reports` e Git. Checklists antigos foram consolidados no [roteiro de regressão](docs/BUILD-WINDOWS.md#roteiro-de-regressão); remover caixas históricas contraditórias não amplia o aceite comprovado.

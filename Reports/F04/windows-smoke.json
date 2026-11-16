@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-16",
+  "branch": "codex/f04-control-rebinding",
+  "scope": "Native Windows UI smoke of initial F04 build; final badge separately validated in graphical Editor and rebuilt.",
+  "observed": [
+    "Title -> Options -> Controls using native clicks",
+    "Dash captured on middle mouse button; Controls showed MMB and saved status",
+    "After relaunch title showed MMB dash",
+    "Gameplay HUD showed MMB dash; middle click moved character forward via dash",
+    "Final Editor captures show MMB potion badge at 720p and 1080p"
+  ],
+  "keyboard": {
+    "status": "Physical acceptance pending",
+    "injected_F_and_Escape_F04": "not accepted by player",
+    "injected_Escape_previous_build": "not accepted by player",
+    "playmode_input_system_callbacks": "passed"
+  },
+  "shutdown": {
+    "automated_title_bar_close_F04_crashed": true,
+    "automated_title_bar_close_previous_build_crashed": true,
+    "F04_AltF4_clean": true,
+    "managed_exceptions_before_shutdown": false
+  },
+  "baseline_executable": "Builds/ReleaseSmoke-1.0.0/DungeonCrawler/DungeonCrawler.exe",
+  "limitations": [
+    "Native shutdown root cause not determined; same title-bar behavior reproduced before F04.",
+    "No complete Windows victory/death playthrough.",
+    "User bindings/options and comparison-build preferences restored from local snapshots."
+  ]
+}
