@@ -54,6 +54,12 @@ Em Opções → Controles, testar captura de tecla e botão do mouse, conflito (
 
 Builder específico: `DungeonCrawler.Editor.ControlBindingsSceneBuilder.Integrate`, menu **Tools / Dungeon Crawler / Input / Integrate Control Remapping (F04)**. Build isolada de validação: `ControlBindingsSceneBuilder.BuildWindowsValidation` gera `Builds/F04/Eldoria.exe` e `Reports/F04/windows-build.json`, recusando sobrescrever esse relatório; não modifica o pacote histórico. Para execuções posteriores, escolher novos destinos. Testes, comandos e limites da entrega em [Reports/F04](../Reports/F04/README.md).
 
+### Regressão F05 — Cura, coleta e nível
+
+Na cena `Floor_01_GeneratedCharacters`, ferir e usar Q/Usar: somente cura efetiva produz `+HP`, motes rubi e o tom discreto existente. Com HP cheio ou morto, não consumir nem confirmar cura. Coletar XP/ouro/poção/arma/armadura; conferir mensagem/glint apenas após aceite, e pickup mantido no chão com bolsa cheia. Uma coleta que sobe vários níveis deve curar e atualizar dano uma vez pela regra existente e apresentar o nível final. Abrir bolsa, consumir durante pausa e retomar; efeitos/tempo dos avisos retomam sem acúmulo ilimitado. Morte/reinício/desativação não deixam partículas ou mensagens antigas. Flash zero mantém mensagens e remove partículas; SFX zero respeita o mixer. Revalidar trail de combo, anel do giro, faíscas de acerto e flash/shake de dano.
+
+Builder: **Tools / Dungeon Crawler / Feedback / Integrate Rewards (F05)**, ou `DungeonCrawler.Editor.RewardFeedbackSceneBuilder.Integrate`. Build isolada: `RewardFeedbackSceneBuilder.BuildWindowsValidation`, com saída `Builds/F05/Eldoria.exe` e relatório novo `Reports/F05/windows-build.json`; recusa substituir evidência existente. Testes visuais explícitos exigem Editor gráfico; XML automatizado e captura diagnóstica não substituem uma run normal até vitória/derrota. Evidências e comandos desta revisão em [Reports/F05](../Reports/F05/README.md).
+
 ## Reconstrução da composição
 
 Os assets necessários já estão versionados. Não é necessário regenerar personagens, cenário ou imagens para construir o jogo.

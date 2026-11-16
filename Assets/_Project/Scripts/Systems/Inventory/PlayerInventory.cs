@@ -18,6 +18,7 @@ namespace DungeonCrawler.Systems
         [SerializeField] private LayerMask dropObstacleMask;
         private InventoryModel model;
         private float dropDistance = 2.2f;
+        private bool usingPotion;
 
         public IReadOnlyList<InventoryStack> Slots => model != null ? model.Slots : Array.Empty<InventoryStack>();
         public int Capacity => model?.Capacity ?? 0;
@@ -117,9 +118,15 @@ namespace DungeonCrawler.Systems
         public bool TryUseQuickPotion() => TryUsePotion(QuickPotionIndex);
         public bool TryUsePotion(int index)
         {
-            if (!CanUseCommands || health.Current >= health.Max || !model.TryConsumePotion(index, out int healing)) return false;
-            health.Heal(healing);
-            return true;
+            if (usingPotion || !CanUseCommands || health.Current >= health.Max) return false;
+            usingPotion = true;
+            try
+            {
+                if (!model.TryConsumePotion(index, out int healing)) return false;
+                health.Heal(healing, HealingSource.Potion);
+                return true;
+            }
+            finally { usingPotion = false; }
         }
 
         public bool TryDrop(int index)

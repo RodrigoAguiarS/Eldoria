@@ -16,6 +16,9 @@ namespace DungeonCrawler.Core
         /// <summary>Dano efetivamente aplicado.</summary>
         public event Action<float> Damaged;
         public event Action Died;
+        public event Action<HealingAccepted> Healed;
+        public event Action ResetPerformed;
+        private int resetVersion;
 
         public HealthModel(float max)
         {
@@ -25,8 +28,10 @@ namespace DungeonCrawler.Core
 
         public void Reset(float max)
         {
+            resetVersion++;
             Max = Mathf.Max(1f, max);
             Current = Max;
+            ResetPerformed?.Invoke();
             Changed?.Invoke(Current, Max);
         }
 
@@ -42,12 +47,16 @@ namespace DungeonCrawler.Core
             return true;
         }
 
-        public void Heal(float amount)
+        public void Heal(float amount, HealingSource source = HealingSource.Other)
         {
-            if (!IsAlive || amount <= 0f) return;
+            if (!IsAlive || amount <= 0f || float.IsNaN(amount)) return;
 
+            float previous = Current;
+            int version = resetVersion;
             Current = Mathf.Clamp(Current + amount, 0f, Max);
+            var accepted = new HealingAccepted(Current - previous, Current, Max, source);
             Changed?.Invoke(Current, Max);
+            if (version == resetVersion && accepted.Amount > 0f) Healed?.Invoke(accepted);
         }
     }
 }

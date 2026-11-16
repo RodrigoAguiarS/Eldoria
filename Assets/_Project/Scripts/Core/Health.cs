@@ -33,6 +33,17 @@ namespace DungeonCrawler.Core
             remove { Model.Died -= value; }
         }
 
+        public event Action<HealingAccepted> Healed
+        {
+            add { Model.Healed += value; }
+            remove { Model.Healed -= value; }
+        }
+        public event Action ResetPerformed
+        {
+            add { Model.ResetPerformed += value; }
+            remove { Model.ResetPerformed -= value; }
+        }
+
         private HealthModel Model => model ??= new HealthModel(maxHealth);
 
         public bool IsAlive => Model.IsAlive;
@@ -61,6 +72,6 @@ namespace DungeonCrawler.Core
             return Model.TakeDamage(DamageMitigation.ApplyDefense(amount, defense));
         }
 
-        public void Heal(float amount) => Model.Heal(amount);
+        public void Heal(float amount, HealingSource source = HealingSource.Other) => Model.Heal(amount, source);
     }
 }
