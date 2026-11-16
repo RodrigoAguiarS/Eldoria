@@ -47,5 +47,27 @@ namespace DungeonCrawler.Tests.EditMode
             }
             finally { EditorSceneManager.CloseScene(scene, true); }
         }
+
+        [Test]
+        public void IntegrateInventorySortTwice_KeepsSceneBytesAndOneSortButtonLinkedToPresenter()
+        {
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            InventorySceneBuilder.IntegrateInventorySort();
+            byte[] first = File.ReadAllBytes(MvpReleaseBuild.Floor);
+            InventorySceneBuilder.IntegrateInventorySort();
+            CollectionAssert.AreEqual(first, File.ReadAllBytes(MvpReleaseBuild.Floor));
+            Scene scene = EditorSceneManager.OpenScene(MvpReleaseBuild.Floor, OpenSceneMode.Additive);
+            try
+            {
+                var presenter = scene.GetRootGameObjects().SelectMany(root => root.GetComponentsInChildren<InventoryPresenter>(true)).Single();
+                var buttons = presenter.GetComponentsInChildren<UnityEngine.UI.Button>(true).Where(button => button.name == "Sort").ToArray();
+                Assert.AreEqual(1, buttons.Length);
+                Assert.AreEqual(1, buttons[0].onClick.GetPersistentEventCount());
+                Assert.AreSame(presenter, buttons[0].onClick.GetPersistentTarget(0));
+                Assert.AreEqual(nameof(InventoryPresenter.SortSelected), buttons[0].onClick.GetPersistentMethodName(0));
+                Assert.AreEqual(16, presenter.GetComponentsInChildren<InventorySlotView>(true).Length);
+            }
+            finally { EditorSceneManager.CloseScene(scene, true); }
+        }
     }
 }

@@ -60,6 +60,22 @@ namespace DungeonCrawler.UI
                 inventory.TryUnequip(inventory.Slots[selected].Definition.Kind);
         }
         public void UseSelected() => inventory.TryUsePotion(selected);
+        /// <summary>Requests the domain sort and keeps the selection on the same slot instance.</summary>
+        public void SortSelected()
+        {
+            if (!inventory.TrySort(out int[] newIndexOf)) return;
+            if (selected < newIndexOf.Length) selected = Mathf.Clamp(newIndexOf[selected], 0, slots.Length - 1);
+            Refresh();
+            // Keyboard/gamepad focus on a slot follows the item; focus on the Sort button stays there.
+            if (eventSystem != null && IsSlot(eventSystem.currentSelectedGameObject))
+                eventSystem.SetSelectedGameObject(slots[selected].Button.gameObject);
+        }
+        private bool IsSlot(GameObject target)
+        {
+            if (target == null) return false;
+            foreach (InventorySlotView slot in slots) if (slot.Button.gameObject == target) return true;
+            return false;
+        }
         public void DropSelected()
         {
             if (!inventory.TryDrop(selected)) details.text = "Não é possível largar neste local.\n\nFeche o inventário e procure um espaço aberto.";

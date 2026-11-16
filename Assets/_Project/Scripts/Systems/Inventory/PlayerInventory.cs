@@ -102,6 +102,13 @@ namespace DungeonCrawler.Systems
         }
 
         public bool TryUnequip(InventoryItemKind kind) => CanUseCommands && model.TryUnequip(kind);
+
+        /// <summary>Sorts the bag in the domain model; see <see cref="InventoryModel.TrySort"/>. One Changed event when slots move.</summary>
+        public bool TrySort(out int[] newIndexOf)
+        {
+            newIndexOf = null;
+            return CanUseCommands && model.TrySort(out newIndexOf);
+        }
         public bool TryUseFirstPotion() => model != null && TryUsePotion(model.FirstPotionIndex);
         public bool TryUsePotion(int index)
         {

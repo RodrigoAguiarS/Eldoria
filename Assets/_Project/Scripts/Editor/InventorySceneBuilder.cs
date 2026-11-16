@@ -193,11 +193,18 @@ namespace DungeonCrawler.Editor
             GameShellSceneBuilder.ConfigureGameplay(hud, player, menu, panel.gameObject, pausePanel.gameObject, events, resume);
             ConfigureItemVisuals(hud, player);
             ConfigureEquipmentComparison(hud);
+            ConfigureInventorySort(hud);
             root.SetAsLastSibling();
         }
 
         [MenuItem("Tools/Dungeon Crawler/Inventory/Integrate Equipment Comparison (F01)")]
-        public static void IntegrateEquipmentComparison()
+        public static void IntegrateEquipmentComparison() => ConfigureSavedHuds(ConfigureEquipmentComparison);
+
+        [MenuItem("Tools/Dungeon Crawler/Inventory/Integrate Inventory Sort (F02)")]
+        public static void IntegrateInventorySort() => ConfigureSavedHuds(ConfigureInventorySort);
+
+        /// <summary>Applies one presentation step to the HUD of each existing gameplay scene and saves it.</summary>
+        private static void ConfigureSavedHuds(Action<GameObject> configure)
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Saia do PlayMode.");
             for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -210,13 +217,25 @@ namespace DungeonCrawler.Editor
                 if (opened) scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
                 try
                 {
-                    ConfigureEquipmentComparison(scene.GetRootGameObjects().Single(root => root.name == "HUD"));
+                    configure(scene.GetRootGameObjects().Single(root => root.name == "HUD"));
                     EditorSceneManager.MarkSceneDirty(scene);
                     EditorSceneManager.SaveScene(scene);
                 }
                 finally { if (opened) EditorSceneManager.CloseScene(scene, true); }
             }
             if (original.IsValid() && original.isLoaded) SceneManager.SetActiveScene(original);
+        }
+
+        /// <summary>F02: adds the Sort button to the bag header; the presenter delegates the ordering to the domain.</summary>
+        public static void ConfigureInventorySort(GameObject hud)
+        {
+            Transform window = hud.transform.Find("InventoryUI/InventoryPanel/Window");
+            if (window == null) throw new InvalidOperationException("Inventory window missing; integrate the inventory first.");
+            var presenter = window.parent.GetComponent<InventoryPresenter>();
+            // Title keeps its position; its rect ends before the button (text "INVENTÁRIO 16/16" is ~350 px at size 32).
+            Label(window, "Title", window.Find("Title").GetComponent<Text>().text, new Vector2(32f, -24f), new Vector2(580f, 50f), 32);
+            Button sort = Button(window, "Sort", "Ordenar", new Vector2(632f, -26f), new Vector2(188f, 46f));
+            Link(sort, presenter.SortSelected);
         }
 
         /// <summary>Updates only the comparison area in an existing inventory; preserves items, art and commands.</summary>

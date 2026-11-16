@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace DungeonCrawler.Systems
 {
@@ -138,6 +139,57 @@ namespace DungeonCrawler.Systems
             Changed?.Invoke();
             return true;
         }
+
+        /// <summary>
+        /// Reorders whole stacks by kind, rarity rank (rarest first) and name; ties keep their original order and
+        /// empty slots go last. Equipment follows the moved slot instance, so identical definitions stay distinct.
+        /// Never merges, splits or changes stacks. Publishes one Changed event, or none when already ordered.
+        /// <paramref name="newIndexOf"/>[old] is the slot's new index (identity when nothing moved).
+        /// </summary>
+        public bool TrySort(out int[] newIndexOf)
+        {
+            int[] order = new int[slots.Length];
+            for (int i = 0; i < order.Length; i++) order[i] = i;
+            // Insertion sort: stable, allocation-free beyond the index arrays and trivial for 16 slots.
+            for (int i = 1; i < order.Length; i++)
+            {
+                int current = order[i];
+                int j = i - 1;
+                while (j >= 0 && CompareSlots(order[j], current) > 0) { order[j + 1] = order[j]; j--; }
+                order[j + 1] = current;
+            }
+            newIndexOf = new int[slots.Length];
+            bool moved = false;
+            for (int target = 0; target < order.Length; target++)
+            {
+                newIndexOf[order[target]] = target;
+                moved |= order[target] != target;
+            }
+            if (!moved) return false;
+
+            InventoryStack[] previous = (InventoryStack[])slots.Clone();
+            for (int target = 0; target < order.Length; target++) slots[target] = previous[order[target]];
+            if (EquippedWeaponIndex >= 0) EquippedWeaponIndex = newIndexOf[EquippedWeaponIndex];
+            if (EquippedArmorIndex >= 0) EquippedArmorIndex = newIndexOf[EquippedArmorIndex];
+            Changed?.Invoke();
+            return true;
+        }
+
+        private int CompareSlots(int left, int right)
+        {
+            InventoryStack a = slots[left], b = slots[right];
+            if (a.IsEmpty || b.IsEmpty)
+                return a.IsEmpty == b.IsEmpty ? left.CompareTo(right) : (a.IsEmpty ? 1 : -1);
+            int result = a.Definition.Kind.CompareTo(b.Definition.Kind);
+            if (result != 0) return result;
+            result = RarityRank(b.Definition).CompareTo(RarityRank(a.Definition));
+            if (result != 0) return result;
+            result = string.Compare(a.Definition.DisplayName ?? "", b.Definition.DisplayName ?? "",
+                CultureInfo.InvariantCulture, CompareOptions.IgnoreCase);
+            return result != 0 ? result : left.CompareTo(right);
+        }
+
+        private static int RarityRank(ItemDefinition definition) => definition.rarity != null ? definition.rarity.rank : -1;
 
         private bool Valid(int index) => index >= 0 && index < slots.Length;
         private static bool Compatible(InventoryStack item, ItemDefinition definition, int potency) =>
