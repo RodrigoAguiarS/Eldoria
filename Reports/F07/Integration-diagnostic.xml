@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-16 14:40:09Z" end-time="2026-11-16 14:40:16Z" duration="6,5675089">
+  <test-suite type="TestSuite" id="1173" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="131" result="Failed" site="Child" start-time="2026-11-16 14:40:09Z" end-time="2026-11-16 14:40:16Z" duration="6.567509" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1238" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/F07Validation/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="53" result="Failed" site="Child" start-time="2026-11-16 14:40:09Z" end-time="2026-11-16 14:40:16Z" duration="6.557934" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="14996" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1239" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="53" result="Failed" site="Child" start-time="2026-11-16 14:40:09Z" end-time="2026-11-16 14:40:16Z" duration="6.556588" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1240" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="53" result="Failed" site="Child" start-time="2026-11-16 14:40:09Z" end-time="2026-11-16 14:40:16Z" duration="6.555685" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1241" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="53" result="Failed" site="Child" start-time="2026-11-16 14:40:09Z" end-time="2026-11-16 14:40:16Z" duration="6.554725" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1184" name="FloorIntegrationTests" fullname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests" classname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2026-11-16 14:40:09Z" end-time="2026-11-16 14:40:16Z" duration="6.552378" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1187" name="SavedRangedEnemy_FiresWarmedProjectileAndDamagesActualPlayer" fullname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests.SavedRangedEnemy_FiresWarmedProjectileAndDamagesActualPlayer" methodname="SavedRangedEnemy_FiresWarmedProjectileAndDamagesActualPlayer" classname="DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests" runstate="Runnable" seed="101091668" result="Failed" start-time="2026-11-16 14:40:09Z" end-time="2026-11-16 14:40:16Z" duration="6.536865" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  The saved ranged enemy must launch through the actual pool. State=Attack, position=(0.00, 0.07, -2.10), target=(0.00, 0.08, -6.50), sight=True
+  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.PlayerInput.FloorIntegrationTests+<SavedRangedEnemy_FiresWarmedProjectileAndDamagesActualPlayer>d__9.MoveNext () [0x002a9] in G:\DungeonCrawler\F07Validation\Assets\_Project\Tests\PlayMode\PlayerInput\FloorIntegrationTests.cs:180
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

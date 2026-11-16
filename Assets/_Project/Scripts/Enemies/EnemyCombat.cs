@@ -23,11 +23,33 @@ namespace DungeonCrawler.Enemies
         private float hitAt;
         private IDamageable target;
         private Transform targetTransform;
+        private Transform sightTarget;
+        private float nextSightAt;
+        private bool hasSight;
 
         public bool IsBusy => windingUp;
+        public Vector3 ProjectileOrigin => transform.position + Vector3.up * data.projectileHeight;
         public event Action AttackStarted;
 
-        public void Initialize(EnemyData enemyData) => data = enemyData;
+        public void Initialize(EnemyData enemyData)
+        {
+            CancelAttack();
+            data = enemyData;
+            sightTarget = null;
+        }
+
+        /// <summary>Cached, scaled-time cover query. Attack boundaries explicitly refresh it.</summary>
+        public bool HasLineOfSight(Transform aimTarget, bool refresh = false)
+        {
+            if (aimTarget == null || data == null) return false;
+            if (data.attackType != EnemyAttackType.Ranged) return true;
+            if (!refresh && sightTarget == aimTarget && Time.time < nextSightAt) return hasSight;
+            sightTarget = aimTarget;
+            nextSightAt = Time.time + Mathf.Max(0.05f, data.lineOfSightInterval);
+            Vector3 aimPoint = aimTarget.position + Vector3.up * data.projectileHeight;
+            hasSight = !Physics.Linecast(ProjectileOrigin, aimPoint, data.lineOfSightMask, QueryTriggerInteraction.Ignore);
+            return hasSight;
+        }
 
         public void SetProjectilePool(ProjectilePool pool) => projectilePool = pool;
 
@@ -35,7 +57,9 @@ namespace DungeonCrawler.Enemies
 
         public void BeginAttack(IDamageable damageable, Transform damageableTransform)
         {
-            if (!CanStartAttack()) return;
+            if (!isActiveAndEnabled || Time.timeScale <= 0f || data == null || !CanStartAttack()) return;
+            if (damageable == null || !damageable.IsAlive || damageableTransform == null) return;
+            if (!HasLineOfSight(damageableTransform, true)) return;
 
             windingUp = true;
             target = damageable;
@@ -46,18 +70,40 @@ namespace DungeonCrawler.Enemies
             AttackStarted?.Invoke();
         }
 
-        public void CancelAttack() => windingUp = false;
+        public void CancelAttack()
+        {
+            windingUp = false;
+            target = null;
+            targetTransform = null;
+        }
+
+        private void OnDisable()
+        {
+            CancelAttack();
+            sightTarget = null;
+        }
 
         private void Update()
         {
             if (Time.timeScale <= 0f) return;
-            if (!windingUp || Time.time < hitAt) return;
+            if (!windingUp) return;
+            if (target == null || targetTransform == null || !target.IsAlive || !HasLineOfSight(targetTransform))
+            {
+                CancelAttack();
+                return;
+            }
+            if (Time.time < hitAt) return;
 
             windingUp = false;
             if (target == null || !target.IsAlive || targetTransform == null) return;
 
-            if (data.attackType == EnemyAttackType.Ranged) FireProjectile();
+            // A door can close after the timed sample, including on the impact frame.
+            if (data.attackType == EnemyAttackType.Ranged)
+            {
+                if (HasLineOfSight(targetTransform, true)) FireProjectile();
+            }
             else StrikeMelee();
+            CancelAttack();
         }
 
         private void StrikeMelee()
@@ -72,7 +118,7 @@ namespace DungeonCrawler.Enemies
         {
             if (projectilePool == null) return;
 
-            Vector3 origin = transform.position + Vector3.up * data.projectileHeight;
+            Vector3 origin = ProjectileOrigin;
             Vector3 aimPoint = targetTransform.position + Vector3.up * data.projectileHeight;
             projectilePool.Fire(origin, aimPoint - origin, data.projectileSpeed, data.attackDamage);
         }

@@ -25,5 +25,8 @@ namespace DungeonCrawler.Enemies
         [Tooltip("Se > 0, o inimigo recua quando o alvo chega mais perto que isto.")]
         [Min(0f)] public float keepDistance = 0f;
         [Min(0f)] public float projectileHeight = 1f;
+        [Tooltip("Solid cover only: Obstacle and Door. Exclude actors and triggers.")]
+        public LayerMask lineOfSightMask = (1 << 12) | (1 << 13);
+        [Min(0.05f)] public float lineOfSightInterval = 0.1f;
     }
 }

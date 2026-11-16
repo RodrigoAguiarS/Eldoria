@@ -60,6 +60,12 @@ Na cena `Floor_01_GeneratedCharacters`, ferir e usar Q/Usar: somente cura efetiv
 
 Builder: **Tools / Dungeon Crawler / Feedback / Integrate Rewards (F05)**, ou `DungeonCrawler.Editor.RewardFeedbackSceneBuilder.Integrate`. Build isolada: `RewardFeedbackSceneBuilder.BuildWindowsValidation`, com saída `Builds/F05/Eldoria.exe` e relatório novo `Reports/F05/windows-build.json`; recusa substituir evidência existente. Testes visuais explícitos exigem Editor gráfico; XML automatizado e captura diagnóstica não substituem uma run normal até vitória/derrota. Evidências e comandos desta revisão em [Reports/F05](../Reports/F05/README.md).
 
+### Regressão F07 — Linha de visão do ranged
+
+Usar **Tools / Dungeon Crawler / Enemies / Integrate Ranged Line Of Sight (F07)** (`RangedLineOfSightBuilder.Integrate`) para persistir máscara Obstacle/Door e intervalo de 0,1 s no asset compartilhado, sem reconstruir salas ou prefabs. Cobertura deve impedir novo preparo; entrar em cobertura durante windup deve cancelar o tiro, e sair exige preparo novo com cooldown preservado. Conferir porta fechada/abrindo, alvo móvel/morto, desativação/reativação e pausa. O agente persegue pelo NavMesh em thinkInterval, inclusive quando já está no alcance de ataque atrás da parede.
+
+Build isolada: `RangedLineOfSightBuilder.BuildWindowsValidation`, saída `Builds/F07/Eldoria.exe` e relatório novo `Reports/F07/windows-build.json`. Captura explícita gráfica: `RangedLineOfSightReleaseTests.Capture_ReleaseRangedBehindDoorAndFiring`, na cena real de release, com ator/porta diagnósticos. Evidências, reprodução e limites em [Reports/F07](../Reports/F07/README.md); essa captura não substitui uma run normal Windows.
+
 ## Reconstrução da composição
 
 Os assets necessários já estão versionados. Não é necessário regenerar personagens, cenário ou imagens para construir o jogo.

@@ -27,12 +27,16 @@ namespace DungeonCrawler.Enemies
         private bool retreating;
 
         /// <summary>Define o alvo em runtime.</summary>
-        public void SetTarget(Health newTarget) => target = newTarget;
+        public void SetTarget(Health newTarget)
+        {
+            if (target != newTarget) combat.CancelAttack();
+            target = newTarget;
+        }
 
         /// <summary>Injeção feita pelo spawner: alvo e pool de projéteis (inimigos ranged).</summary>
         public void Inject(Health newTarget, ProjectilePool pool)
         {
-            target = newTarget;
+            SetTarget(newTarget);
             combat.SetProjectilePool(pool);
         }
 
@@ -44,9 +48,21 @@ namespace DungeonCrawler.Enemies
             combat.Initialize(data);
         }
 
-        private void OnEnable() => health.Died += OnDied;
+        private void OnEnable()
+        {
+            health.Died += OnDied;
+            if (!health.IsAlive && State != EnemyState.Dead) OnDied();
+        }
 
-        private void OnDisable() => health.Died -= OnDied;
+        private void OnDisable()
+        {
+            health.Died -= OnDied;
+            combat.CancelAttack();
+            navigation.Stop();
+            retreating = false;
+            if (State != EnemyState.Dead) State = EnemyState.Idle;
+            nextThinkAt = 0f;
+        }
 
         private void Update()
         {
@@ -79,11 +95,16 @@ namespace DungeonCrawler.Enemies
 
                 case EnemyState.Chase:
                     if (distance > data.loseInterestRange) Enter(EnemyState.Idle);
-                    else if (distance <= data.attackRange) Enter(EnemyState.Attack);
-                    else navigation.MoveTo(target.transform.position);
+                    else if (distance <= data.attackRange && combat.HasLineOfSight(target.transform)) Enter(EnemyState.Attack);
+                    else navigation.MoveTo(target.transform.position, data.attackType == EnemyAttackType.Ranged);
                     break;
 
                 case EnemyState.Attack:
+                    if (!combat.HasLineOfSight(target.transform))
+                    {
+                        Enter(EnemyState.Chase);
+                        break;
+                    }
                     if (combat.IsBusy) break;
                     if (distance > data.attackRange * 1.2f)
                     {
@@ -123,7 +144,7 @@ namespace DungeonCrawler.Enemies
                     break;
                 case EnemyState.Chase:
                     combat.CancelAttack();
-                    navigation.MoveTo(target.transform.position);
+                    navigation.MoveTo(target.transform.position, data.attackType == EnemyAttackType.Ranged);
                     break;
                 case EnemyState.Attack:
                     navigation.Stop();

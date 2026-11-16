@@ -20,6 +20,8 @@ Usa CharacterController; atributos HP, recurso (estamina nesta versão), ataque,
 ## Inimigos
 Máquina de estados Idle → Chase → Attack → Dead. Melee aproxima e golpeia; ranged mantém distância e dispara; elite tem maior HP/tamanho/dano e concede mais XP. Navegação por NavMeshAgent.
 
+F07: ranged só prepara tiros com visão direta da origem do projétil ao alvo. Parede e porta fechada bloqueiam; ao detectar perda de visão durante a preparação, cancela o tiro e volta a perseguir pelo NavMesh. Reabrir a visão exige um novo ataque e respeita o cooldown já iniciado. Pausa congela os tempos; desativação descarta ataques pendentes. Dano, recuo, drops e Boss mantêm as regras existentes.
+
 ## Boss
 Duas fases. Aos 50% HP: transição única, invulnerável por 3 segundos, rugido e mudança visual; segunda fase altera ataques. Golpes pesados mostram telegraph no chão pelo menos 1 segundo antes do dano. HUD de Boss apenas durante luta.
 
