@@ -1,4 +1,4 @@
-# Catálogo de prompts — Dungeon Crawler
+# Catálogo de prompts — Eldoria
 
 Base auditada: `5873d7a`, atualizada após o handoff `aff1895` em 14/11/2026. **Nenhum prompt foi executado nesta missão.** F01–F15 são sugestões novas ou complementos identificados; A01–A15 são briefs artísticos. Escolher um ID por entrega. P1 = próximo incremento útil; P2 = expansão/polimento; P3 = mudança ampla. Complexidade B/M/A = baixa/média/alta relativa a este projeto, sem promessa de prazo.
 

@@ -16,7 +16,7 @@ No PowerShell, a partir de `G:\DungeonCrawler\My project`:
 & 'C:/Program Files/Unity/Hub/Editor/6000.6.9f1/Editor/Unity.exe' -batchmode -nographics -projectPath 'G:/DungeonCrawler/My project' -buildTarget win64 -executeMethod DungeonCrawler.Editor.MvpReleaseBuild.BuildWindows -quit -logFile 'G:/DungeonCrawler/My project/Reports/Leadership/Windows-rebuild.log'
 ```
 
-A chamada pode retornar antes de o processo Unity terminar. Aguarde o processo e confira `Reports/Leadership/windows-build.json`: versão 1.0.0, `Succeeded`, zero erros e `development=false`. Saída: `Builds/WindowsMVP/DungeonCrawler.exe`, com MainMenu e Floor_01_GeneratedCharacters. O menu equivalente é **Tools / Dungeon Crawler / Build / Windows Release (Current MVP)**.
+A chamada pode retornar antes de o processo Unity terminar. Aguarde o processo e confira `Reports/Leadership/windows-build.json`: versão 1.0.0, `Succeeded`, zero erros e `development=false`. Saída: `Builds/WindowsMVP/Eldoria.exe` (antes de D-003: `DungeonCrawler.exe`), com MainMenu e Floor_01_GeneratedCharacters. O menu equivalente é **Tools / Dungeon Crawler / Build / Windows Release (Current MVP)**.
 
 `BuildWindowsProfile` gera somente a build Development de diagnóstico em `Builds/WindowsProfile`; não a distribua. Flags, carga e limites das medições: `Tools/AudioGenerator/DIAGNOSTICS.md` e `Reports/Leadership/WindowsPerf/README.md`.
 
@@ -67,4 +67,4 @@ Após build final e testes aprovados:
 python Tools/Release/package_windows.py
 ```
 
-Gera `Builds/Release/DungeonCrawler-1.0.0-windows-x64.zip`, README, BUILD-INFO e manifesto SHA256. Verifica PE x64, CRC e hashes; exclui pastas de backup/debug e recusa sobrescrever um pacote existente. Não publica nem envia arquivos. Para outra revisão, preserve o pacote anterior e versione explicitamente o novo artefato.
+Gera `Builds/Release/<produto>-<versão>-windows-x64.zip` (nome do executável da build; ex.: `Eldoria-…`; o pacote histórico 1.0.0 é `DungeonCrawler-1.0.0-windows-x64.zip`), README, BUILD-INFO e manifesto SHA256. Verifica PE x64, CRC e hashes; exclui pastas de backup/debug e recusa sobrescrever um pacote existente. Não publica nem envia arquivos. Para outra revisão, preserve o pacote anterior e versione explicitamente o novo artefato.

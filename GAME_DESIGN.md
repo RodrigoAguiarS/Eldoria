@@ -1,7 +1,7 @@
-# GAME_DESIGN.md — Dungeon Crawler
+# GAME_DESIGN.md — Eldoria
 
 ## Visão
-Action-RPG / Dungeon Crawler isométrico 3D para Windows, inspirado no ritmo de combate e progressão de jogos do gênero, com identidade visual própria. Unity 6 URP, estilo low-poly estilizado, câmera fixa em orientação e inclinada ~45°.
+**Eldoria** é um Action-RPG / dungeon crawler isométrico 3D para Windows, inspirado no ritmo de combate e progressão de jogos do gênero, com identidade visual própria. Unity 6 URP, estilo low-poly estilizado, câmera fixa em orientação e inclinada ~45°.
 
 ## Loop completo (após MVP)
 Entrar na sala → portas fecham → inimigos surgem → derrotar todos → portas abrem → coletar XP/loot → avançar. Um andar tem quatro salas normais e uma arena de Boss.
@@ -48,6 +48,7 @@ Vida do jogador 100; inimigo 40; dano do ataque 20; velocidade do jogador 5 unid
 | --- | --- | --- | --- | --- |
 | D-001 | 13/11/2026 | Inventário interativo e raridades entram na 1.0 | Adiar para expansão | Escolha explícita do usuário; não muda retroativamente o primeiro marco. |
 | D-002 | 14/11/2026 | Aprovar integralmente as [regras concretas da 1.0](docs/PRODUCT-1.0-PROPOSAL.md) | Ajustar proposta antes de implementar | Usuário aprovou inventário/pausa/consumo/equipamento/defesa/especial/estamina/menus/opções. Preservar fórmula de dano e armas +6/+12; sem save de campanha nesta versão. |
+| D-003 | 15/11/2026 | Nome do jogo passa a ser **Eldoria** | Manter "Dungeon Crawler" | Pedido do usuário. Muda nome do produto/janela, executável `Eldoria.exe` e título do menu. Identificadores técnicos `DungeonCrawler` permanecem. Como PlayerPrefs no Windows usa o nome do produto, opções salvas pela build anterior voltam ao padrão uma vez. |
 
 O loop do andar fixo já está implementado; “após MVP” e “primeiro marco” acima identificam a sequência original de construção, não pendências atuais. Combo de três golpes e segurar para repetir, inventário de 16 slots, três raridades, especial e opções fazem parte do produto existente. Estado/evidências em [MVP](MVP.md). Valores atuais inspecionados e limites do playtest em [BALANCE-1.0](docs/BALANCE-1.0.md).
 

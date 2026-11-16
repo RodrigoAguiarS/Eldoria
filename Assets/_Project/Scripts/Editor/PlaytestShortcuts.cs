@@ -81,7 +81,7 @@ namespace DungeonCrawler.Editor
             if (!File.Exists(exe)) { Debug.LogError("Build não encontrada em " + exe + ". Use ▶ 3 para gerar."); return; }
             Process.Start(new ProcessStartInfo(exe, showcase ? "-dcc-start-floor " + ItemShowcaseScenario.Flag : "")
                 { WorkingDirectory = Path.GetDirectoryName(exe), UseShellExecute = false });
-            Debug.Log("[Teste] Abrindo " + exe + (showcase ? " (direto no andar, com itens de teste)" : "") + " — build de " + File.GetLastWriteTime(Path.Combine(Path.GetDirectoryName(exe), "DungeonCrawler_Data", "globalgamemanagers")));
+            Debug.Log("[Teste] Abrindo " + exe + (showcase ? " (direto no andar, com itens de teste)" : "") + " — build de " + File.GetLastWriteTime(Path.Combine(Path.GetDirectoryName(exe), GameIdentity.DataFolder, "globalgamemanagers")));
         }
     }
 }

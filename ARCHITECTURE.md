@@ -1,4 +1,4 @@
-# ARCHITECTURE.md — Unity Dungeon Crawler
+# ARCHITECTURE.md — Eldoria (Unity)
 
 ## Ambiente
 Unity **6000.6.9f1**, URP **17.6.0**, PC Windows x64. Manifest/lock versionados: Input System 1.20.1, Cinemachine 6.6.0, AI Navigation 2.0.16, UGUI 2.6.0 e Test Framework 1.8.0 (builtin no lock). Preservar essas versões; consultar instalação/Package Manager antes de mudanças. Não aplicar APIs de Cinemachine 2/3 presumindo compatibilidade.
@@ -66,7 +66,7 @@ PlayerSpecialDefinition configura recurso, custo, regeneração, cooldown e movi
 
 ## Menus e opções (1.0 / D-002)
 
-MainMenu e o andar são destinos explícitos de GameSceneFlow; iniciar/reiniciar cria uma run nova. MenuScreenStack oculta a tela anterior e restaura o foco ao voltar, mantendo o menu superior como superfície interativa. GameMenuController solicita pausa ao domínio; telas de vitória/derrota encerram overlays e selecionam o botão de reinício. GameShellSceneBuilder configura telas/referências pelas APIs e coloca MainMenu antes do andar no build, preservando as demais cenas de teste no Editor.
+MainMenu e o andar são destinos explícitos de GameSceneFlow; iniciar/reiniciar cria uma run nova. MenuScreenStack oculta a tela anterior e restaura o foco ao voltar, mantendo o menu superior como superfície interativa. GameMenuController solicita pausa ao domínio; telas de vitória/derrota encerram overlays e selecionam o botão de reinício. GameShellSceneBuilder configura telas/referências pelas APIs e coloca MainMenu antes do andar no build, preservando as demais cenas de teste no Editor. `GameIdentity` (Editor) concentra o nome do produto (D-003): `Eldoria` em PlayerSettings, `Eldoria.exe`/`Eldoria_Data` e título do MainMenu; `MvpReleaseBuild` reaplica o nome a cada build e `GameIdentity.Apply` atualiza só o título salvo, de forma idempotente.
 
 GameOptionsDefinition compartilha defaults serializados e estado de sessão não serializado; os ajustes ficam em JSON versionado no PlayerPrefs por usuário, separados da progressão. Dados inválidos/versões futuras não são aplicados; valores são limitados antes de uso. GameOptionsPresenter edita uma cópia e só persiste ao aplicar. GameOptionsApplier usa as APIs de qualidade/tela no player, preservando o seletor de resolução do Game view no Editor. Referências explícitas de opções ajustam flash e impulso de câmera, incluindo o rugido do Boss; a cor persistente da fase 2 permanece legível com flash desligado.
 

@@ -37,7 +37,7 @@ Os 99 EditMode desta auditoria e inspeções API têm artefatos próprios em `Re
 ## Fluxo de trabalho com IA
 
 1. Escolher um ID e um incremento. Ler AGENTS e seções de GDD/arquitetura/MVP pertinentes; consultar somente o achado/ficha relacionado. Carregar 1–3 skills relevantes, não a biblioteca inteira.
-2. Codex registra base/branch, plano curto, arquivos reservados e aceite. Claude revisa design/balanço/arquitetura sem edição concorrente. Agente artístico recebe referências anexadas, pasta exclusiva, formato real e critério de QA.
+2. O agente cria a branch da tarefa a partir da `main` atualizada e registra base/branch, plano curto, arquivos reservados e aceite; ao concluir, abre merge request para a `main`. Claude revisa design/balanço/arquitetura sem edição concorrente. Agente artístico recebe referências anexadas, pasta exclusiva, formato real e critério de QA.
 3. Integrar por APIs do Editor, testar comportamento e revisar visualmente a cena de release. Separar geração de bitmap, modelagem/rig e integração; nenhuma ferramenta recebe capacidades presumidas.
 4. Atualizar somente a regra/contrato afetado e uma linha de estado/evidência. Handoff: base, arquivos, decisões, testes, pendência, próximo comando. Evidências detalhadas ficam em Reports; CHANGELOG guarda histórico, não instruções operacionais duplicadas.
 5. Rodar o inventário/leitor de links e checker de Unity documentados em ARCHITECTURE. Usar saída nova e benchmarks em pasta exclusiva. Revisar e integrar commits por escopo; não incluir assets desconhecidos numa limpeza documental.

@@ -10,7 +10,7 @@ namespace DungeonCrawler.Editor
     public static class MvpReleaseBuild
     {
         public const string Floor = "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity";
-        public const string Executable = "Builds/WindowsMVP/DungeonCrawler.exe";
+        public const string Executable = "Builds/WindowsMVP/" + GameIdentity.ExecutableFile;
         public const string ReleaseVersion = "1.0.0";
 
         [Serializable] private sealed class Result
@@ -41,9 +41,10 @@ namespace DungeonCrawler.Editor
             if (AssetDatabase.LoadAssetAtPath<WeaponData>(WeaponAssetRepair.IronPath) == null ||
                 AssetDatabase.LoadAssetAtPath<WeaponData>(WeaponAssetRepair.WardenPath) == null)
                 throw new InvalidOperationException("Weapon assets must load before building.");
-            string executable = development ? "Builds/WindowsProfile/DungeonCrawler.exe" : Executable;
+            string executable = development ? "Builds/WindowsProfile/" + GameIdentity.ExecutableFile : Executable;
             Directory.CreateDirectory(Path.GetDirectoryName(executable));
             PlayerSettings.bundleVersion = ReleaseVersion;
+            PlayerSettings.productName = GameIdentity.ProductName;
             BuildReport report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
                 scenes = new[] { GameShellSceneBuilder.MenuScene, Floor },

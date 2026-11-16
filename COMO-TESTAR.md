@@ -9,7 +9,7 @@ Use só estes caminhos. Eles sempre abrem as cenas oficiais do jogo
 | --- | --- |
 | **▶ 1. Jogar versão atual (menu principal)** | Abre o menu principal e dá Play. É o jogo como o jogador vê. |
 | **▶ 2. Testar itens e combate (já com itens)** | Dá Play direto no andar e entrega 3 espadas, colete e poções, equipa a Lâmina mais forte e o colete e põe um pickup de cada tipo à sua frente (espadas, colete, poção, ouro, XP). |
-| **▶ 3. Gerar build Windows e abrir** | Gera a build oficial (`Builds/WindowsMVP/DungeonCrawler.exe`) e abre o jogo. |
+| **▶ 3. Gerar build Windows e abrir** | Gera a build oficial (`Builds/WindowsMVP/Eldoria.exe`) e abre o jogo. |
 | **▶ 4. Gerar build Windows e abrir já com itens** | Igual ao 3, mas o jogo abre direto no andar com os itens de teste. |
 | **▶ 5. Abrir última build (sem gerar)** | Abre o .exe já existente. |
 

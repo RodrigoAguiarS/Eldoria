@@ -19,7 +19,8 @@ def main():
     source = (project / report['executable']).resolve().parent
     if not source.is_relative_to((project / 'Builds').resolve()):
         raise SystemExit('Unexpected build directory.')
-    executable = source / 'DungeonCrawler.exe'
+    executable = (project / report['executable']).resolve()
+    product = executable.stem
     with executable.open('rb') as stream:
         header = stream.read(64); stream.seek(struct.unpack_from('<I', header, 60)[0]); signature = stream.read(6)
     if signature[:4] != b'PE\0\0' or struct.unpack_from('<H', signature, 4)[0] != 0x8664:
@@ -35,7 +36,7 @@ def main():
     readme = (project / 'docs/WINDOWS-RELEASE-README.txt').read_bytes()
     build_info = (json.dumps(report, indent=2, ensure_ascii=False) + '\n').encode('utf-8')
     manifest = {}
-    output = project / 'Builds/Release/DungeonCrawler-1.0.0-windows-x64.zip'
+    output = project / f"Builds/Release/{product}-{report['version']}-windows-x64.zip"
     output.parent.mkdir(parents=True, exist_ok=True)
     if output.exists():
         raise SystemExit('Package already exists; preserving it: ' + str(output))
@@ -43,15 +44,15 @@ def main():
         for path in files:
             relative = path.relative_to(source).as_posix()
             data = path.read_bytes(); manifest[relative] = hashlib.sha256(data).hexdigest()
-            package.writestr('DungeonCrawler/' + relative, data)
+            package.writestr(product + '/' + relative, data)
         for name, data in (('README.txt', readme), ('BUILD-INFO.json', build_info)):
-            manifest[name] = hashlib.sha256(data).hexdigest(); package.writestr('DungeonCrawler/' + name, data)
-        package.writestr('DungeonCrawler/SHA256-MANIFEST.json', json.dumps(manifest, indent=2) + '\n')
+            manifest[name] = hashlib.sha256(data).hexdigest(); package.writestr(product + '/' + name, data)
+        package.writestr(product + '/SHA256-MANIFEST.json', json.dumps(manifest, indent=2) + '\n')
     with zipfile.ZipFile(output) as package:
         if package.testzip() is not None:
             raise SystemExit('Package CRC validation failed.')
         for name, expected in manifest.items():
-            if hashlib.sha256(package.read('DungeonCrawler/' + name)).hexdigest() != expected:
+            if hashlib.sha256(package.read(product + '/' + name)).hexdigest() != expected:
                 raise SystemExit('Package hash mismatch: ' + name)
     digest = hashlib.sha256(output.read_bytes()).hexdigest()
     evidence = {'package': str(output), 'sha256': digest, 'bytes': output.stat().st_size, 'files': len(manifest),

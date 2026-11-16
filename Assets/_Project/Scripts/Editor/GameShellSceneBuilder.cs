@@ -180,7 +180,7 @@ namespace DungeonCrawler.Editor
                 var controller = Get<MainMenuController>(hud); Set(controller, "screens", stack);
                 var title = Panel(hud.transform, "TitlePanel", Background); Stretch(title);
                 var content = Box(title, "Content", Vector2.zero, new Vector2(1100f, 820f), new Vector2(.5f, .5f));
-                Label(content, "Title", "DUNGEON\nCRAWLER", new Vector2(0f, -20f), new Vector2(1100f, 190f), 76).alignment = TextAnchor.MiddleCenter;
+                Label(content, "Title", GameIdentity.TitleText, new Vector2(0f, -20f), new Vector2(1100f, 190f), 76).alignment = TextAnchor.MiddleCenter;
                 Label(content, "Description", "Quatro salas. Um Guardião. Conquiste o andar.", new Vector2(0f, -230f), new Vector2(1100f, 55f), 28).alignment = TextAnchor.MiddleCenter;
                 var play = Button(content, "Play", "Jogar", new Vector2(300f, -330f), new Vector2(500f, 72f)); Link(play, flow.StartGame);
                 var options = Button(content, "Options", "Opções", new Vector2(300f, -425f), new Vector2(500f, 72f)); Link(options, controller.OpenOptions);
