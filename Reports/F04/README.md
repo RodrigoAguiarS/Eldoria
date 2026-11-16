@@ -2,6 +2,8 @@
 
 16/11/2026. Base `3468060ae3be1d5b21240efc8f16ca026834f752`, branch `codex/f04-control-rebinding`, criada da `main` atualizada. Unity 6000.6.9f1 / Input System 1.20.1; pacotes, GUIDs e identificadores técnicos preservados.
 
+Implementação: `f289917`. [Merge request #2 → main](https://github.com/RodrigoAguiarS/Eldoria/pull/2), aberto para revisão, sem merge. Próximo passo: aceite de teclado físico Windows e revisão do usuário.
+
 ## Entrega e contratos
 
 **Opções → Controles** no título e na pausa. Treze bindings editáveis: quatro direções, básico, dash, duas alternativas do giro, duas da bolsa, poção, pausa/voltar e reinício. Captura aceita teclas físicas e cinco botões do mouse. Conflitos indicam a ação ocupante e preservam o binding anterior; não há troca automática. Para trocar duas teclas, use uma tecla livre intermediária.
