@@ -18,8 +18,8 @@
   "summary": {
     "logical_resources": 133,
     "by_status": {
-      "EXISTENTE": 122,
-      "AUSENTE": 8,
+      "EXISTENTE": 123,
+      "AUSENTE": 7,
       "INCOMPLETO": 1,
       "NÃO VERIFICADO": 2
     },
@@ -57,9 +57,9 @@
         "AUSENTE": 1
       },
       "J": {
-        "EXISTENTE": 11,
+        "EXISTENTE": 12,
         "INCOMPLETO": 1,
-        "AUSENTE": 4
+        "AUSENTE": 3
       }
     },
     "by_priority": {
@@ -7062,7 +7062,7 @@
       "category": "J",
       "category_name": "VFX e animações adicionais",
       "functionality": "Polimento opcional de ação existente",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "VFX",
       "scope": "sugestão_polimento",
@@ -7090,7 +7090,7 @@
       "technical_dependencies": [
         "PlayerProgression.Collected(LootKind) existe, sem quantidade/posição/item completo."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Produzido em staging (A06, 17/11/2026) como atlas 2D 384×128 de três glints estáticos (XP, ouro, guardado); NÃO integrado. O F05 atual continua com o burst procedural de 4 partículas tingidas (collectionEffect). Usar o atlas no emissor existente (Texture Sheet Animation 3×1, startFrame pelo LootKind, até 5 partículas, 0,28 s, só após CollectionAccepted) é tarefa de código separada; proposta em Source~/FX-LOOT.atlas.json.",
       "visual_specification": "Small cyan glint for XP, brass for gold, neutral spark for stored gear/potions; restrained size and brightness.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7099,7 +7099,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "Técnica fora da Unity em 17/11/2026: FxLoot.validation.json (PNG decodificado: atlas 384×128 RGBA e três glints 128×128 RGBA, célula i = glint i, canal alpha idêntico nas três variantes, 0 pixels transparentes com RGB sujo, margem mínima 14 px, centroide no centro, alpha máx. 199, cobertura alpha>50% 10,5%, 0 px verdes, 0 px saturados em matiz de ameaça 0–36°, 0 px de branco opaco, médias distintas (XP 194°, ouro 42°/sat. 0,61, marfim sat. 0,22), contraste ≥ 2,4 sobre a pedra, envelope proposto 0,30 m / 5 partículas / 0,28 s) e asset_report.py (atlas --expect-size 384x128 e glints 128x128, --require-alpha, exit 0); revisão sobre a captura real F05 de coleta 1920×1080 na escala de gameplay, ao lado dos ícones de item e de um telegraph vermelho. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -7112,10 +7112,11 @@
         "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/FX-LOOT/FX-LOOT.prefab"
       },
       "source_and_rights": {
-        "kind": "not_produced",
-        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
-        "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/FX-LOOT/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria e render próprios (Tools/FxLootGenerator/generate.py, Pillow MIT-CMU/HPND). Sem IA generativa de imagem nem asset de terceiros."
+      },
+      "production_state": "Produzido por gerador próprio (generate.py: uma única estrela facetada compacta de 4 pontas largas, núcleo em losango e 4 pontas diagonais curtas, halo de 6 degraus; mesma forma/alpha nas três cores: ciano #4FD8FF para XP, latão contido #D4A846 para ouro, marfim quente #D9CCAC para poção/arma/armadura; alpha ≤ 0,78, sem branco opaco; luz de cima/esquerda; supersampling 8× com alpha pré-multiplicado): FX-LOOT-Atlas.png 384×128 (três células 128×128, nPOTScale None), pivô no centro; glints isolados, mapa de rects/LootKind e proposta de integração em Source~/FX-LOOT.atlas.json. Prefab sugerido pela ficha não criado (integração em tarefa separada)."
     },
     {
       "id": "FX-LEVEL",
@@ -12741,6 +12742,46 @@
         "review_floor.png compõe sobre a captura F05 de nível, que já contém o burst procedural atual (pontos de latão/ciano no piso); não é captura da Unity.",
         "Altura da cintura (1,0 m) deduzida do CharacterController de 2 m; na captura o cinto do Hero parece mais alto. Conferir em PlayMode e ajustar RING.rise_m se preciso.",
         "FX-LEVEL.prefab sugerido pela ficha não criado: prefab exige coordenação.",
+        "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "A06-FX-LOOT",
+      "date_local": "2026-11-17",
+      "branch": "claude/a06-fx-loot",
+      "produced": [
+        "FX-LOOT"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/FxLootGenerator/generate.py"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/FX-LOOT.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-LOOT/FX-LOOT-Atlas.png",
+        "Assets/_Project/Art/ProductionStaging/FX-LOOT/FX-LOOT-Atlas.png.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-LOOT/Source~/"
+      ],
+      "import_settings": "Template de FX_Spark/FX-HEAL (Tools/FxHealGenerator/texture.meta.template): Default, sRGB, alphaIsTransparency, bilinear, clamp, mipmaps on; padrão 2048, Standalone/WebGL compressão normal; nPOTScale 0 (None) para manter as células 128 alinhadas a pixel no atlas 384×128; GUID novo e estável (SHA256 do nome).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "FxLoot.validation.json ok (21/21); asset_report.py exit 0 (atlas e três glints); geração determinística (2 execuções, mesmos SHA256)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: .meta derivada do template de FX_Spark com nPOTScale None; a Unity pode reserializá-la na primeira importação. Conferir compressão do atlas nPOT (384×128, múltiplos de 4) e mips.",
+        "Sem integração no F05 (tarefa de código separada; proposta em Source~/FX-LOOT.atlas.json: startFrame por LootKind, posições fixas sem RNG, só após CollectionAccepted).",
+        "review_floor.png/preview_floor.gif simulam o burst proposto sobre a captura F05 de coleta, que já contém o burst procedural atual; não é captura da Unity.",
+        "Sobre a capa azul do Hero o glint ciano tem menos contraste que sobre a pedra; conferir ordenação/legibilidade em PlayMode.",
+        "Comparação com pickups usa as cores dos materiais (ItemModels.mjs) e os ícones de item; não há render dos pickups 3D no repositório.",
+        "FX-LOOT.prefab sugerido pela ficha não criado: prefab exige coordenação.",
         "Aprovação artística humana pendente."
       ]
     }
