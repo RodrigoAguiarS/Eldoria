@@ -178,3 +178,12 @@ Checkpoint **v2**: `RunCheckpointData.talents` (`{id, rank}`), resolvidos por `R
 ## Auditoria reproduzível
 
 `python Tools/Audit/audit_project.py --output <relatorio-novo.json>` inventaria hashes, duplicatas, cópias instaladas e caminhos de links Markdown sem alterar assets. Recusa sobrescrever o relatório. `MvpProjectAudit.InspectCleanupBaseline`/menu Audit abre cenas/prefabs pelas APIs e escreve em `Reports/ProjectAudit/editor-assets.json`; não salva assets. Esses dados não comprovam aceite visual ou ausência de uso dinâmico. Comandos de teste e regressão em `docs/BUILD-WINDOWS.md`.
+
+
+## Sequência fixa entre andares — F14
+
+`FixedFloorSequence` é SO com destinos ordenados (scenePath + RunCheckpointCatalog; floorId exclusivo). `GameSceneFlow` consulta essa composição para Nova run e Continuar; a busca tenta o arquivo principal com todos os catálogos antes de tentar o backup. `GameRestarter.sceneFlow` reinicia pelo destino inicial; cenas isoladas antigas preservam o fallback local. `FloorTransitionController` recebe FloorController, Health, checkpoint e sequência por referências serializadas (sequência em FixedFloorConfiguration herdada de prefab). Exige andar concluído/vida/tempo ativo/fronteira segura, valida dados/cena, grava atomicamente a chegada e só então solicita uma única carga. Falhas são apresentadas sem consumir a run. `FloorTransitionPresenter` apresenta disponibilidade/mensagem e o botão solicita o domínio.
+
+Checkpoint v3 mantém o payload v2; catálogos com `allowEntryCheckpoint` admitem zero salas concluídas e resumeRoom igual ao primeiro ID, com âncora fora do trigger. Só uma chegada restaurada habilita essa fronteira no controller; carregar uma cena vazia diretamente não fabrica um checkpoint. Rooms/baús/pickups são descartados da cópia entre andares; estado do jogador e RNG permanecem. v1/v2 mantêm as validações antigas, inclusive mínimo de uma sala limpa.
+
+`SecondFloorSceneBuilder.Integrate` cria assets próprios F14 e copia o shell existente uma única vez por API do Editor; compõe uma sala de primitivas com encounter explícito, dados de inimigos já existentes e NavMesh próprio. Reexecução preserva dados/layout já existentes e GUIDs. Só acrescenta composição/botão ao primeiro andar e sequência ao menu. Não executa builders de personagens/arte. Build corrente inclui menu e os dois andares; `BuildWindowsValidation` isola artefato e relatório F14. [Proposta](Reports/F14/PROPOSAL.md).

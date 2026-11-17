@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eca8aad1ec419a4c823e52d32d16c56, type: 3}
+  m_Name: RunCheckpointCatalog_F14
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Systems.RunCheckpointCatalog
+  floorId: eldoria.floor02.v1
+  allowEntryCheckpoint: 1
+  items:
+  - {fileID: 11400000, guid: 5eb876043ebbecd45a32dd8df2e79ab3, type: 2}
+  - {fileID: 11400000, guid: ed1cb9ab53730d641a52af5ca4ce876d, type: 2}
+  - {fileID: 11400000, guid: a33866f6136a0564aa6adc3e210089ae, type: 2}
+  - {fileID: 11400000, guid: 07a3d1916572dc6458b68b154eb5d3c0, type: 2}
+  - {fileID: 11400000, guid: 464c97b9c1f29ea42bf7d304648f5d96, type: 2}
+  talents: {fileID: 11400000, guid: b8aa084e63ecaef468c80cf4c7368f7a, type: 2}
+  rooms:
+  - id: eldoria.floor02.room.1
+    anchor: {x: 0, y: 0.1, z: -8}
+  capacity: 16
+  baseXp: 30
+  maxLevel: 10
+  xpGrowth: 1.35
+  maxHealth: 100
+  maxStamina: 100
+  specialCooldown: 6
+  regenerationDelay: 0.8
+  dashCooldown: 2

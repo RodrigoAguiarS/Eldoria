@@ -60,3 +60,6 @@ Histórico incremental permanece em [CHANGELOG](CHANGELOG.md), XML/JSON de `Repo
 ## Relatório por tarefa
 
 Informar objetivo, base/branch, arquivos alterados, comportamento, critérios atendidos com evidência, testes executados, validação pendente, riscos e próximo passo. Se não houve execução na Unity, escrever `NÃO VALIDADO NO EDITOR`. Uma cena jogável, testada e reproduzível precede expansão de escopo.
+
+
+F14 — primeiro incremento: uma sala fixa de primitivas no segundo andar e descida voluntária após as cinco salas preservadas do primeiro. Estado do jogador segue integralmente; checkpoint v3 na entrada segura, retomada por floorId e reinício/nova run no primeiro andar. Não declara um segundo andar completo de cinco salas nem balanceamento humano aprovado. 66 EditMode e 35 PlayMode pertinentes aprovados, mais reteste F14 9/9 e percurso gráfico completo com movimento/combate reais automatizados. Evidências/limitações em [Reports/F14](Reports/F14/README.md).

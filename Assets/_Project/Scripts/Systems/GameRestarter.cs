@@ -12,6 +12,7 @@ namespace DungeonCrawler.Systems
     {
         private InputAction restart;
         [SerializeField] private RuntimeInputBindings bindings;
+        [SerializeField] private GameSceneFlow sceneFlow;
         private InputBindingSet ownedBindings;
 
         private void Awake()
@@ -39,6 +40,7 @@ namespace DungeonCrawler.Systems
 
         public void Restart()
         {
+            if (sceneFlow != null) { sceneFlow.StartGame(); return; }
             if (!RunCheckpointSession.BeginNew(out string error)) { Debug.LogWarning(error, this); return; }
             Time.timeScale = 1f;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

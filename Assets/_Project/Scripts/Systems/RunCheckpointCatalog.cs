@@ -17,6 +17,7 @@ namespace DungeonCrawler.Systems
     public sealed class RunCheckpointCatalog : ScriptableObject
     {
         public string floorId = "eldoria.floor01.v1";
+        public bool allowEntryCheckpoint;
         public ItemDefinition[] items = Array.Empty<ItemDefinition>();
         /// <summary>F12: resolves talent IDs of v2 snapshots. Null only for floors without talents.</summary>
         public TalentCatalog talents;
@@ -55,10 +56,11 @@ namespace DungeonCrawler.Systems
                 if (room == null || string.IsNullOrEmpty(room.id) || !ids.Add(room.id) || !ValidPosition(room.anchor)) return false;
             if (data.floorId != floorId || !uint.TryParse(data.randomState, NumberStyles.HexNumber,
                     CultureInfo.InvariantCulture, out uint state) || state == 0) return false;
-            if (data.clearedRooms == null || data.clearedRooms.Length < 1 || data.clearedRooms.Length > rooms.Length) return false;
+            if (data.clearedRooms == null || (data.clearedRooms.Length == 0 && (!allowEntryCheckpoint || data.version < 3)) || data.clearedRooms.Length > rooms.Length) return false;
             for (int i = 0; i < data.clearedRooms.Length; i++)
                 if (data.clearedRooms[i] != rooms[i].id) return false;
-            if (data.resumeRoom != data.clearedRooms[data.clearedRooms.Length - 1]) return false;
+            string expectedRoom = data.clearedRooms.Length == 0 ? rooms[0].id : data.clearedRooms[data.clearedRooms.Length - 1];
+            if (data.resumeRoom != expectedRoom) return false;
             ids.Clear();
             if (data.openedChests == null || data.openedChests.Length > data.clearedRooms.Length) return false;
             foreach (string id in data.openedChests)

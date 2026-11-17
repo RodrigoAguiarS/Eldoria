@@ -87,3 +87,10 @@ F11 (D-004): ao limpar uma sala, o andar grava HP, nível/XP/ouro, bolsa exata (
 O loop do andar fixo já está implementado; “após MVP” e “primeiro marco” acima identificam a sequência original de construção, não pendências atuais. Combo de três golpes e segurar para repetir, inventário de 16 slots, três raridades, especial e opções fazem parte do produto existente. Estado/evidências em [MVP](MVP.md). Valores atuais inspecionados e limites do playtest em [BALANCE-1.0](docs/BALANCE-1.0.md).
 
 Novos andares/biomas, arma ranged do jogador, afixos/slots adicionais, geração procedural, save de campanha (além do checkpoint F11 entre salas), quests, coop, lojas e publicação em loja continuam expansões. O [catálogo](PROMPT_CATALOG.md) contém sugestões para escolha futura; esta auditoria não aprova sua implementação nem muda a identidade low-poly/rig Generic da 1.0.
+
+
+## Segundo andar fixo — F14 (primeiro incremento)
+
+Após limpar as cinco salas do primeiro andar, o painel oferece **Descer ao segundo andar**. A decisão é voluntária para permitir coleta e baú antes da passagem sem retorno; loot no chão fica para trás. Jogador vivo, andar concluído e ausência de pausa são exigidos. HP, nível/XP, ouro, bolsa/equipamento, talentos, estamina e cooldowns permanecem sem cura ou recompensa extra. Uma sala fixa 20×20 de primitivas, dois pilares e 2 melee + 2 ranged existentes validam entrada, navegação, portas e combate; seus números permanecem propostas de playtest. A vitória desse incremento ocorre ao limpar essa sala. Não constitui um segundo andar completo de quatro salas e Boss.
+
+F14 estende F11 com checkpoint v3 na entrada segura do segundo andar, antes de iniciar combate; v1/v2 continuam legíveis. Continuar run resolve o andar por ID explícito e retorna à última fronteira segura. Nova run ou Reiniciar em qualquer andar começa no primeiro; morte descarta checkpoint/backup. Sem retorno entre andares, novo Boss, geração procedural ou arte final. Proposta prévia e evidências em [Reports/F14](Reports/F14/PROPOSAL.md).

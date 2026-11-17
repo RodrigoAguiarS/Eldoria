@@ -22,7 +22,9 @@ namespace DungeonCrawler.Systems
         [SerializeField] private RunLootRegistry loot;
         [SerializeField] private RoomRewardChest[] chests;
         [SerializeField] private Pickup pickupPrefab;
-        private bool dirty, ready, restoring, writing;
+        private bool dirty, ready, restoring, writing, arrivedAtEntry, departing;
+        public void CommitDeparture() { departing = true; dirty = false; }
+        public string FloorId => catalog != null ? catalog.floorId : "";
         private string lastSavedJson;
         public string Status { get; private set; } = "Limpe uma sala para criar um checkpoint.";
         public event Action StatusChanged;
@@ -32,7 +34,7 @@ namespace DungeonCrawler.Systems
         {
             get
             {
-                if (!ready || restoring || !health.IsAlive || floor.ClearedCount < 1) return false;
+                if (!ready || restoring || departing || !health.IsAlive || (floor.ClearedCount < 1 && !arrivedAtEntry)) return false;
                 foreach (var room in floor.Rooms) if (room.State == RoomState.Active) return false;
                 return true;
             }
@@ -61,6 +63,7 @@ namespace DungeonCrawler.Systems
             var data = RunCheckpointSession.Consume();
             if (data == null) return;
             if (!catalog.Validate(data, out string error)) { SetStatus(error, true); return; }
+            arrivedAtEntry = catalog.allowEntryCheckpoint && data.clearedRooms.Length == 0;
             restoring = true;
             try
             {
@@ -132,7 +135,7 @@ namespace DungeonCrawler.Systems
                     count = stack.Count, potency = stack.Potency };
             }
             return new RunCheckpointData { version = RunCheckpointData.CurrentVersion, floorId = catalog.floorId, randomState = loot.RandomState,
-                clearedRooms = cleared.ToArray(), resumeRoom = cleared.Count > 0 ? cleared[cleared.Count - 1] : "",
+                clearedRooms = cleared.ToArray(), resumeRoom = cleared.Count > 0 ? cleared[cleared.Count - 1] : arrivedAtEntry ? catalog.rooms[0].id : "",
                 openedChests = opened.ToArray(), health = health.Current, maxHealth = health.Max,
                 level = progression.Level, xp = progression.Xp, gold = progression.Gold, slots = slots,
                 weaponIndex = inventory.EquippedWeaponIndex, armorIndex = inventory.EquippedArmorIndex,

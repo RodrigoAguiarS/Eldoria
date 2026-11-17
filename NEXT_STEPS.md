@@ -46,7 +46,7 @@ Generic. O achado de portas sem bloqueio foi corrigido na main; ver Reports/Door
 - Builders de 600–770 linhas podem separar importação, composição e validação em entregas próprias. Preservar menus, GUIDs e fontes/cópias instaladas; nenhum movimento de pastas nesta auditoria.
 - Antes de pooling de pickups/atores ou atlas de materiais, medir carga normal no Windows e definir orçamento. Pools de projéteis e áudio já estão implementados; não reivindicar esse trabalho como otimização nova.
 - Revisar tamanho de build por BuildReport antes de propor remoção de AI Assistant/Inference, Collab/IDE ou módulos de template. Separar ferramentas de Editor, transitivos e runtime. Não remover pacote por ausência de `using`.
-- F11 usa IDs persistentes explícitos em ItemDefinition/RoomController. O schema v2 (F12, talentos) aceita e migra v1 com teste; um v3 deve seguir o mesmo padrão. GUID de asset e índice de slot não são identificadores universais de instâncias.
+- F11 usa IDs persistentes explícitos em ItemDefinition/RoomController. O schema v3 (F14, entrada do segundo andar) preserva leitura v1/v2 e talentos F12, com testes; versões futuras devem seguir o mesmo padrão. GUID de asset e índice de slot não são identificadores universais de instâncias.
 
 ## Pendências de testes
 
@@ -63,3 +63,6 @@ Os 99 EditMode desta auditoria e inspeções API têm artefatos próprios em `Re
 5. Rodar o inventário/leitor de links e checker de Unity documentados em ARCHITECTURE. Usar saída nova e benchmarks em pasta exclusiva. Revisar e integrar commits por escopo; não incluir assets desconhecidos numa limpeza documental.
 
 Não há cronograma imposto. O primeiro marco histórico continua pequeno; o produto atual já passou desse marco. Atlas/Humanoid permanecem divergências bloqueadas para a parte afetada, sem impedir polimento compatível com o rig Generic existente.
+
+
+F14 iniciada em 17/11/2026 por solicitação do usuário: uma sala jogável fixa e transição a partir do primeiro andar, com persistência explícita de jogador e fronteira segura de checkpoint v3. [Proposta anterior ao código](Reports/F14/PROPOSAL.md) e [evidências/limites](Reports/F14/README.md). Expansão para demais salas/Boss e A15 continuam separadas; números exigem playtest. Merge F13 e correção de portas integrados na main pelo PR #13; merge F14 depende da revisão do usuário.

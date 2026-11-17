@@ -302,7 +302,7 @@ namespace DungeonCrawler.Editor
         /// Sala quadrada com 'interior' m de lado. O piso cobre as paredes (interior + 2); as paredes N/S têm vão de 4 m no centro.
         /// Para interior 16, salas adjacentes distam 18 m (corredor de 2 m entre as portas).
         /// </summary>
-        private static GameObject BuildRoomPrefab(string prefabName, float interior, string floorMaterialName, Color floorColor, Vector3[] spawnPositions, RoomEncounter encounter)
+        internal static GameObject BuildRoomPrefab(string prefabName, float interior, string floorMaterialName, Color floorColor, Vector3[] spawnPositions, RoomEncounter encounter)
         {
             Material floorMat = EditorBuildUtility.GetOrCreateLitMaterial(floorMaterialName, floorColor);
             Material wallMat = EditorBuildUtility.GetOrCreateLitMaterial("Mat_Wall", new Color(0.55f, 0.5f, 0.45f));
