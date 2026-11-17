@@ -18,8 +18,8 @@
   "summary": {
     "logical_resources": 133,
     "by_status": {
-      "EXISTENTE": 119,
-      "AUSENTE": 11,
+      "EXISTENTE": 120,
+      "AUSENTE": 10,
       "INCOMPLETO": 1,
       "NÃO VERIFICADO": 2
     },
@@ -43,8 +43,8 @@
         "EXISTENTE": 3
       },
       "F": {
-        "EXISTENTE": 6,
-        "AUSENTE": 2
+        "EXISTENTE": 7,
+        "AUSENTE": 1
       },
       "G": {
         "EXISTENTE": 10
@@ -6463,7 +6463,7 @@
       "category": "F",
       "category_name": "Menus e interfaces",
       "functionality": "Polimento opcional preservando telas atuais",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "interface",
       "scope": "sugestão_polimento",
@@ -6485,7 +6485,7 @@
         "UI-TYPE"
       ],
       "technical_dependencies": [],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Produzido em staging (A03, 17/11/2026): 16 sprites 9-slice/marcadores em ProductionStaging/UI-SKIN com mapa de estados (Source~/UI-SKIN.states.json); NÃO integrado. Integração é tarefa de código separada: builders atribuem sprites (Sliced, Image.color branco) por referência explícita, InventorySlotView troca sprite em vez de tingir, hover/foco de slot (hoje Transition.None) e FocusCorner; sem mudar targets, navegação, pilha de menus ou regras.",
       "visual_specification": "Manter azul-preto/dourado; chanfros discretos e foco por cantos além da cor. Não redesenhar telas.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -6494,7 +6494,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "Técnica fora da Unity em 17/11/2026: UiSkin.validation.json (16 PNG decodificados: tamanho exato, RGBA, alpha real, 0 pixels transparentes com RGB sujo; bordas 9-slice idênticas ao longo do eixo esticado e centro de cor única em todas as bases; contraste do texto atual 18/18 ≥ 4,5:1 (desabilitado ≥ 3:1; mínimo 4,71 Épico sobre Selected); 16/16 pares de estado distintos em tons de cinza ≥ 291 px de borda) e asset_report.py (--expect-size por grupo --require-alpha, exit 0); prancha 1080p e redução 720p aproximada (não é captura Unity). NÃO VALIDADO NO EDITOR: importação, Canvas real e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -6507,10 +6507,11 @@
         "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/UI-SKIN/UI-SKIN.prefab"
       },
       "source_and_rights": {
-        "kind": "not_produced",
-        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
-        "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/UI-SKIN/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria e render próprios (Tools/UiSkinGenerator/generate.py, Pillow 13 MIT-CMU). Sem IA generativa de imagem nem asset de terceiros."
+      },
+      "production_state": "Produzido por gerador próprio (generate.py: octógonos chanfrados com bevel facetado sombreado por normal, supersampling 8× e redução pré-multiplicada): Panel-Window/Inset 128×128 b16; Button Normal/Hover/Focus/Pressed/Disabled 256×80 b12; Slot Normal/Hover/Selected/Empty + RarityBand 192×112 b8; Marker Selected/Equipped/Empty 24×24; FocusCorner 32×32. Sem texto; prefab sugerido não criado (integração por builder)."
     },
     {
       "id": "FX-DAMAGE",
@@ -12620,6 +12621,46 @@
         "Aprovação artística humana pendente."
       ],
       "note": "DashIcon.mjs só passou a exportar PAGE, tri, flatNormals e area2 para reuso; geometria e saída do A01 inalteradas."
+    },
+    {
+      "id": "A03-UI-SKIN",
+      "date_local": "2026-11-17",
+      "branch": "claude/a03-ui-skin",
+      "produced": [
+        "UI-SKIN"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/UiSkinGenerator/generate.py",
+        "Tools/UiSkinGenerator/sprite.meta.template"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/UI-SKIN.meta",
+        "Assets/_Project/Art/ProductionStaging/UI-SKIN/UI-SKIN-*.png (16)",
+        "Assets/_Project/Art/ProductionStaging/UI-SKIN/UI-SKIN-*.png.meta (16)",
+        "Assets/_Project/Art/ProductionStaging/UI-SKIN/Source~/"
+      ],
+      "import_settings": "Sprite (2D and UI) Single, Full Rect, spriteBorder medido (16/12/8; 0 nos marcadores), sRGB, bilinear, clamp, mipmaps off, PPU 100, alphaIsTransparency; padrão 256 sem compressão; GUIDs novos e estáveis (SHA256 do nome).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "UiSkinGenerator ok (tamanho/RGBA/alpha sujo/9-slice uniforme/centro liso/contraste 18/18/estados 16/16); asset_report.py exit 0 nos 5 grupos; geração determinística (2 execuções, mesmos SHA256)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: .meta escritas a partir do modelo do A01; a Unity pode reserializá-las.",
+        "Sem integração nas telas (tarefa de código separada; ver Source~/UI-SKIN.states.json).",
+        "UI-SKIN.prefab sugerido pela ficha não criado: prefab/cena exigem coordenação; A03 pede integração por builder.",
+        "review_720.png é redução bilinear da prancha 1080p, não captura do CanvasScaler.",
+        "Aprovação artística humana pendente."
+      ],
+      "note": "Mudanças locais do Editor presentes na árvore (ICON-ACTION-DASH.png.meta, ProjectSettings) não pertencem a este lote e não foram commitadas."
     }
   ]
 }
