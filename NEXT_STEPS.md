@@ -34,6 +34,11 @@ Pausa → Talentos, três opções fixas em SO com ranks, checkpoint v2 com migr
 de v1. [Regras](docs/TALENTS-F12.md) e [evidências/limites](Reports/F12/README.md).
 Balanceamento sem playtest humano; integração na main aguarda revisão do usuário.
 
+F13 implementado em 16/11/2026 como experimento isolado: lanceiro com investida
+linear numa sala de teste fora do build. [Regras](docs/LANCER-F13.md) e
+[evidências](Reports/F13/README.md). Pendências: playtest dos valores, A13/rig
+Generic. O achado de portas sem bloqueio foi corrigido na main; ver Reports/DoorNavMesh.
+
 ## Melhorias de arquitetura propostas
 
 - Manter domínio puro separado de presenters. InventoryModel depende de índices estáveis: ordenação exige remapeamento explícito; não ordenar apenas o array apresentado na UI.

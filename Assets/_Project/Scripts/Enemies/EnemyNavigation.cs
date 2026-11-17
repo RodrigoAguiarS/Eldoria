@@ -17,6 +17,22 @@ namespace DungeonCrawler.Enemies
 
         public void SetSpeed(float speed) => agent.speed = speed;
 
+        /// <summary>Raio do agente (largura usada para validar a faixa da investida F13).</summary>
+        public float Radius => agent != null ? agent.radius : 0.5f;
+
+        /// <summary>F13: recorta o segmento na primeira borda do NavMesh (paredes assadas). Uma consulta no compromisso.</summary>
+        public Vector3 ClampLane(Vector3 from, Vector3 to)
+        {
+            if (!IsOnNavMesh) return from;
+            return NavMesh.Raycast(from, to, out NavMeshHit hit, agent.areaMask) ? hit.position : to;
+        }
+
+        /// <summary>F13: deslocamento relativo restrito ao NavMesh (NavMeshAgent.Move); nunca Rigidbody.</summary>
+        public void MoveBy(Vector3 delta)
+        {
+            if (IsOnNavMesh) agent.Move(delta);
+        }
+
         public void SetStoppingDistance(float distance)
         {
             stoppingDistance = distance;
