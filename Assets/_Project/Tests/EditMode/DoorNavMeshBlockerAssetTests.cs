@@ -36,10 +36,14 @@ namespace DungeonCrawler.Tests.EditMode
             Assert.AreEqual(1, door.GetComponents<NavMeshObstacle>().Length, context);
             Assert.AreEqual(0, blocker.GetComponentsInChildren<NavMeshObstacle>(true).Length, context);
             // O volume carvado coincide com o collider do bloqueio fechado (4 × 1,4 × 1 nas salas de release).
+            // Collider.bounds é zero em asset não instanciado: compara pelos transforms.
             Vector3 worldCenter = door.transform.TransformPoint(obstacle.center);
             Vector3 worldSize = Vector3.Scale(door.transform.lossyScale, obstacle.size);
-            Assert.That(Vector3.Distance(box.bounds.center, worldCenter), Is.LessThan(0.001f), context);
-            Assert.That(Vector3.Distance(box.bounds.size, worldSize), Is.LessThan(0.001f), context);
+            Vector3 boxCenter = blocker.TransformPoint(box.center);
+            Vector3 boxSize = Vector3.Scale(blocker.lossyScale, box.size);
+            Assert.That(Vector3.Distance(boxCenter, worldCenter), Is.LessThan(0.001f), context);
+            Assert.That(Vector3.Distance(boxSize, worldSize), Is.LessThan(0.001f), context);
+            Assert.That(Vector3.Distance(new Vector3(4f, 1.4f, 1f), worldSize), Is.LessThan(0.001f), context + ": vão de 4 m × parede 1,4 m × 1 m.");
         }
 
         [Test]
