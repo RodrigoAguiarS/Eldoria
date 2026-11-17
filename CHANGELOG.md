@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-17 — F14: primeira sala do segundo andar fixo
+
+- Descida voluntária após 5/5 preserva estado do jogador; sala de primitivas com composição mista e referências explícitas.
+- Checkpoint v3 na entrada segura, leitura v1/v2 e retomada no andar correto; reinício/nova run voltam ao primeiro.
+- Builder próprio idempotente, sem regenerar personagens/arte; evidências e limitações em [Reports/F14](Reports/F14/README.md).
+
 ## 2026-11-17 — Portas fechadas bloqueiam inimigos no NavMesh
 
 - Inimigos (melee/ranged/elite/Boss) não atravessam mais o vão de uma porta fechada:

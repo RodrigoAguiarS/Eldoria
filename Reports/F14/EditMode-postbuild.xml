@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="9" result="Passed" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-17 04:08:00Z" end-time="2026-11-17 04:08:07Z" duration="6,5698335">
+  <test-suite type="TestSuite" id="1000" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="256" result="Passed" start-time="2026-11-17 04:08:00Z" end-time="2026-11-17 04:08:07Z" duration="6.569834" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1315" name="DungeonCrawler.Tests.EditMode.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.EditMode.dll" runstate="Runnable" testcasecount="256" result="Passed" start-time="2026-11-17 04:08:00Z" end-time="2026-11-17 04:08:07Z" duration="6.552910" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="30868" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1316" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="256" result="Passed" start-time="2026-11-17 04:08:00Z" end-time="2026-11-17 04:08:07Z" duration="6.547948" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1317" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="256" result="Passed" start-time="2026-11-17 04:08:00Z" end-time="2026-11-17 04:08:07Z" duration="6.526405" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1318" name="EditMode" fullname="DungeonCrawler.Tests.EditMode" runstate="Runnable" testcasecount="256" result="Passed" start-time="2026-11-17 04:08:00Z" end-time="2026-11-17 04:08:07Z" duration="6.519609" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1261" name="SecondFloorTests" fullname="DungeonCrawler.Tests.EditMode.SecondFloorTests" classname="DungeonCrawler.Tests.EditMode.SecondFloorTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-11-17 04:08:00Z" end-time="2026-11-17 04:08:07Z" duration="6.513807" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1262" name="ArrivalPreservesPlayerStateWithoutMutatingSourceOrCarryingWorld" fullname="DungeonCrawler.Tests.EditMode.SecondFloorTests.ArrivalPreservesPlayerStateWithoutMutatingSourceOrCarryingWorld" methodname="ArrivalPreservesPlayerStateWithoutMutatingSourceOrCarryingWorld" classname="DungeonCrawler.Tests.EditMode.SecondFloorTests" runstate="Runnable" seed="407924795" result="Passed" start-time="2026-11-17 04:08:00Z" end-time="2026-11-17 04:08:00Z" duration="0.038363" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1270" name="BuilderIsIdempotentAndPreservesExistingAssetBytesAndFirstFloorRooms" fullname="DungeonCrawler.Tests.EditMode.SecondFloorTests.BuilderIsIdempotentAndPreservesExistingAssetBytesAndFirstFloorRooms" methodname="BuilderIsIdempotentAndPreservesExistingAssetBytesAndFirstFloorRooms" classname="DungeonCrawler.Tests.EditMode.SecondFloorTests" runstate="Runnable" seed="1515062452" result="Passed" start-time="2026-11-17 04:08:00Z" end-time="2026-11-17 04:08:06Z" duration="5.864086" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1267" name="EntryBoundaryRequiresV3AndOptInAndKnownAnchor" fullname="DungeonCrawler.Tests.EditMode.SecondFloorTests.EntryBoundaryRequiresV3AndOptInAndKnownAnchor" methodname="EntryBoundaryRequiresV3AndOptInAndKnownAnchor" classname="DungeonCrawler.Tests.EditMode.SecondFloorTests" runstate="Runnable" seed="1771649365" result="Passed" start-time="2026-11-17 04:08:06Z" end-time="2026-11-17 04:08:06Z" duration="0.001280" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1266" name="PreviousVersionsRemainValidOnFirstFloor" fullname="DungeonCrawler.Tests.EditMode.SecondFloorTests.PreviousVersionsRemainValidOnFirstFloor" classname="DungeonCrawler.Tests.EditMode.SecondFloorTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-17 04:08:06Z" end-time="2026-11-17 04:08:06Z" duration="0.254702" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1263" name="PreviousVersionsRemainValidOnFirstFloor(1)" fullname="DungeonCrawler.Tests.EditMode.SecondFloorTests.PreviousVersionsRemainValidOnFirstFloor(1)" methodname="PreviousVersionsRemainValidOnFirstFloor" classname="DungeonCrawler.Tests.EditMode.SecondFloorTests" runstate="Runnable" seed="71895656" result="Passed" start-time="2026-11-17 04:08:06Z" end-time="2026-11-17 04:08:06Z" duration="0.000879" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1264" name="PreviousVersionsRemainValidOnFirstFloor(2)" fullname="DungeonCrawler.Tests.EditMode.SecondFloorTests.PreviousVersionsRemainValidOnFirstFloor(2)" methodname="PreviousVersionsRemainValidOnFirstFloor" classname="DungeonCrawler.Tests.EditMode.SecondFloorTests" runstate="Runnable" seed="942790448" result="Passed" start-time="2026-11-17 04:08:06Z" end-time="2026-11-17 04:08:06Z" duration="0.000317" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1265" name="PreviousVersionsRemainValidOnFirstFloor(3)" fullname="DungeonCrawler.Tests.EditMode.SecondFloorTests.PreviousVersionsRemainValidOnFirstFloor(3)" methodname="PreviousVersionsRemainValidOnFirstFloor" classname="DungeonCrawler.Tests.EditMode.SecondFloorTests" runstate="Runnable" seed="1904585327" result="Passed" start-time="2026-11-17 04:08:06Z" end-time="2026-11-17 04:08:06Z" duration="0.000174" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1269" name="PrimarySecondFloorWinsOverFirstFloorBackup_AndCorruptPrimaryRecovers" fullname="DungeonCrawler.Tests.EditMode.SecondFloorTests.PrimarySecondFloorWinsOverFirstFloorBackup_AndCorruptPrimaryRecovers" methodname="PrimarySecondFloorWinsOverFirstFloorBackup_AndCorruptPrimaryRecovers" classname="DungeonCrawler.Tests.EditMode.SecondFloorTests" runstate="Runnable" seed="645837102" result="Passed" start-time="2026-11-17 04:08:06Z" end-time="2026-11-17 04:08:06Z" duration="0.037964" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1271" name="SavedSecondFloorHasNoMissingScriptsOrBrokenObjectReferences" fullname="DungeonCrawler.Tests.EditMode.SecondFloorTests.SavedSecondFloorHasNoMissingScriptsOrBrokenObjectReferences" methodname="SavedSecondFloorHasNoMissingScriptsOrBrokenObjectReferences" classname="DungeonCrawler.Tests.EditMode.SecondFloorTests" runstate="Runnable" seed="864886034" result="Passed" start-time="2026-11-17 04:08:06Z" end-time="2026-11-17 04:08:07Z" duration="0.291383" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1268" name="SequenceRejectsMissingAndDuplicateDestinations" fullname="DungeonCrawler.Tests.EditMode.SecondFloorTests.SequenceRejectsMissingAndDuplicateDestinations" methodname="SequenceRejectsMissingAndDuplicateDestinations" classname="DungeonCrawler.Tests.EditMode.SecondFloorTests" runstate="Runnable" seed="2024335156" result="Passed" start-time="2026-11-17 04:08:07Z" end-time="2026-11-17 04:08:07Z" duration="0.001692" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

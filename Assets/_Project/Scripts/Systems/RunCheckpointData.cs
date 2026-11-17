@@ -7,8 +7,8 @@ namespace DungeonCrawler.Systems
     [Serializable]
     public sealed class RunCheckpointData
     {
-        /// <summary>v2 (F12) adds talents; v1 is still accepted and migrates with no talents chosen.</summary>
-        public const int CurrentVersion = 2;
+        /// <summary>v3 (F14) admits an authored entry boundary; v1/v2 remain readable.</summary>
+        public const int CurrentVersion = 3;
         public int version;
         public string floorId;
         public string randomState;

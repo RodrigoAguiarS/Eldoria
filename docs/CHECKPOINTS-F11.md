@@ -70,3 +70,8 @@ de escrita; checkpoints repetidos; carga sem XP/loot duplicados; bloqueio durant
 combate; Nova run/Reiniciar/morte; menu e ciclo real salvar/sair/retomar. Rodar
 EditMode/PlayMode e inspeção gráfica com a Unity 6000.6.9f1 instalada. Evidências
 novas em Reports/F11, sem substituir resultados históricos.
+
+
+## Extensão F14 — schema v3
+
+O payload continua preservando talentos de v2 e aceita leitura v1/v2. Apenas o catálogo do segundo andar habilita uma fronteira com zero salas limpas (v3), resumeRoom igual ao primeiro ID e âncora fora do trigger. É gravada ao descer, antes da carga, preservando HP/XP/nível/ouro/bolsa/equipamento/talentos/recursos e removendo estado de salas/baús/pickups do andar anterior. Sem cura ou concessão de recompensa. Combate não sobrescreve essa entrada; Continuar retoma a entrada até a primeira limpeza. A seleção de andar valida o principal em todos os catálogos antes de usar backup. Nova run, Reiniciar e morte mantêm descarte de ambos; reinício parte do primeiro andar. Ver [F14](../Reports/F14/PROPOSAL.md).

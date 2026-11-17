@@ -159,3 +159,10 @@ python Tools/Release/package_windows.py
 ```
 
 Gera `Builds/Release/<produto>-<versão>-windows-x64.zip` (nome do executável da build; ex.: `Eldoria-…`; o pacote histórico 1.0.0 é `DungeonCrawler-1.0.0-windows-x64.zip`), README, BUILD-INFO e manifesto SHA256. Verifica PE x64, CRC e hashes; exclui pastas de backup/debug e recusa sobrescrever um pacote existente. Não publica nem envia arquivos. Para outra revisão, preserve o pacote anterior e versione explicitamente o novo artefato.
+
+
+## F14 — validação isolada de dois andares
+
+`DungeonCrawler.Editor.SecondFloorSceneBuilder.Integrate` / **Tools / Dungeon Crawler / Dungeon / Integrate Second Fixed Floor (F14)** acrescenta uma sala de primitivas e referências explícitas sem reconstruir personagens/primeiro andar. `SecondFloorSceneBuilder.BuildWindowsValidation` gera `Builds/F14/Eldoria.exe` com MainMenu, Floor_01_GeneratedCharacters e Floor_02_Fixed; recusa substituir `Reports/F14/windows-build.json`. O builder de release corrente também inclui as três cenas.
+
+Percorrer primeiro andar normalmente, coletar antes da descida sem retorno, descer pelo painel e conferir estado exato; entrar na sala F14, fechar portas, usar coberturas e limpar somente na última morte. Testar menu/Continuar antes e durante combate, morte, Reiniciar/nova run no primeiro andar, pausa e repetição da transição. Retomada usa fronteira segura e não concede XP/loot outra vez. Diagnósticos com teleporte/dano sintético não equivalem a esse percurso normal. Evidências/limites em [Reports/F14](../Reports/F14/README.md).

@@ -10672,6 +10672,7 @@ MonoBehaviour:
   menuScene: Assets/_Project/Scenes/MainMenu.unity
   gameScene: Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity
   checkpointCatalog: {fileID: 11400000, guid: bd3faea18c8d0f1498a1305204c75ed0, type: 2}
+  floorConfiguration: {fileID: 1991243144}
   checkpoint: {fileID: 0}
 --- !u!4 &1311015835
 Transform:
@@ -15893,6 +15894,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943047151}
   m_CullTransparentMesh: 1
+--- !u!1001 &1991243143
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3746200627914896811, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746200627914896811, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746200627914896811, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746200627914896811, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746200627914896811, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746200627914896811, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746200627914896811, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746200627914896811, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746200627914896811, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746200627914896811, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029224956981296487, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+      propertyPath: m_Name
+      value: FixedFloorConfiguration_F14
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+--- !u!114 &1991243144 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8580662797530747354, guid: f38f11362225762458a3b2cb877f4207, type: 3}
+  m_PrefabInstance: {fileID: 1991243143}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2fad428d5794d4e956237ec6bcfd57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Systems.FixedFloorConfiguration
 --- !u!1 &1992458500
 GameObject:
   m_ObjectHideFlags: 0
@@ -17163,3 +17232,4 @@ SceneRoots:
   - {fileID: 7407154}
   - {fileID: 915162010}
   - {fileID: 1311015835}
+  - {fileID: 1991243143}
