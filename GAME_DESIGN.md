@@ -35,6 +35,13 @@ F13 (experimental, só na sala de teste fora do build): lanceiro com investida l
 ## Boss
 Duas fases. Aos 50% HP: transição única, invulnerável por 3 segundos, rugido e mudança visual; segunda fase altera ataques. Golpes pesados mostram telegraph no chão pelo menos 1 segundo antes do dano. HUD de Boss apenas durante luta.
 
+F15: Sentinela de Pedra experimental, em arena opcional separada da release e
+dos andares. Uma fase com leque frontal travado, aviso ≥1 s, impacto único e
+recuperação explícita. Morte/desativação/pausa cancelam o aviso; retomar exige
+novo aviso completo. Sem loot/XP/checkpoint, novos padrões ou A14. Reinício
+local não toca a run salva. Valores propostos em [STONE-SENTINEL-F15](docs/STONE-SENTINEL-F15.md).
+As duas fases/50%/3 s acima continuam sendo o contrato do Guardião existente.
+
 ## Dungeon
 Salas como prefabs, com pontos de entrada/saída, portas e pontos de spawn definidos. Inicialmente sequência fixa; aleatoriedade só após estabilização. Inimigos da sala são rastreados por referências/eventos, não por busca global.
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-17 — F15: Sentinela de Pedra experimental
+
+- Boss de primitivas com uma fase, leque frontal travado, aviso ≥1 s, impacto
+  único, recuperação e cancelamento por pausa/morte/desativação.
+- Arena/cena/dados próprios, HUD e vitória/reinício locais; sem checkpoint,
+  loot global ou alteração das duas fases/50%/3 s do Guardião.
+- Builder idempotente e build Windows isolada. Parâmetros propostos em
+  [STONE-SENTINEL-F15](docs/STONE-SENTINEL-F15.md); [evidências/limites](Reports/F15/README.md).
+
 ## 2026-11-17 — F14: primeira sala do segundo andar fixo
 
 - Descida voluntária após 5/5 preserva estado do jogador; sala de primitivas com composição mista e referências explícitas.

@@ -57,6 +57,15 @@ Uma run nova reinicia progressão/inventário; opções/bindings persistem e, de
 
 Histórico incremental permanece em [CHANGELOG](CHANGELOG.md), XML/JSON de `Reports` e Git. Checklists antigos foram consolidados no [roteiro de regressão](docs/BUILD-WINDOWS.md#roteiro-de-regressão); remover caixas históricas contraditórias não amplia o aceite comprovado.
 
+F15: protótipo isolado da Sentinela de Pedra com uma fase, leque frontal
+anunciado, recuperação e cancelamento, arena própria fora da release e reinício
+local sem checkpoint. Guardião/loot global preservados. Valores continuam
+propostas; A14 e integração em andares ficam para outra tarefa.
+33 EditMode, 20 PlayMode funcionais/de regressão, 2 provas gráficas no Editor e
+14 testes no WindowsPlayer aprovados; luta com movimento/combo/giro reais e
+build jogável isolada com zero erros. Sem aprovação humana de balanceamento.
+[Regras](docs/STONE-SENTINEL-F15.md) e [evidências/limites](Reports/F15/README.md).
+
 ## Relatório por tarefa
 
 Informar objetivo, base/branch, arquivos alterados, comportamento, critérios atendidos com evidência, testes executados, validação pendente, riscos e próximo passo. Se não houve execução na Unity, escrever `NÃO VALIDADO NO EDITOR`. Uma cena jogável, testada e reproduzível precede expansão de escopo.
