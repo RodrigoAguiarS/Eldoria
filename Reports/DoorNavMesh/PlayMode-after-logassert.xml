@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="2" result="Failed(Child)" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-17 03:20:59Z" end-time="2026-11-17 03:21:12Z" duration="12,8864052">
+  <test-suite type="TestSuite" id="1230" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="176" result="Failed" site="Child" start-time="2026-11-17 03:20:59Z" end-time="2026-11-17 03:21:12Z" duration="12.886405" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1324" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/.claude/worktrees/silly-driscoll-88ece9/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="77" result="Failed" site="Child" start-time="2026-11-17 03:20:59Z" end-time="2026-11-17 03:21:12Z" duration="12.877295" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="30224" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1325" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="77" result="Failed" site="Child" start-time="2026-11-17 03:20:59Z" end-time="2026-11-17 03:21:12Z" duration="12.875964" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1326" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="77" result="Failed" site="Child" start-time="2026-11-17 03:20:59Z" end-time="2026-11-17 03:21:12Z" duration="12.874906" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1327" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="77" result="Failed" site="Child" start-time="2026-11-17 03:20:59Z" end-time="2026-11-17 03:21:12Z" duration="12.873580" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1241" name="DoorNavMeshBlockingTests" fullname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests" classname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-11-17 03:20:59Z" end-time="2026-11-17 03:21:12Z" duration="12.870434" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1242" name="SavedFloor_ClosedDoorStopsAgentsAtItsFace_OpenDoorsKeepRoomsConnected" fullname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests.SavedFloor_ClosedDoorStopsAgentsAtItsFace_OpenDoorsKeepRoomsConnected" methodname="SavedFloor_ClosedDoorStopsAgentsAtItsFace_OpenDoorsKeepRoomsConnected" classname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests" runstate="Runnable" seed="1651682034" result="Failed" start-time="2026-11-17 03:20:59Z" end-time="2026-11-17 03:21:11Z" duration="12.752609" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[Unhandled log message: '[Log] [DoorNavMesh] face=10 forcedMinZ=11,363 chasersMinZ=12,015 forcedPath=PathPartial player=(0,11)'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+                  <stack-trace><![CDATA[DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests/<SavedFloor_ClosedDoorStopsAgentsAtItsFace_OpenDoorsKeepRoomsConnected>d__12:MoveNext () (at Assets/_Project/Tests/PlayMode/PlayerInput/DoorNavMeshBlockingTests.cs:166)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+[RoomController] 'Room_2': 3 inimigo(s) instanciado(s) do encounter 'Encounter_Room2_Generated'.
+[DoorNavMesh] face=10 forcedMinZ=11,363 chasersMinZ=12,015 forcedPath=PathPartial player=(0,11)
+]]></output>
+              </test-case>
+              <test-case id="1243" name="SavedFloor_InstantOpenAndCloseTogglesCarvingImmediately" fullname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests.SavedFloor_InstantOpenAndCloseTogglesCarvingImmediately" methodname="SavedFloor_InstantOpenAndCloseTogglesCarvingImmediately" classname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests" runstate="Runnable" seed="122127226" result="Passed" start-time="2026-11-17 03:21:11Z" end-time="2026-11-17 03:21:12Z" duration="0.100926" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

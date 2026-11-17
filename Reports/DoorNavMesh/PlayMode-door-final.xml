@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-17 03:22:04Z" end-time="2026-11-17 03:22:16Z" duration="11,9568878">
+  <test-suite type="TestSuite" id="1230" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="176" result="Passed" start-time="2026-11-17 03:22:04Z" end-time="2026-11-17 03:22:16Z" duration="11.956888" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1324" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/.claude/worktrees/silly-driscoll-88ece9/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="77" result="Passed" start-time="2026-11-17 03:22:04Z" end-time="2026-11-17 03:22:16Z" duration="11.945977" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="1968" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1325" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="77" result="Passed" start-time="2026-11-17 03:22:04Z" end-time="2026-11-17 03:22:16Z" duration="11.944412" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1326" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="77" result="Passed" start-time="2026-11-17 03:22:04Z" end-time="2026-11-17 03:22:16Z" duration="11.942683" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1327" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="77" result="Passed" start-time="2026-11-17 03:22:04Z" end-time="2026-11-17 03:22:16Z" duration="11.940770" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1241" name="DoorNavMeshBlockingTests" fullname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests" classname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-17 03:22:04Z" end-time="2026-11-17 03:22:16Z" duration="11.936772" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1242" name="SavedFloor_ClosedDoorStopsAgentsAtItsFace_OpenDoorsKeepRoomsConnected" fullname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests.SavedFloor_ClosedDoorStopsAgentsAtItsFace_OpenDoorsKeepRoomsConnected" methodname="SavedFloor_ClosedDoorStopsAgentsAtItsFace_OpenDoorsKeepRoomsConnected" classname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests" runstate="Runnable" seed="958535103" result="Passed" start-time="2026-11-17 03:22:04Z" end-time="2026-11-17 03:22:16Z" duration="11.824015" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+[RoomController] 'Room_2': 3 inimigo(s) instanciado(s) do encounter 'Encounter_Room2_Generated'.
+[DoorNavMesh] face=10 forcedMinZ=11,351 chasersMinZ=12,006 forcedPath=PathPartial player=(0,11)
+]]></output>
+              </test-case>
+              <test-case id="1243" name="SavedFloor_InstantOpenAndCloseTogglesCarvingImmediately" fullname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests.SavedFloor_InstantOpenAndCloseTogglesCarvingImmediately" methodname="SavedFloor_InstantOpenAndCloseTogglesCarvingImmediately" classname="DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests" runstate="Runnable" seed="181778445" result="Passed" start-time="2026-11-17 03:22:16Z" end-time="2026-11-17 03:22:16Z" duration="0.094189" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-17 — Portas fechadas bloqueiam inimigos no NavMesh
+
+- Inimigos (melee/ranged/elite/Boss) não atravessam mais o vão de uma porta fechada:
+  cada porta das salas de release carva o NavMesh enquanto está fechada e deixa de
+  carvar ao abrir. Aplicado por builder idempotente aos prefabs `Room_*`; cenas e
+  NavMesh inalterados.
+- Teste PlayMode na cena salva: 0/2 antes, 2/2 depois. PlayMode completo 165/176
+  (0 falhas), EditMode 229/230 (falha pré-existente da F10). [Evidências](Reports/DoorNavMesh/README.md).
+
 ## 2026-11-16 — F12: talento por nível (D-005)
 
 - Cada nível ganho concede uma escolha em **Pausa → Talentos**: Lâmina Afiada
