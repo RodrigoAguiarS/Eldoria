@@ -43,6 +43,10 @@ slots/tipos/potências, equipamento, referências, salas, baús e IDs de pickup 
 Duplicatas de uma definição em slots diferentes são legítimas. Rejeitar versão
 futura/ID ausente em vez de perder itens silenciosamente; v1 é o primeiro schema,
 sem migração de saves anteriores inexistentes. Revisões futuras exigem migração.
+Desde a correção de HUD do F12, o texto no andar mostra só falhas (gravação ou
+descarte não concluídos, snapshot inválido); status rotineiros não aparecem.
+F12 introduz **v2** (talentos `{id, rank}`); v1 é migrado sem talentos, com as
+escolhas dos níveis ganhos pendentes. Ver [TALENTS-F12](TALENTS-F12.md).
 
 Escrever temporário no mesmo diretório, flush e troca atômica por File.Replace
 com backup anterior. Carga inválida tenta backup validado e avisa na UI. Falha

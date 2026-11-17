@@ -15,6 +15,7 @@ namespace DungeonCrawler.Systems
         [SerializeField] private FloorController floor;
         [SerializeField] private Health health;
         [SerializeField] private PlayerProgression progression;
+        [SerializeField] private PlayerTalents talents;
         [SerializeField] private PlayerInventory inventory;
         [SerializeField] private PlayerSpecial special;
         [SerializeField] private PlayerDash dash;
@@ -25,6 +26,8 @@ namespace DungeonCrawler.Systems
         private string lastSavedJson;
         public string Status { get; private set; } = "Limpe uma sala para criar um checkpoint.";
         public event Action StatusChanged;
+        /// <summary>True when the last status reports a failure (invalid snapshot, write/delete error).</summary>
+        public bool StatusIsError { get; private set; }
         public bool IsSafe
         {
             get
@@ -39,6 +42,7 @@ namespace DungeonCrawler.Systems
             floor.ProgressChanged += OnProgress; health.Changed += OnHealth;
             health.Died += OnDeath; inventory.Changed += MarkDirty; progression.Changed += MarkDirty;
             loot.Changed += MarkDirty;
+            if (talents != null) talents.Changed += MarkDirty;
             foreach (var chest in chests) chest.Opened += MarkDirty;
             foreach (var room in floor.Rooms) room.Started += OnRoomStarted;
         }
@@ -47,6 +51,7 @@ namespace DungeonCrawler.Systems
             floor.ProgressChanged -= OnProgress; health.Changed -= OnHealth;
             health.Died -= OnDeath; inventory.Changed -= MarkDirty; progression.Changed -= MarkDirty;
             loot.Changed -= MarkDirty;
+            if (talents != null) talents.Changed -= MarkDirty;
             foreach (var chest in chests) if (chest != null) chest.Opened -= MarkDirty;
             foreach (var room in floor.Rooms) if (room != null) room.Started -= OnRoomStarted;
         }
@@ -55,11 +60,12 @@ namespace DungeonCrawler.Systems
             ready = true;
             var data = RunCheckpointSession.Consume();
             if (data == null) return;
-            if (!catalog.Validate(data, out string error)) { SetStatus(error); return; }
+            if (!catalog.Validate(data, out string error)) { SetStatus(error, true); return; }
             restoring = true;
             try
             {
                 progression.RestoreCheckpoint(data.level, data.xp, data.gold);
+                if (talents != null) talents.RestoreCheckpoint(data.talents); // after level: validates against level − 1
                 inventory.RestoreCheckpoint(data, catalog);
                 health.RestoreCheckpoint(data.health);
                 special.RestoreCheckpoint(data.stamina, data.specialCooldown, data.regenerationDelay);
@@ -92,7 +98,8 @@ namespace DungeonCrawler.Systems
         private void OnDeath()
         {
             dirty = false;
-            SetStatus(RunCheckpointSession.Store.TryDelete(out string error) ? "Run encerrada · checkpoint descartado." : error);
+            bool deleted = RunCheckpointSession.Store.TryDelete(out string error);
+            SetStatus(deleted ? "Run encerrada · checkpoint descartado." : error, !deleted);
         }
         public bool SaveNow()
         {
@@ -105,7 +112,7 @@ namespace DungeonCrawler.Systems
                 if (lastSavedJson == json) return true;
                 bool saved = RunCheckpointSession.Store.TrySave(data, catalog, out string message);
                 if (saved) lastSavedJson = json;
-                SetStatus(message); return saved;
+                SetStatus(message, !saved); return saved;
             }
             finally { writing = false; }
         }
@@ -124,14 +131,15 @@ namespace DungeonCrawler.Systems
                 slots[i] = new CheckpointSlot { itemId = stack.IsEmpty ? "" : stack.Definition.PersistentId,
                     count = stack.Count, potency = stack.Potency };
             }
-            return new RunCheckpointData { version = 1, floorId = catalog.floorId, randomState = loot.RandomState,
+            return new RunCheckpointData { version = RunCheckpointData.CurrentVersion, floorId = catalog.floorId, randomState = loot.RandomState,
                 clearedRooms = cleared.ToArray(), resumeRoom = cleared.Count > 0 ? cleared[cleared.Count - 1] : "",
                 openedChests = opened.ToArray(), health = health.Current, maxHealth = health.Max,
                 level = progression.Level, xp = progression.Xp, gold = progression.Gold, slots = slots,
                 weaponIndex = inventory.EquippedWeaponIndex, armorIndex = inventory.EquippedArmorIndex,
                 stamina = special.Stamina, specialCooldown = special.CooldownRemaining,
-                regenerationDelay = special.RegenerationRemaining, dashCooldown = dash.CooldownRemaining, pickups = loot.Capture() };
+                regenerationDelay = special.RegenerationRemaining, dashCooldown = dash.CooldownRemaining, pickups = loot.Capture(),
+                talents = talents != null ? talents.Capture() : Array.Empty<CheckpointTalent>() };
         }
-        private void SetStatus(string value) { Status = value; StatusChanged?.Invoke(); }
+        private void SetStatus(string value, bool error = false) { Status = value; StatusIsError = error; StatusChanged?.Invoke(); }
     }
 }

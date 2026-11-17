@@ -227,6 +227,10 @@ namespace DungeonCrawler.Tests.PlayerInput
                     hud.Find("RewardNotice").GetComponent<Text>().text = "Nível 12 · Armadura do sentinela coletada";
                     hud.Find("InventoryNotice").GetComponent<Text>().enabled = true;
                     hud.Find("InventoryNotice").GetComponent<Text>().text = "Bolsa cheia. Libere um espaço para coletar.";
+                    // F12: two pending talents show the HUD notice and the counted pause button.
+                    var progression = InScene<PlayerProgression>(); var xpModel = new ExperienceModel(30, 1.35f, 10);
+                    Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Xp, xpModel.XpForLevel(1) + xpModel.XpForLevel(2))));
+                    yield return null;
                     AssertTextFits(hud); yield return Capture(directory, prefix + "-hud");
                     var menu = InScene<GameMenuController>(); menu.ToggleInventory(); yield return null; yield return null;
                     var bag = InScene<InventoryPresenter>(); AssertTextFits(bag.transform);
@@ -238,6 +242,15 @@ namespace DungeonCrawler.Tests.PlayerInput
                     yield return Capture(directory, prefix + "-bag-scrolled");
                     var target = (RectTransform)bag.transform.Find("Window/Close");
                     measurements.Add(prefix + ": target=" + target.rect.size + " logical, " + target.rect.size * InScene<Canvas>().scaleFactor + " pixels; scroll=" + scroll.content.rect.height + "/" + scroll.viewport.rect.height);
+                    menu.Resume(); menu.TogglePause(); yield return null;
+                    var pauseWindow = (RectTransform)menu.transform.Find("PausePanel/Window");
+                    AssertInsideScreen(pauseWindow); AssertTextFits(pauseWindow); AssertTargetsDisjoint(pauseWindow);
+                    yield return Capture(directory, prefix + "-pause");
+                    menu.OpenTalents(); yield return null; yield return null;
+                    var talents = InScene<TalentChoicePresenter>();
+                    AssertInsideScreen((RectTransform)talents.transform.Find("Window")); AssertTextFits(talents.transform);
+                    AssertTargetsDisjoint(talents.transform);
+                    yield return Capture(directory, prefix + "-talents");
                     menu.Resume(); Time.timeScale = 1;
                     if (percent == 150)
                     {

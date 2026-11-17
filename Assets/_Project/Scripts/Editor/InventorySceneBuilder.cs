@@ -129,6 +129,7 @@ namespace DungeonCrawler.Editor
                 root.GetComponent<PlayerCombat>(), root.GetComponent<PlayerDash>(), root.GetComponent<PlayerSpecial>() });
             ControlBindingsSceneBuilder.ConfigurePlayer(root);
             RewardFeedbackSceneBuilder.ConfigurePlayer(root);
+            TalentSceneBuilder.ConfigurePlayer(root);
         }
 
         public static void ConfigureHud(Scene scene, GameObject player, GameRestarter restarter)
@@ -201,6 +202,8 @@ namespace DungeonCrawler.Editor
             root.SetAsLastSibling();
             ControlBindingsSceneBuilder.ConfigureScene(scene);
             RewardFeedbackSceneBuilder.ConfigureHud(hud, player);
+            // GameShell resets the screen list above; F12 re-appends its screen and pause entry.
+            TalentSceneBuilder.ConfigureHud(scene);
             TextScaleSceneBuilder.ConfigureScene(scene);
         }
 

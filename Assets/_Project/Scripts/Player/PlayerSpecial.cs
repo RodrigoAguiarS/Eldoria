@@ -18,6 +18,7 @@ namespace DungeonCrawler.Player
         [SerializeField] private LayerMask enemyMask;
         [SerializeField] private LayerMask destructibleMask;
         private PlayerSpecialModel model;
+        private float cooldownReduction;
         private Collider[] hitBuffer = new Collider[16];
         private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>(16);
         public event Action<int, PlayerComboStep> AttackStarted;
@@ -30,6 +31,14 @@ namespace DungeonCrawler.Player
         public float MaxStamina => model?.MaxStamina ?? 1f;
         public float StaminaCost => definition != null ? Mathf.Max(0f, definition.staminaCost) : 0f;
         public float CooldownRemaining => model?.CooldownRemaining(Time.time) ?? 0f;
+        /// <summary>Talent reduction (F12) applied when a cast starts; the shared definition is never edited.</summary>
+        public float CooldownReduction => cooldownReduction;
+        public float EffectiveCooldown => model?.EffectiveCooldown ?? (definition != null ? Mathf.Max(0f, definition.cooldown) : 0f);
+        public void SetCooldownReduction(float seconds)
+        {
+            cooldownReduction = float.IsNaN(seconds) || float.IsInfinity(seconds) ? 0f : Mathf.Max(0f, seconds);
+            if (model != null) model.CooldownReduction = cooldownReduction;
+        }
         public float RegenerationRemaining => model?.RegenerationRemaining(Time.time) ?? 0f;
         public void RestoreCheckpoint(float stamina, float cooldown, float regeneration) =>
             model.RestoreCheckpoint(stamina, cooldown, regeneration, Time.time);
@@ -42,7 +51,7 @@ namespace DungeonCrawler.Player
                 Debug.LogError("[PlayerSpecial] Definition, Combat e Health são obrigatórios.", this);
                 enabled = false; return;
             }
-            model = new PlayerSpecialModel(definition, Time.time);
+            model = new PlayerSpecialModel(definition, Time.time) { CooldownReduction = cooldownReduction };
             model.Started += OnStarted; model.Impact += OnImpact;
             model.Finished += OnFinished; model.Cancelled += OnCancelled;
         }

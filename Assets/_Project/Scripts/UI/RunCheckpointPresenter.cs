@@ -23,7 +23,8 @@ namespace DungeonCrawler.UI
         }
         public void Refresh()
         {
-            if (checkpoint != null) { status.text = checkpoint.Status; return; }
+            // In-run HUD: routine statuses stay silent; only failures (checkpoint not saved/discarded) are shown.
+            if (checkpoint != null) { status.text = checkpoint.StatusIsError ? checkpoint.Status : ""; return; }
             bool valid = flow.CanContinue(out string message);
             continueButton.interactable = valid;
             status.text = flow.CheckpointStatus ?? message;

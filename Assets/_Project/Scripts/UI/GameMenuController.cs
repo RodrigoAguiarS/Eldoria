@@ -50,6 +50,7 @@ namespace DungeonCrawler.UI
             if (terminalVisible) return;
             if (!screens.IsEmpty && screens.Current == MenuScreen.Controls) { screens.Pop(); return; }
             if (!screens.IsEmpty && screens.Current == MenuScreen.Options) { CloseOptions(); return; }
+            if (!screens.IsEmpty && screens.Current == MenuScreen.Talents) { CloseTalents(); return; }
             if (!screens.IsEmpty) { Resume(); return; }
             if (!health.IsAlive) return;
             pause.SetPaused(true);
@@ -63,6 +64,13 @@ namespace DungeonCrawler.UI
         public void OpenOptions() => screens.Push(MenuScreen.Options);
         public void OpenControls() => screens.Push(MenuScreen.Controls);
         public void CloseOptions() => screens.Pop();
+        /// <summary>F12: talents open on top of the pause screen, sharing its pause; Back returns to it.</summary>
+        public void OpenTalents()
+        {
+            if (!health.IsAlive || terminalVisible || screens.IsEmpty || screens.Current != MenuScreen.Pause) return;
+            screens.Push(MenuScreen.Talents);
+        }
+        public void CloseTalents() { if (!screens.IsEmpty && screens.Current == MenuScreen.Talents) screens.Pop(); }
         public void ShowTerminal() { Resume(); terminalVisible = true; }
         public void LeaveTerminal() { terminalVisible = false; Resume(); }
         private void OnScreenChanged()

@@ -97,6 +97,10 @@ namespace DungeonCrawler.Editor
             Set(checkpoint, "catalog", catalog); Set(checkpoint, "floor", floor); Set(checkpoint, "health", health);
             Set(checkpoint, "inventory", inventory); Set(checkpoint, "progression", progression);
             Set(checkpoint, "special", special); Set(checkpoint, "dash", dash); Set(checkpoint, "loot", loot);
+            // F12: talents travel in checkpoint v2; the catalog resolves their IDs before any mutation.
+            var talents = player.GetComponent<PlayerTalents>();
+            catalog.talents = talents != null ? (TalentCatalog)new SerializedObject(talents).FindProperty("catalog").objectReferenceValue : null;
+            Set(checkpoint, "talents", talents);
             SetArray(checkpoint, "chests", ordered);
             Set(checkpoint, "pickupPrefab", AssetDatabase.LoadAssetAtPath<Pickup>(ProjectPaths.Root + "/Prefabs/Items/Pickup.prefab"));
             var flow = InScene<GameSceneFlow>(scene); Set(flow, "checkpoint", checkpoint); Set(flow, "checkpointCatalog", catalog);
