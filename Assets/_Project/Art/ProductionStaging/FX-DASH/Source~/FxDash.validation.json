@@ -1,0 +1,147 @@
+{
+  "checks": [
+    {
+      "name": "size_mode",
+      "ok": true,
+      "detail": "(256, 64) RGBA"
+    },
+    {
+      "name": "no_dirty_transparent_px",
+      "ok": true,
+      "detail": "0 px com alpha 0 e RGB != 0"
+    },
+    {
+      "name": "transparent_border",
+      "ok": true,
+      "detail": "alpha máx. na moldura de 1 px = 0"
+    },
+    {
+      "name": "v_margin",
+      "ok": true,
+      "detail": "margem vertical 6 px (≥ 3)"
+    },
+    {
+      "name": "restrained_alpha",
+      "ok": true,
+      "detail": "alpha máx. 163 ≤ 165"
+    },
+    {
+      "name": "fade_both_ends",
+      "ok": true,
+      "detail": "alpha máx. nos 15 px da cabeça 29 e da cauda 0 ≤ 25% do pico (41)"
+    },
+    {
+      "name": "head_does_not_cover_hero",
+      "ok": true,
+      "detail": "alpha máx. nas 8 colunas junto ao Hero = 8 ≤ 40 (sem duplicata opaca)"
+    },
+    {
+      "name": "smooth_column_profile",
+      "ok": true,
+      "detail": "maior salto do alpha máx. entre colunas vizinhas = 6"
+    },
+    {
+      "name": "floor_not_hidden",
+      "ok": true,
+      "detail": "cobertura alpha>50% 13.0% ≤ 22%"
+    },
+    {
+      "name": "telegraph_visible_under_peak",
+      "ok": true,
+      "detail": "no pixel mais opaco, 36% da diferença telegraph↔piso continua visível (≥ 35%)"
+    },
+    {
+      "name": "no_green_hue",
+      "ok": true,
+      "detail": "0 px em matiz (70.0, 170.0)"
+    },
+    {
+      "name": "no_threat_red_orange",
+      "ok": true,
+      "detail": "0 px saturados em matiz (0.0, 36.0)"
+    },
+    {
+      "name": "no_opaque_white",
+      "ok": true,
+      "detail": "0 px de branco opaco"
+    },
+    {
+      "name": "reads_royal_blue",
+      "ok": true,
+      "detail": "média HSV [221.7, 0.786, 0.924] (capa #2F6BFF = 223°)"
+    },
+    {
+      "name": "restrained_cyan_edge",
+      "ok": true,
+      "detail": "2.4% dos px visíveis em ciano (2–20%)"
+    },
+    {
+      "name": "two_or_three_sweeps",
+      "ok": true,
+      "detail": "3 dobras: ['lower_fold', 'upper_fold', 'main_sweep']"
+    },
+    {
+      "name": "readable_on_stone",
+      "ok": true,
+      "detail": "distância RGB mínima da faixa (alpha>50%) à pedra ['#3E4152', '#55596B'] = 80.4 ≥ 60 (contraste WCAG 1.26, discreto por design)"
+    },
+    {
+      "name": "not_slash_copy",
+      "ok": true,
+      "detail": "saturação dash 0.79 vs slash 0.00; diferença média de alpha 38.1"
+    },
+    {
+      "name": "tail_le_0_20s",
+      "ok": true,
+      "detail": "time 0.16 s ≤ 0.2 s"
+    },
+    {
+      "name": "texture_aspect_matches_trail",
+      "ok": true,
+      "detail": "rastro ≈ 2.56 m × 0.6 m (razão 4.27; textura 4:1, faixa 3–6)"
+    },
+    {
+      "name": "dash_rules_untouched",
+      "ok": true,
+      "detail": "PlayerDash.cs só lido: velocidade 16.0, duração 0.18 s, invulnerabilidade 0.25 s, recarga 2.0 s"
+    }
+  ],
+  "cover_over_50pct": 0.1297,
+  "mean_rgb": [
+    50,
+    107,
+    236
+  ],
+  "mean_hsv": [
+    221.7,
+    0.786,
+    0.924
+  ],
+  "cyan_fraction": 0.0244,
+  "contrast_on_stone": {
+    "#3E4152": 1.58,
+    "#55596B": 1.26
+  },
+  "rgb_distance_on_stone": {
+    "#3E4152": 95.5,
+    "#55596B": 80.4
+  },
+  "slash_compare": {
+    "slash_mean_sat": 0.0,
+    "dash_mean_sat": 0.786,
+    "mean_abs_alpha_diff": 38.08
+  },
+  "player_dash_defaults": {
+    "dashSpeed": 16.0,
+    "dashDuration": 0.18,
+    "invulnerabilityDuration": 0.25,
+    "cooldown": 2.0
+  },
+  "trail_length_m": 2.56,
+  "ok": true,
+  "meta_created": false,
+  "folder_meta_created": false,
+  "sha256": {
+    "FX-DASH-Trail.png": "7e9ae6b7ac16b367cb4cbc26d678e801397dbdf73816687ba8054783b709c7a2"
+  }
+}
