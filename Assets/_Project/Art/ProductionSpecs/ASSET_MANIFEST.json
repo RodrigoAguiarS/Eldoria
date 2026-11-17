@@ -18,8 +18,8 @@
   "summary": {
     "logical_resources": 133,
     "by_status": {
-      "EXISTENTE": 117,
-      "AUSENTE": 13,
+      "EXISTENTE": 118,
+      "AUSENTE": 12,
       "INCOMPLETO": 1,
       "NÃO VERIFICADO": 2
     },
@@ -47,8 +47,8 @@
         "AUSENTE": 2
       },
       "G": {
-        "EXISTENTE": 8,
-        "AUSENTE": 2
+        "EXISTENTE": 9,
+        "AUSENTE": 1
       },
       "H": {
         "EXISTENTE": 3
@@ -6364,7 +6364,7 @@
       "category": "G",
       "category_name": "HUD e gameplay",
       "functionality": "Leitura de comando existente",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "ícone 2D",
       "scope": "sugestão_polimento",
@@ -6380,7 +6380,7 @@
       ],
       "depends_on": [],
       "technical_dependencies": [],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Produzido em staging (A01, 17/11/2026); NÃO integrado ao HUD. Integração pelo presenter/builder do dash em tarefa separada, sem mudar a regra do dash; atalho e cooldown continuam UI nativa.",
       "visual_specification": "Blue cape sweep with a broad forward chevron-shaped cutout, no weapon arrow, no text.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -6389,7 +6389,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "Técnica fora da Unity em 17/11/2026: DashIcon.validation.json (PNG decodificado: 512×512 RGBA, cantos alpha 0, margem 48 px, 0 pixels transparentes com RGB sujo) e asset_report.py (--expect-size 512x512 --require-alpha, exit 0); revisão a 48/32 px em claro/escuro/pedra e em tons de cinza. NÃO VALIDADO NO EDITOR: importação, aparência no HUD e PlayMode não observados. Comparação com o ícone de giro pendente (A02 inexistente).",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -6402,10 +6402,11 @@
         "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/ICON-ACTION-DASH/ICON-ACTION-DASH.png"
       },
       "source_and_rights": {
-        "kind": "not_produced",
-        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
-        "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/ICON-ACTION-DASH/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria e render próprios (Tools/Lemo3DGenerator/src/production/DashIcon.mjs, three.js r170 MIT). Sem IA generativa de imagem nem asset de terceiros."
+      },
+      "production_state": "Produzido por render de geometria low-poly própria (DashIcon.mjs: contorno, facetas e profundidades editáveis) na mesma página/luz/contorno de ItemIcons.mjs (three.js r170 via core/render/page.mjs do Lemo); PNG RGBA 512 com alpha real, conteúdo 416×334 dentro da área 416×416, margem mínima 48 px."
     },
     {
       "id": "ICON-ACTION-SPECIAL",
@@ -12544,6 +12545,43 @@
         ],
         "options_restored": "1920×1080, tela cheia, Alta"
       }
+    },
+    {
+      "id": "A01-ICON-ACTION-DASH",
+      "date_local": "2026-11-17",
+      "branch": "claude/a01-dash-icon",
+      "produced": [
+        "ICON-ACTION-DASH"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/Lemo3DGenerator/src/production/DashIcon.mjs"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/ICON-ACTION-DASH/ICON-ACTION-DASH.png",
+        "Assets/_Project/Art/ProductionStaging/ICON-ACTION-DASH/ICON-ACTION-DASH.png.meta",
+        "Assets/_Project/Art/ProductionStaging/ICON-ACTION-DASH/Source~/"
+      ],
+      "import_settings": "Sprite (2D and UI) Single, sRGB, bilinear, clamp, mipmaps off, PPU 100, alphaIsTransparency; plataformas copiadas de ICON-ITEM-IRON.png.meta (padrão 512, Standalone 2048).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "DashIcon.validation.json ok; asset_report.py exit 0"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: .meta escrita à mão a partir da família; a Unity pode reserializá-la na primeira importação.",
+        "Sem integração no HUD (tarefa separada).",
+        "Distinção do giro em 32/48 px pendente até existir A02.",
+        "Aprovação artística humana pendente."
+      ],
+      "note": "FULL_ASSET_AUDIT.md é o retrato da auditoria de 14/11/2026 e não foi reescrito; estado vivo neste manifesto."
     }
   ]
 }
