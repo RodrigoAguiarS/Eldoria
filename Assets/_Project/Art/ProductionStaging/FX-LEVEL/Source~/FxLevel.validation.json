@@ -1,0 +1,441 @@
+{
+  "checks": [
+    {
+      "name": "sheet_size_mode",
+      "ok": true,
+      "detail": "(1024, 768) RGBA"
+    },
+    {
+      "name": "frames_are_256_rgba",
+      "ok": true,
+      "detail": "12 quadros"
+    },
+    {
+      "name": "sheet_cells_equal_frames",
+      "ok": true,
+      "detail": "célula k = quadro k"
+    },
+    {
+      "name": "no_dirty_transparent_px",
+      "ok": true,
+      "detail": "0 px com alpha 0 e RGB != 0"
+    },
+    {
+      "name": "no_edge_cut_margin_ge_16px",
+      "ok": true,
+      "detail": "margem mínima 23 px"
+    },
+    {
+      "name": "final_frame_transparent",
+      "ok": true,
+      "detail": "alpha máx. quadro 11 = 0"
+    },
+    {
+      "name": "frames_before_last_visible",
+      "ok": true,
+      "detail": "quadros 0–10 não vazios"
+    },
+    {
+      "name": "fades_out",
+      "ok": true,
+      "detail": "quadro 10 < 30% do pico"
+    },
+    {
+      "name": "no_green_hue",
+      "ok": true,
+      "detail": "0 px em matiz (70.0, 170.0)"
+    },
+    {
+      "name": "no_threat_red_orange",
+      "ok": true,
+      "detail": "0 px saturados em matiz (0.0, 36.0)"
+    },
+    {
+      "name": "no_opaque_white",
+      "ok": true,
+      "detail": "0 px com saturação < 0.18, valor > 0.92 e alpha > 200"
+    },
+    {
+      "name": "no_wide_flash",
+      "ok": true,
+      "detail": "cobertura alpha>50% ≤ 6% por quadro"
+    },
+    {
+      "name": "centre_free",
+      "ok": true,
+      "detail": "miolo do anel vazio (sem disco)"
+    },
+    {
+      "name": "body_column_free_of_motes",
+      "ok": true,
+      "detail": "nenhum mote em |x| < 0.3 m"
+    },
+    {
+      "name": "pivot_consistent",
+      "ok": true,
+      "detail": "anel centrado em x=128.0 e base coerente com pivô y=178.0"
+    },
+    {
+      "name": "continuity_no_jumps",
+      "ok": true,
+      "detail": "deslocamento máx. do anel entre quadros 14 px ≤ 16.0"
+    },
+    {
+      "name": "gameplay_radius_le_0_8m",
+      "ok": true,
+      "detail": "alcance máx. 0.799 m"
+    },
+    {
+      "name": "particle_budget_le_20",
+      "ok": true,
+      "detail": "8 motes + 1 anel"
+    }
+  ],
+  "frames": [
+    {
+      "frame": 0,
+      "time_s": 0.0,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 144263,
+      "alpha_max": 113,
+      "cover_over_50pct": 0.0,
+      "bbox": [
+        50,
+        150,
+        206,
+        233
+      ],
+      "edge_margin_px": 23,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_bbox": [
+        50,
+        150,
+        206,
+        233
+      ],
+      "ring_centre_x": 128.0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0,
+      "ring_bottom_expected": 232.98
+    },
+    {
+      "frame": 1,
+      "time_s": 0.0583,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 268531,
+      "alpha_max": 214,
+      "cover_over_50pct": 0.01775,
+      "bbox": [
+        29,
+        143,
+        227,
+        226
+      ],
+      "edge_margin_px": 29,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_bbox": [
+        50,
+        143,
+        206,
+        226
+      ],
+      "ring_centre_x": 128.0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0,
+      "ring_bottom_expected": 225.96
+    },
+    {
+      "frame": 2,
+      "time_s": 0.1167,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 344419,
+      "alpha_max": 243,
+      "cover_over_50pct": 0.02058,
+      "bbox": [
+        26,
+        134,
+        229,
+        216
+      ],
+      "edge_margin_px": 26,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_bbox": [
+        51,
+        134,
+        205,
+        216
+      ],
+      "ring_centre_x": 128.0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0,
+      "ring_bottom_expected": 215.8
+    },
+    {
+      "frame": 3,
+      "time_s": 0.175,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 353736,
+      "alpha_max": 250,
+      "cover_over_50pct": 0.02122,
+      "bbox": [
+        25,
+        119,
+        231,
+        204
+      ],
+      "edge_margin_px": 25,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_bbox": [
+        52,
+        123,
+        204,
+        204
+      ],
+      "ring_centre_x": 128.0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0,
+      "ring_bottom_expected": 203.41
+    },
+    {
+      "frame": 4,
+      "time_s": 0.2333,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 345387,
+      "alpha_max": 232,
+      "cover_over_50pct": 0.0197,
+      "bbox": [
+        25,
+        104,
+        232,
+        190
+      ],
+      "edge_margin_px": 24,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_bbox": [
+        54,
+        111,
+        202,
+        190
+      ],
+      "ring_centre_x": 128.0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0,
+      "ring_bottom_expected": 189.74
+    },
+    {
+      "frame": 5,
+      "time_s": 0.2917,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 333508,
+      "alpha_max": 232,
+      "cover_over_50pct": 0.01894,
+      "bbox": [
+        25,
+        91,
+        231,
+        176
+      ],
+      "edge_margin_px": 25,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_bbox": [
+        56,
+        99,
+        200,
+        176
+      ],
+      "ring_centre_x": 128.0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0,
+      "ring_bottom_expected": 175.69
+    },
+    {
+      "frame": 6,
+      "time_s": 0.35,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 334344,
+      "alpha_max": 232,
+      "cover_over_50pct": 0.02135,
+      "bbox": [
+        25,
+        83,
+        231,
+        163
+      ],
+      "edge_margin_px": 25,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_bbox": [
+        58,
+        87,
+        198,
+        163
+      ],
+      "ring_centre_x": 128.0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0,
+      "ring_bottom_expected": 162.2
+    },
+    {
+      "frame": 7,
+      "time_s": 0.4083,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 309218,
+      "alpha_max": 232,
+      "cover_over_50pct": 0.02039,
+      "bbox": [
+        26,
+        76,
+        231,
+        151
+      ],
+      "edge_margin_px": 25,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_bbox": [
+        59,
+        77,
+        197,
+        151
+      ],
+      "ring_centre_x": 128.0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0,
+      "ring_bottom_expected": 150.18
+    },
+    {
+      "frame": 8,
+      "time_s": 0.4667,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 220770,
+      "alpha_max": 232,
+      "cover_over_50pct": 0.01657,
+      "bbox": [
+        26,
+        68,
+        230,
+        141
+      ],
+      "edge_margin_px": 26,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_bbox": [
+        60,
+        68,
+        196,
+        141
+      ],
+      "ring_centre_x": 128.0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0
+    },
+    {
+      "frame": 9,
+      "time_s": 0.525,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 85853,
+      "alpha_max": 165,
+      "cover_over_50pct": 0.00114,
+      "bbox": [
+        26,
+        64,
+        229,
+        136
+      ],
+      "edge_margin_px": 26,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_bbox": [
+        60,
+        87,
+        196,
+        136
+      ],
+      "ring_centre_x": 128.0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0
+    },
+    {
+      "frame": 10,
+      "time_s": 0.5833,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 9015,
+      "alpha_max": 50,
+      "cover_over_50pct": 0.0,
+      "bbox": [
+        29,
+        65,
+        162,
+        134
+      ],
+      "edge_margin_px": 29,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_bbox": [
+        94,
+        124,
+        162,
+        134
+      ],
+      "ring_centre_x": 128.0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0
+    },
+    {
+      "frame": 11,
+      "time_s": 0.6417,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 0,
+      "alpha_max": 0,
+      "cover_over_50pct": 0.0,
+      "bbox": null,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "opaque_white_px": 0,
+      "ring_inner_alpha_max": 0,
+      "motes_in_body_column_alpha_max": 0
+    }
+  ],
+  "ring_bottom_steps_px": [
+    7,
+    10,
+    12,
+    14,
+    14,
+    13,
+    12
+  ],
+  "ok": true,
+  "sha256": {
+    "FX-LEVEL-Sheet.png": "baafd771fba81a7652a2ceb87ab2b8b3a75fd891b403082e2cf1ee746b4ec518",
+    "frames/FX-LEVEL-F0.png": "8e80e73cb6407b59a80e58898146cf98113150d87c916dacb511458ca6345eb6",
+    "frames/FX-LEVEL-F1.png": "908acc3b32f2b22c9f74f94cd0d53b6cc4bc38af3b2b0997a65de2bb6eba603d",
+    "frames/FX-LEVEL-F2.png": "f276bee03e5abfb09348a1f31b5baa170a4e20fa796cce4248848f0f7a183e2d",
+    "frames/FX-LEVEL-F3.png": "705a388f07a31b8e4e9490b37a42595a0cdc4f79d0b96b6d6ef11d75bd419362",
+    "frames/FX-LEVEL-F4.png": "09f546e3ced1005f652a9c686b9dc2b59aaad4019c0f1bbd937b90e9d3a75a29",
+    "frames/FX-LEVEL-F5.png": "e3e7dac63131e265b3b7f97f2fdfd54535799d0c4c64e4d08ea3d4485a0148e8",
+    "frames/FX-LEVEL-F6.png": "73ccdb4f4f795922a37850328f7d0184b7a9b416a17bbd01c169f9b55f2001cd",
+    "frames/FX-LEVEL-F7.png": "380654d35a5b3fd49e55a5d5c44ac0c2b61a14dbd15dd920adac82614f840a28",
+    "frames/FX-LEVEL-F8.png": "fad0a2e438ac75533fd1bece021fcc50abbd8a89768478911ff600499f74207b",
+    "frames/FX-LEVEL-F9.png": "302355b2b5b599c55ddfcd9fa42e1a1cc7d7fae870aeddd0c8642066ef45490b",
+    "frames/FX-LEVEL-F10.png": "071c542b7683cb7c86fa6332a1bc8358ecab796f35b66df5cff70f72a7f0c18b",
+    "frames/FX-LEVEL-F11.png": "aebc86755d7beb8b01bcd992ab44e1133afcb473511b7832eb82228be275473f"
+  },
+  "meta_created": false
+}
