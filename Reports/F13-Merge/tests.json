@@ -1,0 +1,186 @@
+{
+  "environment": "Unity 6000.6.9f1; integration workspace on codex/f14-second-fixed-floor, based on main 1d91a36",
+  "scope": "F13 and door compatibility regression subset; full XML retained in F14 report",
+  "tests": [
+    {
+      "name": "DungeonCrawler.Tests.EditMode.DoorNavMeshBlockerAssetTests.Integrate_SecondRun_ChangesNothing_PreservesBytesGuidsAndBakedNavMesh",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.DoorNavMeshBlockerAssetTests.RoomPrefabsAndReleaseScenes_EveryDoorCarvesItsClosedBlocker",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LancerAssetTests.LancerPrefab_UsesLungeAttackWithResolvedReferences_AndNoRigidbodyOrEnemyCombat",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LancerAssetTests.LungeData_ProposesAtLeastOneSecondWarning_AndSolidCoverMask",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LancerAssetTests.ReleaseEncounters_DoNotReferenceLancer_AndTestEncounterIsIsolated",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LancerAssetTests.Telegraph_IsColliderFreeAndHiddenByDefault",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LancerAssetTests.TestScene_ExistsOutsideBuildSettings",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.Cancel_ReturnsToReadyFromAnyPhase",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.Contact_CanBeClaimedOncePerLunge_AndOnlyDuringDash",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.DashDuration_FromDistanceAndSpeed_HasSafeMinimum",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.Data_TelegraphSecondsClampsSerializedValuesBelowMinimum",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.FlatDistanceToSegment_IgnoresHeightAndClampsToEndpoints",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.FrozenClock_KeepsTelegraphPending",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.Phases_AdvanceTelegraphDashRecoverReady_OnlyOnTheirDeadlines",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.Telegraph_IsNeverShorterThanOneSecond(0.0f)",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.Telegraph_IsNeverShorterThanOneSecond(0.2f)",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.Telegraph_IsNeverShorterThanOneSecond(0.99f)",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.Telegraph_IsNeverShorterThanOneSecond(-3.0f)",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.EditMode.LungeTimelineTests.Telegraph_IsNeverShorterThanOneSecond(float.NaN)",
+      "result": "Passed",
+      "source": "EditMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests.SavedFloor_ClosedDoorStopsAgentsAtItsFace_OpenDoorsKeepRoomsConnected",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayerInput.DoorNavMeshBlockingTests.SavedFloor_InstantOpenAndCloseTogglesCarvingImmediately",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.BakedWall_ClipsLane_LancerNeverCrossesIt",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.Brain_ChasesCommitsAndKeepsFourExternalStates",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.Brain_DeathMidDash_StopsTravelAndHidesWarning",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.ClosedDoorNotInNavMesh_ClipsLaneBySolidCast",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.CoverBetweenLancerAndTarget_RefusesCommit",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.DashInvulnerability_ConsumesContact_LancerPassesThroughWithoutLaterHit",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.DeadOrDestroyedTarget_CancelsDuringTelegraph",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.Direction_IsLockedAtCommit_TargetLeavingLaneTakesNoDamage",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.DisableDuringTelegraph_HidesWarning_DoesNotRefundCooldown",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.Pause_FreezesTelegraph_ThenResumesRemainingWarningAndHitsOnce",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.Room_KillingLancersDuringTelegraph_ClearsRoomAndOpensExit",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.TargetInsideLaneForWholeDash_IsDamagedExactlyOnce",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerLungeTests.Telegraph_LastsAtLeastOneSecond_WithoutMovementOrDamage",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerTestRoomTests.Capture_TelegraphDashAndClearedRoom",
+      "result": "Skipped",
+      "source": "PlayMode-final.xml"
+    },
+    {
+      "name": "DungeonCrawler.Tests.PlayMode.LancerTestRoomTests.SavedRoom_SpawnsLancers_LanesStopBeforeClosedDoor_AndRoomClearsWithoutSoftlock",
+      "result": "Passed",
+      "source": "PlayMode-final.xml"
+    }
+  ]
+}

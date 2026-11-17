@@ -256,17 +256,10 @@ namespace DungeonCrawler.Editor
             blocker.transform.localScale = new Vector3(4f, WallHeight, 1f);
             blocker.layer = layer;
             blocker.GetComponent<MeshRenderer>().sharedMaterial = material;
-            // Portas (layer Door) não entram no bake: sem carving, qualquer NavMeshAgent anda pelo vão fechado.
-            // Somente nesta sala de teste; salas de release seguem inalteradas (achado registrado em Reports/F13).
-            var carve = blocker.AddComponent<NavMeshObstacle>();
-            carve.shape = NavMeshObstacleShape.Box;
-            carve.center = Vector3.zero;
-            carve.size = Vector3.one;
-            carve.carving = true;
-            carve.carveOnlyStationary = true;
             var door = doorRoot.AddComponent<DoorController>();
             DungeonMvpSceneBuilder.SetObj(door, "blocker", blocker.transform);
             DungeonMvpSceneBuilder.SetObj(door, "blockerCollider", blocker.GetComponent<Collider>());
+            DoorNavMeshBlockerBuilder.Configure(door);
             return door;
         }
 

@@ -95,6 +95,12 @@ namespace DungeonCrawler.Editor
             Vector3 size = Vector3.Scale(new Vector3(Mathf.Abs(scale.x), Mathf.Abs(scale.y), Mathf.Abs(scale.z)), box.size);
 
             bool changed = false;
+            // F13 originally placed carving on the animated blocker. Migrate it to the static root.
+            foreach (var childObstacle in blocker.GetComponentsInChildren<NavMeshObstacle>(true))
+            {
+                UnityEngine.Object.DestroyImmediate(childObstacle);
+                changed = true;
+            }
             NavMeshObstacle obstacle = door.GetComponent<NavMeshObstacle>();
             if (obstacle == null)
             {
