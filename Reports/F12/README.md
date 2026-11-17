@@ -51,7 +51,11 @@ porque o diretório isolado do checkpoint não existia e `File.Delete` lança
   vem do builder (reserva para 150%), mas não foi observada.
 - **Sem playtest humano nem medição de balanceamento.** Os valores são a proposta
   inicial; não se afirma melhoria de variação ou dificuldade.
-- Build Windows não gerada nesta entrega.
+- Build Windows gerada depois (commit `7ae0ac8`): `Builds/WindowsMVP/Eldoria.exe`,
+  `Succeeded`, 0 erros, 496 avisos de shader ([windows-build.json](windows-build.json),
+  hashes em `windows-build-files.sha256`). Smoke sem gráficos com `-dcc-start-floor`:
+  menu e andar carregados, 20 s sem exceções. Sem janela/gráficos: não é revisão visual
+  nem partida completa. Builds antigas removidas a pedido do usuário; mantido só o ZIP 1.0.
 - **Falha pré-existente (já na main, registrada no F11):**
   `ItemsCombatAssetTests.IntegrateTwice_IsIdempotentAndPreservesPickupIdentity`
   com `Inventory slot missing: 0` (`TextScaleSceneBuilder` move os slots).
