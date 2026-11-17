@@ -151,6 +151,14 @@ Personagens usam rig Generic/in-place e FBX; GLB é fonte/prévia sem importador
 
 A reconstrução M1 aplica arte somente à própria arena por `GeneratedArtApplier.ApplySceneEnvironment`, mantendo prefabs de salas e a cena de release intactos. O teste de preservação verifica esses bytes durante cada rebuild e inclui a cena gerada/meta no snapshot restaurado. Isso evita que a recriação global da decoração mude fileIDs dos pais e deixe as chamas adicionadas à cena órfãs no centro das salas. Fonte Tools e cópia instalada permanecem sincronizadas.
 
+## Checkpoint entre salas (F11 / D-004)
+
+Especificação e limites em [CHECKPOINTS-F11](docs/CHECKPOINTS-F11.md). `RunCheckpointData` é o schema JSON **v1** em `persistentDataPath/run-checkpoint.json` (`DUNGEON_CRAWLER_CHECKPOINT_DIR` isola testes), separado de PlayerPrefs de opções/bindings. `RunCheckpointCatalog` (SO) resolve IDs explícitos de `ItemDefinition.PersistentId` e `RoomController.PersistentId`, guarda a âncora de retomada por sala e valida o documento inteiro (versão, finitos, limites, capacidade, tipos/potências, equipamento, salas, baús, pickups únicos) antes de qualquer mutação. Versão futura ou ID ausente rejeitam a carga.
+
+`RunCheckpointFile` limita o tamanho a 1 MiB, escreve `.tmp` com flush e troca por `File.Replace` com `.bak`; um primário inválido nunca substitui um backup válido. `RunCheckpointStore` tenta primário e backup com o mesmo validador. `RunCheckpointSession` transporta um único pedido de Continuar até a cena do andar; Nova run/Reiniciar apagam slot e backup.
+
+`RunCheckpointController` (ordem 100) grava no `LateUpdate` quando há mudança e a fronteira é segura: jogador vivo, ≥1 sala limpa e nenhuma sala Active. Retomar usa APIs `RestoreCheckpoint`/`TryRestore` que atribuem estado sem passar por coleta, cura, ganho de XP ou eventos de nível; salas limpas abrem portas sem spawn nem `Cleared`. `RunLootRegistry` registra pickups injetados (ID de instância, payload já sorteado, posição, tempo restante) e mantém o xorshift32 da run que sorteia loot de baús/inimigos e dispersão de spawn; o estado é persistido em hexadecimal. Morte apaga o checkpoint. `RunCheckpointSceneBuilder` (menu `Tools/Dungeon Crawler/Checkpoints/...`) compõe catálogo, referências do andar de release e o botão **ContinueRun**/status no MainMenu de forma idempotente; `GameShellSceneBuilder` reaplica o menu.
+
 ## Auditoria reproduzível
 
 `python Tools/Audit/audit_project.py --output <relatorio-novo.json>` inventaria hashes, duplicatas, cópias instaladas e caminhos de links Markdown sem alterar assets. Recusa sobrescrever o relatório. `MvpProjectAudit.InspectCleanupBaseline`/menu Audit abre cenas/prefabs pelas APIs e escreve em `Reports/ProjectAudit/editor-assets.json`; não salva assets. Esses dados não comprovam aceite visual ou ausência de uso dinâmico. Comandos de teste e regressão em `docs/BUILD-WINDOWS.md`.

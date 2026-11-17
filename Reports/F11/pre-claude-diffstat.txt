@@ -1,0 +1,28 @@
+ .../_GameTest/Floor_01_GeneratedCharacters.unity   | Bin 805484 -> 813404 bytes
+ Assets/_Project/Scenes/MainMenu.unity              | 334 ++++++++++++++++++++-
+ .../ScriptableObjects/Items/Armor_Leather.asset    |   1 +
+ .../ScriptableObjects/Items/Potion_Health.asset    |   1 +
+ .../Items/Weapon_AncientEdge.asset                 |   1 +
+ .../ScriptableObjects/Items/Weapon_IronSword.asset |   1 +
+ .../Items/Weapon_WardenBlade.asset                 |   1 +
+ Assets/_Project/Scripts/Core/Health.cs             |   6 +
+ Assets/_Project/Scripts/Core/HealthModel.cs        |   7 +
+ Assets/_Project/Scripts/Dungeon/EnemySpawner.cs    |   5 +-
+ Assets/_Project/Scripts/Dungeon/FloorController.cs |  11 +-
+ Assets/_Project/Scripts/Dungeon/RoomController.cs  |  17 +-
+ Assets/_Project/Scripts/Dungeon/RoomRewardChest.cs |   6 +-
+ .../Scripts/Editor/GameShellSceneBuilder.cs        |   1 +
+ Assets/_Project/Scripts/Enemies/EnemyReward.cs     |   8 +-
+ Assets/_Project/Scripts/Player/PlayerDash.cs       |   6 +
+ Assets/_Project/Scripts/Player/PlayerSpecial.cs    |   3 +
+ .../_Project/Scripts/Player/PlayerSpecialModel.cs  |   8 +
+ Assets/_Project/Scripts/Systems/ExperienceModel.cs |   6 +
+ Assets/_Project/Scripts/Systems/GameRestarter.cs   |   1 +
+ Assets/_Project/Scripts/Systems/GameSceneFlow.cs   |  20 +-
+ .../Scripts/Systems/Inventory/InventoryModel.cs    |  24 ++
+ .../Scripts/Systems/Inventory/ItemDefinition.cs    |   2 +
+ .../Scripts/Systems/Inventory/PlayerInventory.cs   |  14 +-
+ Assets/_Project/Scripts/Systems/Pickup.cs          |  32 +-
+ .../_Project/Scripts/Systems/PlayerProgression.cs  |   7 +
+ ProjectSettings/ProjectSettings.asset              |   2 +-
+ 27 files changed, 500 insertions(+), 25 deletions(-)

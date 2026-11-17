@@ -8,11 +8,27 @@ namespace DungeonCrawler.Systems
     {
         [SerializeField] private string menuScene = "Assets/_Project/Scenes/MainMenu.unity";
         [SerializeField] private string gameScene = "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity";
-        public void StartGame() => Load(gameScene);
-        public void ReturnToMenu() => Load(menuScene);
+        [SerializeField] private RunCheckpointCatalog checkpointCatalog;
+        [SerializeField] private RunCheckpointController checkpoint;
+        public string CheckpointStatus { get; private set; }
+        public event System.Action CheckpointStatusChanged;
+        public void StartGame()
+        {
+            if (!RunCheckpointSession.BeginNew(out string error)) { Report(error); return; }
+            Load(gameScene);
+        }
+        public bool CanContinue(out string message) => RunCheckpointSession.Store.TryLoad(checkpointCatalog, out _, out message);
+        public void ContinueGame()
+        {
+            if (!RunCheckpointSession.Store.TryLoad(checkpointCatalog, out var data, out string message)) { Report(message); return; }
+            RunCheckpointSession.RequestContinue(data); Load(gameScene);
+        }
+        private void Report(string value) { CheckpointStatus = value; CheckpointStatusChanged?.Invoke(); }
+        public void ReturnToMenu() { if (checkpoint != null) checkpoint.SaveNow(); Load(menuScene); }
         private static void Load(string path) { Time.timeScale = 1f; SceneManager.LoadScene(path); }
         public void QuitGame()
         {
+            if (checkpoint != null) checkpoint.SaveNow();
             if (!Application.isEditor) Application.Quit();
         }
     }

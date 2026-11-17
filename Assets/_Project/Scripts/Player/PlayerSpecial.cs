@@ -30,6 +30,9 @@ namespace DungeonCrawler.Player
         public float MaxStamina => model?.MaxStamina ?? 1f;
         public float StaminaCost => definition != null ? Mathf.Max(0f, definition.staminaCost) : 0f;
         public float CooldownRemaining => model?.CooldownRemaining(Time.time) ?? 0f;
+        public float RegenerationRemaining => model?.RegenerationRemaining(Time.time) ?? 0f;
+        public void RestoreCheckpoint(float stamina, float cooldown, float regeneration) =>
+            model.RestoreCheckpoint(stamina, cooldown, regeneration, Time.time);
         public int HitBufferCapacity => hitBuffer.Length;
 
         private void Awake()

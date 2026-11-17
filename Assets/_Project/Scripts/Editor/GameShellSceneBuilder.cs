@@ -238,6 +238,7 @@ namespace DungeonCrawler.Editor
                 GameAudioSceneBuilder.ConfigureMenu(systems, hud);
                 SetScreens(stack, new[] { MenuScreen.Title, MenuScreen.Options }, new[] { title.gameObject, optionPanel }, new Selectable[] { play, first });
                 ControlBindingsSceneBuilder.ConfigureScene(scene);
+                RunCheckpointSceneBuilder.ConfigureMenu(scene);
                 title.gameObject.SetActive(true); EditorSceneManager.SaveScene(scene, MenuScene);
             }
             finally

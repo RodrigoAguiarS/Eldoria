@@ -47,5 +47,11 @@ namespace DungeonCrawler.Systems
             if (IsMaxLevel) Xp = 0;
             return gained;
         }
+
+        public bool TryRestore(int level, int xp)
+        {
+            if (level < 1 || level > maxLevel || xp < 0 || (level == maxLevel ? xp != 0 : xp >= XpForLevel(level))) return false;
+            Level = level; Xp = xp; return true;
+        }
     }
 }

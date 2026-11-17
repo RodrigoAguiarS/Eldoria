@@ -22,16 +22,22 @@ namespace DungeonCrawler.Systems
         private float nextCollectAt;
         private PlayerProgression rejectedFor;
         private MaterialPropertyBlock block;
+        private RunLootRegistry registry;
+        private string checkpointId;
 
         public LootKind Kind => drop.Kind;
         public LootDrop Drop => drop;
         public PickupVisualPresenter Presenter => presenter;
 
-        public void Setup(in LootDrop lootDrop, bool persistUntilCollected = false)
+        public void Setup(in LootDrop lootDrop, bool persistUntilCollected = false, RunLootRegistry registry = null)
         {
+            if (this.registry != null) this.registry.Unregister(this);
+            this.registry = registry;
+            checkpointId = System.Guid.NewGuid().ToString("N");
             drop = lootDrop;
             baseY = transform.position.y;
             expireAt = persistUntilCollected ? float.PositiveInfinity : Time.time + lifetime;
+            if (registry != null) registry.Register(this);
             if (presenter != null && presenter.Present(lootDrop)) return;
             ItemDefinition item = lootDrop.Kind == LootKind.Weapon ? lootDrop.Weapon : lootDrop.Armor;
             Tint(item != null && item.rarity != null ? item.rarity.color : ColorFor(lootDrop.Kind));
@@ -78,6 +84,30 @@ namespace DungeonCrawler.Systems
 
             collected = true;
             Destroy(gameObject);
+        }
+
+        private void OnDestroy() { if (registry != null) registry.Unregister(this); }
+
+        public bool TryCapture(PotionData potion, out CheckpointPickup snapshot)
+        {
+            snapshot = null;
+            if (collected || !isActiveAndEnabled || Time.time >= expireAt) return false;
+            ItemDefinition item = drop.Kind == LootKind.Potion ? potion :
+                drop.Kind == LootKind.Weapon ? (ItemDefinition)drop.Weapon : drop.Armor;
+            snapshot = new CheckpointPickup { id = checkpointId, itemId = item != null ? item.PersistentId : "",
+                kind = drop.Kind, amount = drop.Kind == LootKind.Weapon || drop.Kind == LootKind.Armor ? 0 : drop.Amount,
+                position = new Vector3(transform.position.x, baseY, transform.position.z),
+                persistent = float.IsPositiveInfinity(expireAt),
+                remainingLifetime = float.IsPositiveInfinity(expireAt) ? 0f : Mathf.Max(0f, expireAt - Time.time) };
+            return true;
+        }
+
+        public void RestoreCheckpoint(CheckpointPickup data, RunCheckpointCatalog catalog, RunLootRegistry loot)
+        {
+            var item = catalog.Resolve(data.itemId);
+            Setup(new LootDrop(data.kind, data.amount, item as WeaponData, item as ArmorData), data.persistent, loot);
+            checkpointId = data.id;
+            expireAt = data.persistent ? float.PositiveInfinity : Time.time + data.remainingLifetime;
         }
 
         private void Tint(Color color)

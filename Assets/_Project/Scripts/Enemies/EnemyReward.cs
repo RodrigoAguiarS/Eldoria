@@ -17,6 +17,8 @@ namespace DungeonCrawler.Enemies
         [SerializeField, Min(0f)] private float scatterRadius = 1f;
 
         private bool dropped;
+        private RunLootRegistry checkpointLoot;
+        public void InjectCheckpointLoot(RunLootRegistry loot) => checkpointLoot = loot;
 
         private void OnEnable()
         {
@@ -37,13 +39,13 @@ namespace DungeonCrawler.Enemies
 
             foreach (LootDrop drop in Buffer)
             {
-                Vector2 offset = Random.insideUnitCircle * scatterRadius;
+                Vector2 offset = (checkpointLoot != null ? checkpointLoot.InsideUnitCircle() : Random.insideUnitCircle) * scatterRadius;
                 Vector3 position = transform.position + new Vector3(offset.x, 0.6f, offset.y);
                 Pickup pickup = Instantiate(pickupPrefab, position, Quaternion.identity);
-                pickup.Setup(drop);
+                pickup.Setup(drop, registry: checkpointLoot);
             }
         }
 
-        private static float RandomValue() => Random.value;
+        private float RandomValue() => checkpointLoot != null ? checkpointLoot.NextValue() : Random.value;
     }
 }

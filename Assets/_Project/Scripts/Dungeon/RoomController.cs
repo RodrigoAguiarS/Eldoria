@@ -20,6 +20,8 @@ namespace DungeonCrawler.Dungeon
         [SerializeField] private EnemySpawner spawner;
         [SerializeField] private RoomEncounter encounter;
         [SerializeField, Min(0f)] private float spawnDelay = 0.8f;
+        [SerializeField] private string persistentId;
+        public string PersistentId => persistentId;
 
         private readonly EnemyTracker tracker = new EnemyTracker();
         private readonly List<Health> tracked = new List<Health>();
@@ -27,6 +29,7 @@ namespace DungeonCrawler.Dungeon
         private ProjectilePool projectilePool;
         private bool spawnPending;
         private float spawnAt;
+        private RunLootRegistry checkpointLoot;
 
         public RoomState State { get; private set; } = RoomState.Waiting;
 
@@ -40,13 +43,21 @@ namespace DungeonCrawler.Dungeon
         /// 'encounterFallback' é usado só se a sala não tiver Encounter próprio (override de prefab perdido na cena);
         /// o FloorController, que é um componente comum de cena, fornece a lista paralela às salas.
         /// </summary>
-        public void Initialize(Health playerHealth, ProjectilePool pool, RoomEncounter encounterFallback = null)
+        public void Initialize(Health playerHealth, ProjectilePool pool, RoomEncounter encounterFallback = null, RunLootRegistry loot = null)
         {
+            checkpointLoot = loot;
             player = playerHealth;
             projectilePool = pool;
             if (encounter == null) encounter = encounterFallback;
             entryDoor.SetOpenInstant(true);
-            exitDoor.SetOpenInstant(false);
+            exitDoor.SetOpenInstant(State == RoomState.Cleared);
+        }
+
+        /// <summary>Only on a freshly loaded scene; never spawns enemies or publishes Cleared.</summary>
+        public void RestoreClearedCheckpoint()
+        {
+            State = RoomState.Cleared; spawnPending = false;
+            entryDoor.SetOpenInstant(true); exitDoor.SetOpenInstant(true);
         }
 
         private void OnEnable()
@@ -102,7 +113,7 @@ namespace DungeonCrawler.Dungeon
             tracked.Clear();
             tracker.Reset();
 
-            int count = spawner.Spawn(encounter, player, projectilePool, tracked);
+            int count = spawner.Spawn(encounter, player, projectilePool, tracked, checkpointLoot);
             if (count == 0)
             {
                 // Falha silenciosa seria confundida com "sala limpa": avisa o motivo provável.

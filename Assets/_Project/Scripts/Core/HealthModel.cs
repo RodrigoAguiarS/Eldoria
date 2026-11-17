@@ -35,6 +35,13 @@ namespace DungeonCrawler.Core
             Changed?.Invoke(Current, Max);
         }
 
+        public bool TryRestore(float current)
+        {
+            if (float.IsNaN(current) || float.IsInfinity(current) || current <= 0f || current > Max) return false;
+            resetVersion++; Current = current;
+            ResetPerformed?.Invoke(); Changed?.Invoke(Current, Max); return true;
+        }
+
         /// <summary>Retorna true se o dano foi aplicado.</summary>
         public bool TakeDamage(float amount)
         {

@@ -16,6 +16,7 @@ namespace DungeonCrawler.Systems
         [SerializeField] private PlayerProgression progression;
         [SerializeField] private Pickup pickupPrefab;
         [SerializeField] private LayerMask dropObstacleMask;
+        [SerializeField] private RunLootRegistry checkpointLoot;
         private InventoryModel model;
         private float dropDistance = 2.2f;
         private bool usingPotion;
@@ -149,13 +150,24 @@ namespace DungeonCrawler.Systems
             }
             if (!foundSpace) return false;
             Pickup pickup = Instantiate(pickupPrefab, position, Quaternion.identity);
-            pickup.Setup(drop);
+            pickup.Setup(drop, registry: checkpointLoot);
             if (!model.TryTakeOne(index, out _)) { Destroy(pickup.gameObject); return false; }
             ItemDropped?.Invoke(pickup);
             return true;
         }
 
         private bool CanUseCommands => isActiveAndEnabled && model != null && health.IsAlive;
+
+        public bool RestoreCheckpoint(RunCheckpointData data, RunCheckpointCatalog catalog)
+        {
+            var slots = new InventoryStack[data.slots.Length];
+            for (int i = 0; i < slots.Length; i++)
+            {
+                var slot = data.slots[i];
+                slots[i] = new InventoryStack(catalog.Resolve(slot.itemId), slot.count, slot.potency);
+            }
+            return model != null && model.TryRestore(slots, data.weaponIndex, data.armorIndex);
+        }
         private void OnOptionsChanged() => Changed?.Invoke();
         private bool Deny(InventoryCollectionFailure reason, bool notify)
         {
