@@ -44,11 +44,35 @@ porque o diretório isolado do checkpoint não existia e `File.Delete` lança
   v1 com talentos, ID desconhecido/duplicado, rank 0 ou acima do máximo, soma acima
   de `nível − 1` e entrada nula rejeitados antes de mutar.
 
+## Correção do HUD após playtest do usuário (16/11/2026)
+
+Na build F12 o usuário observou a barra do Boss no meio da tela (y −230, 56 px,
+herdada do F10 e reaplicada pelo builder) e o texto de checkpoint durante o combate.
+
+- Barra do Boss de volta ao topo central: 640×44, y −112 (`TextScaleSceneBuilder`).
+- HUD do checkpoint mostra **somente falhas** (`RunCheckpointController.StatusIsError`):
+  gravação/descarte falhos e snapshot inválido. Status rotineiros ficam ocultos.
+- Aviso de talentos desenhado abaixo das telas de Pausa/Talentos; a reordenação
+  alternava a cada execução do builder e foi tornada idempotente (agora testada).
+  Aviso 960×60 para caber em uma linha a 150%; cartões de talento 472×320.
+- Captura gráfica explícita `TextScaleInputTests.Capture_LayoutsAtAllScalesAndResolutions`
+  estendida com Pausa e Talentos: **aprovada** em 1280×720, 1920×1080 e 2560×1080
+  emulado × 100/125/150% ([visual-capture.xml](visual-capture.xml), 85 imagens em
+  [Visual](Visual)). Inspecionadas: HUD 1080p/720p, Pausa 2560×1080 150%, Talentos
+  720p/1080p 150%. As duas primeiras execuções falharam por texto do aviso/dica
+  quebrando linha e pela ordem de desenho; ambas corrigidas antes da aprovação.
+- Regressão: EditMode 227/228 (mesma falha F10) [editmode-hudfix.xml](editmode-hudfix.xml);
+  PlayMode 162/174 com 11 capturas ignoradas e 1 benchmark que recusou sobrescrever a
+  medição da execução anterior no mesmo diretório; reexecutado em diretório novo, 1/1
+  ([playmode-hudfix.xml](playmode-hudfix.xml), [benchmark](playmode-hudfix-benchmark.xml)).
+- Build Windows regenerada: `Succeeded`, 0 erros, 496 avisos; smoke sem gráficos
+  20 s sem exceções. Hashes em `windows-build-files.sha256`.
+
 ## Limites e pendências
 
-- **NÃO VALIDADO VISUALMENTE.** Nenhuma captura gráfica nem inspeção da tela de
-  talentos, do botão na Pausa ou do aviso no HUD em 720p/1080p/150%. A geometria
-  vem do builder (reserva para 150%), mas não foi observada.
+- Validação visual por captura diagnóstica em tamanhos emulados (seção acima);
+  não substitui uma partida normal completa nem monitor ultrawide físico. A barra do
+  Boss foi vista ativada artificialmente, não durante a luta real.
 - **Sem playtest humano nem medição de balanceamento.** Os valores são a proposta
   inicial; não se afirma melhoria de variação ou dificuldade.
 - Build Windows gerada depois (commit `7ae0ac8`): `Builds/WindowsMVP/Eldoria.exe`,

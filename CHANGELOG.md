@@ -7,6 +7,8 @@
   até 3 ranks, valores em SO. Termo próprio; +10%/nível, cura de nível e armas
   preservados. Subir de nível não pausa; HUD avisa; Esc/Voltar não gasta.
 - Checkpoint F11 passa ao schema v2 com talentos; v1 é migrado sem talentos.
+- Correção de HUD: barra do Boss fina no topo, texto de checkpoint só em falhas e
+  aviso de talentos abaixo dos menus; captura gráfica 9/9 combinações aprovada.
 - 227/228 EditMode (falha pré-existente da F10) e 37/37 PlayMode relacionados no
   estado commitado. Sem captura visual, playtest ou build. [Evidências](Reports/F12/README.md).
 
