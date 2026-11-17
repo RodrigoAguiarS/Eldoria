@@ -29,6 +29,11 @@ com escrita atômica e backup, Continuar run no menu e restauração sem XP/loot
 duplicados. [Regras](docs/CHECKPOINTS-F11.md) e [evidências/limites](Reports/F11/README.md).
 Integração na main aguarda revisão do usuário.
 
+F12 implementado em 16/11/2026 (D-005): uma escolha de talento por nível em
+Pausa → Talentos, três opções fixas em SO com ranks, checkpoint v2 com migração
+de v1. [Regras](docs/TALENTS-F12.md) e [evidências/limites](Reports/F12/README.md).
+Balanceamento sem playtest humano; integração na main aguarda revisão do usuário.
+
 ## Melhorias de arquitetura propostas
 
 - Manter domínio puro separado de presenters. InventoryModel depende de índices estáveis: ordenação exige remapeamento explícito; não ordenar apenas o array apresentado na UI.
@@ -36,7 +41,7 @@ Integração na main aguarda revisão do usuário.
 - Builders de 600–770 linhas podem separar importação, composição e validação em entregas próprias. Preservar menus, GUIDs e fontes/cópias instaladas; nenhum movimento de pastas nesta auditoria.
 - Antes de pooling de pickups/atores ou atlas de materiais, medir carga normal no Windows e definir orçamento. Pools de projéteis e áudio já estão implementados; não reivindicar esse trabalho como otimização nova.
 - Revisar tamanho de build por BuildReport antes de propor remoção de AI Assistant/Inference, Collab/IDE ou módulos de template. Separar ferramentas de Editor, transitivos e runtime. Não remover pacote por ausência de `using`.
-- F11 usa IDs persistentes explícitos em ItemDefinition/RoomController e schema v1 sem migração; qualquer schema v2 exige migração testada de v1. GUID de asset e índice de slot não são identificadores universais de instâncias.
+- F11 usa IDs persistentes explícitos em ItemDefinition/RoomController. O schema v2 (F12, talentos) aceita e migra v1 com teste; um v3 deve seguir o mesmo padrão. GUID de asset e índice de slot não são identificadores universais de instâncias.
 
 ## Pendências de testes
 
