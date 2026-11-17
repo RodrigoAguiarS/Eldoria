@@ -32,6 +32,8 @@ namespace DungeonCrawler.Dungeon
         private RunLootRegistry checkpointLoot;
 
         public RoomState State { get; private set; } = RoomState.Waiting;
+        /// <summary>Onda explícita para presenters que precisam reconciliar após reativação.</summary>
+        public IReadOnlyList<Health> SpawnedEnemies => tracked;
 
         public event Action Started;
         public event Action Cleared;

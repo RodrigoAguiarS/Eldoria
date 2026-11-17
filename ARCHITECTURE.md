@@ -42,6 +42,27 @@ Portas: a layer Door fica fora do bake (Ground|Obstacle), então o vão existe n
 
 F07: `EnemyCombat.HasLineOfSight` compartilha cache por alvo com relógio escalado (`EnemyData.lineOfSightInterval`, 0,1 s no ranged; mínimo 0,05 s). `Physics.Linecast` usa máscara explícita Obstacle/Door e ignora triggers; atores ficam fora da máscara. Origem é exatamente `ProjectileOrigin` (posição da raiz + `projectileHeight`), também usada pelo pool; mira usa a posição atual do alvo + a mesma altura. Início e impacto fazem consulta fresca, além das amostras temporizadas durante windup; bloqueio amostrado cancela definitivamente aquele ataque. `EnemyBrain` verifica visão antes de Attack/IsBusy e persegue cobertura somente no thinkInterval existente; `EnemyNavigation.MoveTo` reduz a distância de parada para o raio do agente durante aproximação ranged, evitando parar atrás da parede no alcance de ataque. Não promete achar posição de tiro para alvos inalcançáveis. OnDisable de combate/brain cancela pendências; brain também para a navegação e reinicia em Idle ao reativar. Cooldown iniciado não é reembolsado. `RangedLineOfSightBuilder.Integrate` migra só os campos de visão do asset compartilhado, preservando GUIDs/referências e balanceamento.
 
+## Sentinela experimental (F15)
+
+`StoneSentinelData` guarda propostas próprias da fase única; `StoneSentinelBrain`
+implementa `IEnemyInjectable` e Idle/Chase/Attack/Dead, usa `EnemyNavigation` e
+decisões temporizadas. Compromisso captura origem/direção/geometria/dano/ritmo;
+`FanAttackGeometry` consulta o centro XZ do alvo injetado uma única vez. Consome
+o impacto antes de Health/eventos, inclusive quando dash rejeita dano.
+`FanAttackTelegraph` reutiliza dois setores, sem collider ou autoridade de dano.
+Pausa/morte/desativação cancelam windup e navegação; recuperação e cooldown são
+explícitos. Nenhuma alteração em BossBrain/Data/Phase do Guardião.
+
+`StoneSentinelSceneBuilder` cria assets F15 e copia apenas o shell/jogador para
+uma arena aberta de primitivas, fora da release. Reexecução preserva dados,
+layout e GUIDs. `StoneSentinelArenaSession` recarrega a cena sem acessar
+RunCheckpointSession; callbacks/atalho de reinício são próprios. Nenhum sistema
+de checkpoint, loot/recompensa ou transição de andar participa da arena.
+`StoneSentinelHealthPresenter` reconcilia por `RoomController.SpawnedEnemies`
+(lista explícita, somente leitura), eventos de HP e referências locais. O fluxo
+existente RoomController/FloorController/VictoryPresenter mantém vitória única.
+[Parâmetros/reprodução](docs/STONE-SENTINEL-F15.md), [evidências](Reports/F15/README.md).
+
 ## Lanceiro experimental (F13)
 
 Regras/valores em [LANCER-F13](docs/LANCER-F13.md). `IEnemyAttack` (IsBusy, LocksFacing, visão, início/cancelamento) é implementado por `EnemyCombat` e `EnemyLungeAttack`; `EnemyBrain` usa a investida apenas quando o campo serializado `lunge` está atribuído, mantendo melee/ranged/elite e os estados Idle/Chase/Attack/Dead. `LungeTimeline` é o modelo puro Telegraph→Dash→Recover com aviso mínimo de 1 s e uma reivindicação de contato por investida. `EnemyLungeData` (SO) guarda faixa, velocidade, largura, recuperação e máscara Obstacle/Door; dano/cooldown/alcance continuam em `EnemyData`. No compromisso, `EnemyNavigation.ClampLane` (NavMesh.Raycast) e um SphereCast em Obstacle/Door recortam a faixa; o dash usa `EnemyNavigation.MoveBy` (`NavMeshAgent.Move`) e o contato é uma conta de segmento contra o alvo injetado, sem consulta de cena por frame. `LaneTelegraph` reutiliza dois quads sem collider posicionados em espaço de mundo. `LancerTestSceneBuilder` (menu `Tools/Dungeon Crawler/Enemies/...`) cria somente assets próprios e a cena `F13_Lancer_Test.unity` fora das Build Settings. As portas dessa sala recebem `NavMeshObstacle` com carving (portas Door não entram no bake; o achado original de ausência nas salas de release foi corrigido por DoorNavMeshBlockerBuilder; evidências em Reports/DoorNavMesh).

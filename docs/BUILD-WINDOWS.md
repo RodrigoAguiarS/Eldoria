@@ -1,5 +1,13 @@
 # Build e reconstrução — Windows 1.0
 
+F15 experimental: builder **Tools / Dungeon Crawler / Boss / Build Stone Sentinel
+Prototype (F15)** abre `F15_StoneSentinel_Test.unity`, fora das Build Settings de
+release. `DungeonCrawler.Editor.StoneSentinelSceneBuilder.BuildWindowsValidation`
+gera uma build só da arena em `Builds/F15/Eldoria.exe`, com relatório em
+`Reports/F15/windows-build.json`. Reexecuções geram subpastas `Windows-<timestamp>`
+e preservam os artefatos anteriores. Nenhum acesso ao checkpoint da run normal.
+[Parâmetros/roteiro](STONE-SENTINEL-F15.md) e [evidências](../Reports/F15/README.md).
+
 Unity **6000.6.9f1**, URP 17.6.0 e pacotes fixados em `Packages/manifest.json`/`packages-lock.json`. Abra o projeto por essa versão; não atualize pacotes para reproduzir esta entrega. Feche PlayMode e qualquer outra instância do Editor antes de executar batchmode no mesmo projeto.
 
 ## Abrir o projeto existente
