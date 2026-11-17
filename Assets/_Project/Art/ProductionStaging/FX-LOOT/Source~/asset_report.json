@@ -1,0 +1,103 @@
+{
+  "tool": ".claude/skills/create-game-assets/scripts/asset_report.py",
+  "groups": [
+    {
+      "command": "asset_report.py --expect-size 384x128 --require-alpha --json FX-LOOT-Atlas.png",
+      "exit_code": 0,
+      "report": {
+        "ok": true,
+        "assets": [
+          {
+            "path": "Assets/_Project/Art/ProductionStaging/FX-LOOT/FX-LOOT-Atlas.png",
+            "format": "PNG",
+            "mode": "RGBA",
+            "width": 384,
+            "height": 128,
+            "bytes": 13890,
+            "color_count": 1578,
+            "has_alpha": true,
+            "alpha_min": 0,
+            "alpha_max": 199,
+            "transparent_pixels": 39519,
+            "content_bounds": [
+              21,
+              14,
+              364,
+              105
+            ],
+            "problems": []
+          }
+        ]
+      }
+    },
+    {
+      "command": "asset_report.py --expect-size 128x128 --require-alpha --json Source~/glints/FX-LOOT-*.png",
+      "exit_code": 0,
+      "report": {
+        "ok": true,
+        "assets": [
+          {
+            "path": "Assets/_Project/Art/ProductionStaging/FX-LOOT/Source~/glints/FX-LOOT-gold.png",
+            "format": "PNG",
+            "mode": "RGBA",
+            "width": 128,
+            "height": 128,
+            "bytes": 4949,
+            "color_count": 526,
+            "has_alpha": true,
+            "alpha_min": 0,
+            "alpha_max": 199,
+            "transparent_pixels": 13173,
+            "content_bounds": [
+              21,
+              14,
+              108,
+              105
+            ],
+            "problems": []
+          },
+          {
+            "path": "Assets/_Project/Art/ProductionStaging/FX-LOOT/Source~/glints/FX-LOOT-stored.png",
+            "format": "PNG",
+            "mode": "RGBA",
+            "width": 128,
+            "height": 128,
+            "bytes": 4829,
+            "color_count": 507,
+            "has_alpha": true,
+            "alpha_min": 0,
+            "alpha_max": 199,
+            "transparent_pixels": 13173,
+            "content_bounds": [
+              21,
+              14,
+              108,
+              105
+            ],
+            "problems": []
+          },
+          {
+            "path": "Assets/_Project/Art/ProductionStaging/FX-LOOT/Source~/glints/FX-LOOT-xp.png",
+            "format": "PNG",
+            "mode": "RGBA",
+            "width": 128,
+            "height": 128,
+            "bytes": 4768,
+            "color_count": 551,
+            "has_alpha": true,
+            "alpha_min": 0,
+            "alpha_max": 199,
+            "transparent_pixels": 13173,
+            "content_bounds": [
+              21,
+              14,
+              108,
+              105
+            ],
+            "problems": []
+          }
+        ]
+      }
+    }
+  ]
+}

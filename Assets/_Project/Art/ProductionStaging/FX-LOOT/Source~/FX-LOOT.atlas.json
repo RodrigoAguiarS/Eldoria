@@ -1,0 +1,154 @@
+{
+  "asset_id": "FX-LOOT",
+  "atlas": "../FX-LOOT-Atlas.png",
+  "atlas_size": [
+    384,
+    128
+  ],
+  "kind": "atlas 2D de três variantes estáticas (não é spritesheet de animação nem corporal)",
+  "cell": [
+    128,
+    128
+  ],
+  "pivot": {
+    "meaning": "centro do glint = centro do quad",
+    "cell_normalized": [
+      0.5,
+      0.5
+    ]
+  },
+  "rects": [
+    {
+      "index": 0,
+      "id": "xp",
+      "label": "XP",
+      "loot_kinds": [
+        "Xp"
+      ],
+      "rect_px_top_left": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "rect_uv_unity_bottom_left": {
+        "x": 0.0,
+        "y": 0.0,
+        "w": 0.333333,
+        "h": 1.0
+      },
+      "source_file": "glints/FX-LOOT-xp.png",
+      "palette": {
+        "shade": "#2A9CC8",
+        "mid": "#4FD8FF",
+        "light": "#C8F4FF",
+        "halo": "#4FD8FF"
+      }
+    },
+    {
+      "index": 1,
+      "id": "gold",
+      "label": "Ouro",
+      "loot_kinds": [
+        "Gold"
+      ],
+      "rect_px_top_left": {
+        "x": 128,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "rect_uv_unity_bottom_left": {
+        "x": 0.333333,
+        "y": 0.0,
+        "w": 0.333333,
+        "h": 1.0
+      },
+      "source_file": "glints/FX-LOOT-gold.png",
+      "palette": {
+        "shade": "#A8822E",
+        "mid": "#D4A846",
+        "light": "#EED38A",
+        "halo": "#D4A846"
+      }
+    },
+    {
+      "index": 2,
+      "id": "stored",
+      "label": "Equipamento/poção guardados",
+      "loot_kinds": [
+        "Potion",
+        "Weapon",
+        "Armor"
+      ],
+      "rect_px_top_left": {
+        "x": 256,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "rect_uv_unity_bottom_left": {
+        "x": 0.666667,
+        "y": 0.0,
+        "w": 0.333333,
+        "h": 1.0
+      },
+      "source_file": "glints/FX-LOOT-stored.png",
+      "palette": {
+        "shade": "#A8977A",
+        "mid": "#D9CCAC",
+        "light": "#EADCBA",
+        "halo": "#D9CCAC"
+      }
+    }
+  ],
+  "loot_kind_to_index": {
+    "Xp": 0,
+    "Gold": 1,
+    "Potion": 2,
+    "Weapon": 2,
+    "Armor": 2
+  },
+  "unity_integration_proposal": {
+    "status": "Proposta; NÃO VALIDADO NO EDITOR. Integração é tarefa de código separada.",
+    "texture_import": "Default, sRGB, alphaIsTransparency, clamp, bilinear, mipmaps on (como FX_Spark); nPOTScale None para manter as células 128 alinhadas a pixel.",
+    "material": "URP/Particles/Unlit, Surface Transparent, Blend Alpha, cor branca (a cor já vem na textura); opacidade multiplicada pela opção de flash do F05 (options.Current.flash; 0 desliga).",
+    "particle_system": {
+      "emitter": "reutilizar o collectionEffect existente do PlayerRewardFeedback (sem instanciar por coleta)",
+      "max_particles": 5,
+      "emission": "um burst por PlayerProgression.CollectionAccepted (Stop+Clear, depois Emit), sem loop",
+      "start_lifetime_s": 0.28,
+      "start_size_m": 0.2,
+      "positions": "5 posições fixas num círculo de 0.2 m a 0.15 m do piso, subindo 0.4 m/s (como o Burst atual; sem RNG)",
+      "start_color": "branco × alpha da opção de flash (não tingir: a textura já distingue o tipo)",
+      "color_over_lifetime": "alpha 0 → 1 em 25% da vida, cai a partir de 45% até 0",
+      "texture_sheet_animation": {
+        "mode": "Grid",
+        "tiles": [
+          3,
+          1
+        ],
+        "animation": "Whole Sheet",
+        "frame_over_time": "constante 0",
+        "start_frame": "constante = loot_kind_to_index[drop.Kind]",
+        "cycles": 1,
+        "note": "Definir startFrame no módulo antes do Emit (struct do módulo, sem alocação). Conferir no Editor a unidade de startFrame (índice de quadro × fração). Alternativa: três materiais com offset/tiling fixos."
+      },
+      "renderer": {
+        "render_mode": "Billboard",
+        "pivot": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "rules": [
+      "Emitir só depois de CollectionAccepted (coleta aceita). Pickup recusado (bolsa cheia, morto, desativado) não emite nem toca a textura.",
+      "É só apresentação: não lê nem altera LootTable, quantidades, chances ou estado do RNG de loot; posições fixas, sem UnityEngine.Random.",
+      "Coletas seguidas reiniciam o mesmo emissor (Clear + Emit); no máximo 5 partículas vivas.",
+      "Pausa congela; morte, reset e desativação chamam Clear; opção de flash reduz a opacidade e 0 desliga.",
+      "Não introduz tipo novo de recompensa: Potion, Weapon e Armor usam a mesma célula marfim."
+    ]
+  }
+}

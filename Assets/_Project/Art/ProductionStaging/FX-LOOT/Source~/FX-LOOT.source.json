@@ -1,0 +1,417 @@
+{
+  "asset_id": "FX-LOOT",
+  "catalog_id": "A06",
+  "generator": "Tools/FxLootGenerator/generate.py",
+  "supersampling": 8,
+  "cell": 128,
+  "centre_px": [
+    64.0,
+    64.0
+  ],
+  "light": [
+    -0.552380364401192,
+    -0.8335921862781622
+  ],
+  "variants": [
+    {
+      "id": "xp",
+      "label": "XP",
+      "kinds": [
+        "Xp"
+      ],
+      "shade": "#2A9CC8",
+      "mid": "#4FD8FF",
+      "light": "#C8F4FF",
+      "halo": "#4FD8FF"
+    },
+    {
+      "id": "gold",
+      "label": "Ouro",
+      "kinds": [
+        "Gold"
+      ],
+      "shade": "#A8822E",
+      "mid": "#D4A846",
+      "light": "#EED38A",
+      "halo": "#D4A846"
+    },
+    {
+      "id": "stored",
+      "label": "Equipamento/poção guardados",
+      "kinds": [
+        "Potion",
+        "Weapon",
+        "Armor"
+      ],
+      "shade": "#A8977A",
+      "mid": "#D9CCAC",
+      "light": "#EADCBA",
+      "halo": "#D9CCAC"
+    }
+  ],
+  "shape": {
+    "tip_up": 50.0,
+    "tip_down": 40.0,
+    "tip_side": 43.0,
+    "inner_r": 14.0,
+    "core_r": 9.0,
+    "core_offset": [
+      -1.5,
+      -1.5
+    ],
+    "diag_tip": 23.0,
+    "diag_half_w": 5.5,
+    "diag_alpha": 0.5,
+    "alpha_peak": 0.74,
+    "halo_r": 30.0,
+    "halo_alpha": 0.16,
+    "halo_steps": 6
+  },
+  "emit_proposal": {
+    "particles": 5,
+    "lifetime_s": 0.28,
+    "start_size_m": 0.2,
+    "ring_radius_m": 0.2,
+    "height_m": 0.15,
+    "rise_m_per_s": 0.4
+  },
+  "envelope": {
+    "radius_m": 0.35,
+    "particles": 8,
+    "lifetime_s": [
+      0.2,
+      0.35
+    ]
+  },
+  "facets": [
+    {
+      "role": "diag",
+      "lit": 0.599,
+      "alpha_mul": 0.5,
+      "points": [
+        [
+          67.89,
+          67.89
+        ],
+        [
+          80.26,
+          47.74
+        ],
+        [
+          60.11,
+          60.11
+        ],
+        [
+          64.0,
+          64.0
+        ]
+      ]
+    },
+    {
+      "role": "diag",
+      "lit": 0.99,
+      "alpha_mul": 0.5,
+      "points": [
+        [
+          67.89,
+          60.11
+        ],
+        [
+          47.74,
+          47.74
+        ],
+        [
+          60.11,
+          67.89
+        ],
+        [
+          64.0,
+          64.0
+        ]
+      ]
+    },
+    {
+      "role": "diag",
+      "lit": 0.401,
+      "alpha_mul": 0.5,
+      "points": [
+        [
+          60.11,
+          60.11
+        ],
+        [
+          47.74,
+          80.26
+        ],
+        [
+          67.89,
+          67.89
+        ],
+        [
+          64.0,
+          64.0
+        ]
+      ]
+    },
+    {
+      "role": "diag",
+      "lit": 0.01,
+      "alpha_mul": 0.5,
+      "points": [
+        [
+          60.11,
+          67.89
+        ],
+        [
+          80.26,
+          80.26
+        ],
+        [
+          67.89,
+          60.11
+        ],
+        [
+          64.0,
+          64.0
+        ]
+      ]
+    },
+    {
+      "role": "tip",
+      "lit": 0.876,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          73.9,
+          54.1
+        ],
+        [
+          64.0,
+          14.0
+        ]
+      ]
+    },
+    {
+      "role": "tip",
+      "lit": 0.96,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          54.1,
+          54.1
+        ],
+        [
+          64.0,
+          14.0
+        ]
+      ]
+    },
+    {
+      "role": "tip",
+      "lit": 0.16,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          73.9,
+          73.9
+        ],
+        [
+          107.0,
+          64.0
+        ]
+      ]
+    },
+    {
+      "role": "tip",
+      "lit": 0.321,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          73.9,
+          54.1
+        ],
+        [
+          107.0,
+          64.0
+        ]
+      ]
+    },
+    {
+      "role": "tip",
+      "lit": 0.158,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          54.1,
+          73.9
+        ],
+        [
+          64.0,
+          104.0
+        ]
+      ]
+    },
+    {
+      "role": "tip",
+      "lit": 0.042,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          73.9,
+          73.9
+        ],
+        [
+          64.0,
+          104.0
+        ]
+      ]
+    },
+    {
+      "role": "tip",
+      "lit": 0.856,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          54.1,
+          54.1
+        ],
+        [
+          21.0,
+          64.0
+        ]
+      ]
+    },
+    {
+      "role": "tip",
+      "lit": 0.709,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          54.1,
+          73.9
+        ],
+        [
+          21.0,
+          64.0
+        ]
+      ]
+    },
+    {
+      "role": "core",
+      "lit": 0.679,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          64.0,
+          55.0
+        ],
+        [
+          73.0,
+          64.0
+        ]
+      ]
+    },
+    {
+      "role": "core",
+      "lit": 0.01,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          73.0,
+          64.0
+        ],
+        [
+          64.0,
+          73.0
+        ]
+      ]
+    },
+    {
+      "role": "core",
+      "lit": 0.482,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          64.0,
+          73.0
+        ],
+        [
+          55.0,
+          64.0
+        ]
+      ]
+    },
+    {
+      "role": "core",
+      "lit": 0.99,
+      "alpha_mul": 1.0,
+      "points": [
+        [
+          62.5,
+          62.5
+        ],
+        [
+          55.0,
+          64.0
+        ],
+        [
+          64.0,
+          55.0
+        ]
+      ]
+    }
+  ],
+  "references": {
+    "floor_capture": "Reports/F05/Visual-final/1920-collection.png",
+    "xp_orb": "Tools/Lemo3DGenerator/src/production/ItemModels.mjs M.xp #4FD8FF, emissivo #2FB8E8, M.xpRing #DFFBFF",
+    "gold_coins": "ItemModels.mjs M.gold #F2C14E (glint usa latão mais contido #D4A846)",
+    "item_icons": "Assets/_Project/Art/Items/Icons/ICON-ITEM-HEALTH.png, ICON-ITEM-IRON.png",
+    "f05_collect_burst": "Assets/_Project/Scripts/UI/PlayerRewardFeedback.cs OnCollected: 4 partículas, XP (.3,.85,.95), ouro (.85,.65,.25), demais (.9,.86,.72), raio .48, vida .42 s",
+    "loot_kinds": "Assets/_Project/Scripts/Systems/LootTable.cs enum LootKind",
+    "boss_telegraph": "Assets/_Project/Scripts/Editor/DungeonFloorSceneBuilder.cs Mat_TelegraphFill (1,.2,.15)"
+  }
+}
