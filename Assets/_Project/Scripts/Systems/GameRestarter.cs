@@ -39,6 +39,7 @@ namespace DungeonCrawler.Systems
 
         public void Restart()
         {
+            if (!RunCheckpointSession.BeginNew(out string error)) { Debug.LogWarning(error, this); return; }
             Time.timeScale = 1f;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }

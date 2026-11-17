@@ -7,6 +7,8 @@ namespace DungeonCrawler.Systems
     /// <summary>Shared item identity/presentation. Rarity never multiplies gameplay values.</summary>
     public abstract class ItemDefinition : ScriptableObject
     {
+        [SerializeField] private string persistentId;
+        public string PersistentId => persistentId;
         public ItemRarityDefinition rarity;
         public abstract string DisplayName { get; }
         public abstract InventoryItemKind Kind { get; }

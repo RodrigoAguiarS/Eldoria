@@ -49,6 +49,13 @@ namespace DungeonCrawler.Systems
 
         public void Collect(in LootDrop drop) => TryCollect(drop);
 
+        /// <summary>State assignment only: no XP gain, healing or pickup/level events.</summary>
+        public bool RestoreCheckpoint(int level, int xp, int gold)
+        {
+            if (gold < 0 || gold > RunCheckpointCatalog.MaxAmount || !Model.TryRestore(level, xp)) return false;
+            Gold = gold; ApplyCombatStats(); Changed?.Invoke(); return true;
+        }
+
         public bool TryCollect(in LootDrop drop, bool notifyRejection = true)
         {
             if (collecting || health == null || !health.IsAlive) return false;

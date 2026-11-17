@@ -19,6 +19,12 @@ namespace DungeonCrawler.Player
         private bool dashing;
 
         public bool IsDashing => dashing;
+        public float CooldownRemaining => cooldownTimer.Remaining(Time.time);
+        public void RestoreCheckpoint(float remaining)
+        {
+            dashing = false; movement.ExternalVelocity = Vector3.zero;
+            cooldownTimer.Start(Time.time, remaining);
+        }
 
         /// <summary>0 = pronto, 1 = recém-usado.</summary>
         public float CooldownFraction => cooldown > 0f ? Mathf.Clamp01(cooldownTimer.Remaining(Time.time) / cooldown) : 0f;

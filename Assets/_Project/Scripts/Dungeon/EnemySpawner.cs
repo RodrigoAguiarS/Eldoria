@@ -16,7 +16,7 @@ namespace DungeonCrawler.Dungeon
         [SerializeField, Min(0f)] private float spreadRadius = 1.2f;
 
         /// <summary>Retorna a quantidade instanciada; adiciona o Health de cada inimigo em 'spawned'.</summary>
-        public int Spawn(RoomEncounter encounter, Health target, ProjectilePool pool, List<Health> spawned)
+        public int Spawn(RoomEncounter encounter, Health target, ProjectilePool pool, List<Health> spawned, RunLootRegistry loot = null)
         {
             if (encounter == null || spawnPoints == null || spawnPoints.Length == 0) return 0;
 
@@ -35,7 +35,7 @@ namespace DungeonCrawler.Dungeon
                     Vector3 position = point.position;
                     if (index >= spawnPoints.Length)
                     {
-                        Vector2 offset = Random.insideUnitCircle * spreadRadius;
+                        Vector2 offset = (loot != null ? loot.InsideUnitCircle() : Random.insideUnitCircle) * spreadRadius;
                         position += new Vector3(offset.x, 0f, offset.y);
                     }
 
@@ -51,6 +51,7 @@ namespace DungeonCrawler.Dungeon
                     }
 
                     brain.Inject(target, pool);
+                    if (instance.TryGetComponent(out EnemyReward reward)) reward.InjectCheckpointLoot(loot);
                     if (instance.TryGetComponent(out EnemyAudioBridge audio)) audio.Inject(audioPool);
                     spawned.Add(health);
                 }

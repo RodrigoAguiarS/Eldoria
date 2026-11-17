@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="7" result="Failed(Child)" total="7" passed="6" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-16 23:39:15Z" end-time="2026-11-16 23:39:21Z" duration="5,8654906">
+  <test-suite type="TestSuite" id="1217" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="166" result="Failed" site="Child" start-time="2026-11-16 23:39:15Z" end-time="2026-11-16 23:39:21Z" duration="5.865491" total="7" passed="6" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1305" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="73" result="Failed" site="Child" start-time="2026-11-16 23:39:15Z" end-time="2026-11-16 23:39:21Z" duration="5.844483" total="7" passed="6" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="22000" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1306" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="73" result="Failed" site="Child" start-time="2026-11-16 23:39:15Z" end-time="2026-11-16 23:39:21Z" duration="5.839963" total="7" passed="6" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1307" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="73" result="Failed" site="Child" start-time="2026-11-16 23:39:15Z" end-time="2026-11-16 23:39:21Z" duration="5.836280" total="7" passed="6" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1308" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="73" result="Failed" site="Child" start-time="2026-11-16 23:39:15Z" end-time="2026-11-16 23:39:21Z" duration="5.833588" total="7" passed="6" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1293" name="RunCheckpointPlayModeTests" fullname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests" classname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests" runstate="Runnable" testcasecount="7" result="Failed" site="Child" start-time="2026-11-16 23:39:15Z" end-time="2026-11-16 23:39:21Z" duration="5.829543" total="7" passed="6" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1297" name="Combat_DoesNotOverwriteBoundaryOrKeepCombatLootAndXp" fullname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests.Combat_DoesNotOverwriteBoundaryOrKeepCombatLootAndXp" methodname="Combat_DoesNotOverwriteBoundaryOrKeepCombatLootAndXp" classname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests" runstate="Runnable" seed="1077080962" result="Passed" start-time="2026-11-16 23:39:15Z" end-time="2026-11-16 23:39:16Z" duration="1.402053" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1296" name="FullBag_RejectedPickupKeepsIdentityPotencyAcrossResumeThenCollectsOnce" fullname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests.FullBag_RejectedPickupKeepsIdentityPotencyAcrossResumeThenCollectsOnce" methodname="FullBag_RejectedPickupKeepsIdentityPotencyAcrossResumeThenCollectsOnce" classname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests" runstate="Runnable" seed="309537304" result="Passed" start-time="2026-11-16 23:39:16Z" end-time="2026-11-16 23:39:17Z" duration="0.839772" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1300" name="InvalidFile_MenuDisablesContinueAndNewRunRemainsAvailable" fullname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests.InvalidFile_MenuDisablesContinueAndNewRunRemainsAvailable" methodname="InvalidFile_MenuDisablesContinueAndNewRunRemainsAvailable" classname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests" runstate="Runnable" seed="1555474023" result="Passed" start-time="2026-11-16 23:39:17Z" end-time="2026-11-16 23:39:17Z" duration="0.322333" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1298" name="LastEnemyDeath_CheckpointIncludesFinalReward_AndUncollectedXpRestoresOnce" fullname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests.LastEnemyDeath_CheckpointIncludesFinalReward_AndUncollectedXpRestoresOnce" methodname="LastEnemyDeath_CheckpointIncludesFinalReward_AndUncollectedXpRestoresOnce" classname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests" runstate="Runnable" seed="1255127263" result="Passed" start-time="2026-11-16 23:39:17Z" end-time="2026-11-16 23:39:19Z" duration="1.708842" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1299" name="NewRun_RestartAndDeath_DiscardCheckpointAndBackup" fullname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests.NewRun_RestartAndDeath_DiscardCheckpointAndBackup" methodname="NewRun_RestartAndDeath_DiscardCheckpointAndBackup" classname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests" runstate="Runnable" seed="422632662" result="Passed" start-time="2026-11-16 23:39:19Z" end-time="2026-11-16 23:39:19Z" duration="0.511013" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1295" name="OpenChestAndGroundLoot_RestoreOnce_NoRerollOrRespawnInClearedRoom" fullname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests.OpenChestAndGroundLoot_RestoreOnce_NoRerollOrRespawnInClearedRoom" methodname="OpenChestAndGroundLoot_RestoreOnce_NoRerollOrRespawnInClearedRoom" classname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests" runstate="Runnable" seed="675593486" result="Passed" start-time="2026-11-16 23:39:19Z" end-time="2026-11-16 23:39:20Z" duration="0.630414" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1294" name="RoundTrip_ExactBagAndPlayerState_NoCollectionHealingOrLevelRewards" fullname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests.RoundTrip_ExactBagAndPlayerState_NoCollectionHealingOrLevelRewards" methodname="RoundTrip_ExactBagAndPlayerState_NoCollectionHealingOrLevelRewards" classname="DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests" runstate="Runnable" seed="26662520" result="Failed" start-time="2026-11-16 23:39:20Z" end-time="2026-11-16 23:39:21Z" duration="0.384767" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: less than 0.00999999978f
+  But was:  0.0199999809f
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.PlayerInput.RunCheckpointPlayModeTests+<RoundTrip_ExactBagAndPlayerState_NoCollectionHealingOrLevelRewards>d__26.MoveNext () [0x002ff] in G:\DungeonCrawler\My project\Assets\_Project\Tests\PlayMode\PlayerInput\RunCheckpointPlayModeTests.cs:106
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -18,6 +18,14 @@ namespace DungeonCrawler.Player
         public bool IsAttacking { get; private set; }
         public bool IsBusy(float now) => IsAttacking || now < recoveryUntil;
         public float CooldownRemaining(float now) => Math.Max(0f, readyAt - now);
+        public float RegenerationRemaining(float now) => Math.Max(0f, regenerationAt - now);
+
+        public void RestoreCheckpoint(float stamina, float cooldown, float regeneration, float now)
+        {
+            IsAttacking = false; impacted = false; revision++;
+            Stamina = stamina; readyAt = now + cooldown; regenerationAt = now + regeneration;
+            recoveryUntil = lastTick = now;
+        }
         public event Action Started;
         public event Action Impact;
         public event Action Finished;

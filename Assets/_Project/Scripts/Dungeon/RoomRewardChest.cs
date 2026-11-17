@@ -17,6 +17,7 @@ namespace DungeonCrawler.Dungeon
         [SerializeField] private RoomRewardDefinition definition;
         [SerializeField] private Pickup pickupPrefab;
         [SerializeField] private Transform dropOrigin;
+        [SerializeField] private RunLootRegistry checkpointLoot;
         private readonly List<LootDrop> drops = new List<LootDrop>();
 
         public bool IsOpened { get; private set; }
@@ -45,12 +46,13 @@ namespace DungeonCrawler.Dungeon
                 Pickup pickup = Instantiate(pickupPrefab, dropOrigin.position + offset, Quaternion.identity);
                 // Keep rewards alive when the chest/room is disabled, but unload them with this run.
                 SceneManager.MoveGameObjectToScene(pickup.gameObject, gameObject.scene);
-                pickup.Setup(drops[i], persistUntilCollected: true);
+                pickup.Setup(drops[i], persistUntilCollected: true, registry: checkpointLoot);
             }
             Opened?.Invoke();
             return true;
         }
 
-        private static float RandomValue() => UnityEngine.Random.value;
+        public void RestoreCheckpoint(bool opened) => IsOpened = opened;
+        private float RandomValue() => checkpointLoot != null ? checkpointLoot.NextValue() : UnityEngine.Random.value;
     }
 }

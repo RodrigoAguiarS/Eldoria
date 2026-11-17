@@ -13,6 +13,8 @@ namespace DungeonCrawler.Dungeon
         [SerializeField] private RoomEncounter[] encounters;
         [SerializeField] private Health player;
         [SerializeField] private ProjectilePool projectilePool;
+        [SerializeField] private RunLootRegistry checkpointLoot;
+        public System.Collections.Generic.IReadOnlyList<RoomController> Rooms => rooms;
 
         public int ClearedCount { get; private set; }
         public int TotalRooms => rooms != null ? rooms.Length : 0;
@@ -38,7 +40,7 @@ namespace DungeonCrawler.Dungeon
             for (int i = 0; i < rooms.Length; i++)
             {
                 RoomEncounter fallback = encounters != null && i < encounters.Length ? encounters[i] : null;
-                rooms[i].Initialize(player, projectilePool, fallback);
+                rooms[i].Initialize(player, projectilePool, fallback, checkpointLoot);
             }
 
             ProgressChanged?.Invoke(ClearedCount, TotalRooms);
@@ -46,6 +48,13 @@ namespace DungeonCrawler.Dungeon
 
         private void OnRoomCleared()
         {
+            RefreshProgress();
+        }
+
+        public void RestoreCheckpoint(string[] completedRooms)
+        {
+            foreach (var room in rooms)
+                if (Array.IndexOf(completedRooms, room.PersistentId) >= 0) room.RestoreClearedCheckpoint();
             RefreshProgress();
         }
 

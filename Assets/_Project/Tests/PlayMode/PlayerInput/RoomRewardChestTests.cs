@@ -190,6 +190,9 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return ClearRoom(); Assert.IsFalse(chest.TryOpen());
             chest.gameObject.SetActive(true); var drops = OpenAndGetRewards();
             var identities = drops.Select(p => p.GetEntityId()).ToArray();
+            // Drops land ~0.94 m from the opening spot, at the pickup trigger edge; step away so a
+            // physics step in a slow frame (e.g. checkpoint IO) cannot collect them mid-assertion.
+            Move(chest.transform.position + Vector3.back * 6f);
             chest.gameObject.SetActive(false); yield return null;
             foreach (var drop in drops) Assert.IsTrue(drop.isActiveAndEnabled);
             chest.gameObject.SetActive(true); yield return null;

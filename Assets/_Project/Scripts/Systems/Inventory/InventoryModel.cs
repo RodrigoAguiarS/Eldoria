@@ -198,6 +198,30 @@ namespace DungeonCrawler.Systems
 
         private static int RarityRank(ItemDefinition definition) => definition.rarity != null ? definition.rarity.rank : -1;
 
+        /// <summary>Restores exact slots, without add/merge/auto-equip or collection rewards.</summary>
+        public bool TryRestore(IReadOnlyList<InventoryStack> snapshot, int weaponIndex, int armorIndex)
+        {
+            if (snapshot == null || snapshot.Count != Capacity || weaponIndex < -1 || weaponIndex >= Capacity ||
+                armorIndex < -1 || armorIndex >= Capacity) return false;
+            for (int i = 0; i < snapshot.Count; i++)
+            {
+                InventoryStack slot = snapshot[i];
+                if (slot.Definition == null)
+                {
+                    if (slot.Count != 0 || slot.Potency != 0) return false;
+                    continue;
+                }
+                if (slot.Count < 1 || slot.Count > slot.Definition.StackLimit || slot.Potency < 0 ||
+                    slot.Potency > RunCheckpointCatalog.MaxAmount ||
+                    (slot.Definition.Kind == InventoryItemKind.Potion ? slot.Potency == 0 : slot.Potency != 0)) return false;
+            }
+            if (weaponIndex >= 0 && !(snapshot[weaponIndex].Definition is WeaponData) ||
+                armorIndex >= 0 && !(snapshot[armorIndex].Definition is ArmorData)) return false;
+            for (int i = 0; i < Capacity; i++) slots[i] = snapshot[i];
+            EquippedWeaponIndex = weaponIndex; EquippedArmorIndex = armorIndex;
+            Changed?.Invoke(); return true;
+        }
+
         private bool Valid(int index) => index >= 0 && index < slots.Length;
         private static bool Compatible(InventoryStack item, ItemDefinition definition, int potency) =>
             item.Definition == definition && item.Potency == potency;

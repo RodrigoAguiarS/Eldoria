@@ -73,5 +73,11 @@ namespace DungeonCrawler.Core
         }
 
         public void Heal(float amount, HealingSource source = HealingSource.Other) => Model.Heal(amount, source);
+
+        public bool RestoreCheckpoint(float current)
+        {
+            if (!Model.TryRestore(current)) return false;
+            invulnerableUntil = 0f; return true;
+        }
     }
 }
