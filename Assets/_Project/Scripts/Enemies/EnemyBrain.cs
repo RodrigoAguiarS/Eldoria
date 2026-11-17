@@ -16,20 +16,29 @@ namespace DungeonCrawler.Enemies
         [SerializeField] private Health health;
         [SerializeField] private EnemyNavigation navigation;
         [SerializeField] private EnemyCombat combat;
+        [Tooltip("F13: quando atribuído, substitui o EnemyCombat pela investida linear (lanceiro).")]
+        [SerializeField] private EnemyLungeAttack lunge;
         [SerializeField] private Health target;
         [SerializeField] private Collider bodyCollider;
         [SerializeField, Min(0f)] private float turnSpeedDegrees = 540f;
 
         private float nextThinkAt;
+        private IEnemyAttack attack;
 
         public EnemyState State { get; private set; } = EnemyState.Idle;
 
         private bool retreating;
 
+        // Melee/ranged/elite continuam no EnemyCombat; a investida só entra por referência explícita.
+        private IEnemyAttack Attack => attack ??= lunge != null ? lunge : combat;
+
+        // Ranged e lanceiro precisam de visão livre; ambos se aproximam da cobertura em vez de parar atrás dela.
+        private bool ApproachCover => data.attackType == EnemyAttackType.Ranged || lunge != null;
+
         /// <summary>Define o alvo em runtime.</summary>
         public void SetTarget(Health newTarget)
         {
-            if (target != newTarget) combat.CancelAttack();
+            if (target != newTarget) Attack.CancelAttack();
             target = newTarget;
         }
 
@@ -37,7 +46,7 @@ namespace DungeonCrawler.Enemies
         public void Inject(Health newTarget, ProjectilePool pool)
         {
             SetTarget(newTarget);
-            combat.SetProjectilePool(pool);
+            if (combat != null) combat.SetProjectilePool(pool);
         }
 
         private void Awake()
@@ -45,7 +54,8 @@ namespace DungeonCrawler.Enemies
             health.Configure(data.maxHealth);
             navigation.SetSpeed(data.moveSpeed);
             navigation.SetStoppingDistance(data.attackRange * 0.8f);
-            combat.Initialize(data);
+            if (combat != null) combat.Initialize(data);
+            if (lunge != null) lunge.Initialize(data);
         }
 
         private void OnEnable()
@@ -57,7 +67,7 @@ namespace DungeonCrawler.Enemies
         private void OnDisable()
         {
             health.Died -= OnDied;
-            combat.CancelAttack();
+            Attack.CancelAttack();
             navigation.Stop();
             retreating = false;
             if (State != EnemyState.Dead) State = EnemyState.Idle;
@@ -69,7 +79,7 @@ namespace DungeonCrawler.Enemies
             if (Time.timeScale <= 0f) return;
             if (State == EnemyState.Dead) return;
 
-            if (State == EnemyState.Attack && target != null)
+            if (State == EnemyState.Attack && target != null && !Attack.LocksFacing)
                 navigation.FaceTowards(target.transform.position, turnSpeedDegrees);
 
             if (Time.time < nextThinkAt) return;
@@ -95,17 +105,17 @@ namespace DungeonCrawler.Enemies
 
                 case EnemyState.Chase:
                     if (distance > data.loseInterestRange) Enter(EnemyState.Idle);
-                    else if (distance <= data.attackRange && combat.HasLineOfSight(target.transform)) Enter(EnemyState.Attack);
-                    else navigation.MoveTo(target.transform.position, data.attackType == EnemyAttackType.Ranged);
+                    else if (distance <= data.attackRange && Attack.HasLineOfSight(target.transform)) Enter(EnemyState.Attack);
+                    else navigation.MoveTo(target.transform.position, ApproachCover);
                     break;
 
                 case EnemyState.Attack:
-                    if (!combat.HasLineOfSight(target.transform))
+                    if (!Attack.HasLineOfSight(target.transform))
                     {
                         Enter(EnemyState.Chase);
                         break;
                     }
-                    if (combat.IsBusy) break;
+                    if (Attack.IsBusy) break;
                     if (distance > data.attackRange * 1.2f)
                     {
                         Enter(EnemyState.Chase);
@@ -125,7 +135,7 @@ namespace DungeonCrawler.Enemies
                         navigation.Stop();
                     }
 
-                    if (combat.CanStartAttack()) combat.BeginAttack(target, target.transform);
+                    if (Attack.CanStartAttack()) Attack.BeginAttack(target, target.transform);
                     break;
             }
         }
@@ -139,12 +149,12 @@ namespace DungeonCrawler.Enemies
             switch (next)
             {
                 case EnemyState.Idle:
-                    combat.CancelAttack();
+                    Attack.CancelAttack();
                     navigation.Stop();
                     break;
                 case EnemyState.Chase:
-                    combat.CancelAttack();
-                    navigation.MoveTo(target.transform.position, data.attackType == EnemyAttackType.Ranged);
+                    Attack.CancelAttack();
+                    navigation.MoveTo(target.transform.position, ApproachCover);
                     break;
                 case EnemyState.Attack:
                     navigation.Stop();
@@ -155,7 +165,7 @@ namespace DungeonCrawler.Enemies
         private void OnDied()
         {
             State = EnemyState.Dead;
-            combat.CancelAttack();
+            Attack.CancelAttack();
             navigation.Stop();
             navigation.Disable();
             if (bodyCollider != null) bodyCollider.enabled = false;

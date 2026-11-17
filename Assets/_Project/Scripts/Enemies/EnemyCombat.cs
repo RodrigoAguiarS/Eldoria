@@ -9,7 +9,7 @@ namespace DungeonCrawler.Enemies
     /// Ataque do inimigo (melee ou à distância, conforme EnemyData): windup com tint de aviso,
     /// golpe/disparo ao fim do windup e cooldown. Não decide quando atacar; isso é do EnemyBrain.
     /// </summary>
-    public sealed class EnemyCombat : MonoBehaviour
+    public sealed class EnemyCombat : MonoBehaviour, IEnemyAttack
     {
         private const float RangeTolerance = 1.25f;
 
@@ -28,6 +28,7 @@ namespace DungeonCrawler.Enemies
         private bool hasSight;
 
         public bool IsBusy => windingUp;
+        public bool LocksFacing => false;
         public Vector3 ProjectileOrigin => transform.position + Vector3.up * data.projectileHeight;
         public event Action AttackStarted;
 
