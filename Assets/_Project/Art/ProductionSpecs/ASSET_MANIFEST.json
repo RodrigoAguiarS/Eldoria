@@ -18,8 +18,8 @@
   "summary": {
     "logical_resources": 133,
     "by_status": {
-      "EXISTENTE": 123,
-      "AUSENTE": 7,
+      "EXISTENTE": 124,
+      "AUSENTE": 6,
       "INCOMPLETO": 1,
       "NÃO VERIFICADO": 2
     },
@@ -57,9 +57,9 @@
         "AUSENTE": 1
       },
       "J": {
-        "EXISTENTE": 12,
+        "EXISTENTE": 13,
         "INCOMPLETO": 1,
-        "AUSENTE": 3
+        "AUSENTE": 2
       }
     },
     "by_priority": {
@@ -7247,7 +7247,7 @@
       "category": "J",
       "category_name": "VFX e animações adicionais",
       "functionality": "Polimento opcional de ação existente",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "VFX",
       "scope": "sugestão_polimento",
@@ -7275,7 +7275,7 @@
       "technical_dependencies": [
         "PlayerDash expõe IsDashing, sem evento; ponte atual detecta início por borda."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Produzido em staging (A07, 17/11/2026) como textura 2D estática de faixa 256×64 RGBA para TrailRenderer (três dobras de capa azul, borda ciano contida, alpha zerando nas pontas); NÃO integrado. Hoje o dash não tem rastro. A ponte de início/fim do dash (borda de PlayerDash.IsDashing, Clear em reset/morte/reativação/teleporte, sem alterar duração/invulnerabilidade) e o TrailRenderer reutilizado são tarefa Codex separada; proposta em Source~/FX-DASH.trail.json.",
       "visual_specification": "Two or three faint blue cape sweeps or broad dust puffs; never opaque full-character duplicates.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7284,7 +7284,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "Técnica fora da Unity em 17/11/2026: FxDash.validation.json (PNG decodificado 256×64 RGBA; 0 px transparentes com RGB sujo; moldura de 1 px com alpha 0; margem vertical 6 px; alpha máx. 163 (0,64); nos 15 px de cada ponta alpha ≤ 29 e 0; 8 colunas junto ao Hero com alpha ≤ 8; perfil por coluna sem degrau > 6; cobertura alpha>50% 13,0%; ≥ 36% do telegraph visível sob o pixel mais opaco; 0 px verdes, de ameaça 0–36° ou branco opaco; média 222°/sat. 0,79 (capa #2F6BFF); 2,4% de ciano; três dobras; distância RGB ≥ 80 da pedra (WCAG 1,26–1,58, discreto); saturação 0,79 vs. 0,00 do FX_SlashTrail; cauda proposta 0,16 s ≤ 0,20 s, rastro ≈ 2,56 m × 0,60 m; PlayerDash.cs só lido) e asset_report.py (--expect-size 256x64 --require-alpha, exit 0); prévias a 45° sobre a captura real F05 1920×1080, rotuladas PREVIEW. NÃO VALIDADO NO EDITOR: importação, material URP, TrailRenderer, ponte e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -7297,10 +7297,11 @@
         "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/FX-DASH/FX-DASH.prefab"
       },
       "source_and_rights": {
-        "kind": "not_produced",
-        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
-        "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/FX-DASH/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria e render próprios (Tools/FxDashGenerator/generate.py, Pillow MIT-CMU/HPND, NumPy BSD). Sem IA generativa de imagem nem asset de terceiros."
+      },
+      "production_state": "Produzido por gerador próprio (generate.py: três dobras afiladas de pano — main_sweep, upper_fold, lower_fold — em facetas chapadas azul-real #1F45A8/#2F6BFF/#6E98FF com luz de cima, borda ciano #4FD8FF fina só na dobra principal; envelope de alpha por coluna (sobe em 20% de U, cai a partir de 42%) × pico 0,64; supersampling 8× com alpha pré-multiplicado): FX-DASH-Trail.png 256×64, u = 0 na cabeça (Hero) como o FX_SlashTrail; fonte vetorial Source~/FX-DASH.source.svg, parâmetros/facetas em FX-DASH.source.json e proposta de TrailRenderer/ponte em FX-DASH.trail.json. Prefab sugerido pela ficha não criado (integração em tarefa separada)."
     },
     {
       "id": "FX-PROJECTILE-TRAIL",
@@ -12782,6 +12783,45 @@
         "Sobre a capa azul do Hero o glint ciano tem menos contraste que sobre a pedra; conferir ordenação/legibilidade em PlayMode.",
         "Comparação com pickups usa as cores dos materiais (ItemModels.mjs) e os ícones de item; não há render dos pickups 3D no repositório.",
         "FX-LOOT.prefab sugerido pela ficha não criado: prefab exige coordenação.",
+        "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "A07-FX-DASH",
+      "date_local": "2026-11-17",
+      "branch": "claude/a07-fx-dash",
+      "produced": [
+        "FX-DASH"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/FxDashGenerator/generate.py"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/FX-DASH.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-DASH/FX-DASH-Trail.png",
+        "Assets/_Project/Art/ProductionStaging/FX-DASH/FX-DASH-Trail.png.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-DASH/Source~/"
+      ],
+      "import_settings": "Template de FX_Spark/FX-HEAL (Tools/FxHealGenerator/texture.meta.template) sem mudanças: Default, sRGB, alphaIsTransparency, bilinear, clamp, mipmaps on; 256×64 é potência de 2; GUID novo e estável (SHA256 do nome).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "FxDash.validation.json ok (21/21); asset_report.py exit 0; geração determinística (2 execuções, mesmos SHA256 de PNG/GIF)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: .meta derivada do template de FX_Spark; a Unity pode reserializá-la na primeira importação. Conferir mips na ponta afilada e o sentido de U no TrailRenderer (u = 0 esperado na cabeça).",
+        "Sem integração: o dash continua sem rastro. A ponte (borda de IsDashing, Clear em reset/morte/reativação/teleporte, pausa) é tarefa Codex separada; proposta em Source~/FX-DASH.trail.json, sem alterar duração, velocidade, invulnerabilidade nem recarga.",
+        "review_floor_preview.png, review_telegraph_preview.png e preview_dash.gif são PRÉVIAS: o rastro é projetado sobre a captura F05 (Hero parado, sem ordenação de profundidade com o corpo); não são captura da Unity.",
+        "Contraste de luminância com a pedra é baixo (WCAG 1,26–1,58): a leitura vem do matiz azul, por design discreto; conferir em PlayMode sobre piso claro e sob iluminação de tocha.",
+        "FX-DASH.prefab sugerido pela ficha não criado: prefab exige coordenação.",
         "Aprovação artística humana pendente."
       ]
     }

@@ -1,0 +1,65 @@
+{
+  "asset_id": "FX-DASH",
+  "texture": "../FX-DASH-Trail.png",
+  "texture_size": [
+    256,
+    64
+  ],
+  "uv_convention": {
+    "u": "ao longo do trajeto; u = 0 na cabeça (Hero, ponto mais novo), u = 1 na cauda (ponto mais antigo)",
+    "v": "através da faixa; v = 0,5 no centro do rastro",
+    "head_at_u0": true,
+    "note": "Mesma convenção do FX_SlashTrail.png integrado e do TrailRenderer textureMode Stretch. Conferir no Editor; se aparecer invertido, gerar com HEAD_AT_U0 = False (ou tiling X = −1)."
+  },
+  "unity_integration_proposal": {
+    "status": "Proposta; NÃO VALIDADO NO EDITOR. Ponte de início/fim do dash é tarefa Codex separada.",
+    "texture_import": "Default, sRGB, alphaIsTransparency, clamp, bilinear, mipmaps on (template FX_Spark).",
+    "material": "URP/Particles/Unlit, Surface Transparent, Blend Alpha, cor branca (a cor vem da textura); opacidade multiplicada pela opção de flash existente (0 desliga).",
+    "trail_renderer": {
+      "parent": "filho do Hero na altura da capa, atrás do corpo (reutilizado; nunca instanciado por dash)",
+      "local_height_m": 0.8,
+      "time_s": 0.16,
+      "width_multiplier_m": 0.6,
+      "width_curve": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.6,
+          0.85
+        ],
+        [
+          1.0,
+          0.55
+        ]
+      ],
+      "min_vertex_distance_m": 0.06,
+      "texture_mode": "Stretch",
+      "alignment": "View",
+      "num_cap_vertices": 0,
+      "num_corner_vertices": 1,
+      "color_gradient": "branco; alpha 1 → 1 (o fade já está na textura)",
+      "emitting": "false por padrão; true só enquanto PlayerDash.IsDashing",
+      "autodestruct": false,
+      "shadows_lighting_probes": "desligados, como o SlashTrail",
+      "expected_length_m": 2.56
+    },
+    "extra_particles": 0,
+    "bridge_rules": [
+      "Início: borda false→true de PlayerDash.IsDashing (não há evento) → Clear() e emitting = true.",
+      "Fim: borda true→false → emitting = false; a cauda some sozinha em ≤ time_s.",
+      "Reset/checkpoint (RestoreCheckpoint), morte, OnDisable/reativação e retorno ao menu → emitting = false e Clear(): nenhuma trilha antiga sobrevive.",
+      "Teleporte/troca de sala durante ou logo após o dash → Clear() antes do novo ponto (sem faixa atravessando a sala).",
+      "Pausa (timeScale 0): não emitir pontos novos; ao despausar continuar ou limpar, sem salto.",
+      "Dois dashes rápidos: o segundo início chama Clear() (sem emendar com a cauda anterior).",
+      "Só apresentação: não altera dashSpeed, dashDuration, invulnerabilityDuration, cooldown, colisão, dano nem input. Sem collider."
+    ],
+    "player_dash_defaults_read_only": {
+      "dashSpeed": 16.0,
+      "dashDuration": 0.18,
+      "invulnerabilityDuration": 0.25,
+      "cooldown": 2.0
+    }
+  }
+}

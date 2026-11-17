@@ -1,0 +1,1236 @@
+{
+  "asset_id": "FX-DASH",
+  "catalog_id": "A07",
+  "generator": "Tools/FxDashGenerator/generate.py",
+  "supersampling": 8,
+  "size": [
+    256,
+    64
+  ],
+  "head_at_u0": true,
+  "palette": {
+    "shade": "#1F45A8",
+    "mid": "#2F6BFF",
+    "light": "#6E98FF",
+    "edge": "#4FD8FF"
+  },
+  "sweeps": [
+    {
+      "id": "lower_fold",
+      "x0": 9.0,
+      "x1": 176.0,
+      "y_a": 41.0,
+      "y_b": 49.0,
+      "bow": 3.0,
+      "hw": 8.0,
+      "peak": 0.22,
+      "head_hw": 0.55,
+      "segments": 6,
+      "tone": -0.18,
+      "alpha": 0.72
+    },
+    {
+      "id": "upper_fold",
+      "x0": 12.0,
+      "x1": 204.0,
+      "y_a": 20.0,
+      "y_b": 14.0,
+      "bow": -3.5,
+      "hw": 8.5,
+      "peak": 0.25,
+      "head_hw": 0.55,
+      "segments": 6,
+      "tone": 0.06,
+      "alpha": 0.72
+    },
+    {
+      "id": "main_sweep",
+      "x0": 3.0,
+      "x1": 236.0,
+      "y_a": 31.0,
+      "y_b": 34.0,
+      "bow": -4.5,
+      "hw": 13.5,
+      "peak": 0.22,
+      "head_hw": 0.6,
+      "segments": 8,
+      "tone": 0.0,
+      "alpha": 0.9
+    }
+  ],
+  "edge": {
+    "sweep": "main_sweep",
+    "from": 0.1,
+    "to": 0.78,
+    "width_px": 2.6,
+    "alpha": 0.85
+  },
+  "envelope": {
+    "head_in": 0.2,
+    "tail_from": 0.42,
+    "tail_power": 1.6,
+    "peak": 0.64
+  },
+  "trail_proposal": {
+    "time_s": 0.16,
+    "width_m": 0.6,
+    "width_curve": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.6,
+        0.85
+      ],
+      [
+        1.0,
+        0.55
+      ]
+    ],
+    "mount_height_m": 0.8,
+    "min_vertex_distance_m": 0.06
+  },
+  "limits": {
+    "tail_s": 0.2,
+    "extra_particles": 8
+  },
+  "facets": [
+    {
+      "sweep": "lower_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#326DFF",
+      "points": [
+        [
+          9.0,
+          36.6
+        ],
+        [
+          36.83,
+          36.09
+        ],
+        [
+          36.83,
+          43.83
+        ],
+        [
+          9.0,
+          41.0
+        ]
+      ]
+    },
+    {
+      "sweep": "lower_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#2451C4",
+      "points": [
+        [
+          9.0,
+          41.0
+        ],
+        [
+          36.83,
+          43.83
+        ],
+        [
+          36.83,
+          51.58
+        ],
+        [
+          9.0,
+          45.4
+        ]
+      ]
+    },
+    {
+      "sweep": "lower_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#2B62EA",
+      "points": [
+        [
+          36.83,
+          36.09
+        ],
+        [
+          64.67,
+          38.45
+        ],
+        [
+          64.67,
+          46.26
+        ],
+        [
+          36.83,
+          43.83
+        ]
+      ]
+    },
+    {
+      "sweep": "lower_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#224BB7",
+      "points": [
+        [
+          36.83,
+          43.83
+        ],
+        [
+          64.67,
+          46.26
+        ],
+        [
+          64.67,
+          54.08
+        ],
+        [
+          36.83,
+          51.58
+        ]
+      ]
+    },
+    {
+      "sweep": "lower_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#326DFF",
+      "points": [
+        [
+          64.67,
+          38.45
+        ],
+        [
+          92.5,
+          41.12
+        ],
+        [
+          92.5,
+          48.0
+        ],
+        [
+          64.67,
+          46.26
+        ]
+      ]
+    },
+    {
+      "sweep": "lower_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#2452C5",
+      "points": [
+        [
+          64.67,
+          46.26
+        ],
+        [
+          92.5,
+          48.0
+        ],
+        [
+          92.5,
+          54.88
+        ],
+        [
+          64.67,
+          54.08
+        ]
+      ]
+    },
+    {
+      "sweep": "lower_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#2C63EC",
+      "points": [
+        [
+          92.5,
+          41.12
+        ],
+        [
+          120.33,
+          43.71
+        ],
+        [
+          120.33,
+          48.93
+        ],
+        [
+          92.5,
+          48.0
+        ]
+      ]
+    },
+    {
+      "sweep": "lower_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#224CB8",
+      "points": [
+        [
+          92.5,
+          48.0
+        ],
+        [
+          120.33,
+          48.93
+        ],
+        [
+          120.33,
+          54.15
+        ],
+        [
+          92.5,
+          54.88
+        ]
+      ]
+    },
+    {
+      "sweep": "lower_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#336EFF",
+      "points": [
+        [
+          120.33,
+          43.71
+        ],
+        [
+          148.17,
+          46.22
+        ],
+        [
+          148.17,
+          49.17
+        ],
+        [
+          120.33,
+          48.93
+        ]
+      ]
+    },
+    {
+      "sweep": "lower_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#2553C7",
+      "points": [
+        [
+          120.33,
+          48.93
+        ],
+        [
+          148.17,
+          49.17
+        ],
+        [
+          148.17,
+          52.11
+        ],
+        [
+          120.33,
+          54.15
+        ]
+      ]
+    },
+    {
+      "sweep": "lower_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#2C64EE",
+      "points": [
+        [
+          148.17,
+          46.22
+        ],
+        [
+          176.0,
+          49.0
+        ],
+        [
+          176.0,
+          49.0
+        ],
+        [
+          148.17,
+          49.17
+        ]
+      ]
+    },
+    {
+      "sweep": "lower_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#224DBA",
+      "points": [
+        [
+          148.17,
+          49.17
+        ],
+        [
+          176.0,
+          49.0
+        ],
+        [
+          176.0,
+          49.0
+        ],
+        [
+          148.17,
+          52.11
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#477CFF",
+      "points": [
+        [
+          12.0,
+          15.32
+        ],
+        [
+          44.0,
+          9.26
+        ],
+        [
+          44.0,
+          17.25
+        ],
+        [
+          12.0,
+          20.0
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#2D66F4",
+      "points": [
+        [
+          12.0,
+          20.0
+        ],
+        [
+          44.0,
+          17.25
+        ],
+        [
+          44.0,
+          25.24
+        ],
+        [
+          12.0,
+          24.68
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#3B73FF",
+      "points": [
+        [
+          44.0,
+          9.26
+        ],
+        [
+          76.0,
+          6.59
+        ],
+        [
+          76.0,
+          14.97
+        ],
+        [
+          44.0,
+          17.25
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#2A60E5",
+      "points": [
+        [
+          44.0,
+          17.25
+        ],
+        [
+          76.0,
+          14.97
+        ],
+        [
+          76.0,
+          23.35
+        ],
+        [
+          44.0,
+          25.24
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#467CFF",
+      "points": [
+        [
+          76.0,
+          6.59
+        ],
+        [
+          108.0,
+          6.03
+        ],
+        [
+          108.0,
+          13.5
+        ],
+        [
+          76.0,
+          14.97
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#2D66F3",
+      "points": [
+        [
+          76.0,
+          14.97
+        ],
+        [
+          108.0,
+          13.5
+        ],
+        [
+          108.0,
+          20.97
+        ],
+        [
+          76.0,
+          23.35
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#3A73FF",
+      "points": [
+        [
+          108.0,
+          6.03
+        ],
+        [
+          140.0,
+          7.26
+        ],
+        [
+          140.0,
+          12.97
+        ],
+        [
+          108.0,
+          13.5
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#2A5FE4",
+      "points": [
+        [
+          108.0,
+          13.5
+        ],
+        [
+          140.0,
+          12.97
+        ],
+        [
+          140.0,
+          18.68
+        ],
+        [
+          108.0,
+          20.97
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#467BFF",
+      "points": [
+        [
+          140.0,
+          7.26
+        ],
+        [
+          172.0,
+          10.01
+        ],
+        [
+          172.0,
+          13.25
+        ],
+        [
+          140.0,
+          12.97
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#2C65F1",
+      "points": [
+        [
+          140.0,
+          12.97
+        ],
+        [
+          172.0,
+          13.25
+        ],
+        [
+          172.0,
+          16.49
+        ],
+        [
+          140.0,
+          18.68
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "upper",
+      "alpha": 0.72,
+      "colour": "#3972FF",
+      "points": [
+        [
+          172.0,
+          10.01
+        ],
+        [
+          204.0,
+          14.0
+        ],
+        [
+          204.0,
+          14.0
+        ],
+        [
+          172.0,
+          13.25
+        ]
+      ]
+    },
+    {
+      "sweep": "upper_fold",
+      "role": "lower",
+      "alpha": 0.72,
+      "colour": "#2A5FE2",
+      "points": [
+        [
+          172.0,
+          13.25
+        ],
+        [
+          204.0,
+          14.0
+        ],
+        [
+          204.0,
+          14.0
+        ],
+        [
+          172.0,
+          16.49
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "upper",
+      "alpha": 0.9,
+      "colour": "#4279FF",
+      "points": [
+        [
+          3.0,
+          22.9
+        ],
+        [
+          32.12,
+          17.35
+        ],
+        [
+          32.12,
+          29.65
+        ],
+        [
+          3.0,
+          31.0
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "lower",
+      "alpha": 0.9,
+      "colour": "#2B61E8",
+      "points": [
+        [
+          3.0,
+          31.0
+        ],
+        [
+          32.12,
+          29.65
+        ],
+        [
+          32.12,
+          41.96
+        ],
+        [
+          3.0,
+          39.1
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "upper",
+      "alpha": 0.9,
+      "colour": "#3670FF",
+      "points": [
+        [
+          32.12,
+          17.35
+        ],
+        [
+          61.25,
+          15.09
+        ],
+        [
+          61.25,
+          28.57
+        ],
+        [
+          32.12,
+          29.65
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "lower",
+      "alpha": 0.9,
+      "colour": "#285BDA",
+      "points": [
+        [
+          32.12,
+          29.65
+        ],
+        [
+          61.25,
+          28.57
+        ],
+        [
+          61.25,
+          42.05
+        ],
+        [
+          32.12,
+          41.96
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "upper",
+      "alpha": 0.9,
+      "colour": "#4178FF",
+      "points": [
+        [
+          61.25,
+          15.09
+        ],
+        [
+          90.38,
+          15.06
+        ],
+        [
+          90.38,
+          27.97
+        ],
+        [
+          61.25,
+          28.57
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "lower",
+      "alpha": 0.9,
+      "colour": "#2B61E7",
+      "points": [
+        [
+          61.25,
+          28.57
+        ],
+        [
+          90.38,
+          27.97
+        ],
+        [
+          90.38,
+          40.88
+        ],
+        [
+          61.25,
+          42.05
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "upper",
+      "alpha": 0.9,
+      "colour": "#356FFF",
+      "points": [
+        [
+          90.38,
+          15.06
+        ],
+        [
+          119.5,
+          16.4
+        ],
+        [
+          119.5,
+          28.0
+        ],
+        [
+          90.38,
+          27.97
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "lower",
+      "alpha": 0.9,
+      "colour": "#285AD9",
+      "points": [
+        [
+          90.38,
+          27.97
+        ],
+        [
+          119.5,
+          28.0
+        ],
+        [
+          119.5,
+          39.6
+        ],
+        [
+          90.38,
+          40.88
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "upper",
+      "alpha": 0.9,
+      "colour": "#4178FF",
+      "points": [
+        [
+          119.5,
+          16.4
+        ],
+        [
+          148.62,
+          19.11
+        ],
+        [
+          148.62,
+          28.72
+        ],
+        [
+          119.5,
+          28.0
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "lower",
+      "alpha": 0.9,
+      "colour": "#2A60E6",
+      "points": [
+        [
+          119.5,
+          28.0
+        ],
+        [
+          148.62,
+          28.72
+        ],
+        [
+          148.62,
+          38.33
+        ],
+        [
+          119.5,
+          39.6
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "upper",
+      "alpha": 0.9,
+      "colour": "#346FFF",
+      "points": [
+        [
+          148.62,
+          19.11
+        ],
+        [
+          177.75,
+          23.06
+        ],
+        [
+          177.75,
+          30.07
+        ],
+        [
+          148.62,
+          28.72
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "lower",
+      "alpha": 0.9,
+      "colour": "#285AD7",
+      "points": [
+        [
+          148.62,
+          28.72
+        ],
+        [
+          177.75,
+          30.07
+        ],
+        [
+          177.75,
+          37.07
+        ],
+        [
+          148.62,
+          38.33
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "upper",
+      "alpha": 0.9,
+      "colour": "#4077FF",
+      "points": [
+        [
+          177.75,
+          23.06
+        ],
+        [
+          206.88,
+          28.04
+        ],
+        [
+          206.88,
+          31.9
+        ],
+        [
+          177.75,
+          30.07
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "lower",
+      "alpha": 0.9,
+      "colour": "#2A5FE5",
+      "points": [
+        [
+          177.75,
+          30.07
+        ],
+        [
+          206.88,
+          31.9
+        ],
+        [
+          206.88,
+          35.77
+        ],
+        [
+          177.75,
+          37.07
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "upper",
+      "alpha": 0.9,
+      "colour": "#346EFF",
+      "points": [
+        [
+          206.88,
+          28.04
+        ],
+        [
+          236.0,
+          34.0
+        ],
+        [
+          236.0,
+          34.0
+        ],
+        [
+          206.88,
+          31.9
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "lower",
+      "alpha": 0.9,
+      "colour": "#2859D6",
+      "points": [
+        [
+          206.88,
+          31.9
+        ],
+        [
+          236.0,
+          34.0
+        ],
+        [
+          236.0,
+          34.0
+        ],
+        [
+          206.88,
+          35.77
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "edge",
+      "alpha": 0.85,
+      "colour": "#4FD8FF",
+      "points": [
+        [
+          3.0,
+          22.9
+        ],
+        [
+          32.12,
+          17.35
+        ],
+        [
+          32.12,
+          17.65
+        ],
+        [
+          3.0,
+          22.9
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "edge",
+      "alpha": 0.85,
+      "colour": "#4FD8FF",
+      "points": [
+        [
+          32.12,
+          17.35
+        ],
+        [
+          61.25,
+          15.09
+        ],
+        [
+          61.25,
+          16.75
+        ],
+        [
+          32.12,
+          17.65
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "edge",
+      "alpha": 0.85,
+      "colour": "#4FD8FF",
+      "points": [
+        [
+          61.25,
+          15.09
+        ],
+        [
+          90.38,
+          15.06
+        ],
+        [
+          90.38,
+          17.54
+        ],
+        [
+          61.25,
+          16.75
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "edge",
+      "alpha": 0.85,
+      "colour": "#4FD8FF",
+      "points": [
+        [
+          90.38,
+          15.06
+        ],
+        [
+          119.5,
+          16.4
+        ],
+        [
+          119.5,
+          18.9
+        ],
+        [
+          90.38,
+          17.54
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "edge",
+      "alpha": 0.85,
+      "colour": "#4FD8FF",
+      "points": [
+        [
+          119.5,
+          16.4
+        ],
+        [
+          148.62,
+          19.11
+        ],
+        [
+          148.62,
+          20.81
+        ],
+        [
+          119.5,
+          18.9
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "edge",
+      "alpha": 0.85,
+      "colour": "#4FD8FF",
+      "points": [
+        [
+          148.62,
+          19.11
+        ],
+        [
+          177.75,
+          23.06
+        ],
+        [
+          177.75,
+          23.42
+        ],
+        [
+          148.62,
+          20.81
+        ]
+      ]
+    },
+    {
+      "sweep": "main_sweep",
+      "role": "edge",
+      "alpha": 0.85,
+      "colour": "#4FD8FF",
+      "points": [
+        [
+          177.75,
+          23.06
+        ],
+        [
+          206.88,
+          28.04
+        ],
+        [
+          206.88,
+          28.04
+        ],
+        [
+          177.75,
+          23.42
+        ]
+      ]
+    }
+  ],
+  "references": {
+    "hero_cape": "Assets/_Project/Art/Concepts/ART_DIRECTION_AND_PROMPTS.md capa #2F6BFF, ciano #4FD8FF",
+    "slash_trail": "Assets/_Project/Art/Items/VFX/FX_SlashTrail.png (u = 0 claro na cabeça; Stretch)",
+    "slash_trail_config": "Assets/_Project/Scripts/Editor/ProductionVisualIntegrator.cs ConfigureTrail",
+    "player_dash": "Assets/_Project/Scripts/Player/PlayerDash.cs (IsDashing, sem evento)",
+    "floor_capture": "Reports/F05/Visual-final/1920-collection.png",
+    "boss_telegraph": "Assets/_Project/Scripts/Editor/DungeonFloorSceneBuilder.cs Mat_TelegraphFill (1,.2,.15)"
+  }
+}
