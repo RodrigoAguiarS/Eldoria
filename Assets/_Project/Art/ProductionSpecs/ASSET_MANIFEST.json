@@ -18,8 +18,8 @@
   "summary": {
     "logical_resources": 133,
     "by_status": {
-      "EXISTENTE": 118,
-      "AUSENTE": 12,
+      "EXISTENTE": 119,
+      "AUSENTE": 11,
       "INCOMPLETO": 1,
       "NÃO VERIFICADO": 2
     },
@@ -47,8 +47,7 @@
         "AUSENTE": 2
       },
       "G": {
-        "EXISTENTE": 9,
-        "AUSENTE": 1
+        "EXISTENTE": 10
       },
       "H": {
         "EXISTENTE": 3
@@ -6389,7 +6388,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: DashIcon.validation.json (PNG decodificado: 512×512 RGBA, cantos alpha 0, margem 48 px, 0 pixels transparentes com RGB sujo) e asset_report.py (--expect-size 512x512 --require-alpha, exit 0); revisão a 48/32 px em claro/escuro/pedra e em tons de cinza. NÃO VALIDADO NO EDITOR: importação, aparência no HUD e PlayMode não observados. Comparação com o ícone de giro pendente (A02 inexistente).",
+        "current_session": "Técnica fora da Unity em 17/11/2026: DashIcon.validation.json (PNG decodificado: 512×512 RGBA, cantos alpha 0, margem 48 px, 0 pixels transparentes com RGB sujo) e asset_report.py (--expect-size 512x512 --require-alpha, exit 0); revisão a 48/32 px em claro/escuro/pedra e em tons de cinza. NÃO VALIDADO NO EDITOR: importação, aparência no HUD e PlayMode não observados. Comparação com o ícone de giro feita na revisão do A02 (17/11/2026): cunha × círculo distintos em cor e cinza a 48/32 px.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -6414,7 +6413,7 @@
       "category": "G",
       "category_name": "HUD e gameplay",
       "functionality": "Leitura de comando existente",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "ícone 2D",
       "scope": "sugestão_polimento",
@@ -6430,7 +6429,7 @@
       ],
       "depends_on": [],
       "technical_dependencies": [],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Produzido em staging (A02, 17/11/2026); NÃO integrado ao HUD. Ligar ao HUD por referência explícita (presenter/builder do especial) em tarefa separada, sem mudar custo, dano, tempo ou regra do giro; atalho e cooldown continuam UI nativa.",
       "visual_specification": "Short steel sword inside a broad cyan circular sweep, open centre, suggesting one complete rotation.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -6439,7 +6438,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "Técnica fora da Unity em 17/11/2026: SpinIcon.validation.json (PNG decodificado: 512×512 RGBA, cantos alpha 0, margem 48 px, 0 pixels transparentes com RGB sujo; médias renderizadas ciano #52E2F4, aço #CBD5DE, latão #F6CF56) e asset_report.py (--expect-size 512x512 --require-alpha, exit 0); revisão a 48/32 px em claro/escuro/pedra, em cor e tons de cinza, ao lado do A01 (silhueta circular × cunha). NÃO VALIDADO NO EDITOR: importação, aparência no HUD e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -6452,10 +6451,11 @@
         "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/ICON-ACTION-SPECIAL/ICON-ACTION-SPECIAL.png"
       },
       "source_and_rights": {
-        "kind": "not_produced",
-        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
-        "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/ICON-ACTION-SPECIAL/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria e render próprios (Tools/Lemo3DGenerator/src/production/SpinIcon.mjs, three.js r170 MIT). Sem IA generativa de imagem nem asset de terceiros."
+      },
+      "production_state": "Produzido por render de geometria low-poly própria (SpinIcon.mjs: arco facetado de 18 segmentos com cauda afinando e espada curta de aço/latão/couro da família da Espada de Ferro) na mesma página/luz/contorno do A01 e de ItemIcons.mjs (three.js r170 via core/render/page.mjs do Lemo); PNG RGBA 512 com alpha real, conteúdo 416×416, margem 48 px."
     },
     {
       "id": "UI-SKIN",
@@ -12578,10 +12578,48 @@
       "limitations": [
         "NÃO VALIDADO NO EDITOR: .meta escrita à mão a partir da família; a Unity pode reserializá-la na primeira importação.",
         "Sem integração no HUD (tarefa separada).",
-        "Distinção do giro em 32/48 px pendente até existir A02.",
+        "Distinção do giro em 32/48 px revisada no lote A02 (fora da Unity).",
         "Aprovação artística humana pendente."
       ],
       "note": "FULL_ASSET_AUDIT.md é o retrato da auditoria de 14/11/2026 e não foi reescrito; estado vivo neste manifesto."
+    },
+    {
+      "id": "A02-ICON-ACTION-SPECIAL",
+      "date_local": "2026-11-17",
+      "branch": "claude/a02-spin-icon",
+      "produced": [
+        "ICON-ACTION-SPECIAL"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md",
+        "Tools/Lemo3DGenerator/src/production/DashIcon.mjs"
+      ],
+      "new_code": [
+        "Tools/Lemo3DGenerator/src/production/SpinIcon.mjs"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/ICON-ACTION-SPECIAL/ICON-ACTION-SPECIAL.png",
+        "Assets/_Project/Art/ProductionStaging/ICON-ACTION-SPECIAL/ICON-ACTION-SPECIAL.png.meta",
+        "Assets/_Project/Art/ProductionStaging/ICON-ACTION-SPECIAL/Source~/"
+      ],
+      "import_settings": "Igual ao A01: Sprite (2D and UI) Single, sRGB, bilinear, clamp, mipmaps off, PPU 100, alphaIsTransparency; padrão 512, Standalone/WebGL 2048; GUIDs novos.",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "SpinIcon.validation.json ok; asset_report.py exit 0; render determinístico (2 execuções, mesmo SHA256); A01 re-renderizado com o mesmo SHA256 após exportar a página/helpers de DashIcon.mjs"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: .meta escrita à mão a partir do A01; a Unity pode reserializá-la na primeira importação.",
+        "Sem integração no HUD (tarefa separada, por referência explícita).",
+        "Em tons de cinza sobre fundo claro, arco e lâmina têm valores próximos; a separação vem do contorno escuro.",
+        "Aprovação artística humana pendente."
+      ],
+      "note": "DashIcon.mjs só passou a exportar PAGE, tri, flatNormals e area2 para reuso; geometria e saída do A01 inalteradas."
     }
   ]
 }
