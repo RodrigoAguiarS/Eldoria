@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 7917289991465097981}
   - component: {fileID: 942931642157519372}
   - component: {fileID: 6419145566923140114}
+  - component: {fileID: 9070602653123120747}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -512,6 +513,24 @@ MonoBehaviour:
   levelEffect: {fileID: 4038703803612559273}
   message: {fileID: 0}
   messageSeconds: 1.4
+--- !u!114 &9070602653123120747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2167836254186514884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d7abc6e89fce8d4b8d744e089e1be38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Systems.PlayerTalents
+  catalog: {fileID: 11400000, guid: b8aa084e63ecaef468c80cf4c7368f7a, type: 2}
+  progression: {fileID: 6832286219411081236}
+  health: {fileID: 8531932573774126635}
+  combat: {fileID: 871491815960337618}
+  special: {fileID: 7917289991465097981}
+  inventory: {fileID: 7751617504920147796}
 --- !u!1 &2473901451848699153
 GameObject:
   m_ObjectHideFlags: 0
