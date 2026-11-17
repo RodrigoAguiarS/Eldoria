@@ -225,6 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 516231664823259003}
   - component: {fileID: 8441660245335814910}
+  - component: {fileID: 210167251455389159}
   m_Layer: 0
   m_Name: Door_Entry
   m_TagString: Untagged
@@ -262,8 +263,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Dungeon.DoorController
   blocker: {fileID: 96759614732743338}
   blockerCollider: {fileID: 6966064483762158304}
+  navMeshBlocker: {fileID: 210167251455389159}
   openDepth: 2.7
   speed: 8
+--- !u!208 &210167251455389159
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528938583428020246}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 0.7, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &642011689085615847
 GameObject:
   m_ObjectHideFlags: 0
@@ -2519,6 +2537,7 @@ MonoBehaviour:
   - {fileID: 6264424274901196086}
   - {fileID: 814132498126681347}
   - {fileID: 8737964026406699258}
+  audioPool: {fileID: 0}
   spreadRadius: 1.2
 --- !u!114 &8700464656785479061
 MonoBehaviour:
@@ -2538,6 +2557,7 @@ MonoBehaviour:
   spawner: {fileID: 3624547301942455973}
   encounter: {fileID: 11400000, guid: b3fb046d306300840b5d4b4cf029eda2, type: 2}
   spawnDelay: 0.8
+  persistentId: 
 --- !u!1 &5653314695255331811
 GameObject:
   m_ObjectHideFlags: 0
@@ -3830,6 +3850,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7649188630349382188}
   - component: {fileID: 8034038653348729185}
+  - component: {fileID: 9135658053264865086}
   m_Layer: 0
   m_Name: Door_Exit
   m_TagString: Untagged
@@ -3867,5 +3888,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Dungeon.DoorController
   blocker: {fileID: 6519469022211475980}
   blockerCollider: {fileID: 1769556588606228256}
+  navMeshBlocker: {fileID: 9135658053264865086}
   openDepth: 2.7
   speed: 8
+--- !u!208 &9135658053264865086
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8833188508090708257}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 0.7, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
+  m_TimeToStationary: 0.5

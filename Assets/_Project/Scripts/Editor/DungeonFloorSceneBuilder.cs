@@ -391,6 +391,8 @@ namespace DungeonCrawler.Editor
             var door = doorRoot.AddComponent<DoorController>();
             DungeonMvpSceneBuilder.SetObj(door, "blocker", blocker.transform);
             DungeonMvpSceneBuilder.SetObj(door, "blockerCollider", blocker.GetComponent<Collider>());
+            // Door não entra no bake: o carving da porta fechada impede agentes de usar o vão.
+            DoorNavMeshBlockerBuilder.Configure(door);
             return door;
         }
 

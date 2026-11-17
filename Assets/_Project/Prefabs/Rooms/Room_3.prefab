@@ -972,6 +972,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3719393559548170374}
   - component: {fileID: 364721170841817429}
+  - component: {fileID: 827170262186237903}
   m_Layer: 0
   m_Name: Door_Entry
   m_TagString: Untagged
@@ -1009,8 +1010,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Dungeon.DoorController
   blocker: {fileID: 3019744363897224228}
   blockerCollider: {fileID: 3600317408105876061}
+  navMeshBlocker: {fileID: 827170262186237903}
   openDepth: 2.7
   speed: 8
+--- !u!208 &827170262186237903
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2264259502159650201}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 0.7, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2597533524066696319
 GameObject:
   m_ObjectHideFlags: 0
@@ -2370,6 +2388,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2577371569923469729}
   - component: {fileID: 2257839526644832249}
+  - component: {fileID: 2320261735698394313}
   m_Layer: 0
   m_Name: Door_Exit
   m_TagString: Untagged
@@ -2407,8 +2426,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: DungeonCrawler.Runtime::DungeonCrawler.Dungeon.DoorController
   blocker: {fileID: 8351123512179682159}
   blockerCollider: {fileID: 70197119933106699}
+  navMeshBlocker: {fileID: 2320261735698394313}
   openDepth: 2.7
   speed: 8
+--- !u!208 &2320261735698394313
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4893858850150203967}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2, y: 0.7, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5155553817040871944
 GameObject:
   m_ObjectHideFlags: 0
@@ -3670,6 +3706,7 @@ MonoBehaviour:
   - {fileID: 6354129045825188671}
   - {fileID: 5399088441134454589}
   - {fileID: 6677585084862627222}
+  audioPool: {fileID: 0}
   spreadRadius: 1.2
 --- !u!114 &8418971120607160576
 MonoBehaviour:
@@ -3689,6 +3726,7 @@ MonoBehaviour:
   spawner: {fileID: 6292430040870996453}
   encounter: {fileID: 11400000, guid: 47a8048138701244fbdda9718a5844ec, type: 2}
   spawnDelay: 0.8
+  persistentId: 
 --- !u!1 &8935912088408415080
 GameObject:
   m_ObjectHideFlags: 0
