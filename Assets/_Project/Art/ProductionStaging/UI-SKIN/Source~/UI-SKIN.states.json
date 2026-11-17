@@ -1,0 +1,80 @@
+{
+  "asset_id": "UI-SKIN",
+  "catalog_id": "A03",
+  "purpose": "Mapa de estados do kit modular de UI: qual sprite usar em cada estado, como importar e onde encaixar nas telas atuais. Só arte: nenhum botão, presenter, cena ou prefab foi criado ou alterado.",
+  "canvas_contract": {
+    "reference_resolution": [1920, 1080],
+    "screen_match": 0.5,
+    "pixels_per_unit": 100,
+    "image_pixels_per_unit_multiplier": 1,
+    "note": "As bordas são medidas na referência 1920×1080. Em 1280×720 o CanvasScaler reduz para ~0,667: borda do painel ≈10,7 px, botão ≈8 px, slot ≈5,3 px. Texto continua UGUI Text nativo com LegacyRuntime.ttf; nenhuma fonte nova."
+  },
+  "import": {
+    "textureType": "Sprite (2D and UI)",
+    "spriteMode": "Single",
+    "spriteMeshType": "Full Rect (obrigatório para Image.Type.Sliced sem aviso)",
+    "spriteBorder_order": "x=Left, y=Bottom, z=Right, w=Top",
+    "sRGB": true,
+    "filterMode": "Bilinear",
+    "wrapMode": "Clamp",
+    "mipmaps": false,
+    "alphaIsTransparency": true,
+    "compression": "nenhuma (Default sem compressão; Standalone/WebGL não sobrescrevem)",
+    "maxTextureSize_default": 256
+  },
+  "image_color_rule": "Image.color = branco (1,1,1,1) em todas as bases. As cores já estão no sprite; o tingimento atual (InventorySlotView.Render: background.color, Button Image.color .8/.68/.45) precisa ser trocado por troca de sprite na integração. Exceção: Slot-RarityBand, que é branco e recebe ItemRarity.color.",
+  "sprites": [
+    { "file": "UI-SKIN-Panel-Window.png", "size": [128, 128], "border_LBRT": [16, 16, 16, 16], "image_type": "Sliced", "fill_center": true, "role": "Janela: InventoryPanel/Window, PausePanel/Window, OptionsPanel (janela)", "centre_hex": "#0E131A" },
+    { "file": "UI-SKIN-Panel-Inset.png", "size": [128, 128], "border_LBRT": [16, 16, 16, 16], "image_type": "Sliced", "fill_center": true, "role": "Área rebaixada dentro da janela: detalhes/comparação rolável, fundo do PotionHud", "centre_hex": "#0A0E13" },
+    { "file": "UI-SKIN-Button-Normal.png", "size": [256, 80], "border_LBRT": [12, 12, 12, 12], "image_type": "Sliced", "role": "Button.targetGraphic.sprite (estado normal)", "centre_hex": "#C8AA70" },
+    { "file": "UI-SKIN-Button-Hover.png", "size": [256, 80], "border_LBRT": [12, 12, 12, 12], "image_type": "Sliced", "role": "SpriteState.highlightedSprite", "shape_cue": "linha interna clara de 2 px (normal: 1 px escura) + face mais clara" },
+    { "file": "UI-SKIN-Button-Focus.png", "size": [256, 80], "border_LBRT": [12, 12, 12, 12], "image_type": "Sliced", "role": "SpriteState.selectedSprite (foco por teclado/gamepad)", "shape_cue": "capas geométricas escuro+marfim nos 4 cantos; recomendado somar FocusCorner ×4 para o mesmo idioma de foco dos slots" },
+    { "file": "UI-SKIN-Button-Pressed.png", "size": [256, 80], "border_LBRT": [12, 12, 12, 12], "image_type": "Sliced", "role": "SpriteState.pressedSprite", "shape_cue": "chanfro invertido (luz embaixo) e linha 1 px mais para dentro: lê como afundado" },
+    { "file": "UI-SKIN-Button-Disabled.png", "size": [256, 80], "border_LBRT": [12, 12, 12, 12], "image_type": "Sliced", "role": "SpriteState.disabledSprite", "shape_cue": "sem linha de latão, face cinza-pedra" },
+    { "file": "UI-SKIN-Slot-Normal.png", "size": [192, 112], "border_LBRT": [8, 8, 8, 8], "image_type": "Sliced", "role": "Slot com item, não selecionado", "centre_hex": "#1A2129" },
+    { "file": "UI-SKIN-Slot-Hover.png", "size": [192, 112], "border_LBRT": [8, 8, 8, 8], "image_type": "Sliced", "role": "Slot sob o ponteiro (slots usam Transition.None hoje: integração futura)", "shape_cue": "linha de latão de 2 px mais clara" },
+    { "file": "UI-SKIN-Slot-Selected.png", "size": [192, 112], "border_LBRT": [8, 8, 8, 8], "image_type": "Sliced", "role": "Slot selecionado (substitui SelectionFrame de 4 arestas + cor)", "shape_cue": "moldura de latão de 3 px no lugar do chanfro + face quente; usar com Marker-Selected" },
+    { "file": "UI-SKIN-Slot-Empty.png", "size": [192, 112], "border_LBRT": [8, 8, 8, 8], "image_type": "Sliced", "role": "Slot vazio", "shape_cue": "chanfro invertido (rebaixado) e sem linha de latão; usar com Marker-Empty" },
+    { "file": "UI-SKIN-Slot-RarityBand.png", "size": [192, 112], "border_LBRT": [8, 8, 8, 8], "image_type": "Sliced", "fill_center": true, "role": "Overlay branco na borda esquerda, Image.color = ItemRarity.color; ativo só com item. O nome da raridade continua no texto (raridade não depende só de cor).", "raycastTarget": false },
+    { "file": "UI-SKIN-Marker-Selected.png", "size": [24, 24], "image_type": "Simple", "role": "Losango de latão no canto superior esquerdo do slot selecionado (mesmo idioma do Marker atual de 16 px a 45°)", "placement": "filho de SelectionFrame, âncora (0,1), pivô (.5,.5), posição (-2, 2)", "raycastTarget": false },
+    { "file": "UI-SKIN-Marker-Equipped.png", "size": [24, 24], "image_type": "Simple", "role": "Escudo de aço/latão: item equipado (o texto 'Equipado' continua)", "placement": "âncora (1,1), pivô (1,1), posição (-8, -8)", "raycastTarget": false },
+    { "file": "UI-SKIN-Marker-Empty.png", "size": [24, 24], "image_type": "Simple", "role": "Octógono vazado: slot livre, no lugar do ícone do item", "placement": "centro da área Icon atual (posição (6,-20), 64×64): âncora e pivô (0,1), posição (26,-40)", "raycastTarget": false },
+    { "file": "UI-SKIN-FocusCorner.png", "size": [32, 32], "image_type": "Simple", "role": "Colchete de foco (canto superior esquerdo). Quatro instâncias por elemento focado: TL escala (1,1), TR (-1,1), BL (1,-1), BR (-1,-1); deslocar 6 px para fora do retângulo", "raycastTarget": false }
+  ],
+  "states": {
+    "button": {
+      "transition": "Selectable.Transition.SpriteSwap",
+      "normal": "UI-SKIN-Button-Normal",
+      "highlighted": "UI-SKIN-Button-Hover",
+      "pressed": "UI-SKIN-Button-Pressed",
+      "selected": "UI-SKIN-Button-Focus (+ FocusCorner ×4 recomendado)",
+      "disabled": "UI-SKIN-Button-Disabled",
+      "label": "Text nativo, cor atual #0A0F14; área segura = retângulo do botão menos 12 px por lado"
+    },
+    "inventory_slot": {
+      "base_by_state": { "empty": "UI-SKIN-Slot-Empty", "filled": "UI-SKIN-Slot-Normal", "hover": "UI-SKIN-Slot-Hover", "selected": "UI-SKIN-Slot-Selected" },
+      "precedence": "selected > hover > filled/empty",
+      "overlays_independentes": {
+        "rarity": "UI-SKIN-Slot-RarityBand tingido (com item)",
+        "selected": "UI-SKIN-Marker-Selected",
+        "equipped": "UI-SKIN-Marker-Equipped (pode coexistir com selected)",
+        "empty": "UI-SKIN-Marker-Empty",
+        "focus": "UI-SKIN-FocusCorner ×4 (foco do EventSystem, independente de selected)"
+      },
+      "distinction_beyond_colour": {
+        "focus": "colchetes em L fora do retângulo",
+        "selected": "moldura de 3 px + losango",
+        "equipped": "escudo + texto 'Equipado'",
+        "empty": "rebaixado + octógono vazado + texto 'Vazio'",
+        "hover": "linha de latão de 2 px"
+      }
+    }
+  },
+  "current_ui_targets_unchanged": "Arte não muda RectTransform, alvos de clique, navegação, pilha de menus, InputSystemUIInputModule nem regras de pausa. Slots atuais 188×104 (layout de referência) e 301×149 medidos na captura F10 1080p/100%: ambos esticam a partir do sprite 192×112 com borda 8.",
+  "integration_is_separate_code_task": [
+    "Builder (InventorySceneBuilder/GameShellSceneBuilder) atribui sprites, Image.type Sliced e Image.color branco por referência explícita (AssetDatabase.LoadAssetAtPath), sem FindObjectOfType.",
+    "InventorySlotView.Render troca sprite por estado em vez de tingir background.color; SelectionFrame atual vira Marker-Selected + base Selected.",
+    "Hover/foco de slot (hoje Transition.None) e FocusCorner exigem código de apresentação; não alteram regras de inventário.",
+    "Validar no Editor: 720p/1080p/ultrawide, 100/125/150% de texto (F10), PlayMode e EditMode existentes."
+  ]
+}
