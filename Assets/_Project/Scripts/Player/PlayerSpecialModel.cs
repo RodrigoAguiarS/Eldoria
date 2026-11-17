@@ -18,6 +18,14 @@ namespace DungeonCrawler.Player
         public bool IsAttacking { get; private set; }
         public bool IsBusy(float now) => IsAttacking || now < recoveryUntil;
         public float CooldownRemaining(float now) => Math.Max(0f, readyAt - now);
+        private float cooldownReduction;
+        /// <summary>Seconds removed from the definition cooldown at cast start (F12 talent term).</summary>
+        public float CooldownReduction
+        {
+            get => cooldownReduction;
+            set => cooldownReduction = float.IsNaN(value) || float.IsInfinity(value) ? 0f : Math.Max(0f, value);
+        }
+        public float EffectiveCooldown => Math.Max(0f, Math.Max(0f, definition.cooldown) - cooldownReduction);
         public float RegenerationRemaining(float now) => Math.Max(0f, regenerationAt - now);
 
         public void RestoreCheckpoint(float stamina, float cooldown, float regeneration, float now)
@@ -46,7 +54,7 @@ namespace DungeonCrawler.Player
             Stamina -= cost;
             startedAt = now;
             regenerationAt = now + Math.Max(0f, definition.regenerationDelay);
-            readyAt = now + Math.Max(0f, definition.cooldown);
+            readyAt = now + EffectiveCooldown;
             IsAttacking = true;
             impacted = false;
             revision++;

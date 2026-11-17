@@ -232,6 +232,7 @@ namespace DungeonCrawler.Editor
             Place(root, "Controls", 24, 12, 1868, 94);
             Place(root, "PlayerResource", 24, 122, 660, 100);
             Place(root, "PotionHud", 24, 234, 500, 100);
+            Place(root, "TalentNotice", 24, 346, 660, 56);
             Place(root, "PotionHud/Count", 330, 4, 160, 48); Place(root, "PotionHud/Status", 78, 52, 410, 44);
             var badge = root.Find("PotionHud/KeyBadge") as RectTransform;
             if (badge != null)
@@ -275,11 +276,12 @@ namespace DungeonCrawler.Editor
             var pause = root.Find("InventoryUI/PausePanel/Window");
             if (pause != null)
             {
-                ((RectTransform)pause).sizeDelta = new Vector2(760, 720);
+                // F12 inserts Talents after Resume when present; the window grows instead of shrinking buttons.
+                var commands = new[] { "Resume", "Talents", "Restart", "Options", "MainMenu", "Quit" }.Where(name => pause.Find(name) != null).ToArray();
+                ((RectTransform)pause).sizeDelta = new Vector2(760, 142 + commands.Length * 92 + 118);
                 Place(pause, "Title", 40, 22, 680, 90);
-                string[] commands = { "Resume", "Restart", "Options", "MainMenu", "Quit" };
                 for (int i = 0; i < commands.Length; i++) Place(pause, commands[i], 64, 142 + i * 92, 632, 72);
-                Place(pause, "Hint", 48, 622, 664, 72);
+                Place(pause, "Hint", 48, 142 + commands.Length * 92 + 20, 664, 72);
             }
             foreach (string name in new[] { "GameOverPanel", "VictoryPanel" })
             {

@@ -7,6 +7,8 @@ namespace DungeonCrawler.Systems
     [Serializable]
     public sealed class RunCheckpointData
     {
+        /// <summary>v2 (F12) adds talents; v1 is still accepted and migrates with no talents chosen.</summary>
+        public const int CurrentVersion = 2;
         public int version;
         public string floorId;
         public string randomState;
@@ -18,6 +20,14 @@ namespace DungeonCrawler.Systems
         public CheckpointSlot[] slots;
         public int weaponIndex, armorIndex;
         public CheckpointPickup[] pickups;
+        public CheckpointTalent[] talents;
+    }
+
+    [Serializable]
+    public sealed class CheckpointTalent
+    {
+        public string id;
+        public int rank;
     }
 
     [Serializable]

@@ -17,6 +17,7 @@ namespace DungeonCrawler.Tests.EditMode
         private WeaponData weapon;
         private ArmorData armor;
         private PotionData potion;
+        private TalentCatalog talentCatalog;
         private string directory;
         private RunCheckpointStore store;
         [SetUp] public void Setup()
@@ -27,6 +28,8 @@ namespace DungeonCrawler.Tests.EditMode
             catalog = ScriptableObject.CreateInstance<RunCheckpointCatalog>(); catalog.capacity = 6;
             catalog.items = new ItemDefinition[] { weapon, armor, potion };
             catalog.rooms = new[] { new CheckpointRoom { id = "room1" }, new CheckpointRoom { id = "room2", anchor = Vector3.forward * 24f } };
+            talentCatalog = TalentModelTests.CreateCatalog();
+            catalog.talents = talentCatalog;
             directory = Path.Combine(Path.GetTempPath(), "Eldoria-F11-" + Guid.NewGuid().ToString("N"));
             store = new RunCheckpointStore(Path.Combine(directory, "run.json"));
         }
@@ -34,6 +37,7 @@ namespace DungeonCrawler.Tests.EditMode
         { var serialized = new SerializedObject(item); serialized.FindProperty("persistentId").stringValue = id; serialized.ApplyModifiedPropertiesWithoutUndo(); }
         [TearDown] public void TearDown()
         {
+            TalentModelTests.DestroyCatalog(talentCatalog);
             Object.DestroyImmediate(catalog); Object.DestroyImmediate(weapon); Object.DestroyImmediate(armor); Object.DestroyImmediate(potion);
             if (Directory.Exists(directory)) Directory.Delete(directory, true);
         }
@@ -47,6 +51,19 @@ namespace DungeonCrawler.Tests.EditMode
             pickups = new[] { new CheckpointPickup { id = Guid.NewGuid().ToString("N"), itemId = "potion", kind = LootKind.Potion,
                 amount = 37, position = new Vector3(2f, .6f, 3f), persistent = true } }
         };
+        private static CheckpointTalent Talent(string id, int rank) => new CheckpointTalent { id = id, rank = rank };
+        [Test] public void V2_RoundTripPreservesTalentRanks_AndV1MigratesWithoutTalents()
+        {
+            var data = Valid(); data.version = RunCheckpointData.CurrentVersion;
+            data.talents = new[] { Talent("talent.guard", 1), Talent("talent.blade", 1) }; // level 3: two earned choices
+            Assert.IsTrue(store.TrySave(data, catalog, out string error), error);
+            Assert.IsTrue(store.TryLoad(catalog, out var loaded, out error), error);
+            Assert.AreEqual(JsonUtility.ToJson(data), JsonUtility.ToJson(loaded));
+            var legacy = Valid(); legacy.talents = null; // file written before F12
+            Assert.IsTrue(catalog.Validate(legacy, out error), error);
+            var fromJson = JsonUtility.FromJson<RunCheckpointData>(JsonUtility.ToJson(Valid()).Replace(",\"talents\":[]", ""));
+            Assert.AreEqual(1, fromJson.version); Assert.IsTrue(catalog.Validate(fromJson, out error), error);
+        }
         private static CheckpointSlot Slot(string id, int count, int potency = 0) => new CheckpointSlot { itemId = id, count = count, potency = potency };
         [Test] public void RoundTrip_PreservesExactDuplicateSlotsPotenciesEquipmentAndWorldPayload()
         {
@@ -82,12 +99,21 @@ namespace DungeonCrawler.Tests.EditMode
         [TestCase("wrongEquipment")] [TestCase("duplicatePickup")] [TestCase("unknownRoom")] [TestCase("duplicateRoom")]
         [TestCase("chestInFuture")] [TestCase("xp")] [TestCase("nan")] [TestCase("zeroRandom")] [TestCase("resume")]
         [TestCase("negativeGold")] [TestCase("dead")] [TestCase("infinitePosition")] [TestCase("missingSlots")]
+        [TestCase("talentInV1")] [TestCase("unknownTalent")] [TestCase("talentRank")] [TestCase("zeroTalentRank")]
+        [TestCase("duplicateTalent")] [TestCase("talentsBeyondLevel")] [TestCase("nullTalent")]
         public void InvalidSnapshot_RefusedBeforeMutation(string scenario)
         {
             var data = Valid();
             switch (scenario)
             {
-                case "future": data.version = 2; break;
+                case "future": data.version = RunCheckpointData.CurrentVersion + 1; break;
+                case "talentInV1": data.talents = new[] { Talent("talent.blade", 1) }; break;
+                case "unknownTalent": data.version = 2; data.talents = new[] { Talent("talent.removed", 1) }; break;
+                case "talentRank": data.version = 2; data.level = 5; data.xp = 0; data.talents = new[] { Talent("talent.blade", 4) }; break;
+                case "zeroTalentRank": data.version = 2; data.talents = new[] { Talent("talent.blade", 0) }; break;
+                case "duplicateTalent": data.version = 2; data.talents = new[] { Talent("talent.blade", 1), Talent("talent.blade", 1) }; break;
+                case "talentsBeyondLevel": data.version = 2; data.talents = new[] { Talent("talent.blade", 2), Talent("talent.guard", 1) }; break;
+                case "nullTalent": data.version = 2; data.talents = new CheckpointTalent[] { null }; break;
                 case "missingId": data.slots[0].itemId = "removed"; break;
                 case "capacity": data.slots = data.slots.Take(5).ToArray(); break;
                 case "stack": data.slots[0].count = 2; break;

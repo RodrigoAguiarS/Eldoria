@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace DungeonCrawler.UI
 {
-    public enum MenuScreen { Title, Pause, Inventory, Options, Controls }
+    public enum MenuScreen { Title, Pause, Inventory, Options, Controls, Talents }
     public sealed class MenuScreenStack : MonoBehaviour
     {
         [Serializable] private struct ScreenEntry { public MenuScreen id; public GameObject root; public Selectable firstFocus; }

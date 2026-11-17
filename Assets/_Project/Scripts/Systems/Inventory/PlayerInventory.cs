@@ -20,6 +20,7 @@ namespace DungeonCrawler.Systems
         private InventoryModel model;
         private float dropDistance = 2.2f;
         private bool usingPotion;
+        private float talentDefense;
 
         public IReadOnlyList<InventoryStack> Slots => model != null ? model.Slots : Array.Empty<InventoryStack>();
         public int Capacity => model?.Capacity ?? 0;
@@ -182,6 +183,19 @@ namespace DungeonCrawler.Systems
             Changed?.Invoke();
         }
 
-        private float DefenseWith(ArmorData armor) => Mathf.Max(0f, definition.baseDefense + (armor != null ? armor.defense : 0f));
+        /// <summary>F12 talent defense term, composed with base + armor; assigned absolutely, never accumulated.</summary>
+        public float TalentDefenseBonus => talentDefense;
+        public void SetTalentDefenseBonus(float value)
+        {
+            value = float.IsNaN(value) || float.IsInfinity(value) ? 0f : Mathf.Max(0f, value);
+            if (talentDefense == value) return;
+            talentDefense = value;
+            if (model == null || health == null) return;
+            health.SetDefense(DefenseWith(model.EquippedArmor));
+            Changed?.Invoke();
+        }
+
+        private float DefenseWith(ArmorData armor) =>
+            Mathf.Max(0f, definition.baseDefense + (armor != null ? armor.defense : 0f) + talentDefense);
     }
 }

@@ -18,6 +18,8 @@ namespace DungeonCrawler.Systems
     {
         public string floorId = "eldoria.floor01.v1";
         public ItemDefinition[] items = Array.Empty<ItemDefinition>();
+        /// <summary>F12: resolves talent IDs of v2 snapshots. Null only for floors without talents.</summary>
+        public TalentCatalog talents;
         public CheckpointRoom[] rooms = Array.Empty<CheckpointRoom>();
         public int capacity = 16, baseXp = 30, maxLevel = 10;
         public float xpGrowth = 1.35f, maxHealth = 100f, maxStamina = 100f;
@@ -41,7 +43,8 @@ namespace DungeonCrawler.Systems
         public bool Validate(RunCheckpointData data, out string error)
         {
             error = "Checkpoint inválido ou incompatível.";
-            if (data == null || data.version != 1) { error = "Versão de checkpoint incompatível."; return false; }
+            if (data == null || data.version < 1 || data.version > RunCheckpointData.CurrentVersion)
+            { error = "Versão de checkpoint incompatível."; return false; }
             if (items == null) return false;
             var ids = new HashSet<string>(StringComparer.Ordinal);
             foreach (var item in items)
@@ -66,6 +69,7 @@ namespace DungeonCrawler.Systems
                 data.gold < 0 || data.gold > MaxAmount) return false;
             var experience = new ExperienceModel(baseXp, xpGrowth, maxLevel);
             if (!experience.TryRestore(data.level, data.xp)) return false;
+            if (!ValidTalents(data, out string talentError)) { if (talentError != null) error = talentError; return false; }
             if (data.slots == null || data.slots.Length != capacity || capacity < 1 || capacity > 256) return false;
             var stacks = new InventoryStack[capacity];
             for (int i = 0; i < capacity; i++)
@@ -109,6 +113,25 @@ namespace DungeonCrawler.Systems
             }
             error = "";
             return true;
+        }
+
+        // v1 predates F12 and must carry no talents (it migrates with every earned choice still pending).
+        private bool ValidTalents(RunCheckpointData data, out string error)
+        {
+            error = null;
+            if (data.talents == null || data.talents.Length == 0) return true;
+            if (data.version < 2) return false;
+            if (talents == null || !talents.IsValid(out _)) { error = "Catálogo de talentos ausente."; return false; }
+            var model = new TalentModel(talents.MaxRanks());
+            var ranks = new int[talents.Count];
+            foreach (var entry in data.talents)
+            {
+                int index = entry != null ? talents.IndexOf(entry.id) : -1;
+                if (index < 0) { error = "Talento ausente: " + entry?.id; return false; }
+                if (entry.rank < 1 || ranks[index] != 0) return false;
+                ranks[index] = entry.rank;
+            }
+            return model.TryRestore(ranks, data.level - 1);
         }
 
         public static bool Between(float value, float min, float max) => !float.IsNaN(value) && !float.IsInfinity(value) && value >= min && value <= max;

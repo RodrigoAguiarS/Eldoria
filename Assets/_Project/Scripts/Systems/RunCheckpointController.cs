@@ -15,6 +15,7 @@ namespace DungeonCrawler.Systems
         [SerializeField] private FloorController floor;
         [SerializeField] private Health health;
         [SerializeField] private PlayerProgression progression;
+        [SerializeField] private PlayerTalents talents;
         [SerializeField] private PlayerInventory inventory;
         [SerializeField] private PlayerSpecial special;
         [SerializeField] private PlayerDash dash;
@@ -39,6 +40,7 @@ namespace DungeonCrawler.Systems
             floor.ProgressChanged += OnProgress; health.Changed += OnHealth;
             health.Died += OnDeath; inventory.Changed += MarkDirty; progression.Changed += MarkDirty;
             loot.Changed += MarkDirty;
+            if (talents != null) talents.Changed += MarkDirty;
             foreach (var chest in chests) chest.Opened += MarkDirty;
             foreach (var room in floor.Rooms) room.Started += OnRoomStarted;
         }
@@ -47,6 +49,7 @@ namespace DungeonCrawler.Systems
             floor.ProgressChanged -= OnProgress; health.Changed -= OnHealth;
             health.Died -= OnDeath; inventory.Changed -= MarkDirty; progression.Changed -= MarkDirty;
             loot.Changed -= MarkDirty;
+            if (talents != null) talents.Changed -= MarkDirty;
             foreach (var chest in chests) if (chest != null) chest.Opened -= MarkDirty;
             foreach (var room in floor.Rooms) if (room != null) room.Started -= OnRoomStarted;
         }
@@ -60,6 +63,7 @@ namespace DungeonCrawler.Systems
             try
             {
                 progression.RestoreCheckpoint(data.level, data.xp, data.gold);
+                if (talents != null) talents.RestoreCheckpoint(data.talents); // after level: validates against level − 1
                 inventory.RestoreCheckpoint(data, catalog);
                 health.RestoreCheckpoint(data.health);
                 special.RestoreCheckpoint(data.stamina, data.specialCooldown, data.regenerationDelay);
@@ -124,13 +128,14 @@ namespace DungeonCrawler.Systems
                 slots[i] = new CheckpointSlot { itemId = stack.IsEmpty ? "" : stack.Definition.PersistentId,
                     count = stack.Count, potency = stack.Potency };
             }
-            return new RunCheckpointData { version = 1, floorId = catalog.floorId, randomState = loot.RandomState,
+            return new RunCheckpointData { version = RunCheckpointData.CurrentVersion, floorId = catalog.floorId, randomState = loot.RandomState,
                 clearedRooms = cleared.ToArray(), resumeRoom = cleared.Count > 0 ? cleared[cleared.Count - 1] : "",
                 openedChests = opened.ToArray(), health = health.Current, maxHealth = health.Max,
                 level = progression.Level, xp = progression.Xp, gold = progression.Gold, slots = slots,
                 weaponIndex = inventory.EquippedWeaponIndex, armorIndex = inventory.EquippedArmorIndex,
                 stamina = special.Stamina, specialCooldown = special.CooldownRemaining,
-                regenerationDelay = special.RegenerationRemaining, dashCooldown = dash.CooldownRemaining, pickups = loot.Capture() };
+                regenerationDelay = special.RegenerationRemaining, dashCooldown = dash.CooldownRemaining, pickups = loot.Capture(),
+                talents = talents != null ? talents.Capture() : Array.Empty<CheckpointTalent>() };
         }
         private void SetStatus(string value) { Status = value; StatusChanged?.Invoke(); }
     }
