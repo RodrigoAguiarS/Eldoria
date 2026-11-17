@@ -151,7 +151,7 @@ namespace DungeonCrawler.Editor
 
             var panel = Panel(menuRoot, "TalentPanel", new Color(.015f, .02f, .03f, .9f)); Stretch(panel);
             // Sizes reserve room for the 150% text option (F10); TextScale only stretches the button labels.
-            var window = Box(panel, "Window", Vector2.zero, new Vector2(1560f, 820f), new Vector2(.5f, .5f));
+            var window = Box(panel, "Window", Vector2.zero, new Vector2(1560f, 660f), new Vector2(.5f, .5f));
             Get<Image>(window.gameObject).color = Background;
             Label(window, "Title", "TALENTOS", new Vector2(48f, -28f), new Vector2(1464f, 76f), 42).alignment = TextAnchor.MiddleCenter;
             var status = Label(window, "Status", "", new Vector2(48f, -112f), new Vector2(1464f, 60f), 26);
@@ -159,22 +159,22 @@ namespace DungeonCrawler.Editor
             var options = new Button[3]; var labels = new Text[3];
             for (int i = 0; i < options.Length; i++)
             {
-                options[i] = Button(window, "Option_" + i, "", new Vector2(48f + i * 496f, -196f), new Vector2(472f, 440f));
+                options[i] = Button(window, "Option_" + i, "", new Vector2(48f + i * 496f, -196f), new Vector2(472f, 320f));
                 labels[i] = options[i].transform.Find("Label").GetComponent<Text>();
-                labels[i].alignment = TextAnchor.UpperCenter; labels[i].fontSize = 24;
+                labels[i].alignment = TextAnchor.MiddleCenter; labels[i].fontSize = 24; labels[i].lineSpacing = 1.1f;
                 labels[i].horizontalOverflow = HorizontalWrapMode.Wrap; labels[i].verticalOverflow = VerticalWrapMode.Truncate;
                 var colors = options[i].colors; colors.disabledColor = new Color(.45f, .45f, .45f, .8f); options[i].colors = colors;
             }
-            var hint = Label(window, "Hint", "Esc volta à pausa", new Vector2(48f, -664f), new Vector2(920f, 56f), 22);
-            var back = Button(window, "Back", "Voltar", new Vector2(1072f, -664f), new Vector2(440f, 72f));
+            var hint = Label(window, "Hint", "Esc volta à pausa", new Vector2(48f, -548f), new Vector2(1000f, 56f), 22);
+            var back = Button(window, "Back", "Voltar", new Vector2(1072f, -548f), new Vector2(440f, 72f));
             Link(back, menu.CloseTalents);
             if (bindings != null)
             {
                 var hintPresenter = Get<BindingHintPresenter>(hint.gameObject);
                 Set(hintPresenter, "source", bindings); Set(hintPresenter, "label", hint);
-                SetString(hintPresenter, "format", "Cada nível ganho concede uma escolha · {Pause} volta à pausa");
+                SetString(hintPresenter, "format", "Um talento por nível · {Pause} volta à pausa");
                 using var defaults = new InputBindingSet(AssetDatabase.LoadAssetAtPath<InputActionAsset>(ProjectPaths.InputActionsAsset), false);
-                hint.text = BindingHintPresenter.Format("Cada nível ganho concede uma escolha · {Pause} volta à pausa", defaults);
+                hint.text = BindingHintPresenter.Format("Um talento por nível · {Pause} volta à pausa", defaults);
             }
             var presenter = Get<TalentChoicePresenter>(panel.gameObject);
             Set(presenter, "talents", talents); Set(presenter, "menu", menu); Set(presenter, "eventSystem", events);
@@ -183,7 +183,9 @@ namespace DungeonCrawler.Editor
             panel.gameObject.SetActive(false);
             AddScreen(stack, panel.gameObject, options[0]);
 
-            var notice = Label(hud.transform, "TalentNotice", "", new Vector2(24f, -346f), new Vector2(660f, 56f), 24);
+            var notice = Label(hud.transform, "TalentNotice", "", new Vector2(24f, -346f), new Vector2(960f, 60f), 24);
+            // HUD layer: drawn below the pause/talent overlays. Move only when needed, so reruns are idempotent.
+            if (notice.transform.GetSiblingIndex() > menuRoot.GetSiblingIndex()) notice.transform.SetSiblingIndex(menuRoot.GetSiblingIndex());
             notice.color = new Color(1f, .82f, .45f); notice.enabled = false;
             Get<Outline>(notice.gameObject).effectDistance = new Vector2(1f, -1f);
             var noticePresenter = Get<TalentNoticePresenter>(notice.gameObject);

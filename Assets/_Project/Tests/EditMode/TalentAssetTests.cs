@@ -64,6 +64,10 @@ namespace DungeonCrawler.Tests.EditMode
                     Assert.AreEqual(3, new SerializedObject(presenter).FindProperty("options").arraySize);
                     var notice = components.OfType<TalentNoticePresenter>().Single();
                     Assert.AreSame(talents, new SerializedObject(notice).FindProperty("talents").objectReferenceValue);
+                    Assert.AreSame(menu.transform.parent, notice.transform.parent, path);
+                    Assert.Less(notice.transform.GetSiblingIndex(), menu.transform.GetSiblingIndex(),
+                        path + ": HUD notice must render below the pause/talent overlays; siblings: " +
+                        string.Join(",", Enumerable.Range(0, menu.transform.parent.childCount).Select(i => menu.transform.parent.GetChild(i).name)));
                     var checkpoint = components.OfType<RunCheckpointController>().SingleOrDefault();
                     if (path == MvpReleaseBuild.Floor)
                         Assert.AreSame(talents, new SerializedObject(checkpoint).FindProperty("talents").objectReferenceValue);

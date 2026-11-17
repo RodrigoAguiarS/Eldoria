@@ -26,6 +26,8 @@ namespace DungeonCrawler.Systems
         private string lastSavedJson;
         public string Status { get; private set; } = "Limpe uma sala para criar um checkpoint.";
         public event Action StatusChanged;
+        /// <summary>True when the last status reports a failure (invalid snapshot, write/delete error).</summary>
+        public bool StatusIsError { get; private set; }
         public bool IsSafe
         {
             get
@@ -58,7 +60,7 @@ namespace DungeonCrawler.Systems
             ready = true;
             var data = RunCheckpointSession.Consume();
             if (data == null) return;
-            if (!catalog.Validate(data, out string error)) { SetStatus(error); return; }
+            if (!catalog.Validate(data, out string error)) { SetStatus(error, true); return; }
             restoring = true;
             try
             {
@@ -96,7 +98,8 @@ namespace DungeonCrawler.Systems
         private void OnDeath()
         {
             dirty = false;
-            SetStatus(RunCheckpointSession.Store.TryDelete(out string error) ? "Run encerrada · checkpoint descartado." : error);
+            bool deleted = RunCheckpointSession.Store.TryDelete(out string error);
+            SetStatus(deleted ? "Run encerrada · checkpoint descartado." : error, !deleted);
         }
         public bool SaveNow()
         {
@@ -109,7 +112,7 @@ namespace DungeonCrawler.Systems
                 if (lastSavedJson == json) return true;
                 bool saved = RunCheckpointSession.Store.TrySave(data, catalog, out string message);
                 if (saved) lastSavedJson = json;
-                SetStatus(message); return saved;
+                SetStatus(message, !saved); return saved;
             }
             finally { writing = false; }
         }
@@ -137,6 +140,6 @@ namespace DungeonCrawler.Systems
                 regenerationDelay = special.RegenerationRemaining, dashCooldown = dash.CooldownRemaining, pickups = loot.Capture(),
                 talents = talents != null ? talents.Capture() : Array.Empty<CheckpointTalent>() };
         }
-        private void SetStatus(string value) { Status = value; StatusChanged?.Invoke(); }
+        private void SetStatus(string value, bool error = false) { Status = value; StatusIsError = error; StatusChanged?.Invoke(); }
     }
 }

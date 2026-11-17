@@ -224,7 +224,7 @@ namespace DungeonCrawler.Editor
                 Place(titleContent, "Controls", 0, 700, 1600, 240);
             }
             // Retain corner/centre anchors of gameplay presenters, expanding their local text containers.
-            foreach (string path in new[] { "PlayerHealthBar", "BossHealthBar" })
+            foreach (string path in new[] { "PlayerHealthBar" })
             {
                 var rect = root.Find(path) as RectTransform;
                 if (rect != null) rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 56);
@@ -232,7 +232,7 @@ namespace DungeonCrawler.Editor
             Place(root, "Controls", 24, 12, 1868, 94);
             Place(root, "PlayerResource", 24, 122, 660, 100);
             Place(root, "PotionHud", 24, 234, 500, 100);
-            Place(root, "TalentNotice", 24, 346, 660, 56);
+            Place(root, "TalentNotice", 24, 346, 960, 60);
             Place(root, "PotionHud/Count", 330, 4, 160, 48); Place(root, "PotionHud/Status", 78, 52, 410, 44);
             var badge = root.Find("PotionHud/KeyBadge") as RectTransform;
             if (badge != null)
@@ -254,7 +254,8 @@ namespace DungeonCrawler.Editor
                 floor.GetComponent<Text>().alignment = TextAnchor.MiddleRight;
             }
             var boss = root.Find("BossHealthBar") as RectTransform;
-            if (boss != null) boss.anchoredPosition = new Vector2(0, -230);
+            // Thin top-centre bar between the stamina line and floor progress, clear of the play area.
+            if (boss != null) { boss.anchoredPosition = new Vector2(0, -112); boss.sizeDelta = new Vector2(640, 44); }
             foreach (string path in new[] { "DashBar", "XpBar" })
             {
                 var bar = root.Find(path) as RectTransform;
