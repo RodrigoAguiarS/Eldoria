@@ -1,0 +1,191 @@
+{
+  "asset_id": "FX-HEAL",
+  "catalog_id": "A04",
+  "generator": "Tools/FxHealGenerator/generate.py",
+  "supersampling": 8,
+  "cell": 256,
+  "grid": [
+    4,
+    2
+  ],
+  "duration_s": 0.4,
+  "ppm": 160.0,
+  "pivot_px": [
+    128.0,
+    180.0
+  ],
+  "camera_pitch_deg": 45,
+  "light": [
+    -0.552380364401192,
+    -0.8335921862781622
+  ],
+  "palette": {
+    "ruby_deep": "#C21D3A",
+    "ruby": "#E04A63",
+    "ruby_light": "#F07C8C",
+    "warm_white": "#FFEBD8",
+    "ivory": "#FFF6EA"
+  },
+  "ring": {
+    "radius_m": [
+      0.3,
+      0.47
+    ],
+    "width_m": 0.045,
+    "segments": 20,
+    "back_gap_deg": 84.0,
+    "front_gaps_deg": [
+      [
+        -62.0,
+        9.0
+      ],
+      [
+        62.0,
+        9.0
+      ]
+    ],
+    "alpha_peak": 0.3,
+    "fade": [
+      0.55,
+      1.0,
+      0.85,
+      0.62,
+      0.4,
+      0.2,
+      0.07,
+      0.0
+    ],
+    "colour_in": "ruby_light",
+    "colour_out": "warm_white"
+  },
+  "ring_arcs_deg": [
+    [
+      0.0,
+      18.0
+    ],
+    [
+      18.0,
+      36.0
+    ],
+    [
+      36.0,
+      54.0
+    ],
+    [
+      126.0,
+      144.0
+    ],
+    [
+      144.0,
+      162.0
+    ],
+    [
+      162.0,
+      180.0
+    ],
+    [
+      180.0,
+      198.0
+    ],
+    [
+      216.0,
+      234.0
+    ],
+    [
+      234.0,
+      252.0
+    ],
+    [
+      252.0,
+      270.0
+    ],
+    [
+      270.0,
+      288.0
+    ],
+    [
+      288.0,
+      306.0
+    ],
+    [
+      306.0,
+      324.0
+    ],
+    [
+      342.0,
+      360.0
+    ]
+  ],
+  "motes": [
+    {
+      "x_m": -0.36,
+      "z_m": -0.08,
+      "rise_m": 0.8,
+      "delay": 0.0,
+      "size": 1.0,
+      "drift_x_m": -0.04
+    },
+    {
+      "x_m": 0.38,
+      "z_m": -0.04,
+      "rise_m": 0.86,
+      "delay": 0.06,
+      "size": 1.05,
+      "drift_x_m": 0.05
+    },
+    {
+      "x_m": -0.22,
+      "z_m": -0.3,
+      "rise_m": 0.56,
+      "delay": 0.1,
+      "size": 0.9,
+      "drift_x_m": -0.03
+    },
+    {
+      "x_m": 0.25,
+      "z_m": -0.32,
+      "rise_m": 0.62,
+      "delay": 0.02,
+      "size": 0.95,
+      "drift_x_m": 0.03
+    },
+    {
+      "x_m": -0.5,
+      "z_m": 0.08,
+      "rise_m": 0.46,
+      "delay": 0.16,
+      "size": 0.8,
+      "drift_x_m": -0.02
+    },
+    {
+      "x_m": 0.5,
+      "z_m": 0.1,
+      "rise_m": 0.5,
+      "delay": 0.2,
+      "size": 0.82,
+      "drift_x_m": 0.02
+    },
+    {
+      "x_m": 0.02,
+      "z_m": -0.36,
+      "rise_m": 0.42,
+      "delay": 0.08,
+      "size": 0.85,
+      "drift_x_m": 0.0
+    }
+  ],
+  "mote": {
+    "half_w_m": 0.06,
+    "half_h_m": 0.1,
+    "life": 0.8,
+    "alpha_peak": 0.92,
+    "halo_alpha": 0.2,
+    "halo_scale": 2.0
+  },
+  "references": {
+    "floor_capture": "Reports/F05/Visual-final/1920-healing.png",
+    "potion_ruby": "Tools/Lemo3DGenerator/src/production/ItemModels.mjs M.ruby #C21D3A",
+    "f05_heal_colour": "Assets/_Project/Scripts/UI/PlayerRewardFeedback.cs Color(.92,.32,.42)",
+    "camera": "Assets/_Project/Scripts/Editor/ArtTestSceneBuilder.cs (offset 0,10,-10, pitch 45°)"
+  }
+}

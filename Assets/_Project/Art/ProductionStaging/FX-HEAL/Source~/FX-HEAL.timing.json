@@ -1,0 +1,166 @@
+{
+  "asset_id": "FX-HEAL",
+  "sheet": "../FX-HEAL-Sheet.png",
+  "sheet_size": [
+    1024,
+    512
+  ],
+  "grid": {
+    "columns": 4,
+    "rows": 2,
+    "cell": [
+      256,
+      256
+    ],
+    "order": "linha a linha, da esquerda para a direita, de cima para baixo"
+  },
+  "frames": [
+    {
+      "index": 0,
+      "cell": [
+        0,
+        0
+      ],
+      "start_s": 0.0,
+      "duration_s": 0.05,
+      "file": "frames/FX-HEAL-F0.png"
+    },
+    {
+      "index": 1,
+      "cell": [
+        1,
+        0
+      ],
+      "start_s": 0.05,
+      "duration_s": 0.05,
+      "file": "frames/FX-HEAL-F1.png"
+    },
+    {
+      "index": 2,
+      "cell": [
+        2,
+        0
+      ],
+      "start_s": 0.1,
+      "duration_s": 0.05,
+      "file": "frames/FX-HEAL-F2.png"
+    },
+    {
+      "index": 3,
+      "cell": [
+        3,
+        0
+      ],
+      "start_s": 0.15,
+      "duration_s": 0.05,
+      "file": "frames/FX-HEAL-F3.png"
+    },
+    {
+      "index": 4,
+      "cell": [
+        0,
+        1
+      ],
+      "start_s": 0.2,
+      "duration_s": 0.05,
+      "file": "frames/FX-HEAL-F4.png"
+    },
+    {
+      "index": 5,
+      "cell": [
+        1,
+        1
+      ],
+      "start_s": 0.25,
+      "duration_s": 0.05,
+      "file": "frames/FX-HEAL-F5.png"
+    },
+    {
+      "index": 6,
+      "cell": [
+        2,
+        1
+      ],
+      "start_s": 0.3,
+      "duration_s": 0.05,
+      "file": "frames/FX-HEAL-F6.png"
+    },
+    {
+      "index": 7,
+      "cell": [
+        3,
+        1
+      ],
+      "start_s": 0.35,
+      "duration_s": 0.05,
+      "file": "frames/FX-HEAL-F7.png"
+    }
+  ],
+  "duration_s": 0.4,
+  "fps": 20.0,
+  "loop": false,
+  "final_frame": "quadro 7 totalmente transparente (fim do efeito)",
+  "pivot": {
+    "meaning": "centro dos pés do Hero, sobre o piso",
+    "cell_px_from_top_left": [
+      128.0,
+      180.0
+    ],
+    "cell_normalized_unity_bottom_left": [
+      0.5,
+      0.2969
+    ]
+  },
+  "scale": {
+    "pixels_per_metre_at_feet": 160.0,
+    "cell_size_m": 1.6,
+    "gameplay_radius_m": 0.6,
+    "in_game_reference": "~75 px/m perto do Hero a 1920×1080 → sheet exibida a ~0.47×"
+  },
+  "camera": {
+    "pitch_deg": 45,
+    "offset": [
+      0,
+      10,
+      -10
+    ],
+    "note": "Billboard voltado para a câmera; o anel já vem projetado a 45°."
+  },
+  "unity_integration_proposal": {
+    "status": "Proposta; NÃO VALIDADO NO EDITOR. Integração é tarefa de código separada.",
+    "texture_import": "Default, sRGB, alphaIsTransparency, clamp, bilinear, mipmaps on (como FX_Spark).",
+    "material": "URP/Particles/Unlit, Surface Transparent, Blend Alpha, cor branca; opacidade multiplicada pela opção de flash do F05.",
+    "particle_system": {
+      "max_particles": 1,
+      "emission": "1 burst por cura aceita (PlayerRewardFeedback.OnHealed), sem loop",
+      "start_lifetime_s": 0.4,
+      "start_size_m": 1.6,
+      "simulation_space": "World (efeito fica no piso se o Hero andar)",
+      "texture_sheet_animation": {
+        "mode": "Grid",
+        "tiles": [
+          4,
+          2
+        ],
+        "animation": "Whole Sheet",
+        "frame_over_time": "linear 0→1",
+        "cycles": 1
+      },
+      "renderer": {
+        "render_mode": "Billboard",
+        "pivot": [
+          0,
+          0.2031,
+          0
+        ],
+        "pivot_note": "Desloca o quad para o pivô dos pés coincidir com a posição da partícula (unidades do tamanho). Conferir o sinal no Editor."
+      }
+    },
+    "rules": [
+      "Disparar só após cura efetiva (HealingAccepted, origem != LevelUp); HP cheio/morto não publica.",
+      "Não atrasar a cura: o efeito é só apresentação, iniciado depois do evento.",
+      "Pausa congela (Time.timeScale/ParticleSystem.Pause); morte, reset e desativação chamam Clear.",
+      "Retrigger reusa o mesmo ParticleSystem (Clear + Emit), sem instanciar."
+    ]
+  }
+}

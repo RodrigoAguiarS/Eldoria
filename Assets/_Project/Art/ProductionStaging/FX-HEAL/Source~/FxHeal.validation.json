@@ -1,0 +1,275 @@
+{
+  "checks": [
+    {
+      "name": "sheet_size_mode",
+      "ok": true,
+      "detail": "(1024, 512) RGBA"
+    },
+    {
+      "name": "frames_are_256_rgba",
+      "ok": true,
+      "detail": "8 quadros"
+    },
+    {
+      "name": "sheet_cells_equal_frames",
+      "ok": true,
+      "detail": "célula k = quadro k"
+    },
+    {
+      "name": "no_dirty_transparent_px",
+      "ok": true,
+      "detail": "0 px com alpha 0 e RGB != 0"
+    },
+    {
+      "name": "no_edge_cut_margin_ge_8px",
+      "ok": true,
+      "detail": "margem mínima 20 px"
+    },
+    {
+      "name": "final_frame_transparent",
+      "ok": true,
+      "detail": "alpha máx. quadro 7 = 0"
+    },
+    {
+      "name": "frames_0_to_6_visible",
+      "ok": true,
+      "detail": "quadros 0–6 não vazios"
+    },
+    {
+      "name": "fades_out",
+      "ok": true,
+      "detail": "quadro 6 < 35% do pico"
+    },
+    {
+      "name": "no_green_hue",
+      "ok": true,
+      "detail": "0 px em matiz (70.0, 170.0)"
+    },
+    {
+      "name": "no_threat_red_orange",
+      "ok": true,
+      "detail": "0 px saturados em matiz (0.0, 45.0)"
+    },
+    {
+      "name": "no_wide_flash",
+      "ok": true,
+      "detail": "cobertura alpha>50% ≤ 6% por quadro"
+    },
+    {
+      "name": "pivot_consistent",
+      "ok": true,
+      "detail": "anel centrado em x=128.0 e base coerente com pivô y=180.0"
+    },
+    {
+      "name": "gameplay_radius_le_0_6m",
+      "ok": true,
+      "detail": "anel e motes dentro de 0,6 m"
+    },
+    {
+      "name": "particle_budget_le_16",
+      "ok": true,
+      "detail": "7 motes + 1 anel"
+    }
+  ],
+  "frames": [
+    {
+      "frame": 0,
+      "time_s": 0.0,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 132771,
+      "alpha_max": 199,
+      "cover_over_50pct": 0.00494,
+      "bbox": [
+        54,
+        147,
+        203,
+        228
+      ],
+      "edge_margin_px": 28,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "ring_bbox": [
+        76,
+        150,
+        180,
+        217
+      ],
+      "ring_centre_x": 128.0,
+      "ring_bottom_expected": 216.49
+    },
+    {
+      "frame": 1,
+      "time_s": 0.05,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 484925,
+      "alpha_max": 240,
+      "cover_over_50pct": 0.01965,
+      "bbox": [
+        36,
+        118,
+        219,
+        224
+      ],
+      "edge_margin_px": 32,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "ring_bbox": [
+        69,
+        146,
+        187,
+        222
+      ],
+      "ring_centre_x": 128.0,
+      "ring_bottom_expected": 221.59
+    },
+    {
+      "frame": 2,
+      "time_s": 0.1,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 622354,
+      "alpha_max": 240,
+      "cover_over_50pct": 0.02733,
+      "bbox": [
+        32,
+        97,
+        224,
+        226
+      ],
+      "edge_margin_px": 30,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "ring_bbox": [
+        63,
+        142,
+        193,
+        226
+      ],
+      "ring_centre_x": 128.0,
+      "ring_bottom_expected": 225.91
+    },
+    {
+      "frame": 3,
+      "time_s": 0.15,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 608972,
+      "alpha_max": 240,
+      "cover_over_50pct": 0.02788,
+      "bbox": [
+        31,
+        80,
+        225,
+        230
+      ],
+      "edge_margin_px": 26,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "ring_bbox": [
+        58,
+        140,
+        198,
+        230
+      ],
+      "ring_centre_x": 128.0,
+      "ring_bottom_expected": 229.44
+    },
+    {
+      "frame": 4,
+      "time_s": 0.2,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 429834,
+      "alpha_max": 240,
+      "cover_over_50pct": 0.02084,
+      "bbox": [
+        30,
+        70,
+        226,
+        233
+      ],
+      "edge_margin_px": 23,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "ring_bbox": [
+        54,
+        137,
+        202,
+        233
+      ],
+      "ring_centre_x": 128.0,
+      "ring_bottom_expected": 232.19
+    },
+    {
+      "frame": 5,
+      "time_s": 0.25,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 148329,
+      "alpha_max": 194,
+      "cover_over_50pct": 0.00491,
+      "bbox": [
+        31,
+        69,
+        226,
+        235
+      ],
+      "edge_margin_px": 21,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "ring_bbox": [
+        51,
+        136,
+        205,
+        235
+      ],
+      "ring_centre_x": 128.0,
+      "ring_bottom_expected": 234.15
+    },
+    {
+      "frame": 6,
+      "time_s": 0.3,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 21420,
+      "alpha_max": 69,
+      "cover_over_50pct": 0.0,
+      "bbox": [
+        34,
+        97,
+        223,
+        236
+      ],
+      "edge_margin_px": 20,
+      "green_px": 0,
+      "threat_hue_px": 0,
+      "ring_bbox": [
+        49,
+        135,
+        207,
+        236
+      ],
+      "ring_centre_x": 128.0,
+      "ring_bottom_expected": 235.33
+    },
+    {
+      "frame": 7,
+      "time_s": 0.35,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 0,
+      "alpha_max": 0,
+      "cover_over_50pct": 0.0,
+      "bbox": null,
+      "green_px": 0,
+      "threat_hue_px": 0
+    }
+  ],
+  "ok": true,
+  "sha256": {
+    "FX-HEAL-Sheet.png": "db52b493fdf99fbb717c5422e3fd211d75ca29b7456c5fb3604a0afe090d1b91",
+    "frames/FX-HEAL-F0.png": "9b131fe828bb17b30ebe8378d05625f9d6180cc263b878a13b10dde91a039e31",
+    "frames/FX-HEAL-F1.png": "3aafc74d8241bb01e5bfa7419cafe300855ff9c2835737a96b8b023986850bd7",
+    "frames/FX-HEAL-F2.png": "7965fe7e4c0de6828ad5c042657f65dcaa32e31b2c334921c754f9b98afe4105",
+    "frames/FX-HEAL-F3.png": "5e4e9eb87bd1ac13f68fd1bd92476a4a49d6e075fc66f95548abf05637ef1d78",
+    "frames/FX-HEAL-F4.png": "733b50a466d29eab98e1a00e160a9df062dd513b1aa2b082f38909908f051f43",
+    "frames/FX-HEAL-F5.png": "8a047309754443a240cdb438dde347061a99b1084a08019ba1a82cac26161c23",
+    "frames/FX-HEAL-F6.png": "b42ab08166198bb3ed5598df3ed499ed711802d2abda146e5800c8cb5cfa1cd5",
+    "frames/FX-HEAL-F7.png": "aebc86755d7beb8b01bcd992ab44e1133afcb473511b7832eb82228be275473f"
+  },
+  "meta_created": false
+}

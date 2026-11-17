@@ -18,8 +18,8 @@
   "summary": {
     "logical_resources": 133,
     "by_status": {
-      "EXISTENTE": 120,
-      "AUSENTE": 10,
+      "EXISTENTE": 121,
+      "AUSENTE": 9,
       "INCOMPLETO": 1,
       "NÃO VERIFICADO": 2
     },
@@ -57,9 +57,9 @@
         "AUSENTE": 1
       },
       "J": {
-        "EXISTENTE": 9,
+        "EXISTENTE": 10,
         "INCOMPLETO": 1,
-        "AUSENTE": 6
+        "AUSENTE": 5
       }
     },
     "by_priority": {
@@ -7000,7 +7000,7 @@
       "category": "J",
       "category_name": "VFX e animações adicionais",
       "functionality": "Polimento opcional de ação existente",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "VFX",
       "scope": "sugestão_polimento",
@@ -7028,7 +7028,7 @@
       "technical_dependencies": [
         "Health.Changed genérico; não há PotionUsed. Distinguir consumo aceito de cura de nível."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Produzido em staging (A04, 17/11/2026) como sheet raster 4×2 de 8 quadros; NÃO integrado. O F05 atual continua com os 7 motes procedurais (FX_Spark). Ligar a sheet ao ParticleSystem de cura do PlayerRewardFeedback (Texture Sheet Animation 4×2, 1 partícula, 0,4 s) é tarefa de código separada; proposta em Source~/FX-HEAL.timing.json.",
       "visual_specification": "Brief soft ruby-to-warm-white upward motes close to the hero and a low-opacity foot ring; no poison-like effect.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7037,7 +7037,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "Técnica fora da Unity em 17/11/2026: FxHeal.validation.json (PNG decodificado: sheet 1024×512 RGBA, célula k = quadro k, 0 pixels transparentes com RGB sujo, margem mínima 20 px sem corte, quadro 7 com alpha máx. 0, pivô coerente em todos os quadros, 0 px em matiz verde e 0 px saturados em matiz de ameaça 0–45°, cobertura alpha>50% ≤ 6%, anel/motes ≤ 0,6 m) e asset_report.py (sheet --expect-size 1024x512 e quadros 256x256, --require-alpha, exit 0); revisão sobre a captura real F05 1920×1080 na escala de gameplay. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -7050,10 +7050,11 @@
         "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/FX-HEAL/FX-HEAL.prefab"
       },
       "source_and_rights": {
-        "kind": "not_produced",
-        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
-        "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/FX-HEAL/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria e render próprios (Tools/FxHealGenerator/generate.py, Pillow MIT-CMU/HPND). Sem IA generativa de imagem nem asset de terceiros."
+      },
+      "production_state": "Produzido por gerador próprio (generate.py: 7 motes em losango facetado rubi #E04A63 → branco quente #FFEBD8 subindo à frente e aos lados das botas e anel de 20 facetas aberto atrás do Hero, alpha ≤ 0,30, projetados na câmera de 45°; supersampling 8× com alpha pré-multiplicado): FX-HEAL-Sheet.png 1024×512 (grade 4×2, células 256×256), pivô nos pés em (128,180) px, 160 px/m, 0,4 s a 20 fps, quadro 7 vazio; quadros isolados e timing JSON em Source~. Prefab sugerido pela ficha não criado (integração em tarefa separada)."
     },
     {
       "id": "FX-LOOT",
@@ -12661,6 +12662,46 @@
         "Aprovação artística humana pendente."
       ],
       "note": "Mudanças locais do Editor presentes na árvore (ICON-ACTION-DASH.png.meta, ProjectSettings) não pertencem a este lote e não foram commitadas."
+    },
+    {
+      "id": "A04-FX-HEAL",
+      "date_local": "2026-11-17",
+      "branch": "claude/a04-fx-heal",
+      "produced": [
+        "FX-HEAL"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/FxHealGenerator/generate.py",
+        "Tools/FxHealGenerator/texture.meta.template"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/FX-HEAL.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-HEAL/FX-HEAL-Sheet.png",
+        "Assets/_Project/Art/ProductionStaging/FX-HEAL/FX-HEAL-Sheet.png.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-HEAL/Source~/"
+      ],
+      "import_settings": "Igual a FX_Spark (textura de partícula existente): Default, sRGB, alphaIsTransparency, bilinear, clamp, mipmaps on; padrão 2048, Standalone/WebGL compressão normal; GUID novo e estável (SHA256 do nome).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "FxHeal.validation.json ok (14/14); asset_report.py exit 0 (sheet e 8 quadros); geração determinística (2 execuções, mesmos SHA256)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: .meta copiada de FX_Spark.png.meta; a Unity pode reserializá-la na primeira importação.",
+        "Sem integração no F05 (tarefa de código separada; proposta em Source~/FX-HEAL.timing.json, incluindo renderer.pivot cujo sinal precisa ser conferido no Editor).",
+        "review_floor.png compõe sobre a captura F05, que já contém os motes procedurais atuais perto das botas; não é captura da Unity.",
+        "Escala in-game estimada (~75 px/m a 1080p, ladrilho 2 m ≈ 150 px); a leitura final depende do PlayMode.",
+        "FX-HEAL.prefab sugerido pela ficha não criado: prefab exige coordenação.",
+        "Aprovação artística humana pendente."
+      ]
     }
   ]
 }
