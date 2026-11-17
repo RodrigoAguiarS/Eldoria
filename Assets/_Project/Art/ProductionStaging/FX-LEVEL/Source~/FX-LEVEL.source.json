@@ -1,0 +1,228 @@
+{
+  "asset_id": "FX-LEVEL",
+  "catalog_id": "A05",
+  "generator": "Tools/FxLevelGenerator/generate.py",
+  "supersampling": 8,
+  "cell": 256,
+  "grid": [
+    4,
+    3
+  ],
+  "duration_s": 0.7,
+  "ppm": 128.0,
+  "pivot_px": [
+    128.0,
+    178.0
+  ],
+  "camera_pitch_deg": 45,
+  "light": [
+    -0.552380364401192,
+    -0.8335921862781622
+  ],
+  "hero_height_m": 2.0,
+  "palette": {
+    "cyan_shade": "#2FB8E8",
+    "cyan": "#4FD8FF",
+    "cyan_pale": "#DFFBFF",
+    "brass_shade": "#B08A2A",
+    "brass": "#E0B040",
+    "brass_light": "#F2D27A"
+  },
+  "ring": {
+    "radius_m": [
+      0.58,
+      0.5
+    ],
+    "rise_m": 1.0,
+    "rise_end_t": 0.8,
+    "width_m": 0.055,
+    "segments": 24,
+    "back_gap_deg": 120.0,
+    "back_alpha": 0.55,
+    "alpha_peak": 0.82,
+    "fade": [
+      0.5,
+      0.85,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.95,
+      0.85,
+      0.7,
+      0.48,
+      0.24,
+      0.0
+    ],
+    "dissolve": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0.2,
+      0.45,
+      0.7,
+      1.0
+    ]
+  },
+  "ring_segments_deg": [
+    [
+      0.0,
+      15.0
+    ],
+    [
+      15.0,
+      30.0
+    ],
+    [
+      150.0,
+      165.0
+    ],
+    [
+      165.0,
+      180.0
+    ],
+    [
+      180.0,
+      195.0
+    ],
+    [
+      195.0,
+      210.0
+    ],
+    [
+      210.0,
+      225.0
+    ],
+    [
+      225.0,
+      240.0
+    ],
+    [
+      240.0,
+      255.0
+    ],
+    [
+      255.0,
+      270.0
+    ],
+    [
+      270.0,
+      285.0
+    ],
+    [
+      285.0,
+      300.0
+    ],
+    [
+      300.0,
+      315.0
+    ],
+    [
+      315.0,
+      330.0
+    ],
+    [
+      330.0,
+      345.0
+    ],
+    [
+      345.0,
+      360.0
+    ]
+  ],
+  "motes": [
+    {
+      "x_m": -0.71,
+      "z_m": -0.1,
+      "start_height_m": 0.1,
+      "rise_m": 0.34,
+      "delay": 0.06,
+      "size": 1.0,
+      "drift_x_m": -0.02
+    },
+    {
+      "x_m": 0.72,
+      "z_m": -0.04,
+      "start_height_m": 0.24,
+      "rise_m": 0.32,
+      "delay": 0.14,
+      "size": 0.95,
+      "drift_x_m": 0.02
+    },
+    {
+      "x_m": -0.73,
+      "z_m": 0.12,
+      "start_height_m": 0.44,
+      "rise_m": 0.3,
+      "delay": 0.26,
+      "size": 0.85,
+      "drift_x_m": -0.01
+    },
+    {
+      "x_m": 0.73,
+      "z_m": 0.14,
+      "start_height_m": 0.56,
+      "rise_m": 0.3,
+      "delay": 0.34,
+      "size": 0.85,
+      "drift_x_m": 0.01
+    },
+    {
+      "x_m": -0.71,
+      "z_m": -0.16,
+      "start_height_m": 0.7,
+      "rise_m": 0.28,
+      "delay": 0.42,
+      "size": 0.9,
+      "drift_x_m": -0.02
+    },
+    {
+      "x_m": 0.71,
+      "z_m": -0.14,
+      "start_height_m": 0.8,
+      "rise_m": 0.28,
+      "delay": 0.48,
+      "size": 0.9,
+      "drift_x_m": 0.02
+    },
+    {
+      "x_m": -0.72,
+      "z_m": 0.04,
+      "start_height_m": 0.86,
+      "rise_m": 0.28,
+      "delay": 0.54,
+      "size": 0.8,
+      "drift_x_m": -0.02
+    },
+    {
+      "x_m": 0.71,
+      "z_m": 0.02,
+      "start_height_m": 0.06,
+      "rise_m": 0.3,
+      "delay": 0.02,
+      "size": 0.8,
+      "drift_x_m": 0.02
+    }
+  ],
+  "mote": {
+    "half_w_m": 0.055,
+    "half_h_m": 0.08,
+    "life": 0.4,
+    "alpha_peak": 0.88,
+    "halo_alpha": 0.16,
+    "halo_scale": 1.45
+  },
+  "references": {
+    "floor_capture": "Reports/F05/Visual-final/1920-level.png",
+    "xp_orb": "Tools/Lemo3DGenerator/src/production/ItemModels.mjs M.xp #4FD8FF, M.xpRing #DFFBFF (torus 12 segmentos)",
+    "f05_level_burst": "Assets/_Project/Scripts/UI/PlayerRewardFeedback.cs OnLevel: 12 partículas Color(.9,.76,.42)",
+    "boss_telegraph": "Assets/_Project/Scripts/Editor/DungeonFloorSceneBuilder.cs Mat_TelegraphFill (1,.2,.15)",
+    "hero_height": "Assets/_Project/Scripts/Editor/DungeonMvpSceneBuilder.cs controller.height = 2",
+    "camera": "Assets/_Project/Scripts/Editor/ArtTestSceneBuilder.cs (offset 0,10,-10, pitch 45°)"
+  }
+}

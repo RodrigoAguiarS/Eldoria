@@ -1,0 +1,231 @@
+{
+  "asset_id": "FX-LEVEL",
+  "sheet": "../FX-LEVEL-Sheet.png",
+  "sheet_size": [
+    1024,
+    768
+  ],
+  "grid": {
+    "columns": 4,
+    "rows": 3,
+    "cell": [
+      256,
+      256
+    ],
+    "order": "linha a linha, da esquerda para a direita, de cima para baixo"
+  },
+  "frames": [
+    {
+      "index": 0,
+      "cell": [
+        0,
+        0
+      ],
+      "start_s": 0.0,
+      "duration_s": 0.0583,
+      "ring_height_m": 0.0,
+      "ring_radius_m": 0.58,
+      "file": "frames/FX-LEVEL-F0.png"
+    },
+    {
+      "index": 1,
+      "cell": [
+        1,
+        0
+      ],
+      "start_s": 0.0583,
+      "duration_s": 0.0583,
+      "ring_height_m": 0.075,
+      "ring_radius_m": 0.577,
+      "file": "frames/FX-LEVEL-F1.png"
+    },
+    {
+      "index": 2,
+      "cell": [
+        2,
+        0
+      ],
+      "start_s": 0.1167,
+      "duration_s": 0.0583,
+      "ring_height_m": 0.179,
+      "ring_radius_m": 0.569,
+      "file": "frames/FX-LEVEL-F2.png"
+    },
+    {
+      "index": 3,
+      "cell": [
+        3,
+        0
+      ],
+      "start_s": 0.175,
+      "duration_s": 0.0583,
+      "ring_height_m": 0.305,
+      "ring_radius_m": 0.558,
+      "file": "frames/FX-LEVEL-F3.png"
+    },
+    {
+      "index": 4,
+      "cell": [
+        0,
+        1
+      ],
+      "start_s": 0.2333,
+      "duration_s": 0.0583,
+      "ring_height_m": 0.443,
+      "ring_radius_m": 0.545,
+      "file": "frames/FX-LEVEL-F4.png"
+    },
+    {
+      "index": 5,
+      "cell": [
+        1,
+        1
+      ],
+      "start_s": 0.2917,
+      "duration_s": 0.0583,
+      "ring_height_m": 0.585,
+      "ring_radius_m": 0.532,
+      "file": "frames/FX-LEVEL-F5.png"
+    },
+    {
+      "index": 6,
+      "cell": [
+        2,
+        1
+      ],
+      "start_s": 0.35,
+      "duration_s": 0.0583,
+      "ring_height_m": 0.721,
+      "ring_radius_m": 0.519,
+      "file": "frames/FX-LEVEL-F6.png"
+    },
+    {
+      "index": 7,
+      "cell": [
+        3,
+        1
+      ],
+      "start_s": 0.4083,
+      "duration_s": 0.0583,
+      "ring_height_m": 0.844,
+      "ring_radius_m": 0.509,
+      "file": "frames/FX-LEVEL-F7.png"
+    },
+    {
+      "index": 8,
+      "cell": [
+        0,
+        2
+      ],
+      "start_s": 0.4667,
+      "duration_s": 0.0583,
+      "ring_height_m": 0.943,
+      "ring_radius_m": 0.502,
+      "file": "frames/FX-LEVEL-F8.png"
+    },
+    {
+      "index": 9,
+      "cell": [
+        1,
+        2
+      ],
+      "start_s": 0.525,
+      "duration_s": 0.0583,
+      "ring_height_m": 1.0,
+      "ring_radius_m": 0.5,
+      "file": "frames/FX-LEVEL-F9.png"
+    },
+    {
+      "index": 10,
+      "cell": [
+        2,
+        2
+      ],
+      "start_s": 0.5833,
+      "duration_s": 0.0583,
+      "ring_height_m": 1.0,
+      "ring_radius_m": 0.5,
+      "file": "frames/FX-LEVEL-F10.png"
+    },
+    {
+      "index": 11,
+      "cell": [
+        3,
+        2
+      ],
+      "start_s": 0.6417,
+      "duration_s": 0.0583,
+      "ring_height_m": 1.0,
+      "ring_radius_m": 0.5,
+      "file": "frames/FX-LEVEL-F11.png"
+    }
+  ],
+  "duration_s": 0.7,
+  "fps": 17.143,
+  "loop": false,
+  "final_frame": "quadro 11 totalmente transparente (fim do efeito)",
+  "pivot": {
+    "meaning": "centro dos pés do Hero, sobre o piso",
+    "cell_px_from_top_left": [
+      128.0,
+      178.0
+    ],
+    "cell_normalized_unity_bottom_left": [
+      0.5,
+      0.3047
+    ]
+  },
+  "scale": {
+    "pixels_per_metre_at_feet": 128.0,
+    "cell_size_m": 2.0,
+    "gameplay_radius_m": 0.8,
+    "in_game_reference": "~75 px/m perto do Hero a 1920×1080 → sheet exibida a ~0.59×"
+  },
+  "camera": {
+    "pitch_deg": 45,
+    "offset": [
+      0,
+      10,
+      -10
+    ],
+    "note": "Billboard voltado para a câmera; anel e alturas já vêm projetados a 45°."
+  },
+  "unity_integration_proposal": {
+    "status": "Proposta; NÃO VALIDADO NO EDITOR. Integração é tarefa de código separada.",
+    "texture_import": "Default, sRGB, alphaIsTransparency, clamp, bilinear, mipmaps on (como FX_Spark).",
+    "material": "URP/Particles/Unlit, Surface Transparent, Blend Alpha, cor branca; opacidade multiplicada pela opção de flash do F05 (options.Current.flash).",
+    "particle_system": {
+      "max_particles": 1,
+      "emission": "1 burst por PlayerProgression.LeveledUp, sem loop",
+      "start_lifetime_s": 0.7,
+      "start_size_m": 2.0,
+      "simulation_space": "Local ao Hero (o anel acompanha o corpo enquanto sobe)",
+      "texture_sheet_animation": {
+        "mode": "Grid",
+        "tiles": [
+          4,
+          3
+        ],
+        "animation": "Whole Sheet",
+        "frame_over_time": "linear 0→1",
+        "cycles": 1
+      },
+      "renderer": {
+        "render_mode": "Billboard",
+        "pivot": [
+          0,
+          0.1953,
+          -0.2
+        ],
+        "pivot_note": "y desloca o quad para o pivô dos pés coincidir com a partícula; z (≈0,4 m) aproxima o quad da câmera para o arco da frente não ser escondido pelas pernas. A abertura de 120° atrás evita que o arco de trás seja desenhado sobre o tronco. Conferir os sinais de y e z no Editor."
+      }
+    },
+    "rules": [
+      "Disparar só em PlayerProgression.LeveledUp; é só apresentação e não lê nem altera HP, XP ou fórmula.",
+      "Vários níveis no mesmo ganho de XP: um único restart do mesmo emissor (Clear + Emit); nenhum efeito extra de cura ou dano.",
+      "A cura de LevelUp continua sem disparar o FX-HEAL (regra atual do F05).",
+      "Pausa congela; morte, reset e desativação chamam Clear; opção de flash reduz a opacidade e 0 desliga.",
+      "Não é AnimationClip corporal nem altera o Animator do Hero."
+    ]
+  }
+}

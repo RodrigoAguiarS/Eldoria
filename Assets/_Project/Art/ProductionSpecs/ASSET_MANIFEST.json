@@ -18,8 +18,8 @@
   "summary": {
     "logical_resources": 133,
     "by_status": {
-      "EXISTENTE": 121,
-      "AUSENTE": 9,
+      "EXISTENTE": 122,
+      "AUSENTE": 8,
       "INCOMPLETO": 1,
       "NÃO VERIFICADO": 2
     },
@@ -57,9 +57,9 @@
         "AUSENTE": 1
       },
       "J": {
-        "EXISTENTE": 10,
+        "EXISTENTE": 11,
         "INCOMPLETO": 1,
-        "AUSENTE": 5
+        "AUSENTE": 4
       }
     },
     "by_priority": {
@@ -7123,7 +7123,7 @@
       "category": "J",
       "category_name": "VFX e animações adicionais",
       "functionality": "Polimento opcional de ação existente",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "VFX",
       "scope": "sugestão_polimento",
@@ -7151,7 +7151,7 @@
       "technical_dependencies": [
         "PlayerProgression.LeveledUp(int), sem mudar cura ou fórmula."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Produzido em staging (A05, 17/11/2026) como sheet raster 4×3 de 12 quadros; NÃO integrado. O F05 atual continua com o burst procedural de 12 partículas de latão (levelEffect). Ligar a sheet a PlayerProgression.LeveledUp (Texture Sheet Animation 4×3, 1 partícula, 0,7 s, billboard com pivô deslocado para a câmera) é tarefa de código separada; proposta em Source~/FX-LEVEL.timing.json.",
       "visual_specification": "One thin cyan ring rising boots-to-waist, sparse brass motes; combat floor remains visible.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7160,7 +7160,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "Técnica fora da Unity em 17/11/2026: FxLevel.validation.json (PNG decodificado: sheet 1024×768 RGBA, célula k = quadro k, 0 pixels transparentes com RGB sujo, margem mínima 23 px sem corte, quadro 11 com alpha máx. 0, pivô coerente, continuidade ≤ 16 px entre quadros (máx. 14), centro do anel vazio, nenhum mote na coluna do corpo, 0 px verdes, 0 px saturados em matiz de ameaça 0–36°, 0 px de branco opaco, cobertura alpha>50% ≤ 6%, alcance ≤ 0,8 m, 9 partículas ≤ 20) e asset_report.py (sheet --expect-size 1024x768 e quadros 256x256, --require-alpha, exit 0); revisão sobre a captura real F05 1920×1080 e ao lado de um telegraph vermelho. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -7173,10 +7173,11 @@
         "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/FX-LEVEL/FX-LEVEL.prefab"
       },
       "source_and_rights": {
-        "kind": "not_produced",
-        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
-        "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/FX-LEVEL/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria e render próprios (Tools/FxLevelGenerator/generate.py, Pillow MIT-CMU/HPND). Sem IA generativa de imagem nem asset de terceiros."
+      },
+      "production_state": "Produzido por gerador próprio (generate.py: um anel ciano #4FD8FF de 24 facetas, fino e aberto 120° atrás do Hero, sobe das botas a 1,0 m e se estreita de 0,58 para 0,50 m, depois se dissolve; 8 motes largos de latão #E0B040 só nas laterais (|x| ≥ 0,70 m); alpha ≤ 0,82, sem branco opaco; câmera de 45°; supersampling 8× com alpha pré-multiplicado): FX-LEVEL-Sheet.png 1024×768 (grade 4×3, células 256×256), pivô nos pés em (128,178) px, 128 px/m, 0,7 s a ~17,1 fps, quadro 11 vazio; quadros isolados e timing JSON em Source~. Prefab sugerido pela ficha não criado (integração em tarefa separada)."
     },
     {
       "id": "FX-SLAM",
@@ -12700,6 +12701,46 @@
         "review_floor.png compõe sobre a captura F05, que já contém os motes procedurais atuais perto das botas; não é captura da Unity.",
         "Escala in-game estimada (~75 px/m a 1080p, ladrilho 2 m ≈ 150 px); a leitura final depende do PlayMode.",
         "FX-HEAL.prefab sugerido pela ficha não criado: prefab exige coordenação.",
+        "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "A05-FX-LEVEL",
+      "date_local": "2026-11-17",
+      "branch": "claude/a05-fx-level",
+      "produced": [
+        "FX-LEVEL"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/FxLevelGenerator/generate.py"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/FX-LEVEL.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-LEVEL/FX-LEVEL-Sheet.png",
+        "Assets/_Project/Art/ProductionStaging/FX-LEVEL/FX-LEVEL-Sheet.png.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-LEVEL/Source~/"
+      ],
+      "import_settings": "Igual a FX_Spark/FX-HEAL (template Tools/FxHealGenerator/texture.meta.template): Default, sRGB, alphaIsTransparency, bilinear, clamp, mipmaps on; padrão 2048, Standalone/WebGL compressão normal; GUID novo e estável (SHA256 do nome).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "FxLevel.validation.json ok (18/18); asset_report.py exit 0 (sheet e 12 quadros); geração determinística (2 execuções, mesmos SHA256)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: .meta copiada do template de FX_Spark; a Unity pode reserializá-la na primeira importação.",
+        "Sheet 1024×768 não é potência de 2 na altura; com nPOTScale ToNearest do template a Unity deve reescalá-la na importação (grade 4×3 continua proporcional em UV). Conferir no Editor; alternativa nPOTScale None.",
+        "Sem integração no F05 (tarefa de código separada; proposta em Source~/FX-LEVEL.timing.json, incluindo renderer.pivot com y e z cujos sinais precisam ser conferidos no Editor).",
+        "review_floor.png compõe sobre a captura F05 de nível, que já contém o burst procedural atual (pontos de latão/ciano no piso); não é captura da Unity.",
+        "Altura da cintura (1,0 m) deduzida do CharacterController de 2 m; na captura o cinto do Hero parece mais alto. Conferir em PlayMode e ajustar RING.rise_m se preciso.",
+        "FX-LEVEL.prefab sugerido pela ficha não criado: prefab exige coordenação.",
         "Aprovação artística humana pendente."
       ]
     }
