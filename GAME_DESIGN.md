@@ -30,6 +30,8 @@ Máquina de estados Idle → Chase → Attack → Dead. Melee aproxima e golpeia
 
 F07: ranged só prepara tiros com visão direta da origem do projétil ao alvo. Parede e porta fechada bloqueiam; ao detectar perda de visão durante a preparação, cancela o tiro e volta a perseguir pelo NavMesh. Reabrir a visão exige um novo ataque e respeita o cooldown já iniciado. Pausa congela os tempos; desativação descarta ataques pendentes. Dano, recuo, drops e Boss mantêm as regras existentes.
 
+F13 (experimental, só na sala de teste fora do build): lanceiro com investida linear. Trava a direção ao se comprometer, mostra a faixa real no chão por pelo menos 1 s, avança pelo NavMesh sem atravessar parede/porta e causa no máximo um dano por investida; esquiva invulnerável consome o contato. Recuperação curta após o golpe. Encontros de release inalterados; valores são propostas de playtest em [LANCER-F13](docs/LANCER-F13.md).
+
 ## Boss
 Duas fases. Aos 50% HP: transição única, invulnerável por 3 segundos, rugido e mudança visual; segunda fase altera ataques. Golpes pesados mostram telegraph no chão pelo menos 1 segundo antes do dano. HUD de Boss apenas durante luta.
 

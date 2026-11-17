@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-11-16 — F13: lanceiro com investida (experimental)
+
+- Lanceiro de primitivas numa sala de teste fixa (`F13_Lancer_Test.unity`, fora do
+  build): aviso linear no chão ≥1 s, direção travada no compromisso, investida por
+  `NavMeshAgent.Move` recortada por NavMesh/Obstacle/Door, um dano por investida;
+  esquiva invulnerável consome o contato. Recuperação curta após o golpe.
+- `IEnemyAttack` permite ao `EnemyBrain` usar a investida mantendo Idle/Chase/Attack/Dead;
+  melee/ranged/elite, encontros e tabelas inalterados. Valores em SO, propostas de playtest.
+- 244/245 EditMode (falha pré-existente da F10), 14/14 PlayMode F13, captura gráfica 1/1.
+  Achado: portas não bloqueiam o NavMesh nas salas de release. [Evidências](Reports/F13/README.md).
+
 ## 2026-11-16 — F12: talento por nível (D-005)
 
 - Cada nível ganho concede uma escolha em **Pausa → Talentos**: Lâmina Afiada
