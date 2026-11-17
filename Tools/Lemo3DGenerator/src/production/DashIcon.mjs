@@ -63,8 +63,8 @@ export const CAPE = {
 export const POSE = { rot: [-8, -18, -4], elev: 12 };
 
 // ———————————————————————— malha ————————————————————————
-function tri(out, a, b, c) { out.push(...a, ...b, ...c); }
-function flatNormals(pos) {
+export function tri(out, a, b, c) { out.push(...a, ...b, ...c); }
+export function flatNormals(pos) {
   const n = [];
   for (let i = 0; i < pos.length; i += 9) {
     const ax = pos[i + 3] - pos[i], ay = pos[i + 4] - pos[i + 1], az = pos[i + 5] - pos[i + 2];
@@ -74,7 +74,7 @@ function flatNormals(pos) {
   }
   return n;
 }
-const area2 = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (c[0] - a[0]) * (b[1] - a[1]);
+export const area2 = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (c[0] - a[0]) * (b[1] - a[1]);
 export function buildMesh(src = CAPE) {
   const P = src.vertices, front = [], back = [];
   for (const f of src.faces) {
@@ -128,7 +128,7 @@ function silhouetteSVG(src = CAPE) {
 }
 
 // ———————————————————————— página do renderizador (luz/contorno idênticos a ItemIcons.mjs) ————————————————————————
-const PAGE = String.raw`<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}</style></head><body>
+export const PAGE = String.raw`<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}</style></head><body>
 <script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
 <script type="module">
 import * as THREE from 'three';
