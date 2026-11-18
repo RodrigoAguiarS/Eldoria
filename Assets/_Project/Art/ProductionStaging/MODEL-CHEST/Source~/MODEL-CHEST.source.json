@@ -1,0 +1,666 @@
+{
+  "id": "MODEL-CHEST",
+  "batch": "A11",
+  "name": "MODEL-CHEST",
+  "generator": "Tools/Lemo3DGenerator/src/production/ModelChest.mjs",
+  "three": "0.170.0",
+  "lemoRoot": "G:/lemo-opuscar/lemo-opuscar",
+  "node": "v24.18.0",
+  "units": "metros, +Y para cima, +Z frente (ficha A11); Base com pivô na base central (origem); Lid com pivô no eixo da dobradiça traseira",
+  "dimensions": {
+    "width": 1.2,
+    "depth": 0.7,
+    "height": 0.8,
+    "note": "ficha A11: ~1,2 × 0,7 × 0,8 m (L × P × A)"
+  },
+  "shape": {
+    "plinth": {
+      "w": 1.2,
+      "d": 0.7,
+      "h": 0.08,
+      "chamfer": 0.25
+    },
+    "walls": {
+      "w": 1.12,
+      "d": 0.62,
+      "y0": 0.08,
+      "y1": 0.54,
+      "thick": 0.07,
+      "frontBlocks": 3,
+      "chamfer": 0.15
+    },
+    "floorTop": 0.14,
+    "hinge": {
+      "y": 0.54,
+      "z": -0.342,
+      "knuckleRadius": 0.021,
+      "segments": 6
+    },
+    "lid": {
+      "halfW": 0.575,
+      "zRear": -0.315,
+      "zFront": 0.32,
+      "slabTop": 0.64,
+      "top": 0.8,
+      "topHalfW": 0.45,
+      "topZ": [
+        -0.15,
+        0.16
+      ]
+    },
+    "band": {
+      "y": [
+        0.545,
+        0.6
+      ],
+      "protrude": 0.015
+    },
+    "straps": {
+      "x": 0.36,
+      "width": 0.07,
+      "protrude": 0.012,
+      "baseY": [
+        0.09,
+        0.53
+      ]
+    },
+    "lock": {
+      "halfW": 0.075,
+      "y": [
+        0.4,
+        0.525
+      ],
+      "keyhole": {
+        "halfW": 0.012,
+        "y": [
+          0.44,
+          0.48
+        ]
+      }
+    },
+    "handle": {
+      "halfW": 0.2,
+      "y": [
+        0.575,
+        0.62
+      ],
+      "z": [
+        0.35,
+        0.368
+      ],
+      "posts": {
+        "x": [
+          0.15,
+          0.19
+        ],
+        "y": [
+          0.58,
+          0.615
+        ],
+        "z": [
+          0.33,
+          0.352
+        ]
+      }
+    }
+  },
+  "hinge": [
+    0,
+    0.54,
+    -0.342
+  ],
+  "palette": {
+    "stoneLight": {
+      "cell": [
+        0,
+        0
+      ],
+      "hex": "#55596B",
+      "note": "pedra clara oficial (paredes, águas e topo da tampa)"
+    },
+    "stoneDark": {
+      "cell": [
+        1,
+        0
+      ],
+      "hex": "#3E4152",
+      "note": "pedra escura oficial (plinto, faixa vertical da tampa)"
+    },
+    "interior": {
+      "cell": [
+        2,
+        0
+      ],
+      "hex": "#25262F",
+      "note": "interior/fundo/face de baixo da tampa e buraco da fechadura: derivado escurecido de #3E4152 (lê \"aberto\" pela câmera)"
+    },
+    "brass": {
+      "cell": [
+        0,
+        1
+      ],
+      "hex": "#E0B040",
+      "note": "latão oficial (faces de cima/frente das cintas, aro e pega)"
+    },
+    "brassWorn": {
+      "cell": [
+        1,
+        1
+      ],
+      "hex": "#9C7A30",
+      "note": "latão gasto: derivado de #E0B040 (laterais, traseira, dobradiças)"
+    }
+  },
+  "materials": [
+    {
+      "index": 0,
+      "name": "MODEL-CHEST_Stone",
+      "shader": "Universal Render Pipeline/Lit",
+      "surface": "Opaque",
+      "baseMap": "MODEL-CHEST_Palette.png",
+      "baseColor": "#FFFFFF",
+      "metallic": 0,
+      "smoothness": 0.12,
+      "note": "fosco, como GA_Stone_Floor/Wall (smoothness 0,10–0,15)"
+    },
+    {
+      "index": 1,
+      "name": "MODEL-CHEST_Brass",
+      "shader": "Universal Render Pipeline/Lit",
+      "surface": "Opaque",
+      "baseMap": "MODEL-CHEST_Palette.png",
+      "baseColor": "#FFFFFF",
+      "metallic": 0.45,
+      "smoothness": 0.3,
+      "note": "latão fosco gasto (GA_Iron usa 0,5/0,35); sem emissão"
+    }
+  ],
+  "clip": {
+    "name": "Open",
+    "duration": 0.6,
+    "fps": 30,
+    "loop": false,
+    "target": "Lid",
+    "channel": "Lcl Rotation X (graus)",
+    "keys": [
+      [
+        0,
+        0
+      ],
+      [
+        0.07,
+        -4
+      ],
+      [
+        0.43,
+        -111
+      ],
+      [
+        0.52,
+        -103.5
+      ],
+      [
+        0.6,
+        -105
+      ]
+    ],
+    "openDeg": -105,
+    "note": "Rotação X negativa ergue a frente (+Z) da tampa nas três convenções (three.js, FBX, Unity após o espelho de X). Base e raiz sem curvas (in-place).",
+    "frames": [
+      {
+        "frame": 0,
+        "t": 0,
+        "deg": 0
+      },
+      {
+        "frame": 1,
+        "t": 0.033333,
+        "deg": -1.8573
+      },
+      {
+        "frame": 2,
+        "t": 0.066667,
+        "deg": -3.9737
+      },
+      {
+        "frame": 3,
+        "t": 0.1,
+        "deg": -6.1053
+      },
+      {
+        "frame": 4,
+        "t": 0.133333,
+        "deg": -12.7697
+      },
+      {
+        "frame": 5,
+        "t": 0.166667,
+        "deg": -23.0016
+      },
+      {
+        "frame": 6,
+        "t": 0.2,
+        "deg": -35.7817
+      },
+      {
+        "frame": 7,
+        "t": 0.233333,
+        "deg": -50.0907
+      },
+      {
+        "frame": 8,
+        "t": 0.266667,
+        "deg": -64.9093
+      },
+      {
+        "frame": 9,
+        "t": 0.3,
+        "deg": -79.2183
+      },
+      {
+        "frame": 10,
+        "t": 0.333333,
+        "deg": -91.9984
+      },
+      {
+        "frame": 11,
+        "t": 0.366667,
+        "deg": -102.2303
+      },
+      {
+        "frame": 12,
+        "t": 0.4,
+        "deg": -108.8947
+      },
+      {
+        "frame": 13,
+        "t": 0.433333,
+        "deg": -110.9699
+      },
+      {
+        "frame": 14,
+        "t": 0.466667,
+        "deg": -108.2798
+      },
+      {
+        "frame": 15,
+        "t": 0.5,
+        "deg": -104.4465
+      },
+      {
+        "frame": 16,
+        "t": 0.533333,
+        "deg": -103.6111
+      },
+      {
+        "frame": 17,
+        "t": 0.566667,
+        "deg": -104.4358
+      },
+      {
+        "frame": 18,
+        "t": 0.6,
+        "deg": -105
+      }
+    ]
+  },
+  "parts": {
+    "Base": {
+      "triangles": 624,
+      "pieces": 24,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "boundsLocal": {
+        "min": [
+          -0.6,
+          0,
+          -0.3602
+        ],
+        "max": [
+          0.6,
+          0.561,
+          0.35
+        ]
+      },
+      "facesBySwatch": {
+        "stoneDark": 124,
+        "stoneLight": 160,
+        "interior": 136,
+        "brassWorn": 184,
+        "brass": 20
+      },
+      "pieceList": [
+        {
+          "name": "plinth",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 44,
+          "signedVolume": 0.0656587
+        },
+        {
+          "name": "wall_front_0",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 44,
+          "signedVolume": 0.0118283
+        },
+        {
+          "name": "wall_front_1",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 44,
+          "signedVolume": 0.0118283
+        },
+        {
+          "name": "wall_front_2",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 44,
+          "signedVolume": 0.0118283
+        },
+        {
+          "name": "wall_back_0",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 44,
+          "signedVolume": 0.0118283
+        },
+        {
+          "name": "wall_back_1",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 44,
+          "signedVolume": 0.0118283
+        },
+        {
+          "name": "wall_back_2",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 44,
+          "signedVolume": 0.0118283
+        },
+        {
+          "name": "wall_left",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 44,
+          "signedVolume": 0.0152395
+        },
+        {
+          "name": "wall_right",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 44,
+          "signedVolume": 0.0152395
+        },
+        {
+          "name": "floor",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 12,
+          "signedVolume": 0.028224
+        },
+        {
+          "name": "strap_front_L",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.00077
+        },
+        {
+          "name": "strap_back_L",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0007367
+        },
+        {
+          "name": "hinge_base_L_out",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 24,
+          "signedVolume": 0.0000687
+        },
+        {
+          "name": "leaf_base_L_out",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0001221
+        },
+        {
+          "name": "hinge_base_L_in",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 24,
+          "signedVolume": 0.0000687
+        },
+        {
+          "name": "leaf_base_L_in",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0001221
+        },
+        {
+          "name": "strap_front_R",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.00077
+        },
+        {
+          "name": "strap_back_R",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0007367
+        },
+        {
+          "name": "hinge_base_R_out",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 24,
+          "signedVolume": 0.0000687
+        },
+        {
+          "name": "leaf_base_R_out",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0001221
+        },
+        {
+          "name": "hinge_base_R_in",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 24,
+          "signedVolume": 0.0000687
+        },
+        {
+          "name": "leaf_base_R_in",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0001221
+        },
+        {
+          "name": "lock_plate",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0004125
+        },
+        {
+          "name": "keyhole",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 12,
+          "signedVolume": 0.0000077
+        }
+      ]
+    },
+    "Lid": {
+      "triangles": 204,
+      "pieces": 13,
+      "origin": [
+        0,
+        0.54,
+        -0.342
+      ],
+      "boundsLocal": {
+        "min": [
+          -0.59,
+          -0.021,
+          -0.0182
+        ],
+        "max": [
+          0.59,
+          0.272,
+          0.71
+        ]
+      },
+      "facesBySwatch": {
+        "stoneDark": 8,
+        "stoneLight": 10,
+        "interior": 2,
+        "brassWorn": 152,
+        "brass": 32
+      },
+      "pieceList": [
+        {
+          "name": "lid_shell",
+          "material": "MODEL-CHEST_Stone",
+          "triangles": 20,
+          "signedVolume": 0.1515983
+        },
+        {
+          "name": "band_front",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0011033
+        },
+        {
+          "name": "band_left",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0006077
+        },
+        {
+          "name": "band_right",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0006077
+        },
+        {
+          "name": "strap_lid_L",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 20,
+          "signedVolume": 0.0101962
+        },
+        {
+          "name": "hinge_lid_L",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 24,
+          "signedVolume": 0.0000733
+        },
+        {
+          "name": "leaf_lid_L",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0000837
+        },
+        {
+          "name": "strap_lid_R",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 20,
+          "signedVolume": 0.0101962
+        },
+        {
+          "name": "hinge_lid_R",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 24,
+          "signedVolume": 0.0000733
+        },
+        {
+          "name": "leaf_lid_R",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0000837
+        },
+        {
+          "name": "handle_bar",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.000324
+        },
+        {
+          "name": "handle_post_L",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0000308
+        },
+        {
+          "name": "handle_post_R",
+          "material": "MODEL-CHEST_Brass",
+          "triangles": 12,
+          "signedVolume": 0.0000308
+        }
+      ]
+    }
+  },
+  "triangles": 828,
+  "bounds": {
+    "min": [
+      -0.6,
+      0,
+      -0.3602
+    ],
+    "max": [
+      0.6,
+      0.812,
+      0.368
+    ],
+    "size": [
+      1.2,
+      0.812,
+      0.7282
+    ],
+    "center": [
+      0,
+      0.406,
+      0.0039
+    ]
+  },
+  "fbx": {
+    "file": "MODEL-CHEST.fbx",
+    "models": [
+      "Base",
+      "Lid"
+    ],
+    "info": {
+      "Base": {
+        "polygons": 624,
+        "controlPoints": 360
+      },
+      "Lid": {
+        "polygons": 204,
+        "controlPoints": 128
+      }
+    },
+    "materials": [
+      "MODEL-CHEST_Stone",
+      "MODEL-CHEST_Brass"
+    ],
+    "textures": [
+      "MODEL-CHEST_Palette.png"
+    ],
+    "takes": [
+      "Open"
+    ],
+    "ktimeStop": "27711694800"
+  },
+  "guids": {
+    "folder": "73068015136d09e32bb56fe5e29f637a",
+    "fbx": "53663a4df22cb44d05c5f266ae83bc24",
+    "palette": "df1c9470aac5dd4c77430f19d3f556a3"
+  },
+  "import": {
+    "model": "ModelImporter copiado de Assets/_Project/Art/Items/Models/Loot_XpOrb.fbx.meta (Unity 6000.6, serializedVersion 24600): globalScale 1, useFileUnits, addColliders 0, normais importadas, materialImportMode 2; alterados só GUID, importAnimation 1, animationType 2 (Generic, como Art/Models/Generated/*) e avatarSetup 1. clipAnimations vazio: a Unity cria o clip padrão a partir do take \"Open\" (0–18 quadros, sem loop).",
+    "texture": "Template FX_Spark (Tools/FxHealGenerator/texture.meta.template) com point, sem mipmaps, sem compressão, sem alpha, max 32, sRGB."
+  },
+  "integration_proposal": {
+    "status": "NÃO INTEGRADO — tarefa Codex separada. RoomRewardChest.cs, RoomRewardPresenter.cs, RoomRewardSceneBuilder.cs, cenas, prefabs e materiais Mat_Chest_F08_* não foram alterados.",
+    "orientation": "O baú F08 atual tem a frente em −Z local (Latch em z −0,46; dropOrigin em z −1,2; câmera em (0, 14, −14) olha para +Z). O modelo segue a ficha (+Z frente): o filho Visual deve ter localRotation Y = 180° sob a raiz do baú para a frente encarar a câmera e os pickups.",
+    "lid": "Apontar RoomRewardPresenter.lid para o nó importado \"Lid\" (pivô no eixo, rotação de repouso 0). No espaço do modelo, Euler(−105, 0, 0) abre a frente para cima — é exatamente o valor que o presenter já aplica, então o estado visual binário funciona sem mudar código. O take Open (0,6 s) é opcional: Animator/clip sem eventos, disparado pelo evento Opened, nunca entregando recompensa; ao restaurar checkpoint (RestoreCheckpoint) aplicar a pose final direto, sem tocar o take.",
+    "replace": "Desligar (não remover sem coordenação) Body/LidPivot/Latch de primitivas, ou criar variante/prefab novo pelo Editor via builder idempotente. Materiais URP Lit MODEL-CHEST_Stone (metallic 0, smoothness 0,12) e MODEL-CHEST_Brass (0,45/0,3), ambos com MODEL-CHEST_Palette.png em _BaseMap; uma instância compartilhada pelos cinco baús.",
+    "collider": "Collider simples separado (BoxCollider ~1,2 × 0,8 × 0,7 m centrado em y 0,4) na raiz, se a regra de interação/obstrução pedir; o FBX não traz colisor. Manter fora de spawns, portas e NavMesh crítico (o baú atual está em sala + (3,5, 0, 2)).",
+    "tests": [
+      "F perto/longe, sala bloqueada/limpa, pausa e jogador morto: só a apresentação muda",
+      "reabrir/reativar/reset de HP: tampa continua aberta sem novo sorteio",
+      "RestoreCheckpoint(true) → pose aberta sem take",
+      "pickups em dropOrigin não colidem com a tampa aberta (tampa recua até z ≈ −0,47 m do modelo, ou +0,47 m no espaço do baú atual)",
+      "leitura aberto/fechado na câmera real das cinco salas e no Boss"
+    ]
+  },
+  "licence": "Projeto Eldoria; geometria e animação próprias geradas por código (three.js r170 MIT, somente leitura no Lemo-Opuscar). Sem IA generativa nem asset de terceiros; desenho genérico, sem referência comercial."
+}

@@ -1,0 +1,904 @@
+{
+  "ok": true,
+  "asset": "MODEL-CHEST",
+  "batch": "A11",
+  "validator": "Tools/Lemo3DGenerator/src/production/ModelChest_preview.py",
+  "python": "3.11.9",
+  "numpy": "2.4.6",
+  "read_from_disk": "Assets/_Project/Art/ProductionStaging/MODEL-CHEST/MODEL-CHEST.fbx",
+  "checks": [
+    {
+      "check": "triangulos",
+      "ok": true,
+      "detail": "828 triângulos (Base 624, Lid 204; todos tri: True), orçamento ≤ 1200"
+    },
+    {
+      "check": "unidade_eixos",
+      "ok": true,
+      "detail": "UnitScaleFactor 100 (cm×100 = m), UpAxis 1 (+Y), FrontAxis 2/1 (+Z), TimeMode 6 (6 = 30 fps)"
+    },
+    {
+      "check": "objetos",
+      "ok": true,
+      "detail": "tipos ['AnimationCurve', 'AnimationCurveNode', 'AnimationLayer', 'AnimationStack', 'Geometry', 'Material', 'Model', 'Texture', 'Video']; nós ['Base', 'Lid'] (Mesh, filhos da raiz); sem Deformer/Pose/NodeAttribute: sem rig, ossos, câmera, luz ou colisor"
+    },
+    {
+      "check": "materiais",
+      "ok": true,
+      "detail": "2 materiais ['MODEL-CHEST_Stone', 'MODEL-CHEST_Brass']; ordem ligada a cada nó = ['MODEL-CHEST_Stone', 'MODEL-CHEST_Brass'] (índice 0 pedra, 1 latão); índice por polígono ByPolygon usando os dois em Base e Lid"
+    },
+    {
+      "check": "textura",
+      "ok": true,
+      "detail": "['MODEL-CHEST_Palette.png'] ao lado do FBX, DiffuseColor de ['MODEL-CHEST_Brass', 'MODEL-CHEST_Stone']"
+    },
+    {
+      "check": "pecas_fechadas_convexas",
+      "ok": true,
+      "detail": "Base 24 peças, Lid 13 peças; todas fechadas: True; todas convexas: True"
+    },
+    {
+      "check": "winding_para_fora",
+      "ok": true,
+      "detail": "volume com sinal > 0 em todas as peças"
+    },
+    {
+      "check": "normais",
+      "ok": true,
+      "detail": "menor cos(normal FBX, normal geométrica) = 1.00000 (flat shading, para fora)"
+    },
+    {
+      "check": "uv_paleta",
+      "ok": true,
+      "detail": "cada face com UV constante no centro de uma célula; faces por amostra {'stoneLight': 170, 'stoneDark': 132, 'interior': 138, 'brass': 52, 'brassWorn': 336}; latão só no material Brass: True"
+    },
+    {
+      "check": "paleta_png",
+      "ok": true,
+      "detail": "MODEL-CHEST_Palette.png 16×16, 5 células = paleta do gerador"
+    },
+    {
+      "check": "pivo_base",
+      "ok": true,
+      "detail": "Base em (0,0,0) sem rotação; fundo em y 0.0000; centro XZ dos bounds (0.0000, 0.0039) m (pega na frente e dobradiças atrás quase se equilibram)"
+    },
+    {
+      "check": "dimensoes",
+      "ok": true,
+      "detail": "fechado 1.200 × 0.812 × 0.728 m (L × A × P) vs. ficha ~1.2 × 0.8 × 0.7 (tol. 3/2/5 cm; profundidade inclui pega e nós)"
+    },
+    {
+      "check": "pivo_tampa_dobradica",
+      "ok": true,
+      "detail": "Lid em [0.0, 0.54, -0.342] = eixo da dobradiça, rotação de repouso 0; fundo da tampa em y local 0.00000; menor z local fora dos nós 0.0000 (≥ 0: tudo à frente do eixo); nós coaxiais: 2 da tampa, 4 da base, folga mín. em X 6.0 mm"
+    },
+    {
+      "check": "take_open",
+      "ok": true,
+      "detail": "stacks ['Open'], takes ['Open']; duração 0.600 s; 19 chaves a 30 fps; só [('Lid', 'Lcl Rotation')]; X 0.0° → -105.0° (mín -111.0°, passo máx 14.82°/quadro); Y/Z constantes 0; nenhuma curva na Base/raiz (in-place)"
+    },
+    {
+      "check": "tampa_nao_corta_base",
+      "ok": true,
+      "detail": "SAT entre 13 peças da tampa × 24 da base em 73 instantes do take (120 Hz + chaves, ângulo interpolado das chaves do FBX): maior sobreposição 0.000 mm (≤ 0.5 mm = contato) em t 0.000 s / 0.0°"
+    },
+    {
+      "check": "aberto_fechado_distinguiveis",
+      "ok": true,
+      "detail": "câmera do jogo, rumos −30…+30°: IoU silhueta fechado×aberto máx 0.641 (≤ 0,8); interior escuro visível aberto mín 0.544 (≥ 0,05) vs. fechado máx 0.0032 (≤ 0,01, só a fechadura)"
+    },
+    {
+      "check": "latao_legivel",
+      "ok": true,
+      "detail": "fração de latão na silhueta fechada mín 0.180 (≥ 0,08); WCAG latão vs piso sob a mesma luz {\"#3E4152\": 5.02, \"#55596B\": 3.45} (≥ 3); informativo: latão a n·L 0,5 vs piso sem sombra {\"#3E4152\": 3.71, \"#55596B\": 2.55}; cor média do baú fechado vs piso (pior rumo) {\"#3E4152\": 1.56, \"#55596B\": 1.07} — pedra oficial = cor do piso, ver limitações"
+    }
+  ],
+  "bounds_closed_m": {
+    "min": [
+      -0.6,
+      0.0,
+      -0.3602
+    ],
+    "max": [
+      0.6,
+      0.812,
+      0.368
+    ],
+    "size": [
+      1.2,
+      0.812,
+      0.7282
+    ],
+    "center": [
+      0.0,
+      0.406,
+      0.0039
+    ]
+  },
+  "pieces": [
+    {
+      "part": "Base",
+      "piece": 0,
+      "triangles": 44,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0656587
+    },
+    {
+      "part": "Base",
+      "piece": 1,
+      "triangles": 44,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0118283
+    },
+    {
+      "part": "Base",
+      "piece": 2,
+      "triangles": 44,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0118283
+    },
+    {
+      "part": "Base",
+      "piece": 3,
+      "triangles": 44,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0118283
+    },
+    {
+      "part": "Base",
+      "piece": 4,
+      "triangles": 44,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0118283
+    },
+    {
+      "part": "Base",
+      "piece": 5,
+      "triangles": 44,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0118283
+    },
+    {
+      "part": "Base",
+      "piece": 6,
+      "triangles": 44,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0118283
+    },
+    {
+      "part": "Base",
+      "piece": 7,
+      "triangles": 44,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0152395
+    },
+    {
+      "part": "Base",
+      "piece": 8,
+      "triangles": 44,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0152395
+    },
+    {
+      "part": "Base",
+      "piece": 9,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.028224
+    },
+    {
+      "part": "Base",
+      "piece": 10,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 7.7e-06
+    },
+    {
+      "part": "Base",
+      "piece": 11,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.00077
+    },
+    {
+      "part": "Base",
+      "piece": 12,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0007368
+    },
+    {
+      "part": "Base",
+      "piece": 13,
+      "triangles": 24,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 6.87e-05
+    },
+    {
+      "part": "Base",
+      "piece": 14,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0001221
+    },
+    {
+      "part": "Base",
+      "piece": 15,
+      "triangles": 24,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 6.87e-05
+    },
+    {
+      "part": "Base",
+      "piece": 16,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0001221
+    },
+    {
+      "part": "Base",
+      "piece": 17,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.00077
+    },
+    {
+      "part": "Base",
+      "piece": 18,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0007367
+    },
+    {
+      "part": "Base",
+      "piece": 19,
+      "triangles": 24,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 6.87e-05
+    },
+    {
+      "part": "Base",
+      "piece": 20,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0001221
+    },
+    {
+      "part": "Base",
+      "piece": 21,
+      "triangles": 24,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 6.87e-05
+    },
+    {
+      "part": "Base",
+      "piece": 22,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0001221
+    },
+    {
+      "part": "Base",
+      "piece": 23,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0004125
+    },
+    {
+      "part": "Lid",
+      "piece": 0,
+      "triangles": 20,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.1515983
+    },
+    {
+      "part": "Lid",
+      "piece": 1,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0011033
+    },
+    {
+      "part": "Lid",
+      "piece": 2,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0006078
+    },
+    {
+      "part": "Lid",
+      "piece": 3,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0006077
+    },
+    {
+      "part": "Lid",
+      "piece": 4,
+      "triangles": 20,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0101962
+    },
+    {
+      "part": "Lid",
+      "piece": 5,
+      "triangles": 24,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 7.33e-05
+    },
+    {
+      "part": "Lid",
+      "piece": 6,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 8.37e-05
+    },
+    {
+      "part": "Lid",
+      "piece": 7,
+      "triangles": 20,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0101962
+    },
+    {
+      "part": "Lid",
+      "piece": 8,
+      "triangles": 24,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 7.33e-05
+    },
+    {
+      "part": "Lid",
+      "piece": 9,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 8.37e-05
+    },
+    {
+      "part": "Lid",
+      "piece": 10,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.000324
+    },
+    {
+      "part": "Lid",
+      "piece": 11,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 3.08e-05
+    },
+    {
+      "part": "Lid",
+      "piece": 12,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 3.08e-05
+    }
+  ],
+  "interpenetration": {
+    "worst": {
+      "penetration_m": 0.0,
+      "t": 0.0,
+      "angle_deg": 0.0,
+      "lid_piece": 0,
+      "base_piece": 1
+    },
+    "per_sample": [
+      {
+        "t": 0.0,
+        "angle_deg": 0.0,
+        "max_penetration_mm": 0.0
+      },
+      {
+        "t": 0.00833,
+        "angle_deg": -0.464,
+        "max_penetration_mm": -0.344
+      },
+      {
+        "t": 0.01667,
+        "angle_deg": -0.929,
+        "max_penetration_mm": -0.689
+      },
+      {
+        "t": 0.025,
+        "angle_deg": -1.393,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.03333,
+        "angle_deg": -1.857,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.04167,
+        "angle_deg": -2.386,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.05,
+        "angle_deg": -2.916,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.05833,
+        "angle_deg": -3.445,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.06667,
+        "angle_deg": -3.974,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.075,
+        "angle_deg": -4.507,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.08333,
+        "angle_deg": -5.039,
+        "max_penetration_mm": -7.961
+      },
+      {
+        "t": 0.09167,
+        "angle_deg": -5.572,
+        "max_penetration_mm": -7.879
+      },
+      {
+        "t": 0.1,
+        "angle_deg": -6.105,
+        "max_penetration_mm": -7.799
+      },
+      {
+        "t": 0.10833,
+        "angle_deg": -7.771,
+        "max_penetration_mm": -7.56
+      },
+      {
+        "t": 0.11667,
+        "angle_deg": -9.438,
+        "max_penetration_mm": -7.337
+      },
+      {
+        "t": 0.125,
+        "angle_deg": -11.104,
+        "max_penetration_mm": -7.131
+      },
+      {
+        "t": 0.13333,
+        "angle_deg": -12.77,
+        "max_penetration_mm": -6.942
+      },
+      {
+        "t": 0.14167,
+        "angle_deg": -15.328,
+        "max_penetration_mm": -6.684
+      },
+      {
+        "t": 0.15,
+        "angle_deg": -17.886,
+        "max_penetration_mm": -6.467
+      },
+      {
+        "t": 0.15833,
+        "angle_deg": -20.444,
+        "max_penetration_mm": -6.291
+      },
+      {
+        "t": 0.16667,
+        "angle_deg": -23.002,
+        "max_penetration_mm": -6.156
+      },
+      {
+        "t": 0.175,
+        "angle_deg": -26.197,
+        "max_penetration_mm": -6.046
+      },
+      {
+        "t": 0.18333,
+        "angle_deg": -29.392,
+        "max_penetration_mm": -6.001
+      },
+      {
+        "t": 0.19167,
+        "angle_deg": -32.587,
+        "max_penetration_mm": -6.021
+      },
+      {
+        "t": 0.2,
+        "angle_deg": -35.782,
+        "max_penetration_mm": -6.437
+      },
+      {
+        "t": 0.20833,
+        "angle_deg": -39.359,
+        "max_penetration_mm": -7.08
+      },
+      {
+        "t": 0.21667,
+        "angle_deg": -42.936,
+        "max_penetration_mm": -7.625
+      },
+      {
+        "t": 0.225,
+        "angle_deg": -46.513,
+        "max_penetration_mm": -8.069
+      },
+      {
+        "t": 0.23333,
+        "angle_deg": -50.091,
+        "max_penetration_mm": -8.41
+      },
+      {
+        "t": 0.24167,
+        "angle_deg": -53.795,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.25,
+        "angle_deg": -57.5,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.25833,
+        "angle_deg": -61.205,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.26667,
+        "angle_deg": -64.909,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.275,
+        "angle_deg": -68.487,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.28333,
+        "angle_deg": -72.064,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.29167,
+        "angle_deg": -75.641,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.3,
+        "angle_deg": -79.218,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.30833,
+        "angle_deg": -82.413,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.31667,
+        "angle_deg": -85.608,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.325,
+        "angle_deg": -88.803,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.33333,
+        "angle_deg": -91.998,
+        "max_penetration_mm": -1000.0
+      },
+      {
+        "t": 0.34167,
+        "angle_deg": -94.556,
+        "max_penetration_mm": -6.195
+      },
+      {
+        "t": 0.35,
+        "angle_deg": -97.114,
+        "max_penetration_mm": -6.688
+      },
+      {
+        "t": 0.35833,
+        "angle_deg": -99.672,
+        "max_penetration_mm": -7.132
+      },
+      {
+        "t": 0.36667,
+        "angle_deg": -102.23,
+        "max_penetration_mm": -7.525
+      },
+      {
+        "t": 0.375,
+        "angle_deg": -103.896,
+        "max_penetration_mm": -7.754
+      },
+      {
+        "t": 0.38333,
+        "angle_deg": -105.562,
+        "max_penetration_mm": -7.961
+      },
+      {
+        "t": 0.39167,
+        "angle_deg": -107.229,
+        "max_penetration_mm": -8.145
+      },
+      {
+        "t": 0.4,
+        "angle_deg": -108.895,
+        "max_penetration_mm": -8.308
+      },
+      {
+        "t": 0.40833,
+        "angle_deg": -109.413,
+        "max_penetration_mm": -8.354
+      },
+      {
+        "t": 0.41667,
+        "angle_deg": -109.932,
+        "max_penetration_mm": -8.398
+      },
+      {
+        "t": 0.425,
+        "angle_deg": -110.451,
+        "max_penetration_mm": -8.439
+      },
+      {
+        "t": 0.43333,
+        "angle_deg": -110.97,
+        "max_penetration_mm": -8.479
+      },
+      {
+        "t": 0.44167,
+        "angle_deg": -110.297,
+        "max_penetration_mm": -8.427
+      },
+      {
+        "t": 0.45,
+        "angle_deg": -109.625,
+        "max_penetration_mm": -8.372
+      },
+      {
+        "t": 0.45833,
+        "angle_deg": -108.952,
+        "max_penetration_mm": -8.313
+      },
+      {
+        "t": 0.46667,
+        "angle_deg": -108.28,
+        "max_penetration_mm": -8.25
+      },
+      {
+        "t": 0.475,
+        "angle_deg": -107.321,
+        "max_penetration_mm": -8.155
+      },
+      {
+        "t": 0.48333,
+        "angle_deg": -106.363,
+        "max_penetration_mm": -8.052
+      },
+      {
+        "t": 0.49167,
+        "angle_deg": -105.405,
+        "max_penetration_mm": -7.942
+      },
+      {
+        "t": 0.5,
+        "angle_deg": -104.447,
+        "max_penetration_mm": -7.825
+      },
+      {
+        "t": 0.50833,
+        "angle_deg": -104.238,
+        "max_penetration_mm": -7.798
+      },
+      {
+        "t": 0.51667,
+        "angle_deg": -104.029,
+        "max_penetration_mm": -7.771
+      },
+      {
+        "t": 0.525,
+        "angle_deg": -103.82,
+        "max_penetration_mm": -7.744
+      },
+      {
+        "t": 0.53333,
+        "angle_deg": -103.611,
+        "max_penetration_mm": -7.716
+      },
+      {
+        "t": 0.54167,
+        "angle_deg": -103.817,
+        "max_penetration_mm": -7.744
+      },
+      {
+        "t": 0.55,
+        "angle_deg": -104.023,
+        "max_penetration_mm": -7.771
+      },
+      {
+        "t": 0.55833,
+        "angle_deg": -104.23,
+        "max_penetration_mm": -7.797
+      },
+      {
+        "t": 0.56667,
+        "angle_deg": -104.436,
+        "max_penetration_mm": -7.823
+      },
+      {
+        "t": 0.575,
+        "angle_deg": -104.577,
+        "max_penetration_mm": -7.841
+      },
+      {
+        "t": 0.58333,
+        "angle_deg": -104.718,
+        "max_penetration_mm": -7.859
+      },
+      {
+        "t": 0.59167,
+        "angle_deg": -104.859,
+        "max_penetration_mm": -7.876
+      },
+      {
+        "t": 0.6,
+        "angle_deg": -105.0,
+        "max_penetration_mm": -7.893
+      }
+    ]
+  },
+  "game_camera": "pitch 45°, câmera em −Z (DungeonMvpSceneBuilder.CameraOffset 0,14,−14), ortográfica no preview; baú girado 180° (frente para a câmera)",
+  "readability": [
+    {
+      "heading_offset_deg": -30,
+      "iou_closed_open": 0.641,
+      "area_open_vs_closed": 1.395,
+      "interior_closed": 0.0032,
+      "interior_open": 0.5444,
+      "brass_closed": 0.1805,
+      "mean_srgb_closed": [
+        104,
+        92,
+        85
+      ],
+      "mean_srgb_open": [
+        65,
+        60,
+        60
+      ]
+    },
+    {
+      "heading_offset_deg": -15,
+      "iou_closed_open": 0.638,
+      "area_open_vs_closed": 1.414,
+      "interior_closed": 0.002,
+      "interior_open": 0.5682,
+      "brass_closed": 0.1835,
+      "mean_srgb_closed": [
+        108,
+        96,
+        86
+      ],
+      "mean_srgb_open": [
+        64,
+        59,
+        62
+      ]
+    },
+    {
+      "heading_offset_deg": 0,
+      "iou_closed_open": 0.636,
+      "area_open_vs_closed": 1.421,
+      "interior_closed": 0.0007,
+      "interior_open": 0.5836,
+      "brass_closed": 0.1834,
+      "mean_srgb_closed": [
+        113,
+        99,
+        89
+      ],
+      "mean_srgb_open": [
+        66,
+        61,
+        63
+      ]
+    },
+    {
+      "heading_offset_deg": 15,
+      "iou_closed_open": 0.638,
+      "area_open_vs_closed": 1.414,
+      "interior_closed": 0.002,
+      "interior_open": 0.5682,
+      "brass_closed": 0.1835,
+      "mean_srgb_closed": [
+        113,
+        99,
+        89
+      ],
+      "mean_srgb_open": [
+        68,
+        63,
+        64
+      ]
+    },
+    {
+      "heading_offset_deg": 30,
+      "iou_closed_open": 0.641,
+      "area_open_vs_closed": 1.395,
+      "interior_closed": 0.0032,
+      "interior_open": 0.5444,
+      "brass_closed": 0.1805,
+      "mean_srgb_closed": [
+        111,
+        98,
+        88
+      ],
+      "mean_srgb_open": [
+        71,
+        64,
+        65
+      ]
+    }
+  ],
+  "contrast_wcag": {
+    "#3E4152": {
+      "brass_same_light": 5.02,
+      "brass_half_lit_vs_floor_albedo": 3.71,
+      "chest_mean_closed_worst": 1.56
+    },
+    "#55596B": {
+      "brass_same_light": 3.45,
+      "brass_half_lit_vs_floor_albedo": 2.55,
+      "chest_mean_closed_worst": 1.07
+    }
+  },
+  "sha256": {
+    "MODEL-CHEST.fbx": "6c89fa5b41518cd35f60db187c4aac5b6b8d73a0d202dcb431b909eb408a82fd",
+    "MODEL-CHEST.fbx.meta": "acd24cda1d00168708b9fbb9266e331518afada32e0755c6a61c8014b447e00c",
+    "MODEL-CHEST_Palette.png": "6f0e9d878ced18c36b141868e7874ccc21757b3176997408a84729be66c26fe0",
+    "MODEL-CHEST.glb": "5cf82f0f6453d915e43a430496b17e5fa92c72d9a8b26500a93be7da3bcaa9f8"
+  },
+  "not_validated": "Importação na Unity (ModelImporter Generic, clip padrão do take, materiais por MaterialDescription), URP, cena F08, presenter, collider e PlayMode NÃO observados (NÃO VALIDADO NO EDITOR)."
+}

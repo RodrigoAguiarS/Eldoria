@@ -16,11 +16,11 @@
     "P2": "Polimento, futuro previsto ou proposta condicional."
   },
   "summary": {
-    "logical_resources": 133,
+    "logical_resources": 134,
     "by_status": {
       "EXISTENTE": 126,
       "AUSENTE": 4,
-      "INCOMPLETO": 1,
+      "INCOMPLETO": 2,
       "NÃO VERIFICADO": 2
     },
     "by_category": {
@@ -54,7 +54,8 @@
       },
       "I": {
         "EXISTENTE": 12,
-        "AUSENTE": 1
+        "AUSENTE": 1,
+        "INCOMPLETO": 1
       },
       "J": {
         "EXISTENTE": 15,
@@ -63,7 +64,7 @@
     },
     "by_priority": {
       "P0": 78,
-      "P2": 44,
+      "P2": 45,
       "P1": 11
     },
     "missing_p0": 0,
@@ -134,7 +135,7 @@
     },
     {
       "resource": "Baús, armadilhas e explosões",
-      "reason": "Não previstos nas fontes aprovadas; não encomendar."
+      "reason": "Armadilhas e explosões: não previstas nas fontes aprovadas; não encomendar. Baú: F08 aprovado e integrado (um por sala, GAME_DESIGN.md F08); visual A11 produzido em staging (recurso MODEL-CHEST), sem novo sistema."
     },
     {
       "resource": "Skill tree/tela de habilidades/status separado",
@@ -5155,6 +5156,68 @@
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
       }
+    },
+    {
+      "id": "MODEL-CHEST",
+      "name": "Baú de recompensa (pedra e latão)",
+      "category": "I",
+      "category_name": "Cenários e objetos interativos",
+      "functionality": "Baú F08 por sala: abre com F após limpar a sala; recompensa e estado são do RoomRewardChest",
+      "status": "INCOMPLETO",
+      "priority": "P2",
+      "type": "modelo 3D + clip mecânico",
+      "scope": "planejado_futuro_condicional",
+      "evidence": [
+        {
+          "path": "Assets/_Project/Scripts/Dungeon/RoomRewardChest.cs",
+          "detail": "Autoridade de abertura/recompensa; visual não lido por ele."
+        },
+        {
+          "path": "Assets/_Project/Scripts/UI/RoomRewardPresenter.cs",
+          "detail": "Aplica Euler(−105, 0, 0) ao Transform lid conforme IsOpened."
+        },
+        {
+          "path": "Assets/_Project/Scripts/Editor/RoomRewardSceneBuilder.cs",
+          "detail": "Baú de primitivas (Body/LidPivot/Latch, Mat_Chest_F08_Wood/Metal) com frente em −Z local."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/MODEL-CHEST/Source~/README.md",
+          "detail": "Lote A11 em staging; não integrado."
+        }
+      ],
+      "depends_on": [
+        "ENV-WALL"
+      ],
+      "technical_dependencies": [
+        "F08 (RoomRewardChest/RoomRewardPresenter)"
+      ],
+      "integration_state": "Produzido em staging (A11, 17/11/2026) como modelo 3D real com tampa separada: MODEL-CHEST.fbx (828 triângulos, nós Base e Lid, dois materiais URP/Lit pedra/latão com paleta 16×16, pivô na base central, pivô da tampa no eixo da dobradiça traseira, +Z frente) e take Open de 0,6 s in-place (0° → −105°); NÃO integrado. Em jogo continua o baú de primitivas do F08. Filho Visual com Y 180° (o baú F08 tem a frente em −Z), RoomRewardPresenter.lid → nó Lid, primitivas desligadas e collider simples separado são tarefa Codex; proposta em Source~/MODEL-CHEST.source.json. Achado: o presenter atual gira a tampa de primitivas para baixo/trás (ver README).",
+      "visual_specification": "Caixa baixa de pedra azul (#55596B/#3E4152) em blocos chanfrados, cintas e aro de latão gasto (#E0B040), espelho de fechadura, tampa de quatro águas com pega larga e dobradiça traseira; aberto mostra interior escuro. ~1,2 × 0,8 × 0,7 m, ≤ 1200 tris, ≤ 2 materiais.",
+      "acceptance_criteria": [
+        "Tampa não corta a base ao longo do take; pivôs, escala e take conferidos.",
+        "Silhuetas aberto/fechado legíveis na câmera do jogo.",
+        "Animação não entrega recompensa; estado visual dirigido pelo baú; fora de spawns/passagens/NavMesh crítico.",
+        "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
+      ],
+      "validation": {
+        "current_session": "Técnica fora da Unity em 17/11/2026: ModelChest.validation.json (17/17; FBX e PNG relidos do disco): 828 tris ≤ 1200; 2 materiais (Stone/Brass) por polígono nos dois nós; só Model/Geometry/Material/Texture/Video/Animation* (sem rig/deformador/pose/colisor); UnitScaleFactor 100, +Y up, +Z front, TimeMode 30 fps; Base na origem com fundo em y 0; Lid no eixo (0; 0,54; −0,342) com rotação 0 e toda a geometria fora dos nós à frente do eixo; fechado 1,200 × 0,812 × 0,728 m; 37 peças fechadas, convexas e com volume > 0; normais geométricas; UV no centro das células da paleta; take Open 0,6 s, 19 chaves, só Lcl Rotation X do Lid, 0 → −105° (pico −111°), Base sem curvas; SAT tampa × base em 73 instantes: sobreposição máx. 0,000 mm; câmera do jogo (−30…+30°): IoU fechado×aberto ≤ 0,641, interior aberto ≥ 54% vs. fechado ≤ 0,3%, latão 18% da silhueta, WCAG latão × piso (mesma luz) 5,02/3,45; cor média do baú × piso claro 1,07; asset_report.py exit 0; GLB relido; geração determinística. NÃO VALIDADO NO EDITOR: importação Generic/clip, materiais, cena, presenter, collider e PlayMode não observados.",
+        "historical_evidence": "Reports/F08/README.md e Reports/F08-AllRooms/README.md (baú de primitivas); não confundir com execução nova."
+      },
+      "production": {
+        "dimensions": "~1,2 × 0,8 × 0,7 m (L × A × P), ≤ 1200 triângulos, ≤ 2 materiais",
+        "delivery_format": "FBX (Base + Lid, take Open) + fonte (gerador editável) + GLB de revisão com clip; paleta PNG 16×16",
+        "production_gate": "Condição F08 cumprida (integrado, PRs #6/#7). Produzido no lote A11 (17/11/2026) em staging; integração separada.",
+        "technical_requirements": "Unity 6000.6.9f1/URP 17.6.0, URP/Lit, ModelImporter Generic com clip padrão do take; sem collider, recompensa, loot, rig humanoide ou pacote novo.",
+        "prompt_en": "A11 em PROMPT_CATALOG.md (With a real 3D modelling and animation tool, build an original low-poly reward chest ...).",
+        "staging_directory": "Assets/_Project/Art/ProductionStaging/MODEL-CHEST/",
+        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/MODEL-CHEST/MODEL-CHEST.fbx"
+      },
+      "source_and_rights": {
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/MODEL-CHEST/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria e animação próprias geradas por código (Tools/Lemo3DGenerator/src/production/ModelChest.mjs; three.js r170 MIT, somente leitura no Lemo-Opuscar; validador Python com NumPy BSD e Pillow MIT-CMU/HPND). Sem IA generativa nem asset de terceiros."
+      },
+      "production_state": "Produzido por gerador próprio (ModelChest.mjs: plinto e blocos de pedra chanfrados, interior escuro, cintas/aro/fechadura/pega de latão, tampa de quatro águas e dobradiça com nós coaxiais intercalados; dois materiais com UV por face numa paleta 16×16; take Open smoothstep 0 → −4 → −111 → −103,5 → −105°): MODEL-CHEST.fbx + .meta (ModelImporter de Loot_XpOrb com animação Generic), MODEL-CHEST_Palette.png + .meta (point, sem mips, sem compressão), GLB de revisão e previews ortográficos/45°/take/F08 rotulados PREVIEW. Cores derivadas: interior #25262F e latão gasto #9C7A30."
     },
     {
       "id": "ANIM-TORCH",
@@ -12956,6 +13019,49 @@
         "Escala única para os dois raios: lascas e espessura do anel ficam 30% maiores na fase 2 (lascas 0,47–0,75 m na fase 1, 0,61–0,97 m na fase 2).",
         "review_floor_preview.png, review_floor_zoom.png e preview_slam.gif são PRÉVIAS: projeção ortográfica local sobre a captura F08 (Guardião ausente, centro posto 2 m à frente do Hero), aviso aproximado em 2D, sem luz real, perspectiva ou ordenação de transparências. Não são captura da Unity.",
         "FX-SLAM.prefab sugerido pela ficha não criado: prefab exige coordenação.",
+        "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "A11-MODEL-CHEST",
+      "date_local": "2026-11-17",
+      "branch": "claude/a11-model-chest",
+      "produced": [
+        "MODEL-CHEST"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/Lemo3DGenerator/src/production/ModelChest.mjs",
+        "Tools/Lemo3DGenerator/src/production/ModelChest_preview.py"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/MODEL-CHEST.meta",
+        "Assets/_Project/Art/ProductionStaging/MODEL-CHEST/MODEL-CHEST.fbx",
+        "Assets/_Project/Art/ProductionStaging/MODEL-CHEST/MODEL-CHEST.fbx.meta",
+        "Assets/_Project/Art/ProductionStaging/MODEL-CHEST/MODEL-CHEST_Palette.png",
+        "Assets/_Project/Art/ProductionStaging/MODEL-CHEST/MODEL-CHEST_Palette.png.meta",
+        "Assets/_Project/Art/ProductionStaging/MODEL-CHEST/Source~/"
+      ],
+      "import_settings": "FBX: ModelImporter copiado de Art/Items/Models/Loot_XpOrb.fbx.meta (Unity 6000.6, serializedVersion 24600; escala 1, useFileUnits, sem colliders, normais importadas, materialImportMode 2) com importAnimation 1, animationType 2 (Generic) e avatarSetup 1; clipAnimations vazio (clip padrão do take Open). Paleta: template FX_Spark com point, sem mipmaps, sem compressão, sem alpha, sRGB, max 32. GUIDs novos e estáveis (SHA256 de Eldoria/A11/<nome>).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "ModelChest.validation.json ok (17/17, FBX/PNG relidos do disco, incluindo SAT tampa × base ao longo do take); ModelChest.generator.json ok; asset_report.py exit 0; GLB relido (Base/Lid, clip Open); geração determinística (2 execuções, mesmos SHA256)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: importação Generic/avatar, clip padrão do take, materiais criados pela descrição do FBX (conferir _BaseMap, metallic/smoothness), URP, cena F08, presenter, collider e PlayMode não observados.",
+        "Sem integração: em jogo continua o baú de primitivas. Visual com Y 180° (frente do F08 em −Z), RoomRewardPresenter.lid → Lid, primitivas desligadas e collider separado são tarefa Codex; proposta em Source~/MODEL-CHEST.source.json.",
+        "Achado (estático + captura Reports/F08/Visual/chest-opened.png): o presenter aplica −105° ao LidPivot de primitivas cuja frente é −Z, o que abre a tampa para baixo/trás; com o A11 integrado o mesmo valor fica correto. Não corrigido neste lote.",
+        "Leitura: a pedra oficial #55596B tem a cor do piso claro (contraste médio 1,07); a leitura vem de sombreamento, plinto escuro, latão e interior. Conferir em PlayMode; ajuste preferido por célula da paleta, sem refazer a malha.",
+        "Fechado 1,200 × 0,812 × 0,728 m (pega, nós e latão somam 1–3 cm à ficha ~1,2 × 0,8 × 0,7).",
+        "Previews são do rasterizador próprio (ortográfico), rotulados PREVIEW; não são captura da Unity.",
         "Aprovação artística humana pendente."
       ]
     }
