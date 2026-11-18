@@ -7010,7 +7010,7 @@
       ],
       "depends_on": [],
       "technical_dependencies": [],
-      "integration_state": "Produzido em staging (A08, 17/11/2026) como modelo 3D estático real: FX-PROJECTILE-Core.fbx (156 triângulos, um material URP/Lit com paleta 16×16 Base/Emission, raio máx. 0,1997 m dentro do envelope de 0,4 m da esfera atual, pivô no centro, +Z frente); NÃO integrado. Em jogo continua a esfera laranja (Unity Sphere × 0,4, Mat_Projectile). O filho visual no Projectile.prefab (escala 2,5 sob a raiz 0,4 ou raiz em 1; MeshRenderer da esfera desligado; sem collider; hitMask/radius 0,25/lifetime/pool preservados) é tarefa Codex separada; proposta em Source~/FX-PROJECTILE.source.json.",
+      "integration_state": "Integrado em V07 (18/11/2026, branch claude/v07-projectile): ProjectileArtIntegrator (Tools/Dungeon Crawler/Feedback/Apply Projectile Art (A08-A09) e Validate Projectile Art (A08-A09)) lê Source~/FX-PROJECTILE.source.json e FxProjectile.generator.json, confere a malha real do FBX (156 tris, 1 submalha, tamanho 0,386×0,374×0,375 m, pivô no centro, raio ≤ 0,2 m) e recusa divergências. Filho Visual no Projectile.prefab com localScale 2,5 sob a raiz 0,4 (envelope de 0,4 m no mundo) e Materials/ProjectileFx/Mat_FxProjectileCore.mat (URP/Lit opaco, Base/Emission da paleta, metallic 0,2, smoothness 0,35, compartilhado); MeshRenderer da esfera desligado, não removido; sem collider. Projectile.cs ganhou só o evento Launched (depois do teleporte); radius 0,25, lifetime 4, hitMask Player|Obstacle|Door, velocidade, dano e ProjectilePool 16/64 inalterados. Divergência medida: com GI de emissão None o _EMISSION some na reimportação do .mat (URP 17.6); usado RealtimeEmissive, como os materiais do ITEMS-COMBAT. Aprovação artística humana pendente.",
       "visual_specification": "Esfera laranja .4 m integrada ao pool; sem cauda própria. Não precisa arco/flecha.",
       "acceptance_criteria": [
         "Arte apenas observa domínio; preservar dano/colliders/timers.",
@@ -7018,7 +7018,7 @@
         "Flash/shake 0 não ocultam área do perigo nem cor persistente da fase."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: FxProjectile.validation.json (15/15; FBX e PNG relidos do disco): 156 tris ≤ 300; raio máx. 0,1997 ≤ 0,2 m; bounds 0,386×0,374×0,375 m com centro ≤ 0,6 mm do pivô; UnitScaleFactor 100, +Y up, +Z front; só Model/Geometry/Material/Texture/Video (1 Model, 1 Material, sem rig/animação/colisor); 5 peças fechadas com volume > 0; normais = normal geométrica; UV no centro das células da paleta (ferro 96, parede 40, brasa 20 faces); paletas decodificadas = gerador; pela câmera do jogo (pitch 45°, 24 rumos) silhueta quente 37–44%, área 82–90% da esfera, contraste WCAG da brasa 6,35/4,37 e da cor média 2,54/1,75 vs. piso #3E4152/#55596B (esfera atual 3,22/2,22); asset_report.py exit 0; GLB relido; geração determinística. NÃO VALIDADO NO EDITOR: importação, material URP, Projectile.prefab, 16 tiros simultâneos, reset e GPU não observados.",
+        "current_session": "V07 (18/11/2026, Unity 6000.6.9f1): Apply idempotente (2ª e 3ª execuções sem gravar após a correção do GI de emissão; hashes iguais); Validate ok no Projectile.prefab, no ProjectilePool.prefab e em 5 pools de 6 cenas; EditMode 356/356; PlayMode 241 passed, 0 failed, 24 skipped ([Explicit]/GPU); alvo V07 com GPU 9/9 e sem GPU 8/8 + 6/6 EditMode; rajada de 16 com instâncias aquecidas distintas e segunda rajada sem ponto do tiro anterior; colisão/dano/lifetime idênticos à esfera de baseline com passo fixo (mesmo z, mesmo quadro, mesmo dano); 20 tiros criam exatamente 4 instâncias além das 16 (medido) e são reutilizados; GC 0 em 2.000 tiros aquecidos (controle 1); contadores D3D12 com 16 orbes: baseline 39 draws/26.262 tris, arte 54,5 draws/6.709 tris (câmera vazia 7/1.686), sem promessa de FPS; captura 720p/1080p no Editor gráfico. Evidências: Reports/Validation/V07/20261118-6949200/README.md. Anterior: Técnica fora da Unity em 17/11/2026: FxProjectile.validation.json (15/15; FBX e PNG relidos do disco): 156 tris ≤ 300; raio máx. 0,1997 ≤ 0,2 m; bounds 0,386×0,374×0,375 m com centro ≤ 0,6 mm do pivô; UnitScaleFactor 100, +Y up, +Z front; só Model/Geometry/Material/Texture/Video (1 Model, 1 Material, sem rig/animação/colisor); 5 peças fechadas com volume > 0; normais = normal geométrica; UV no centro das células da paleta (ferro 96, parede 40, brasa 20 faces); paletas decodificadas = gerador; pela câmera do jogo (pitch 45°, 24 rumos) silhueta quente 37–44%, área 82–90% da esfera, contraste WCAG da brasa 6,35/4,37 e da cor média 2,54/1,75 vs. piso #3E4152/#55596B (esfera atual 3,22/2,22); asset_report.py exit 0; GLB relido; geração determinística. NÃO VALIDADO NO EDITOR: importação, material URP, Projectile.prefab, 16 tiros simultâneos, reset e GPU não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -7601,7 +7601,7 @@
       "technical_dependencies": [
         "Reset OnEnable/retorno do ProjectilePool; não criar nova instância a cada tiro."
       ],
-      "integration_state": "Produzido em staging (A09, 17/11/2026) como textura 2D estática de faixa 128×32 RGBA para TrailRenderer (gota compacta laranja #FF9A2E → ferrugem #8A4A22 → alpha 0, centro fino quente, bordas com alpha 0); NÃO integrado. Em jogo o projétil continua sem cauda. O filho Trail no Projectile.prefab (sharedMaterial, time 0,05 s, largura 0,26 m, 0,14 m atrás do centro) e o Clear() em Launch/OnDespawned/OnEnable são tarefa Codex separada; proposta em Source~/FX-PROJECTILE-TRAIL.trail.json.",
+      "integration_state": "Integrado em V07 (18/11/2026, branch claude/v07-projectile): filho Trail no Projectile.prefab (localPosition z −0,35 sob a raiz 0,4 = 0,14 m atrás do centro) com TrailRenderer 0,05 s × 0,26 m, curva 1→0,8, distância mínima 0,05 m, Stretch, View, 0 cap/0 corner, sem sombras/probes, desligado por padrão, e Materials/ProjectileFx/Mat_FxProjectileTrail.mat (URP/Particles/Unlit, Blend Alpha, branco, tiling 1 = U 0 na cabeça), valores lidos de Source~/FX-PROJECTILE-TRAIL.trail.json. ProjectileVisualPresenter liga a cauda limpa em Projectile.Launched (depois do teleporte) e a apaga em OnEnable/OnDisable (retorno ao pool por colisão, timeout, ForceRelease ou desativação do pool); inscrição única em Awake, sem alocação por tiro; não depende da opção de flash. Nenhum Instantiate/Destroy por tiro e nenhum pool novo. Limite observado: no Editor gráfico (FPS não medido) a cauda medida tem 0,64–1,24 m (o TrailRenderer liga o último ponto à posição atual), acima dos 0,6 m previstos em tempo. Aprovação artística humana pendente.",
       "visual_specification": "Compact tapered orange tail on existing hostile orb, clear against stone, no explosion or larger danger radius.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7610,7 +7610,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: FxProjectileTrail.validation.json (PNG relido 128×32 RGBA; 0 px transparentes com RGB sujo; moldura de 1 px com alpha 0; margem vertical 7 px; alpha máx. 235; 3 colunas da cabeça ≤ 30 e últimos 10 px ≤ 2; gota mais larga no primeiro terço e afinando sem realargar; um único componente (sem faíscas); centro quente ≤ 3 px em 50 colunas; cobertura alpha>50% 21,1%; 0 px ciano/azul, verde ou branco opaco; média 30°/sat. 0,77; cabeça (231,142,51) e cauda (151,85,39); contraste WCAG 2,96/2,14 sobre a pedra; 168° do FX-DASH; time 0,05 s e 0,60 m a 12 m/s; largura 65% do orbe; Projectile.cs/ProjectilePool.cs só lidos) e asset_report.py (--expect-size 128x32 --require-alpha, exit 0); prévias a 45° sobre a captura real F05, rotuladas PREVIEW. NÃO VALIDADO NO EDITOR: importação, material URP, TrailRenderer, reset no pool, pausa e PlayMode não observados.",
+        "current_session": "V07 (18/11/2026, Unity 6000.6.9f1): Apply idempotente (2ª e 3ª execuções sem gravar após a correção do GI de emissão; hashes iguais); Validate ok no Projectile.prefab, no ProjectilePool.prefab e em 5 pools de 6 cenas; EditMode 356/356; PlayMode 241 passed, 0 failed, 24 skipped ([Explicit]/GPU); alvo V07 com GPU 9/9 e sem GPU 8/8 + 6/6 EditMode; rajada de 16 com instâncias aquecidas distintas e segunda rajada sem ponto do tiro anterior; colisão/dano/lifetime idênticos à esfera de baseline com passo fixo (mesmo z, mesmo quadro, mesmo dano); 20 tiros criam exatamente 4 instâncias além das 16 (medido) e são reutilizados; GC 0 em 2.000 tiros aquecidos (controle 1); contadores D3D12 com 16 orbes: baseline 39 draws/26.262 tris, arte 54,5 draws/6.709 tris (câmera vazia 7/1.686), sem promessa de FPS; captura 720p/1080p no Editor gráfico. Evidências: Reports/Validation/V07/20261118-6949200/README.md. Anterior: Técnica fora da Unity em 17/11/2026: FxProjectileTrail.validation.json (PNG relido 128×32 RGBA; 0 px transparentes com RGB sujo; moldura de 1 px com alpha 0; margem vertical 7 px; alpha máx. 235; 3 colunas da cabeça ≤ 30 e últimos 10 px ≤ 2; gota mais larga no primeiro terço e afinando sem realargar; um único componente (sem faíscas); centro quente ≤ 3 px em 50 colunas; cobertura alpha>50% 21,1%; 0 px ciano/azul, verde ou branco opaco; média 30°/sat. 0,77; cabeça (231,142,51) e cauda (151,85,39); contraste WCAG 2,96/2,14 sobre a pedra; 168° do FX-DASH; time 0,05 s e 0,60 m a 12 m/s; largura 65% do orbe; Projectile.cs/ProjectilePool.cs só lidos) e asset_report.py (--expect-size 128x32 --require-alpha, exit 0); prévias a 45° sobre a captura real F05, rotuladas PREVIEW. NÃO VALIDADO NO EDITOR: importação, material URP, TrailRenderer, reset no pool, pausa e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -14243,6 +14243,57 @@
         "Divergência da ponte do contrato: emitting = false sozinho não para o rastro na 6000.6 (sondas em Reports/Validation/V06/…/trail-probe); presenter controla enabled/Clear e congela a cauda.",
         "Achado a confirmar fora do escopo: o SlashTrail do combo depende só de emitting = false e pode gravar pontos entre golpes.",
         "Build Windows não medido nesta tarefa."
+      ]
+    },
+    {
+      "id": "V07-PROJECTILE-INTEGRATION",
+      "date_local": "2026-11-18",
+      "branch": "claude/v07-projectile",
+      "main_merge": "pendente (PR para a main; sem merge sem aprovação do usuário)",
+      "produced": [],
+      "imported": [
+        "FX-PROJECTILE",
+        "FX-PROJECTILE-TRAIL"
+      ],
+      "integrated": [
+        "FX-PROJECTILE",
+        "FX-PROJECTILE-TRAIL"
+      ],
+      "validated_in_editor": [
+        "FX-PROJECTILE",
+        "FX-PROJECTILE-TRAIL"
+      ],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Scripts/Systems/Projectile.cs (só o evento Launched)",
+        "Assets/_Project/Prefabs/Projectiles/Projectile.prefab (filhos Visual e Trail, presenter, esfera desligada)",
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md",
+        "MVP.md"
+      ],
+      "new_code": [
+        "Assets/_Project/Scripts/Systems/ProjectileVisualPresenter.cs",
+        "Assets/_Project/Scripts/Editor/ProjectileArtIntegrator.cs",
+        "Assets/_Project/Tests/EditMode/ProjectileArtTests.cs",
+        "Assets/_Project/Tests/PlayMode/ProjectileArtPlayModeTests.cs",
+        "Assets/_Project/Tests/PlayMode/PlayerInput/ProjectileArtSceneTests.cs"
+      ],
+      "new_assets": [
+        "Assets/_Project/Materials/ProjectileFx/Mat_FxProjectileCore.mat",
+        "Assets/_Project/Materials/ProjectileFx/Mat_FxProjectileTrail.mat"
+      ],
+      "import_settings": "Sem alteração: FX-PROJECTILE-Core_Base/_Emission.png já point/sem mips/sem compressão/máx. 32; FX-PROJECTILE-TRAIL.png já no template do V05; FBX como entregue.",
+      "tests": {
+        "editmode": "356/356",
+        "playmode": "241 passed, 0 failed, 24 skipped ([Explicit]/GPU)",
+        "technical": "Validate Projectile Art ok; Apply idempotente; alvo V07 PlayMode 9/9 com GPU e 8/8 sem GPU, EditMode 6/6; captura gráfica 1/1 (720p/1080p: voo, pausa, após impacto, lateral)"
+      },
+      "limitations": [
+        "Aprovação artística humana pendente; capturas em tamanhos emulados do Game view; build Windows não executado.",
+        "Contrato pedia GI de emissão None; URP 17.6 apaga o _EMISSION na reimportação, então o material usa RealtimeEmissive.",
+        "Cauda visível maior que 0,6 m quando o FPS cai (0,64–1,24 m medidos no Editor gráfico).",
+        "DungeonFloorSceneBuilder.BuildProjectilePrefab recria o prefab do zero: rodar o builder exige reaplicar Apply Projectile Art (A08-A09).",
+        "+15,5 draw calls com 16 projéteis (uma por TrailRenderer); medido, sem conclusão de FPS."
       ]
     }
   ]
