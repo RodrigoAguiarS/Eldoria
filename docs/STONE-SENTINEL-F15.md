@@ -2,7 +2,9 @@
 
 Protótipo de **uma fase**, sem ligação com os andares de release, XP, drops ou
 checkpoint. O Guardião mantém duas fases, limiar de 50% e transição de 3 s.
-Não é A14 nem arte final. [Proposta anterior ao código](../Reports/F15/PROPOSAL.md).
+Não é arte final. O conceito 2D A14 existe desde 17/11/2026
+(`Assets/_Project/Art/Concepts/StoneSentinel_Concept_01.png`) e segue a escala desta primitiva, mas não
+há malha, rig nem take. [Proposta anterior ao código](../Reports/F15/PROPOSAL.md).
 
 Abrir `Assets/_Project/Scenes/F15_StoneSentinel_Test.unity`. Entrar pelo sul
 ativa a sala; a Sentinela aparece, portas fecham e a barra surge durante a luta.
@@ -54,4 +56,4 @@ um impacto, dash no impacto, pausar no aviso, matar/desativar no aviso, reativar
 vencer, verificar HUD/portas/vitória única e reiniciar com HP/sala novos.
 Repetir o contrato de duas fases no Guardião existente. Evidências e limites da
 execução em [Reports/F15](../Reports/F15/README.md). Números não são balanceamento
-aprovado; novas fases/padrões, A14 e integração no andar exigem tarefa posterior.
+aprovado; novas fases/padrões, malha/rig a partir do A14 e integração no andar exigem tarefa posterior.

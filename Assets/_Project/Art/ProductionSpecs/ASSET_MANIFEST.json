@@ -16,11 +16,11 @@
     "P2": "Polimento, futuro previsto ou proposta condicional."
   },
   "summary": {
-    "logical_resources": 135,
+    "logical_resources": 136,
     "by_status": {
       "EXISTENTE": 126,
       "AUSENTE": 3,
-      "INCOMPLETO": 4,
+      "INCOMPLETO": 5,
       "NÃO VERIFICADO": 2
     },
     "by_category": {
@@ -32,7 +32,7 @@
       "B": {
         "EXISTENTE": 41,
         "AUSENTE": 1,
-        "INCOMPLETO": 1
+        "INCOMPLETO": 2
       },
       "C": {
         "EXISTENTE": 10
@@ -64,7 +64,7 @@
     },
     "by_priority": {
       "P0": 78,
-      "P2": 46,
+      "P2": 47,
       "P1": 11
     },
     "missing_p0": 0,
@@ -4509,6 +4509,67 @@
         "licence": "Projeto Eldoria; render de geometria própria gerada por código (Tools/Lemo3DGenerator/src/production/ConceptLancer.mjs + preview/concept_lancer.html; three.js r170 MIT, somente leitura no Lemo-Opuscar; validador Python com Pillow MIT-CMU/HPND). Sem IA generativa nem asset de terceiros."
       },
       "production_state": "Produzido por render 3D próprio (kit da família + lança/ombreira/tassetes; poses Guarda e Windup com pegada resolvida numericamente por ConceptLancer_grip.mjs): SkeletonLancer_Concept_01.png + .meta; fonte e evidências em Concepts/Source~/SkeletonLancer. GLB de render (2130 tris) não é malha de produção."
+    },
+    {
+      "id": "REF-CONCEPT-11",
+      "name": "StoneSentinel_Concept_01.png",
+      "category": "B",
+      "category_name": "Inimigos e boss",
+      "functionality": "Referência visual da Sentinela de Pedra F15 (A14); guia para malha/rig futuros, não substituto runtime",
+      "status": "INCOMPLETO",
+      "priority": "P2",
+      "type": "textura (conceito 2D)",
+      "scope": "planejado_futuro_condicional",
+      "evidence": [
+        {
+          "path": "Assets/_Project/Art/Concepts/StoneSentinel_Concept_01.png",
+          "detail": "Folha 2048×1536 RGB, fundo neutro, sem rótulos (A14)."
+        },
+        {
+          "path": "Assets/_Project/Art/Concepts/Source~/StoneSentinel/README.md",
+          "detail": "Leitura da folha, reprodução, aceite medido e limites."
+        },
+        {
+          "path": "docs/STONE-SENTINEL-F15.md",
+          "detail": "Primitiva (colisor 2,5×2,7×1,4 m) e leque 100°/6 m usados só para escala e leitura do aviso."
+        }
+      ],
+      "depends_on": [
+        "REF-CONCEPT-06",
+        "REF-CONCEPT-08",
+        "CHAR-WARDEN-MODEL",
+        "CHAR-HERO-MODEL"
+      ],
+      "technical_dependencies": [
+        "F15 (StoneSentinelBrain/Data: leque frontal travado, aviso ≥ 1 s, dano único, recuperação explícita)"
+      ],
+      "integration_state": "Conceito produzido em 17/11/2026 (A14) em Art/Concepts com .meta de referência (Default/sRGB, NPOT None, sem mipmaps); NÃO é sprite, FBX, rig ou take. Em jogo a F15 continua com a Sentinela de primitivas na arena de teste. Malha, rig Generic, takes e integração são tarefas posteriores separadas, depois da validação da F15.",
+      "visual_specification": "Guardião original de blocos de pedra rachados (2,69 m, 3,3 m de largura): torso baixo e largo em trapézio com canga de pedra, cabeça pequena afundada à frente sem elmo nem chifres, braços em pilares (tambor, junta escura, tambor mais largo, base de pilar como mão) separados do tronco, pernas curtas em laje, núcleo ciano vertical estreito embutido numa moldura escura, runas curtas só nos antebraços e nas costas, musgo nos topos, uma rachadura laranja fina opcional. Stand = postura neutra; Windup = antecipação do leque com os dois pilares abertos e núcleo aceso. Pedra #55596B/#3E4152, musgo #4C5A44, runas #4FD8FF, rachadura #FF9A2E.",
+      "acceptance_criteria": [
+        "Corpo e antecipação legíveis sobre o piso na câmera de jogo 45°.",
+        "Silhueta distinta do Warden e da família a 128 px.",
+        "Sem presumir nova fase, dano ou área: leque desenhado só com os dados do protótipo F15.",
+        "F15 validada (playtest humano) antes de malha/arte final; aprovação artística humana antes de modelar."
+      ],
+      "validation": {
+        "current_session": "Análise fora da Unity em 17/11/2026: ConceptSentinel.validation.json 13/13 (PNG e medidas relidos do disco): 2048×1536 opaco; fundo neutro (croma ≤ 6); paleta da ficha; ciano 0,36 % da silhueta frontal; frente/lado/costas 2,69 m com topo na mesma linha; frente/costas 3,30 m; herói 1,97 m na vista lateral; porte vs primitiva F15 (2,69/3,30/1,62 m vs colisor 2,7 m, largura da primitiva 3,1 m); silhueta 128 px com IoU máximo 0,37 contra Warden (Idle/SlamWindup) e 0,37 contra elite/melee/herói, L/A 0,88; Stand × Windup IoU 0,49 e +46 % de largura. GLB de render determinístico (2 execuções, mesmo SHA256). NÃO VALIDADO NO EDITOR.",
+        "historical_evidence": "Reports/F15/README.md (Sentinela de primitivas); não confundir com execução nova."
+      },
+      "production": {
+        "dimensions": "2048×1536 px",
+        "delivery_format": "PNG RGB + fonte (gerador e página de render versionados, GLB de render, medidas e quadros de revisão em Source~)",
+        "production_gate": "Condição do catálogo (F15 prototipada) cumprida; F15 ainda sem playtest humano, por isso só conceito 2D. Produzido no lote A14 (17/11/2026); sem 3D prometido.",
+        "technical_requirements": "Importar como Default/sRGB para referência, não Sprite de gameplay; Unity 6000.6.9f1.",
+        "prompt_en": "A14 em PROMPT_CATALOG.md (Design an original Stone Sentinel boss concept ...).",
+        "staging_directory": "Assets/_Project/Art/Concepts/",
+        "suggested_primary_file": "Assets/_Project/Art/Concepts/StoneSentinel_Concept_01.png"
+      },
+      "source_and_rights": {
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
+        "licence": "Projeto Eldoria; render de geometria própria gerada por código (Tools/Lemo3DGenerator/src/production/ConceptSentinel.mjs + preview/concept_sentinel.html; three.js r170 MIT, somente leitura no Lemo-Opuscar; validador Python com Pillow MIT-CMU/HPND). Herói/Warden/esqueletos do próprio projeto só como escala. Sem IA generativa nem asset de terceiros."
+      },
+      "production_state": "Produzido por render 3D próprio (blocos chanfrados sobre o rig de pose do gerador; poses Stand e Windup): StoneSentinel_Concept_01.png + .meta; fonte e evidências em Concepts/Source~/StoneSentinel. GLB de render (2424 tris) não é malha de produção."
     },
     {
       "id": "REF-SURFACE-HERO",
@@ -13227,6 +13288,49 @@
         "Na 45° a lança aponta como a espada do melee/herói; a distinção a 128 px vem da base larga e da massa (L/A 0,91).",
         "Windup desvia 12° da linha reta (alcance do braço da família); rig futuro deve travar a lança na direção da faixa.",
         "Aprovação artística humana pendente; valores da F13 seguem como propostas de playtest."
+      ]
+    },
+    {
+      "id": "A14-CONCEPT-SENTINEL",
+      "date_local": "2026-11-17",
+      "branch": "claude/a14-concept-sentinel",
+      "produced": [
+        "REF-CONCEPT-11"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "Assets/_Project/Art/Concepts/PROVENANCE.md",
+        "NEXT_STEPS.md",
+        "docs/STONE-SENTINEL-F15.md"
+      ],
+      "new_code": [
+        "Tools/Lemo3DGenerator/src/production/ConceptSentinel.mjs",
+        "Tools/Lemo3DGenerator/src/production/ConceptSentinel_check.py",
+        "Tools/Lemo3DGenerator/preview/concept_sentinel.html"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/Concepts/StoneSentinel_Concept_01.png",
+        "Assets/_Project/Art/Concepts/StoneSentinel_Concept_01.png.meta",
+        "Assets/_Project/Art/Concepts/Source~/StoneSentinel/"
+      ],
+      "import_settings": "TextureImporter copiado de SkeletonMelee_Concept_01.png.meta (Default, sRGB, nPOTScale 0, sem mipmaps, máx. 2048) mudando só o GUID (SHA256 de Eldoria/A14/StoneSentinel_Concept_01).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "ConceptSentinel.validation.json ok (13/13); GLB de render determinístico (2 execuções, mesmo SHA256); render observado no navegador embutido (sheet/review/scale)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: importação do PNG/.meta não observada na Unity.",
+        "Conceito 2D: sem FBX, rig, take, prefab ou sprite; GLB de render em Source~ não é malha de produção.",
+        "F15 ainda sem playtest humano: o catálogo pede F15 validada antes de arte final; leque 100°/6 m no painel de leitura é só o dado atual do protótipo, não especificação.",
+        "Escala segue a primitiva F15 (2,7 m), menor que o Warden (4,6 m); largura 3,3 m excede o colisor da primitiva (2,5 m), que é proposta de protótipo.",
+        "Windup simétrico (braços abertos) é proposta de leitura; a direção da varredura e takes reais ficam para o rig.",
+        "Luz do render levemente neutralizada (key #ECEEF6, hemisférica #AAB6D6) para a pedra não virar azul-marinho; mesma composição de luz da família.",
+        "Aprovação artística humana pendente."
       ]
     }
   ]

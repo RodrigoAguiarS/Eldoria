@@ -50,8 +50,10 @@ F15 implementada como protótipo de uma fase em arena separada, sem integrar
 F14/release ou alterar loot/Guardião. Leque com aviso ≥1 s, dano único,
 recuperação e cancelamentos; [regras](docs/STONE-SENTINEL-F15.md) e
 [evidências/limites](Reports/F15/README.md). Próximo passo deste incremento é
-revisão/playtest humano dos números e leitura espacial; A14 e novos padrões
-dependem dessa avaliação e de tarefa própria. Merge depende da aprovação do usuário.
+revisão/playtest humano dos números e leitura espacial; novos padrões dependem
+dessa avaliação e de tarefa própria. A14 produzido em 17/11/2026 só como conceito 2D
+(`Art/Concepts/StoneSentinel_Concept_01.png`, fonte em `Concepts/Source~/StoneSentinel`);
+malha/rig/takes só depois do playtest F15 e da aprovação artística. Merge depende da aprovação do usuário.
 
 ## Melhorias de arquitetura propostas
 

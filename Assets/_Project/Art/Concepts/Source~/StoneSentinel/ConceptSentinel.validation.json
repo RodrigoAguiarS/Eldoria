@@ -1,0 +1,209 @@
+{
+  "id": "A14",
+  "resource": "REF-CONCEPT-11",
+  "ok": true,
+  "passed": 13,
+  "total": 13,
+  "scope": "análise de imagem e medidas do render fora da Unity; importação no Editor NÃO VALIDADA",
+  "checks": [
+    {
+      "item": "formato PNG 2048x1536",
+      "ok": true,
+      "detail": "(2048, 1536), modo RGBA, alpha mínimo 255"
+    },
+    {
+      "item": "opaco (publicado em RGB sem alpha)",
+      "ok": true,
+      "detail": "canvas totalmente opaco; publicação converte para RGB"
+    },
+    {
+      "item": "fundo neutro (cinza, sem matiz)",
+      "ok": true,
+      "detail": "croma máximo 6 em 8 amostras (o próprio #2B2C31 tem croma 6; vinheta preta)"
+    },
+    {
+      "item": "paleta da ficha nos materiais",
+      "ok": true,
+      "detail": "{\"stone\": \"#55596B\", \"stoneDark\": \"#3E4152\", \"moss\": \"#4C5A44\", \"rune\": \"#4FD8FF\", \"core\": \"#4FD8FF\", \"ember\": \"#FF9A2E\"}"
+    },
+    {
+      "item": "núcleo/runas ciano visíveis e contidos",
+      "ok": true,
+      "detail": "928 px ciano na vista frontal = 0.36% da área da silhueta (257672 px); limite 3 %"
+    },
+    {
+      "item": "frente/lado/costas com a mesma altura",
+      "ok": true,
+      "detail": "alturas [2.69, 2.69, 2.69] m; topo y [126, 126, 126] px; 200 px/m"
+    },
+    {
+      "item": "frente e costas espelhadas (mesma largura)",
+      "ok": true,
+      "detail": "3.3 / 3.3 m"
+    },
+    {
+      "item": "herói de escala na vista lateral",
+      "ok": true,
+      "detail": "herói 1.965 m ao lado da Sentinela 2.69 m (razão 1.37×)"
+    },
+    {
+      "item": "porte compatível com a primitiva F15",
+      "ok": true,
+      "detail": "altura 2.69 m (colisor 2.7 m), largura 3.3 m (primitiva 3.1 m, colisor 2.5 m), profundidade 1.615 m (colisor 1.4 m)"
+    },
+    {
+      "item": "silhueta 128 px distinta do Warden",
+      "ok": true,
+      "detail": "IoU máx contra Warden (Idle/SlamWindup) 0.37"
+    },
+    {
+      "item": "silhueta 128 px distinta dos demais",
+      "ok": true,
+      "detail": "Stand L/A 0.88; Warden:Idle IoU 0.335 L/A 0.539; Warden:SlamWindup IoU 0.367 L/A 0.622; SkeletonElite:Idle IoU 0.353 L/A 0.516; SkeletonMelee:Idle IoU 0.337 L/A 0.473; Hero:Idle IoU 0.371 L/A 0.488"
+    },
+    {
+      "item": "antecipação distinguível da postura neutra",
+      "ok": true,
+      "detail": "IoU 128 px 0.49; largura 45° 283→412 px (+46%) com braços abertos"
+    },
+    {
+      "item": "antecipação inteira sobre o piso com a área F15",
+      "ok": true,
+      "detail": "Sentinela 403×312 px, herói 87×155 px; setor 100°/6 m (dados do protótipo, só desenho)"
+    }
+  ],
+  "silhouette128": [
+    {
+      "vs": "Warden:Idle",
+      "iou": 0.335,
+      "aspect": 0.539
+    },
+    {
+      "vs": "Warden:SlamWindup",
+      "iou": 0.367,
+      "aspect": 0.622
+    },
+    {
+      "vs": "SkeletonElite:Idle",
+      "iou": 0.353,
+      "aspect": 0.516
+    },
+    {
+      "vs": "SkeletonMelee:Idle",
+      "iou": 0.337,
+      "aspect": 0.473
+    },
+    {
+      "vs": "Hero:Idle",
+      "iou": 0.371,
+      "aspect": 0.488
+    }
+  ],
+  "measures": {
+    "sheet": [
+      {
+        "id": "front",
+        "ppm": 200,
+        "px": {
+          "x0": 50,
+          "y0": 126,
+          "x1": 709,
+          "y1": 663,
+          "w": 660,
+          "h": 538,
+          "area": 257672
+        },
+        "meters": {
+          "h": 2.69,
+          "w": 3.3
+        }
+      },
+      {
+        "id": "side",
+        "ppm": 200,
+        "px": {
+          "x0": 196,
+          "y0": 126,
+          "x1": 518,
+          "y1": 663,
+          "w": 323,
+          "h": 538,
+          "area": 116526
+        },
+        "meters": {
+          "h": 2.69,
+          "w": 1.615
+        }
+      },
+      {
+        "id": "back",
+        "ppm": 200,
+        "px": {
+          "x0": 50,
+          "y0": 126,
+          "x1": 709,
+          "y1": 663,
+          "w": 660,
+          "h": 538,
+          "area": 257660
+        },
+        "meters": {
+          "h": 2.69,
+          "w": 3.3
+        }
+      },
+      {
+        "id": "iso45",
+        "ppm": 168,
+        "px": {
+          "x0": 59,
+          "y0": 118,
+          "x1": 553,
+          "y1": 674,
+          "w": 495,
+          "h": 557,
+          "area": 170544
+        }
+      },
+      {
+        "id": "windup_fan",
+        "ppm": 94,
+        "px": {
+          "x0": 113,
+          "y0": 98,
+          "x1": 515,
+          "y1": 409,
+          "w": 403,
+          "h": 312,
+          "area": 61243
+        }
+      },
+      {
+        "id": "silhouette_Stand",
+        "ppm": 96,
+        "px": {
+          "x0": 112,
+          "y0": 17,
+          "x1": 394,
+          "y1": 334,
+          "w": 283,
+          "h": 318,
+          "area": 55606
+        }
+      },
+      {
+        "id": "silhouette_Windup",
+        "ppm": 96,
+        "px": {
+          "x0": 70,
+          "y0": 17,
+          "x1": 481,
+          "y1": 334,
+          "w": 412,
+          "h": 318,
+          "area": 63885
+        }
+      }
+    ]
+  }
+}

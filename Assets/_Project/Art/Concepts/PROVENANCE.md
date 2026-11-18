@@ -46,3 +46,12 @@ Gerados por script Node (sem dependências) usando o codificador PNG de `Tools/L
 **Fonte e evidências:** `Source~/SkeletonLancer/` (README, GLB de render, source.json, medidas, quadros de silhueta a 128 px e de escala, `ConceptLancer.validation.json` 13/13).
 **Importação:** `.meta` copiado do `SkeletonMelee_Concept_01.png.meta` (Default, sRGB, NPOT None, sem mipmaps, máx. 2048), só com o GUID novo. **NÃO VALIDADO NO EDITOR** nesta sessão.
 **Condições de uso:** projeto Eldoria; three.js MIT; Pillow (validador) MIT-CMU/HPND. É conceito 2D: não há FBX, rig nem clip. Aprovação artística pendente.
+
+## A14 — 17/11/2026 (Claude Code): `StoneSentinel_Concept_01.png`
+
+**Ferramenta:** a mesma técnica da Task 01/A13: render 3D em tempo real com **three.js r170** (somente leitura no Lemo-Opuscar, MIT) no navegador embutido do Claude Code (Chromium/WebGL2), tone mapping Neutral, sRGB. O brilho do núcleo/runas é um blur 2D só dos materiais emissivos, sem bloom. Luz da família levemente neutralizada (key #ECEEF6, hemisférica #AAB6D6) para a pedra não azular.
+**Não é geração por IA de imagem.** A Sentinela é geometria própria (blocos chanfrados com irregularidade determinística) modelada por código em `Tools/Lemo3DGenerator/src/production/ConceptSentinel.mjs`, posada e renderizada por `Tools/Lemo3DGenerator/preview/concept_sentinel.html`; herói, Warden e esqueletos do próprio projeto aparecem só como escala. Nenhuma arte de terceiros. Scripts versionados.
+**Conteúdo:** folha 2048×1536 sem rótulos e fundo cinza neutro #2B2C31: frente/lado/costas ortográficas (200 px/m) com o herói na vista lateral, vista de jogo 45° (guinada −40°), antecipação do leque frontal sobre piso com o setor do protótipo F15 (100°, 6 m) e silhuetas pretas. Paleta da ficha A14: pedra #55596B/#3E4152, musgo #4C5A44, runas/núcleo #4FD8FF, rachadura opcional #FF9A2E.
+**Fonte e evidências:** `Source~/StoneSentinel/` (README, GLB de render, source.json, medidas, quadros de silhueta a 128 px e de escala, `ConceptSentinel.validation.json` 13/13).
+**Importação:** `.meta` copiado do `SkeletonMelee_Concept_01.png.meta` (Default, sRGB, NPOT None, sem mipmaps, máx. 2048), só com o GUID novo. **NÃO VALIDADO NO EDITOR** nesta sessão.
+**Condições de uso:** projeto Eldoria; three.js MIT; Pillow (validador) MIT-CMU/HPND. É conceito 2D: não há FBX, rig nem take. F15 sem playtest humano; aprovação artística pendente.
