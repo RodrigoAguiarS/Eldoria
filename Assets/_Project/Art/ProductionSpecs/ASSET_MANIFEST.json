@@ -6756,7 +6756,7 @@
       ],
       "depends_on": [],
       "technical_dependencies": [],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Produzido em staging (A08, 17/11/2026) como modelo 3D estático real: FX-PROJECTILE-Core.fbx (156 triângulos, um material URP/Lit com paleta 16×16 Base/Emission, raio máx. 0,1997 m dentro do envelope de 0,4 m da esfera atual, pivô no centro, +Z frente); NÃO integrado. Em jogo continua a esfera laranja (Unity Sphere × 0,4, Mat_Projectile). O filho visual no Projectile.prefab (escala 2,5 sob a raiz 0,4 ou raiz em 1; MeshRenderer da esfera desligado; sem collider; hitMask/radius 0,25/lifetime/pool preservados) é tarefa Codex separada; proposta em Source~/FX-PROJECTILE.source.json.",
       "visual_specification": "Esfera laranja .4 m integrada ao pool; sem cauda própria. Não precisa arco/flecha.",
       "acceptance_criteria": [
         "Arte apenas observa domínio; preservar dano/colliders/timers.",
@@ -6764,15 +6764,24 @@
         "Flash/shake 0 não ocultam área do perigo nem cor persistente da fase."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "Técnica fora da Unity em 17/11/2026: FxProjectile.validation.json (15/15; FBX e PNG relidos do disco): 156 tris ≤ 300; raio máx. 0,1997 ≤ 0,2 m; bounds 0,386×0,374×0,375 m com centro ≤ 0,6 mm do pivô; UnitScaleFactor 100, +Y up, +Z front; só Model/Geometry/Material/Texture/Video (1 Model, 1 Material, sem rig/animação/colisor); 5 peças fechadas com volume > 0; normais = normal geométrica; UV no centro das células da paleta (ferro 96, parede 40, brasa 20 faces); paletas decodificadas = gerador; pela câmera do jogo (pitch 45°, 24 rumos) silhueta quente 37–44%, área 82–90% da esfera, contraste WCAG da brasa 6,35/4,37 e da cor média 2,54/1,75 vs. piso #3E4152/#55596B (esfera atual 3,22/2,22); asset_report.py exit 0; GLB relido; geração determinística. NÃO VALIDADO NO EDITOR: importação, material URP, Projectile.prefab, 16 tiros simultâneos, reset e GPU não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
-      "production": null,
+      "production": {
+        "dimensions": "Envelope esférico ≤ 0,4 m (raio ≤ 0,2 m), ≤ 300 triângulos, um material",
+        "delivery_format": "FBX estático + fonte (gerador editável) + GLB de revisão; paleta PNG 16×16 Base/Emission",
+        "production_gate": "Produzido no lote A08 (17/11/2026) em staging; integração separada.",
+        "technical_requirements": "Unity 6000.6.9f1/URP 17.6.0, URP/Lit com emissão, filho visual do Projectile pooled; sem collider, dano, rig ou pacote novo.",
+        "prompt_en": "A08 em PROMPT_CATALOG.md (Using a genuine 3D modelling/export tool, create a small faceted hostile projectile visual ...).",
+        "staging_directory": "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE/",
+        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE/FX-PROJECTILE-Core.fbx"
+      },
       "source_and_rights": {
-        "kind": "project_existing",
-        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
-        "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria própria gerada por código (Tools/Lemo3DGenerator/src/production/FxProjectileCore.mjs; three.js r170 MIT, somente leitura no Lemo-Opuscar; validador Python com NumPy BSD e Pillow MIT-CMU/HPND). Sem IA generativa nem asset de terceiros."
+      },
+      "production_state": "Produzido por gerador próprio (FxProjectileCore.mjs: quatro placas de ferro #3E4152 facetadas por hull convexo, separadas pelas fendas 'spine' (plano x = 0, 10 cm, ao longo do voo) e 'brow' (frente, 6 cm), paredes de fenda ferrugem #8A4A22 com emissão, brasa icosaédrica #FF9A2E emissiva; um material com UV por face numa paleta 16×16): FX-PROJECTILE-Core.fbx + .meta (ModelImporter de Loot_XpOrb), FX-PROJECTILE-Core_Base.png/_Emission.png + .meta (point, sem mips, sem compressão), GLB de revisão e previews ortográficos/45°/F05 rotulados PREVIEW. Fendas mais largas que a 'pequena fenda' da ficha: a variante fina deixava o ferro com contraste ~1,0 contra o piso; desvio registrado no README."
     },
     {
       "id": "FX-SLASH",
@@ -12822,6 +12831,50 @@
         "review_floor_preview.png, review_telegraph_preview.png e preview_dash.gif são PRÉVIAS: o rastro é projetado sobre a captura F05 (Hero parado, sem ordenação de profundidade com o corpo); não são captura da Unity.",
         "Contraste de luminância com a pedra é baixo (WCAG 1,26–1,58): a leitura vem do matiz azul, por design discreto; conferir em PlayMode sobre piso claro e sob iluminação de tocha.",
         "FX-DASH.prefab sugerido pela ficha não criado: prefab exige coordenação.",
+        "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "A08-FX-PROJECTILE",
+      "date_local": "2026-11-17",
+      "branch": "claude/a08-fx-projectile",
+      "produced": [
+        "FX-PROJECTILE"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/Lemo3DGenerator/src/production/FxProjectileCore.mjs",
+        "Tools/Lemo3DGenerator/src/production/FxProjectileCore_preview.py"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE/FX-PROJECTILE-Core.fbx",
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE/FX-PROJECTILE-Core.fbx.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE/FX-PROJECTILE-Core_Base.png",
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE/FX-PROJECTILE-Core_Base.png.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE/FX-PROJECTILE-Core_Emission.png",
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE/FX-PROJECTILE-Core_Emission.png.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE/Source~/"
+      ],
+      "import_settings": "FBX: ModelImporter copiado de Art/Items/Models/Loot_XpOrb.fbx.meta (Unity 6000.6, serializedVersion 24600; escala 1, useFileUnits, sem colliders/animação/rig, normais importadas, materialImportMode 2), só o GUID muda. Paletas: template FX_Spark com point, sem mipmaps, sem compressão, sem alpha, max 32. GUIDs novos e estáveis (SHA256 de Eldoria/A08/<nome>).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "FxProjectile.validation.json ok (15/15, FBX/PNG relidos do disco); FxProjectile.generator.json ok; asset_report.py exit 0; GLB relido; geração determinística (2 execuções, mesmos SHA256)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: importação, material criado pela descrição do FBX (conferir _BaseMap/_EmissionMap), luz real/Bloom, Projectile.prefab, 16 tiros simultâneos, reset e GPU não observados.",
+        "Sem integração: em jogo continua a esfera laranja. Filho visual, desligar o renderer da raiz e escala (2,5 sob a raiz 0,4) são tarefa Codex separada; proposta em Source~/FX-PROJECTILE.source.json.",
+        "Leitura: a cor média do núcleo tem menos contraste com o piso que a esfera atual (2,54/1,75 vs. 3,22/2,22); a brasa tem mais (6,35/4,37). Comparar em PlayMode; ajuste preferido por _EmissionColor/paleta, sem refazer a malha.",
+        "Fendas de 10 cm e 6 cm em vez da 'pequena fenda' da ficha (a variante fina sumia no piso); desvio registrado no README.",
+        "Previews são do rasterizador próprio (ortográfico, ambiente+difusa+emissão), rotulados PREVIEW; não são captura da Unity.",
         "Aprovação artística humana pendente."
       ]
     }
