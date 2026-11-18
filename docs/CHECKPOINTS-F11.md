@@ -72,6 +72,20 @@ EditMode/PlayMode e inspeção gráfica com a Unity 6000.6.9f1 instalada. Evidê
 novas em Reports/F11, sem substituir resultados históricos.
 
 
+## Extensão D-007 — schema v5
+
+Equipamento separado da bolsa ([EQUIPMENT-SLOTS](EQUIPMENT-SLOTS.md)). `slots` passa a conter
+só a bolsa e `equipment` guarda exatamente seis IDs persistentes na ordem dos slots (arma,
+armadura, capacete, luvas, botas, acessório; `""` = vazio). Em v5, `weaponIndex`/`armorIndex`
+valem −1 e `gearIndices` fica vazio; documento v5 sem `equipment`, com tamanho diferente, com
+item ausente do catálogo, de outra categoria ou com os campos antigos preenchidos é recusado
+antes de qualquer mutação. v1–v4 continuam legíveis: a validação completa ocorre antes e cada
+item referenciado pelos índices antigos vai para o seu slot, esvaziando somente o seu espaço
+original; os demais itens mantêm posição, nada é removido por ter a mesma definição e a
+migração não concede a arma inicial. A chegada ao segundo andar converte a origem para v5.
+Continuar restaura exatamente o equipamento salvo, inclusive com o slot de arma vazio.
+Talentos, loot no chão, IDs, backup e fronteiras seguras inalterados; nenhum segundo sistema de save.
+
 ## Extensão D-006 — schema v4
 
 Seis slots de equipamento ([EQUIPMENT-SLOTS](EQUIPMENT-SLOTS.md)). O documento acrescenta

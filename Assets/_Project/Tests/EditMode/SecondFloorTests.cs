@@ -34,12 +34,16 @@ namespace DungeonCrawler.Tests.EditMode
             Assert.AreEqual(1.2f, arrival.specialCooldown); Assert.IsEmpty(arrival.clearedRooms); Assert.IsEmpty(arrival.openedChests);
             Assert.IsEmpty(arrival.pickups); Assert.AreEqual(SecondFloorSceneBuilder.FloorId, arrival.floorId);
         }
-        [TestCase(1)] [TestCase(2)] [TestCase(3)] public void PreviousVersionsRemainValidOnFirstFloor(int version)
-        { var data = State(); data.version = version; Assert.IsTrue(Sequence.floors[0].catalog.Validate(data, out string error), error); }
+        [TestCase(1)] [TestCase(2)] [TestCase(3)] [TestCase(4)] public void PreviousVersionsRemainValidOnFirstFloor(int version)
+        {
+            var data = State(); data.version = version;
+            if (version >= RunCheckpointData.GearVersion) data.gearIndices = new[] { -1, -1, -1, -1 };
+            Assert.IsTrue(Sequence.floors[0].catalog.Validate(data, out string error), error);
+        }
         [Test] public void EntryBoundaryRequiresV3AndOptInAndKnownAnchor()
         {
             var target = Sequence.floors[1].catalog; var arrival = FixedFloorSequence.PrepareArrival(State(), target);
-            arrival.version = 2; Assert.IsFalse(target.Validate(arrival, out _)); arrival.version = 3;
+            arrival.version = 2; Assert.IsFalse(target.Validate(arrival, out _)); arrival.version = RunCheckpointData.CurrentVersion;
             arrival.resumeRoom = "missing"; Assert.IsFalse(target.Validate(arrival, out _));
             Assert.IsNull(FixedFloorSequence.PrepareArrival(State(), Sequence.floors[0].catalog));
         }

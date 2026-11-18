@@ -58,12 +58,17 @@ namespace DungeonCrawler.Systems
         public static RunCheckpointData PrepareArrival(RunCheckpointData source, RunCheckpointCatalog target)
         {
             if (source == null || target == null || !target.allowEntryCheckpoint || target.rooms == null || target.rooms.Length == 0 || target.rooms[0] == null) return null;
-            // Older sources carry no gear field: normalize to the four new slots unequipped before upgrading the version.
-            if (!RunCheckpointCatalog.TryGetEquipment(source, out int[] equipped)) return null;
+            // Older sources bind equipment to bag indices: migrate to separate storage (v5) before upgrading the version.
+            // The arrival never grants the starting weapon; an empty weapon slot stays empty.
+            if (!target.TryGetLoadout(source, out InventoryStack[] bag, out ItemDefinition[] equipped)) return null;
             var data = JsonUtility.FromJson<RunCheckpointData>(JsonUtility.ToJson(source));
             data.version = RunCheckpointData.CurrentVersion; data.floorId = target.floorId;
-            data.gearIndices = new int[EquipmentSlots.GearCount];
-            for (int i = 0; i < data.gearIndices.Length; i++) data.gearIndices[i] = equipped[(int)EquipmentSlots.FromGearIndex(i)];
+            data.slots = new CheckpointSlot[bag.Length];
+            for (int i = 0; i < bag.Length; i++)
+                data.slots[i] = new CheckpointSlot { itemId = bag[i].IsEmpty ? "" : bag[i].Definition.PersistentId, count = bag[i].Count, potency = bag[i].Potency };
+            data.equipment = new string[EquipmentSlots.Count];
+            for (int s = 0; s < equipped.Length; s++) data.equipment[s] = equipped[s] != null ? equipped[s].PersistentId : "";
+            data.weaponIndex = -1; data.armorIndex = -1; data.gearIndices = Array.Empty<int>();
             data.clearedRooms = Array.Empty<string>(); data.openedChests = Array.Empty<string>();
             data.pickups = Array.Empty<CheckpointPickup>(); data.resumeRoom = target.rooms[0].id;
             return target.Validate(data, out _) ? data : null;

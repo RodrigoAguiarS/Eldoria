@@ -62,7 +62,8 @@ namespace DungeonCrawler.Systems
             ready = true;
             var data = RunCheckpointSession.Consume();
             if (data == null) return;
-            if (!catalog.Validate(data, out string error)) { SetStatus(error, true); return; }
+            // A refused snapshot restores nothing: the scene continues as a new run with the starting weapon.
+            if (!catalog.Validate(data, out string error)) { inventory.TryEquipStartingWeapon(); SetStatus(error, true); return; }
             arrivedAtEntry = catalog.allowEntryCheckpoint && data.clearedRooms.Length == 0;
             restoring = true;
             try
@@ -138,16 +139,10 @@ namespace DungeonCrawler.Systems
                 clearedRooms = cleared.ToArray(), resumeRoom = cleared.Count > 0 ? cleared[cleared.Count - 1] : arrivedAtEntry ? catalog.rooms[0].id : "",
                 openedChests = opened.ToArray(), health = health.Current, maxHealth = health.Max,
                 level = progression.Level, xp = progression.Xp, gold = progression.Gold, slots = slots,
-                weaponIndex = inventory.EquippedWeaponIndex, armorIndex = inventory.EquippedArmorIndex, gearIndices = GearIndices(),
+                weaponIndex = -1, armorIndex = -1, gearIndices = Array.Empty<int>(), equipment = inventory.CaptureEquipment(),
                 stamina = special.Stamina, specialCooldown = special.CooldownRemaining,
                 regenerationDelay = special.RegenerationRemaining, dashCooldown = dash.CooldownRemaining, pickups = loot.Capture(),
                 talents = talents != null ? talents.Capture() : Array.Empty<CheckpointTalent>() };
-        }
-        private int[] GearIndices()
-        {
-            var gear = new int[EquipmentSlots.GearCount];
-            for (int i = 0; i < gear.Length; i++) gear[i] = inventory.GetEquippedIndex(EquipmentSlots.FromGearIndex(i));
-            return gear;
         }
         private void SetStatus(string value, bool error = false) { Status = value; StatusIsError = error; StatusChanged?.Invoke(); }
     }

@@ -2,7 +2,7 @@ namespace DungeonCrawler.Systems
 {
     /// <summary>
     /// Six independent equipment slots. Values are stable array indices of <see cref="InventoryModel"/>; append only.
-    /// A slot is a binding to one bag index, never extra storage.
+    /// D-007: each slot stores its item separately from the bag (an equipped item occupies no bag slot).
     /// </summary>
     public enum EquipmentSlot { Weapon = 0, Armor = 1, Helmet = 2, Gloves = 3, Boots = 4, Accessory = 5 }
 

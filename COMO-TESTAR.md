@@ -26,6 +26,7 @@ Os `.bat` usam a última build gerada. Depois de mudar algo no Unity, gere de no
 
 - **Itens no chão:** cada um tem modelo próprio (3 espadas, colete, frasco, moedas, orbe de XP).
 - **Seis slots (D-006):** os itens de teste também trazem elmo, luvas, botas e amuleto, já equipados, e uma segunda fileira de pickups dessas peças (ainda sem ícone/modelo próprio: aparecem com o pickup tingido padrão).
+- **Bolsa e equipamento separados (D-007):** a run começa com a Espada de Ferro no slot Arma e a bolsa vazia (0/16). Equipar tira o item da bolsa; Desequipar devolve. Com a bolsa cheia, Desequipar mostra "Bolsa cheia" e não muda nada.
 - **Inventário (I ou Tab):** ícones nos slots, quantidade (×N), "Cura N" nas poções, moldura de seleção e ícone nos detalhes.
 - **HUD de poções** (canto superior esquerdo): ícone, Q, total e estado. Q bebe uma poção.
 - **Personagem:** a espada equipada aparece na mão e o colete no corpo. Desequipar volta à espada básica.

@@ -70,6 +70,8 @@ namespace DungeonCrawler.Tests.PlayMode
             progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron));
             progression.TryCollect(new LootDrop(LootKind.Weapon, 0, blade));
             progression.TryCollect(new LootDrop(LootKind.Xp, 71));
+            Assert.IsNull(progression.Weapon, "Collected weapons are never auto-equipped (D-007).");
+            Assert.IsTrue(inventory.TryEquip(0)); // iron leaves bag slot 0; the blade stays in slot 1
             int changes = 0;
             inventory.Changed += () => changes++;
             progression.Changed += () => changes++;
@@ -83,17 +85,17 @@ namespace DungeonCrawler.Tests.PlayMode
             Assert.AreEqual(38.4f, preview.SelectedValue, .001f);
             Assert.AreEqual(7.2f, preview.Difference, .001f);
             Assert.AreEqual(0, changes, "Preview must be read-only, including events.");
-            Assert.AreEqual(0, inventory.EquippedWeaponIndex);
+            Assert.AreSame(iron, inventory.EquippedWeapon); Assert.AreSame(blade, inventory.Slots[1].Definition);
             Assert.AreSame(iron, progression.Weapon);
             Assert.IsTrue(inventory.TryEquip(1));
             Assert.AreEqual(preview.SelectedValue, combat.CurrentDamage);
-            Assert.IsTrue(inventory.TryGetEquipmentComparison(0, out var downgrade));
+            Assert.AreSame(iron, inventory.Slots[1].Definition, "The previous weapon returns to the freed slot.");
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(1, out var downgrade));
             Assert.AreEqual(-6f, downgrade.BonusDifference);
             Assert.AreEqual(-7.2f, downgrade.Difference, .001f);
-            Assert.IsTrue(inventory.TryGetEquipmentComparison(1, out var same));
-            Assert.AreEqual(0f, same.Difference);
             Assert.IsTrue(inventory.TryUnequip(InventoryItemKind.Weapon));
-            Assert.IsTrue(inventory.TryGetEquipmentComparison(1, out var baseline));
+            Assert.AreSame(blade, inventory.Slots[0].Definition, "Unequip returns the blade to the first free slot.");
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(0, out var baseline));
             Assert.AreEqual(0f, baseline.CurrentBonus);
             Assert.AreEqual(24f, baseline.CurrentValue, .001f);
             Assert.AreEqual(14.4f, baseline.Difference, .001f);
@@ -112,17 +114,17 @@ namespace DungeonCrawler.Tests.PlayMode
             Assert.AreEqual(7f, baseline.CurrentValue);
             Assert.AreEqual(17f, baseline.SelectedValue);
             Assert.AreEqual(10f, baseline.Difference);
-            inventory.TryEquip(0);
+            Assert.IsTrue(inventory.TryEquip(0));
             Assert.AreEqual(baseline.SelectedValue, health.Defense);
             Assert.IsTrue(inventory.TryGetEquipmentComparison(1, out var upgrade));
             Assert.AreEqual(17f, upgrade.CurrentValue);
             Assert.AreEqual(32f, upgrade.SelectedValue);
             Assert.AreEqual(15f, upgrade.Difference);
-            inventory.TryEquip(1);
+            Assert.IsTrue(inventory.TryEquip(1)); // the first vest returns to slot 1
             Assert.AreEqual(upgrade.SelectedValue, health.Defense);
-            Assert.IsTrue(inventory.TryGetEquipmentComparison(0, out var downgrade));
+            Assert.IsTrue(inventory.TryGetEquipmentComparison(1, out var downgrade));
             Assert.AreEqual(-15f, downgrade.Difference);
-            inventory.TryUnequip(InventoryItemKind.Armor);
+            Assert.IsTrue(inventory.TryUnequip(InventoryItemKind.Armor)); // the better vest goes to slot 0
             Assert.IsTrue(inventory.TryGetEquipmentComparison(0, out var unequipped));
             Assert.AreEqual(health.Defense, unequipped.CurrentValue);
             Assert.AreEqual(7f, unequipped.CurrentValue);
@@ -138,6 +140,8 @@ namespace DungeonCrawler.Tests.PlayMode
             var sword = Asset<WeaponData>(); sword.damageBonus = 6f;
             progression.TryCollect(new LootDrop(LootKind.Potion, 30));
             for (int i = 1; i < 16; i++) Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Weapon, 0, sword)));
+            Assert.IsTrue(inventory.TryEquip(1)); // frees slot 1 ...
+            Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Weapon, 0, sword))); // ... refilled: full again
             Assert.IsFalse(inventory.TryGetEquipmentComparison(0, out _), "Potions never compare weapon stats.");
             Assert.IsTrue(inventory.TryGetEquipmentComparison(15, out var full));
             Assert.AreEqual(0f, full.Difference);
@@ -147,7 +151,7 @@ namespace DungeonCrawler.Tests.PlayMode
             Assert.AreEqual(full.SelectedValue, dead.SelectedValue);
             Assert.IsFalse(inventory.TryEquip(15));
             Assert.IsFalse(inventory.TryUnequip(InventoryItemKind.Weapon));
-            Assert.AreEqual(1, inventory.EquippedWeaponIndex);
+            Assert.AreSame(sword, inventory.EquippedWeapon);
             Assert.AreEqual(16, inventory.Slots.Count);
             Assert.AreEqual(30, inventory.Slots[0].Potency);
             for (int i = 1; i < 16; i++)
@@ -222,18 +226,21 @@ namespace DungeonCrawler.Tests.PlayMode
             var blade = Asset<WeaponData>(); blade.damageBonus = 12f;
             progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron));
             progression.TryCollect(new LootDrop(LootKind.Weapon, 0, blade));
+            Assert.IsNull(progression.Weapon, "Collection never equips (D-007).");
+            Assert.IsTrue(inventory.TryEquip(0));
             Assert.AreSame(iron, progression.Weapon);
             health.TakeDamage(60f, Vector3.zero);
             progression.TryCollect(new LootDrop(LootKind.Xp, 71));
             Assert.AreEqual(3, progression.Level);
-            Assert.AreEqual(100f, health.Current);
+            Assert.AreEqual(100f, health.Current, "Level healing unchanged; equipping never heals.");
             Assert.AreEqual(31.2f, combat.CurrentDamage, .001f);
-            Assert.IsTrue(inventory.TryEquip(1));
+            Assert.IsTrue(inventory.TryEquip(1)); // blade in, iron to slot 1
             Assert.AreEqual(38.4f, combat.CurrentDamage, .001f);
-            Assert.IsTrue(inventory.TryEquip(0));
+            Assert.IsTrue(inventory.TryEquip(1)); // iron in, blade to slot 1
             Assert.AreEqual(31.2f, combat.CurrentDamage, .001f);
             Assert.IsTrue(inventory.TryUnequip(InventoryItemKind.Weapon));
             Assert.AreEqual(24f, combat.CurrentDamage, .001f);
+            Assert.AreSame(iron, inventory.Slots[0].Definition);
             Assert.AreSame(blade, inventory.Slots[1].Definition);
         }
 
@@ -279,7 +286,7 @@ namespace DungeonCrawler.Tests.PlayMode
 
 #if UNITY_EDITOR
         [Test]
-        public void DroppingWithAllDirectionsBlocked_LeavesEquipmentAndItemIntact()
+        public void DroppingWithAllDirectionsBlocked_LeavesEquipmentAndBagItemIntact()
         {
             CreatePlayer(16, true);
             var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Prefabs/Items/Pickup.prefab");
@@ -287,6 +294,8 @@ namespace DungeonCrawler.Tests.PlayMode
             Field(inventory, "dropObstacleMask", (LayerMask)(1 << 30));
             var iron = UnityEditor.AssetDatabase.LoadAssetAtPath<WeaponData>("Assets/_Project/ScriptableObjects/Items/Weapon_IronSword.asset");
             progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron));
+            Assert.IsTrue(inventory.TryEquip(0));
+            progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron)); // a second unit in bag slot 0
             for (int i = 0; i < 8; i++)
             {
                 var blocker = new GameObject("DropBlocker"); created.Add(blocker); blocker.layer = 30;
@@ -301,7 +310,7 @@ namespace DungeonCrawler.Tests.PlayMode
         }
 
         [UnityTest]
-        public IEnumerator DroppingEquippedWeapon_KeepsWorldItemOutsideCollectionRadiusAndCanRecoverIt()
+        public IEnumerator DroppingBagWeapon_KeepsWorldItemOutsideCollectionRadiusAndRecoversItToTheBag()
         {
             CreatePlayer(16, true);
             var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Project/Prefabs/Items/Pickup.prefab");
@@ -314,12 +323,15 @@ namespace DungeonCrawler.Tests.PlayMode
             Assert.IsNotNull(dropped);
             Assert.IsNull(progression.Weapon);
             Assert.AreEqual(20f, combat.CurrentDamage);
+            Assert.IsFalse(inventory.TryDrop(-1), "Only bag slots can be dropped.");
             yield return new WaitForSeconds(.4f);
             Assert.IsTrue(inventory.Slots[0].IsEmpty, "Dropping must not instantly collect the item again.");
             var content = (LootDrop)typeof(Pickup).GetField("drop", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(dropped);
             Assert.AreSame(iron, content.Weapon);
             Assert.IsTrue(progression.TryCollect(content));
-            Assert.AreSame(iron, progression.Weapon);
+            Assert.AreSame(iron, inventory.Slots[0].Definition, "Recovered into the bag, not equipped.");
+            Assert.AreEqual(20f, combat.CurrentDamage);
+            Assert.IsTrue(inventory.TryEquip(0));
             Assert.AreEqual(26f, combat.CurrentDamage);
         }
 
@@ -345,8 +357,8 @@ namespace DungeonCrawler.Tests.PlayMode
             float deadline = Time.time + 1f;
             while (pickup != null && Time.time < deadline) yield return null;
             Assert.IsTrue(pickup == null, "Overlapping pickup must retry without requiring another trigger enter.");
-            Assert.AreSame(iron, progression.Weapon);
-            Assert.AreEqual(26f, combat.CurrentDamage);
+            Assert.AreSame(iron, inventory.Slots[0].Definition);
+            Assert.IsNull(progression.Weapon, "Collected into the bag only (D-007).");
         }
 #endif
     }

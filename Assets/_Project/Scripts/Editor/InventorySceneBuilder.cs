@@ -78,6 +78,13 @@ namespace DungeonCrawler.Editor
             SetMissingRarity(WeaponAssetRepair.WardenPath, rare);
             var definition = Asset(DefinitionPath, (InventoryDefinition item) => { item.capacity = 16; item.healthPotion = potion; });
             if (definition.healthPotion == null) { definition.healthPotion = potion; EditorUtility.SetDirty(definition); }
+            // D-007: a new run starts with the existing common Iron Sword equipped (a designer's later choice is kept).
+            if (definition.startingWeapon == null)
+            {
+                var iron = AssetDatabase.LoadAssetAtPath<WeaponData>(WeaponAssetRepair.IronPath);
+                if (iron == null || iron.rarity != common) throw new InvalidOperationException("Weapon_IronSword must exist with Common rarity to be the starting weapon.");
+                definition.startingWeapon = iron; EditorUtility.SetDirty(definition);
+            }
             return definition;
         }
 

@@ -8,11 +8,11 @@ namespace DungeonCrawler.Systems
     {
         public EquipmentSlot Slot { get; }
         public InventoryItemKind Kind => EquipmentSlots.ToKind(Slot);
-        /// <summary>Item currently bound to the slot; null means empty (or the basic weapon).</summary>
+        /// <summary>Item in the equipment slot (separate from the bag); null means empty (or the basic weapon).</summary>
         public ItemDefinition CurrentItem { get; }
+        /// <summary>Bag item being considered for the slot.</summary>
         public ItemDefinition SelectedItem { get; }
-        public bool SelectedIsCurrent => CurrentItem != null && SelectedIndex == CurrentIndex;
-        public int CurrentIndex { get; }
+        /// <summary>Bag index of <see cref="SelectedItem"/>.</summary>
         public int SelectedIndex { get; }
 
         public float CurrentDamageBonus { get; }
@@ -38,12 +38,11 @@ namespace DungeonCrawler.Systems
         public float SelectedValue => DamageIsPrimary ? SelectedDamage : SelectedDefense;
         public float Difference => SelectedValue - CurrentValue;
 
-        public EquipmentComparison(EquipmentSlot slot, ItemDefinition current, int currentIndex, ItemDefinition selected,
+        public EquipmentComparison(EquipmentSlot slot, ItemDefinition current, ItemDefinition selected,
             int selectedIndex, float currentDamage, float selectedDamage, float currentDefense, float selectedDefense, int level)
         {
             Slot = slot;
             CurrentItem = current;
-            CurrentIndex = current != null ? currentIndex : -1;
             SelectedItem = selected;
             SelectedIndex = selectedIndex;
             CurrentDamageBonus = current != null ? current.EquipmentDamageBonus : 0f;

@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 
 namespace DungeonCrawler.Tests.EditMode
 {
-    /// <summary>Six independent equipment slots in the pure inventory model (bindings to bag indices).</summary>
+    /// <summary>D-007: the bag and the six equipment slots are separate storage in the pure inventory model.</summary>
     public sealed class EquipmentSlotsModelTests
     {
         private readonly List<Object> created = new List<Object>();
@@ -35,76 +35,129 @@ namespace DungeonCrawler.Tests.EditMode
         }
         [TearDown] public void TearDown() { foreach (var item in created) Object.DestroyImmediate(item); created.Clear(); }
 
-        private InventoryModel FullSet(out int[] indices, int capacity = 16)
+        private ItemDefinition[] Six => new ItemDefinition[] { weapon, armor, helmet, gloves, boots, accessory };
+
+        /// <summary>Collects and equips the six items one by one (each passes through bag slot 0), leaving the bag empty.</summary>
+        private InventoryModel FullSet(int capacity = 16)
         {
-            var model = new InventoryModel(capacity, autoEquipFirstWeapon: false);
-            ItemDefinition[] items = { weapon, armor, helmet, gloves, boots, accessory };
-            indices = new int[items.Length];
-            for (int i = 0; i < items.Length; i++) { Assert.IsTrue(model.TryAdd(items[i])); indices[i] = i; Assert.IsTrue(model.TryEquip(i)); }
+            var model = new InventoryModel(capacity);
+            for (int i = 0; i < 6; i++)
+            {
+                Assert.IsTrue(model.TryAdd(Six[i]));
+                Assert.IsTrue(model.TryEquip(0, out EquipmentSlot slot));
+                Assert.AreEqual((EquipmentSlot)i, slot);
+            }
             return model;
         }
 
-        [Test]
-        public void SixCategories_EquipSimultaneously_EachInItsOwnSlot()
+        /// <summary>Every item unit in the bag plus the equipment, by definition.</summary>
+        private static Dictionary<ItemDefinition, int> Units(InventoryModel model)
         {
-            var model = FullSet(out _);
-            Assert.AreEqual(0, model.EquippedWeaponIndex); Assert.AreEqual(1, model.EquippedArmorIndex);
-            Assert.AreEqual(2, model.GetEquippedIndex(EquipmentSlot.Helmet)); Assert.AreEqual(3, model.GetEquippedIndex(EquipmentSlot.Gloves));
-            Assert.AreEqual(4, model.GetEquippedIndex(EquipmentSlot.Boots)); Assert.AreEqual(5, model.GetEquippedIndex(EquipmentSlot.Accessory));
-            Assert.AreSame(gloves, model.GetEquipped(EquipmentSlot.Gloves));
-            EquipmentTotals totals = model.GetTotals();
-            Assert.AreEqual(6f, totals.WeaponDamage); Assert.AreEqual(3f, totals.GearDamage);
-            Assert.AreEqual(10f, totals.ArmorDefense); Assert.AreEqual(9f, totals.GearDefense);
-            Assert.AreEqual(6, model.Slots.Count(slot => !slot.IsEmpty), "Equipment stays in the bag; no extra storage.");
+            var units = new Dictionary<ItemDefinition, int>();
+            foreach (var stack in model.Slots.Where(s => !s.IsEmpty)) units[stack.Definition] = units.TryGetValue(stack.Definition, out int n) ? n + stack.Count : stack.Count;
+            foreach (var item in model.Equipment.Where(i => i != null)) units[item] = units.TryGetValue(item, out int n) ? n + 1 : 1;
+            return units;
         }
 
         [Test]
-        public void UnequipEachCategory_RemovesOnlyItsBindingAndContribution()
+        public void SixCategories_EquipSimultaneously_AndLeaveTheBag()
         {
-            var model = FullSet(out _);
+            var model = FullSet();
+            CollectionAssert.AreEqual(Six, model.Equipment.ToArray());
+            Assert.AreSame(weapon, model.EquippedWeapon); Assert.AreSame(armor, model.EquippedArmor);
+            Assert.AreEqual(0, model.OccupiedCount, "Equipped items occupy no bag slot.");
+            EquipmentTotals totals = model.GetTotals();
+            Assert.AreEqual(6f, totals.WeaponDamage); Assert.AreEqual(3f, totals.GearDamage);
+            Assert.AreEqual(10f, totals.ArmorDefense); Assert.AreEqual(9f, totals.GearDefense);
+        }
+
+        [Test]
+        public void EquipEachCategory_MovesTheUnitAndFreesItsBagSlot()
+        {
+            var model = new InventoryModel(16);
+            foreach (var item in Six) Assert.IsTrue(model.TryAdd(item));
+            Assert.IsTrue(model.TryAdd(potion, 1, 15));
+            foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot)))
+            {
+                int index = (int)slot, changes = 0;
+                ItemDefinition item = model.Slots[index].Definition;
+                model.Changed += Count; void Count() => changes++;
+                Assert.IsTrue(model.TryEquip(index, out EquipmentSlot target), slot.ToString());
+                model.Changed -= Count;
+                Assert.AreEqual(slot, target); Assert.AreEqual(1, changes, "One event with the final state.");
+                Assert.IsTrue(model.Slots[index].IsEmpty, "The bag slot is freed.");
+                Assert.AreSame(item, model.GetEquipped(slot));
+            }
+            Assert.AreSame(potion, model.Slots[6].Definition, "Other bag items keep their position.");
+        }
+
+        [Test]
+        public void UnequipEachCategory_ReturnsTheUnitToTheFirstFreeSlotAndRemovesOnlyItsBonus()
+        {
+            var model = FullSet();
+            Assert.IsTrue(model.TryAdd(potion, 1, 15)); // occupies bag slot 0
             foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot)))
             {
                 var before = model.GetTotals();
                 ItemDefinition item = model.GetEquipped(slot);
-                Assert.IsTrue(model.TryUnequip(slot), slot.ToString());
-                Assert.AreEqual(-1, model.GetEquippedIndex(slot));
+                int expected = model.FirstFreeIndex;
+                Assert.IsTrue(model.TryUnequip(slot, out int bagIndex, out UnequipFailure failure), slot.ToString());
+                Assert.AreEqual(UnequipFailure.None, failure); Assert.AreEqual(expected, bagIndex);
+                Assert.IsNull(model.GetEquipped(slot)); Assert.AreSame(item, model.Slots[bagIndex].Definition);
                 var after = model.GetTotals();
                 Assert.AreEqual(before.FlatDamage - item.EquipmentDamageBonus, after.FlatDamage, 1e-4f, slot.ToString());
                 Assert.AreEqual(before.EquipmentDefense - item.EquipmentDefenseBonus, after.EquipmentDefense, 1e-4f, slot.ToString());
-                Assert.IsFalse(model.TryUnequip(slot), "Second unequip is a no-op.");
-                Assert.AreEqual(6, model.Slots.Count(s => !s.IsEmpty), "Unequip never removes the item.");
+                Assert.IsFalse(model.TryUnequip(slot, out _, out failure)); Assert.AreEqual(UnequipFailure.EmptySlot, failure);
             }
+            Assert.AreEqual(7, model.OccupiedCount);
         }
 
         [Test]
-        public void SwapSameCategory_KeepsTheOtherFiveAndReplacedItemStaysInPlace()
+        public void Swap_PutsThePreviousItemInTheFreedSlot_AtomicallyAndWithAFullBag()
         {
-            var model = FullSet(out _);
-            var betterGloves = Gear(GearSlot.Gloves, 5f, 1f, "Manoplas");
-            Assert.IsTrue(model.TryAdd(betterGloves));
+            var model = FullSet(capacity: 4);
+            var manoplas = Gear(GearSlot.Gloves, 5f, 1f, "Manoplas");
+            Assert.IsTrue(model.TryAdd(potion, 1, 15)); Assert.IsTrue(model.TryAdd(manoplas));
+            Assert.IsTrue(model.TryAdd(potion, 1, 30)); Assert.IsTrue(model.TryAdd(helmet));
+            Assert.AreEqual(-1, model.FirstFreeIndex, "Bag is full.");
+            var units = Units(model);
             int changes = 0; model.Changed += () => changes++;
-            Assert.IsTrue(model.TryEquip(6));
-            Assert.AreEqual(1, changes, "One atomic change.");
-            Assert.AreEqual(6, model.GetEquippedIndex(EquipmentSlot.Gloves));
-            Assert.AreSame(gloves, model.Slots[3].Definition, "Replaced gloves stay in their bag slot.");
-            Assert.IsFalse(model.IsEquipped(3));
-            foreach (var other in new[] { EquipmentSlot.Weapon, EquipmentSlot.Armor, EquipmentSlot.Helmet, EquipmentSlot.Boots, EquipmentSlot.Accessory })
-                Assert.AreEqual((int)other, model.GetEquippedIndex(other), "FullSet adds the items in slot order.");
+            Assert.IsTrue(model.TryEquip(1, out EquipmentSlot slot));
+            Assert.AreEqual(EquipmentSlot.Gloves, slot); Assert.AreEqual(1, changes, "One atomic change.");
+            Assert.AreSame(manoplas, model.GetEquipped(EquipmentSlot.Gloves));
+            Assert.AreSame(gloves, model.Slots[1].Definition, "The replaced gloves take the freed bag slot.");
+            CollectionAssert.AreEquivalent(units, Units(model), "Nothing created or lost.");
             Assert.AreEqual(6f + 5f + 1f, model.GetTotals().FlatDamage, 1e-4f);
-            Assert.IsFalse(model.TryEquip(6), "Equipping the bound item again changes nothing.");
+            foreach (var other in new[] { EquipmentSlot.Weapon, EquipmentSlot.Armor, EquipmentSlot.Helmet, EquipmentSlot.Boots, EquipmentSlot.Accessory })
+                Assert.AreSame(Six[(int)other], model.GetEquipped(other), "The other five slots are untouched.");
+        }
+
+        [Test]
+        public void UnequipWithFullBag_IsRefusedWithoutAnyChange()
+        {
+            var model = FullSet(capacity: 2);
+            Assert.IsTrue(model.TryAdd(potion, 1, 15)); Assert.IsTrue(model.TryAdd(potion, 1, 30));
+            var bag = model.Slots.ToArray(); var equipment = model.Equipment.ToArray(); var totals = model.GetTotals();
+            int changes = 0; model.Changed += () => changes++;
+            Assert.IsFalse(model.TryUnequip(EquipmentSlot.Helmet, out int bagIndex, out UnequipFailure failure));
+            Assert.AreEqual(UnequipFailure.BagFull, failure); Assert.AreEqual(-1, bagIndex);
+            Assert.AreEqual(0, changes);
+            CollectionAssert.AreEqual(bag, model.Slots.ToArray()); CollectionAssert.AreEqual(equipment, model.Equipment.ToArray());
+            Assert.AreEqual(totals.FlatDamage, model.GetTotals().FlatDamage); Assert.AreEqual(totals.EquipmentDefense, model.GetTotals().EquipmentDefense);
         }
 
         [Test]
         public void RefusesConsumablesInvalidCategoryAndCrossSlotPreviews()
         {
-            var model = new InventoryModel(4, false);
+            var model = new InventoryModel(4);
             var invalid = Gear((GearSlot)42, 9f, 9f, "Inválido");
             Assert.IsTrue(model.TryAdd(potion, 1, 15)); Assert.IsTrue(model.TryAdd(invalid)); Assert.IsTrue(model.TryAdd(gloves));
             int changes = 0; model.Changed += () => changes++;
             Assert.IsFalse(model.TryEquip(0), "Potions are not equipment.");
             Assert.IsFalse(model.TryEquip(1), "Out-of-range gear slot is refused by the domain.");
+            Assert.IsFalse(model.TryEquip(3), "Empty bag slot.");
             Assert.IsFalse(model.TryUnequip(InventoryItemKind.Potion));
-            Assert.IsFalse(model.TryUnequipAt(2), "Unequipping an unbound item does nothing.");
+            Assert.IsFalse(model.TryEquipDirect(potion)); Assert.IsFalse(model.TryEquipDirect(invalid));
             Assert.AreEqual(0, changes);
             Assert.IsFalse(model.TryGetTotalsWith(EquipmentSlot.Armor, gloves, out _), "Gloves never preview in the armor slot.");
             Assert.IsFalse(model.TryGetTotalsWith(EquipmentSlot.Weapon, accessory, out _), "An accessory never previews as a weapon.");
@@ -114,38 +167,43 @@ namespace DungeonCrawler.Tests.EditMode
         }
 
         [Test]
-        public void FullBag_EquipSwapAndUnequipNeedNoFreeSpace()
+        public void EquipDirect_OnlyFillsAnEmptySlotAndNeverTouchesTheBag()
         {
-            var model = FullSet(out _, capacity: 8);
-            var second = Gear(GearSlot.Helmet, 0f, 6f, "Elmo 2");
-            Assert.IsTrue(model.TryAdd(second)); Assert.IsTrue(model.TryAdd(potion, 1, 15));
-            Assert.IsFalse(model.Slots.Any(s => s.IsEmpty), "Bag is full.");
-            Assert.IsTrue(model.TryEquip(6)); Assert.AreEqual(6, model.GetEquippedIndex(EquipmentSlot.Helmet));
-            Assert.IsTrue(model.TryUnequip(EquipmentSlot.Helmet)); Assert.IsTrue(model.TryEquip(2));
-            Assert.AreEqual(8, model.Slots.Count(s => !s.IsEmpty));
+            var model = new InventoryModel(4);
+            Assert.IsTrue(model.TryEquipDirect(weapon));
+            Assert.AreSame(weapon, model.EquippedWeapon); Assert.AreEqual(0, model.OccupiedCount, "No bag copy.");
+            var other = Asset<WeaponData>();
+            Assert.IsFalse(model.TryEquipDirect(other), "Occupied slot: refused, never replaced or duplicated.");
+            Assert.AreSame(weapon, model.EquippedWeapon);
         }
 
         [Test]
-        public void Sort_WithAllSixEquippedAndDuplicateDefinitions_RemapsBindingsToTheSameInstances()
+        public void TwoUnitsOfTheSameDefinition_StayDistinct()
         {
-            var model = new InventoryModel(16, false);
-            // Reverse insertion so that sorting moves everything; two identical helmets keep distinct identities.
+            var model = new InventoryModel(4);
+            Assert.IsTrue(model.TryAdd(helmet)); Assert.IsTrue(model.TryAdd(helmet));
+            Assert.IsTrue(model.TryEquip(1));
+            Assert.AreSame(helmet, model.GetEquipped(EquipmentSlot.Helmet)); Assert.AreSame(helmet, model.Slots[0].Definition);
+            Assert.AreEqual(2, Units(model)[helmet]);
+            Assert.IsTrue(model.TryEquip(0), "Swapping identical units keeps both.");
+            Assert.AreSame(helmet, model.Slots[0].Definition); Assert.AreEqual(2, Units(model)[helmet]);
+            Assert.IsTrue(model.TryUnequip(EquipmentSlot.Helmet, out int index, out _));
+            Assert.AreEqual(1, index); Assert.AreEqual(2, model.OccupiedCount);
+        }
+
+        [Test]
+        public void Sort_ReordersTheBagOnlyAndKeepsEquipment()
+        {
+            var model = FullSet();
             ItemDefinition[] items = { accessory, boots, gloves, helmet, helmet, armor, weapon };
             foreach (var item in items) Assert.IsTrue(model.TryAdd(item));
             Assert.IsTrue(model.TryAdd(potion, 2, 15));
-            Assert.IsTrue(model.TryEquip(0)); Assert.IsTrue(model.TryEquip(1)); Assert.IsTrue(model.TryEquip(2));
-            Assert.IsTrue(model.TryEquip(4)); // the SECOND helmet
-            Assert.IsTrue(model.TryEquip(5)); Assert.IsTrue(model.TryEquip(6));
+            var equipment = model.Equipment.ToArray();
             int changes = 0; model.Changed += () => changes++;
             Assert.IsTrue(model.TrySort(out int[] newIndexOf));
             Assert.AreEqual(1, changes);
-            Assert.AreEqual(newIndexOf[6], model.EquippedWeaponIndex); Assert.AreEqual(newIndexOf[5], model.EquippedArmorIndex);
-            Assert.AreEqual(newIndexOf[4], model.GetEquippedIndex(EquipmentSlot.Helmet), "The second helmet instance stays equipped.");
-            Assert.AreEqual(newIndexOf[2], model.GetEquippedIndex(EquipmentSlot.Gloves));
-            Assert.AreEqual(newIndexOf[1], model.GetEquippedIndex(EquipmentSlot.Boots));
-            Assert.AreEqual(newIndexOf[0], model.GetEquippedIndex(EquipmentSlot.Accessory));
-            Assert.IsFalse(model.IsEquipped(newIndexOf[3]), "The first helmet stays unequipped.");
-            // Order: weapon, armor, helmet×2, gloves, boots, accessory, potion.
+            CollectionAssert.AreEqual(equipment, model.Equipment.ToArray(), "Equipment is separate and never moves.");
+            Assert.AreEqual(newIndexOf.Length, model.Capacity);
             CollectionAssert.AreEqual(new InventoryItemKind[] { InventoryItemKind.Weapon, InventoryItemKind.Armor, InventoryItemKind.Helmet,
                 InventoryItemKind.Helmet, InventoryItemKind.Gloves, InventoryItemKind.Boots, InventoryItemKind.Accessory, InventoryItemKind.Potion },
                 model.Slots.Where(s => !s.IsEmpty).Select(s => s.Definition.Kind).ToArray());
@@ -153,78 +211,122 @@ namespace DungeonCrawler.Tests.EditMode
         }
 
         [Test]
-        public void TakeOneOfEquippedGear_ClearsOnlyThatBinding()
+        public void TakeOne_AffectsTheBagOnly()
         {
-            var model = FullSet(out _);
-            Assert.IsTrue(model.TryTakeOne(4, out InventoryStack taken));
+            var model = FullSet();
+            Assert.IsTrue(model.TryAdd(boots));
+            var equipment = model.Equipment.ToArray();
+            Assert.IsTrue(model.TryTakeOne(0, out InventoryStack taken));
             Assert.AreSame(boots, taken.Definition);
-            Assert.AreEqual(-1, model.GetEquippedIndex(EquipmentSlot.Boots));
-            Assert.AreEqual(6f, model.GetTotals().GearDefense, 1e-4f, "Boots defense removed; helmet + amulet remain.");
-            Assert.AreEqual(5, model.GetEquippedIndex(EquipmentSlot.Accessory));
-            Assert.IsTrue(model.TryAdd(boots), "Re-collected boots return unequipped.");
-            Assert.AreEqual(-1, model.GetEquippedIndex(EquipmentSlot.Boots));
+            CollectionAssert.AreEqual(equipment, model.Equipment.ToArray(), "The equipped boots are a different unit.");
+            Assert.IsFalse(model.TryTakeOne(0, out _), "Nothing left in the bag slot.");
         }
 
         [Test]
         public void RepeatedSwapsAndUnequips_NeverAccumulateBonuses()
         {
-            var model = FullSet(out _);
+            var model = FullSet();
             var spare = Gear(GearSlot.Accessory, 3f, 0f, "Anel");
             Assert.IsTrue(model.TryAdd(spare));
             EquipmentTotals baseline = model.GetTotals();
             for (int i = 0; i < 200; i++)
             {
-                model.TryEquip(i % 2 == 0 ? 6 : 5);
-                if (i % 7 == 0) { model.TryUnequip(EquipmentSlot.Helmet); model.TryEquip(2); }
+                Assert.IsTrue(model.TryEquip(0)); // swaps the two accessories through bag slot 0
+                if (i % 7 == 0) { Assert.IsTrue(model.TryUnequip(EquipmentSlot.Helmet, out int index, out _)); Assert.IsTrue(model.TryEquip(index)); }
             }
-            model.TryEquip(5);
             EquipmentTotals after = model.GetTotals();
             Assert.AreEqual(baseline.FlatDamage, after.FlatDamage, 1e-4f); Assert.AreEqual(baseline.EquipmentDefense, after.EquipmentDefense, 1e-4f);
         }
 
         [Test]
-        public void Restore_ValidatesAllSixBindingsBeforeMutation()
+        public void Restore_ValidatesBagAndEquipmentBeforeMutation()
         {
-            var source = FullSet(out _);
-            var snapshot = source.Slots.ToArray();
-            var model = new InventoryModel(16, false);
-            Assert.IsTrue(model.TryAdd(potion, 1, 15));
-            Assert.IsFalse(model.TryRestore(snapshot, new[] { 0, 1, 3, 2, 4, 5 }), "Gloves in the helmet slot are refused.");
-            Assert.IsFalse(model.TryRestore(snapshot, new[] { 0, 1, 2, 3, 4 }), "Exactly six bindings.");
-            Assert.IsFalse(model.TryRestore(snapshot, new[] { 0, 1, 2, 3, 4, 16 }));
-            Assert.AreSame(potion, model.Slots[0].Definition, "Nothing changed after refusals.");
-            Assert.IsTrue(model.TryRestore(snapshot, new[] { 0, 1, 2, 3, 4, 5 }));
-            Assert.AreEqual(5, model.GetEquippedIndex(EquipmentSlot.Accessory));
-            Assert.IsTrue(model.TryRestore(snapshot, 0, 1), "Legacy overload leaves the four new slots empty.");
-            Assert.AreEqual(-1, model.GetEquippedIndex(EquipmentSlot.Helmet));
+            var source = FullSet();
+            Assert.IsTrue(source.TryAdd(potion, 1, 15));
+            var bag = source.Slots.ToArray(); var equipment = source.Equipment.ToArray();
+            var model = new InventoryModel(16);
+            Assert.IsTrue(model.TryAdd(helmet));
+            var swapped = (ItemDefinition[])equipment.Clone(); swapped[(int)EquipmentSlot.Helmet] = gloves;
+            Assert.IsFalse(model.TryRestore(bag, swapped), "Gloves in the helmet slot are refused.");
+            Assert.IsFalse(model.TryRestore(bag, equipment.Take(5).ToArray()), "Exactly six slots.");
+            Assert.IsFalse(model.TryRestore(bag.Take(15).ToArray(), equipment), "Exact bag capacity.");
+            var withPotion = (ItemDefinition[])equipment.Clone(); withPotion[0] = potion;
+            Assert.IsFalse(model.TryRestore(bag, withPotion), "A potion is never equipment.");
+            Assert.AreSame(helmet, model.Slots[0].Definition, "Nothing changed after refusals."); Assert.IsNull(model.GetEquipped(EquipmentSlot.Helmet));
+            Assert.IsTrue(model.TryRestore(bag, equipment));
+            CollectionAssert.AreEqual(equipment, model.Equipment.ToArray()); CollectionAssert.AreEqual(bag, model.Slots.ToArray());
+            Assert.IsTrue(model.TryRestore(bag, new ItemDefinition[6]), "Every slot may be empty, including the weapon.");
+            Assert.IsNull(model.EquippedWeapon);
         }
 
         [Test]
-        public void RandomCommands_KeepEveryBindingValidAndTotalsConsistent()
+        public void MigrateBindings_MovesOnlyTheReferencedUnitsAndKeepsEveryOtherPosition()
+        {
+            var source = new InventoryModel(8);
+            ItemDefinition[] items = { weapon, helmet, helmet, armor, gloves };
+            foreach (var item in items) Assert.IsTrue(source.TryAdd(item));
+            Assert.IsTrue(source.TryAdd(potion, 2, 15));
+            var snapshot = source.Slots.ToArray();
+            // Legacy bindings: weapon 0, armor 3, the SECOND helmet (2); gloves 4 left unequipped in the bag.
+            int[] bindings = { 0, 3, 2, -1, -1, -1 };
+            Assert.IsTrue(InventoryModel.TryMigrateBindings(snapshot, bindings, 8, out var bag, out var equipment));
+            Assert.AreSame(weapon, equipment[0]); Assert.AreSame(armor, equipment[1]); Assert.AreSame(helmet, equipment[2]);
+            Assert.IsNull(equipment[3]);
+            Assert.IsTrue(bag[0].IsEmpty && bag[2].IsEmpty && bag[3].IsEmpty, "Only the original slots are emptied.");
+            Assert.AreSame(helmet, bag[1].Definition, "The other helmet (same definition) stays in its slot.");
+            Assert.AreSame(gloves, bag[4].Definition); Assert.AreSame(potion, bag[5].Definition); Assert.AreEqual(2, bag[5].Count);
+            CollectionAssert.AreEqual(snapshot, source.Slots.ToArray(), "The input snapshot is not mutated.");
+            var model = new InventoryModel(8);
+            Assert.IsTrue(model.TryRestore(bag, equipment));
+            Assert.AreEqual(7, model.Slots.Where(s => !s.IsEmpty).Sum(s => s.Count) + model.Equipment.Count(i => i != null),
+                "Total units conserved: 5 items + 2 potions.");
+        }
+
+        [TestCase(new[] { 1, -1, -1, -1, -1, -1 })]   // helmet in the weapon slot
+        [TestCase(new[] { 0, 0, -1, -1, -1, -1 })]    // the same index twice
+        [TestCase(new[] { 0, -1, -1, -1, -1, 8 })]    // out of range
+        [TestCase(new[] { 0, -1, -1, -1, -1, 3 })]    // empty bag slot
+        [TestCase(new[] { 2, -1, -1, -1, -1, -1 })]   // potion as weapon
+        [TestCase(new[] { 0, -1, -1, -1, -1 })]       // five bindings
+        [TestCase(new[] { -2, -1, -1, -1, -1, -1 })]  // invalid sentinel
+        public void MigrateBindings_RefusesInvalidSnapshotsWhole(int[] bindings)
+        {
+            var source = new InventoryModel(8);
+            Assert.IsTrue(source.TryAdd(weapon)); Assert.IsTrue(source.TryAdd(helmet)); Assert.IsTrue(source.TryAdd(potion, 1, 15));
+            Assert.IsFalse(InventoryModel.TryMigrateBindings(source.Slots.ToArray(), bindings, 8, out var bag, out var equipment));
+            Assert.IsNull(bag); Assert.IsNull(equipment);
+        }
+
+        [Test]
+        public void RandomCommands_ConserveUnitsAndKeepEverySlotValid()
         {
             var random = new System.Random(4242);
-            var model = new InventoryModel(10, true);
+            var model = new InventoryModel(10);
             ItemDefinition[] pool = { weapon, armor, helmet, gloves, boots, accessory, potion };
+            var expected = new Dictionary<ItemDefinition, int>();
             for (int step = 0; step < 1000; step++)
             {
                 switch (random.Next(6))
                 {
-                    case 0: var item = pool[random.Next(pool.Length)]; model.TryAdd(item, 1, item == potion ? 15 : 0); break;
+                    case 0:
+                        var item = pool[random.Next(pool.Length)];
+                        if (model.TryAdd(item, 1, item == potion ? 15 : 0)) expected[item] = expected.TryGetValue(item, out int n) ? n + 1 : 1;
+                        break;
                     case 1: model.TryEquip(random.Next(10)); break;
                     case 2: model.TryUnequip((EquipmentSlot)random.Next(6)); break;
-                    case 3: model.TryTakeOne(random.Next(10), out _); break;
+                    case 3: if (model.TryTakeOne(random.Next(10), out var taken)) expected[taken.Definition]--; break;
                     case 4: model.TrySort(out _); break;
-                    default: model.TryUnequipAt(random.Next(10)); break;
+                    default: model.TryUnequip((EquipmentSlot)random.Next(6), out _, out _); break;
                 }
+                var units = Units(model);
+                foreach (var pair in expected) Assert.AreEqual(pair.Value, units.TryGetValue(pair.Key, out int have) ? have : 0, "Units conserved: " + pair.Key.name);
                 float damage = 0f, defense = 0f;
-                var bound = new HashSet<int>();
-                foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot)))
+                for (int s = 0; s < EquipmentSlots.Count; s++)
                 {
-                    int index = model.GetEquippedIndex(slot);
-                    if (index < 0) continue;
-                    Assert.IsTrue(bound.Add(index), "One bag index per slot at most.");
-                    Assert.IsTrue(model.Slots[index].Definition.TryGetEquipmentSlot(out var own) && own == slot, "Binding matches its category.");
-                    damage += model.Slots[index].Definition.EquipmentDamageBonus; defense += model.Slots[index].Definition.EquipmentDefenseBonus;
+                    var equipped = model.Equipment[s];
+                    if (equipped == null) continue;
+                    Assert.IsTrue(equipped.TryGetEquipmentSlot(out var own) && (int)own == s, "Slot holds its own category.");
+                    damage += equipped.EquipmentDamageBonus; defense += equipped.EquipmentDefenseBonus;
                 }
                 Assert.AreEqual(damage, model.GetTotals().FlatDamage, 1e-4f); Assert.AreEqual(defense, model.GetTotals().EquipmentDefense, 1e-4f);
             }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using DungeonCrawler.Core;
 using DungeonCrawler.Player;
@@ -191,10 +192,10 @@ namespace DungeonCrawler.Tests.PlayerInput
             var iron = UnityEditor.AssetDatabase.LoadAssetAtPath<WeaponData>("Assets/_Project/ScriptableObjects/Items/Weapon_IronSword.asset");
             var blade = UnityEditor.AssetDatabase.LoadAssetAtPath<WeaponData>("Assets/_Project/ScriptableObjects/Items/Weapon_WardenBlade.asset");
             var armor = UnityEditor.AssetDatabase.LoadAssetAtPath<ArmorData>("Assets/_Project/ScriptableObjects/Items/Armor_Leather.asset");
-            progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron));
-            progression.TryCollect(new LootDrop(LootKind.Weapon, 0, blade));
-            progression.TryCollect(new LootDrop(LootKind.Potion, 30));
-            progression.TryCollect(new LootDrop(LootKind.Armor, 0, armor: armor));
+            Assert.AreSame(iron, inventory.EquippedWeapon, "D-007: the new run starts with the Iron Sword equipped.");
+            progression.TryCollect(new LootDrop(LootKind.Weapon, 0, blade)); // 0
+            progression.TryCollect(new LootDrop(LootKind.Potion, 30));       // 1
+            progression.TryCollect(new LootDrop(LootKind.Armor, 0, armor: armor)); // 2
             health.TakeDamage(30f, Vector3.zero);
             int attacks = 0; combat.AttackStarted += (_, __) => attacks++;
             yield return Key(keyboard.iKey);
@@ -204,7 +205,8 @@ namespace DungeonCrawler.Tests.PlayerInput
             var views = presenter.GetComponentsInChildren<InventorySlotView>(true);
             var comparison = presenter.transform.Find("Window/ItemReading/Viewport/Content/Comparison").GetComponent<Text>();
             Assert.AreEqual(16, views.Length);
-            yield return Click(views[1].Button);
+            var weaponSlot = presenter.GetComponentsInChildren<EquipmentSlotView>(true).Single(v => v.Slot == EquipmentSlot.Weapon);
+            yield return Click(views[0].Button);
             StringAssert.Contains("Bônus plano da arma: +6 → +12 (+6)", comparison.text);
             StringAssert.Contains("Dano base no nível 1: 26 → 32 (+6)", comparison.text);
             Assert.AreSame(iron, progression.Weapon, "Selection must not equip the candidate.");
@@ -213,19 +215,21 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return Click(presenter.transform.Find("Window/Equip").GetComponent<Button>());
             Assert.AreSame(blade, progression.Weapon);
             Assert.AreEqual(38.4f, combat.CurrentDamage, .001f);
-            StringAssert.Contains("Bônus plano da arma: +12 → +12 (0)", comparison.text);
+            Assert.AreSame(iron, inventory.Slots[0].Definition, "The previous weapon returns to the freed slot.");
+            Assert.IsFalse(comparison.gameObject.activeSelf, "The selection follows the blade into its slot: nothing to compare.");
             yield return Click(views[0].Button);
             StringAssert.Contains("Bônus plano da arma: +12 → +6 (-6)", comparison.text);
-            yield return Click(views[1].Button);
+            yield return Click(weaponSlot.Button);
             yield return Click(presenter.transform.Find("Window/Unequip").GetComponent<Button>());
+            Assert.AreSame(blade, inventory.Slots[3].Definition, "Unequip moves the blade to the first free slot.");
             StringAssert.Contains("Bônus plano da arma: +0 → +12 (+12)", comparison.text);
             yield return Click(presenter.transform.Find("Window/Equip").GetComponent<Button>());
-            yield return Click(views[3].Button);
+            yield return Click(views[2].Button);
             StringAssert.Contains("Defesa: 0 → 10 (+10)", comparison.text);
             yield return Click(presenter.transform.Find("Window/Equip").GetComponent<Button>());
             Assert.AreEqual(10f, health.Defense);
-            StringAssert.Contains("Defesa: 10 → 10 (0)", comparison.text);
-            yield return Click(views[2].Button);
+            Assert.IsTrue(inventory.Slots[2].IsEmpty);
+            yield return Click(views[1].Button);
             Assert.IsFalse(comparison.gameObject.activeSelf, "Potions must hide the previous comparison.");
             Assert.AreEqual("", comparison.text);
             InScene<GameMenuController>().ToggleInventory();
@@ -234,11 +238,11 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return null;
             yield return Key(keyboard.qKey);
             Assert.AreEqual(100f, health.Current);
-            Assert.IsTrue(inventory.Slots[2].IsEmpty);
-            yield return Click(views[1].Button);
-            yield return Click(presenter.transform.Find("Window/Drop").GetComponent<Button>());
             Assert.IsTrue(inventory.Slots[1].IsEmpty);
-            Assert.AreEqual(24f, combat.CurrentDamage, .001f);
+            yield return Click(views[0].Button);
+            yield return Click(presenter.transform.Find("Window/Drop").GetComponent<Button>());
+            Assert.IsTrue(inventory.Slots[0].IsEmpty);
+            Assert.AreEqual(38.4f, combat.CurrentDamage, .001f, "Dropping a bag weapon never touches the equipped one.");
             Assert.IsFalse(comparison.gameObject.activeSelf, "An emptied selected slot clears comparison.");
             yield return Key(keyboard.tabKey);
             Assert.IsFalse(InScene<GameMenuController>().InventoryOpen);
@@ -265,18 +269,27 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return Click(views[15].Button);
             StringAssert.Contains("Bônus plano da arma: +6 → +6 (0)", comparison.text);
             yield return Click(presenter.transform.Find("Window/Equip").GetComponent<Button>());
-            Assert.AreEqual(15, inventory.EquippedWeaponIndex);
+            Assert.AreSame(iron, inventory.EquippedWeapon, "A full-bag swap of identical units keeps 16 + 1.");
+            Assert.AreEqual(EquipmentSlot.Weapon, presenter.SelectedEquipment);
             yield return Key(keyboard.tabKey);
             yield return Key(keyboard.iKey);
-            Assert.AreEqual(15, inventory.EquippedWeaponIndex);
+            Assert.AreSame(views[0].Button.gameObject, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject, "F10 initial bag focus unchanged.");
+            Assert.IsNull(presenter.SelectedEquipment, "The selection follows the focused bag slot.");
+            Assert.AreSame(iron, inventory.EquippedWeapon, "Closing and reopening never changes equipment.");
+            yield return Click(presenter.GetComponentsInChildren<EquipmentSlotView>(true).Single(v => v.Slot == EquipmentSlot.Weapon).Button);
+            Assert.AreEqual(EquipmentSlot.Weapon, presenter.SelectedEquipment);
+            yield return Click(presenter.transform.Find("Window/Unequip").GetComponent<Button>());
+            Assert.AreEqual(InventoryPresenter.BagFullNotice, presenter.Notice, "Full bag: unequip refused with a message.");
+            Assert.AreSame(iron, inventory.EquippedWeapon);
             yield return Click(views[15].Button);
             Assert.IsTrue(views[15].SelectionFrame.activeSelf);
+            Assert.IsNull(presenter.Notice, "A new selection clears the notice.");
             StringAssert.Contains("Bônus plano da arma: +6 → +6 (0)", comparison.text);
             yield return Key(keyboard.tabKey);
             health.TakeDamage(1000f, Vector3.zero);
             presenter.EquipSelected();
             presenter.UnequipSelected();
-            Assert.AreEqual(15, inventory.EquippedWeaponIndex);
+            Assert.AreSame(iron, inventory.EquippedWeapon);
             Assert.IsFalse(InScene<GameMenuController>().InventoryOpen);
             for (int i = 0; i < 16; i++) Assert.AreSame(iron, inventory.Slots[i].Definition);
         }
@@ -287,7 +300,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             var blade = UnityEditor.AssetDatabase.LoadAssetAtPath<WeaponData>("Assets/_Project/ScriptableObjects/Items/Weapon_WardenBlade.asset");
             var armor = UnityEditor.AssetDatabase.LoadAssetAtPath<ArmorData>("Assets/_Project/ScriptableObjects/Items/Armor_Leather.asset");
             Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Potion, 30)));      // 0
-            Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron)));  // 1 (auto-equipped)
+            Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron)));  // 1 (another unit; the starter is equipped)
             Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Armor, 0, armor: armor))); // 2
             Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Weapon, 0, blade))); // 3
             Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Potion, 15)));      // 4
@@ -330,12 +343,12 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.Less(titleRect.xMin + title.preferredWidth * title.rectTransform.lossyScale.x, sortRect.xMin, "Title text reaches the Sort button.");
 
             yield return Click(views[5].Button);
-            yield return Click(window.Find("Equip").GetComponent<Button>());
+            yield return Click(window.Find("Equip").GetComponent<Button>()); // swaps with the equipped starter (back in slot 5)
             yield return Click(views[2].Button);
-            yield return Click(window.Find("Equip").GetComponent<Button>());
-            Assert.AreEqual(5, inventory.EquippedWeaponIndex);
-            Assert.AreEqual(2, inventory.EquippedArmorIndex);
-            WeaponData equippedWeapon = progression.Weapon;
+            yield return Click(window.Find("Equip").GetComponent<Button>()); // the vest leaves slot 2
+            Assert.IsNotNull(inventory.EquippedWeapon); Assert.IsNotNull(inventory.EquippedArmor);
+            Assert.IsTrue(inventory.Slots[2].IsEmpty);
+            WeaponData equippedWeapon = progression.Weapon; ArmorData equippedArmor = inventory.EquippedArmor;
             float damage = combat.CurrentDamage, defense = health.Defense;
             yield return Click(views[3].Button); // select the rare blade
             int changes = 0; inventory.Changed += () => changes++;
@@ -345,13 +358,13 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.AreEqual(1, changes, "One atomic change per sort.");
             Assert.IsTrue(menu.InventoryOpen);
             Assert.AreEqual(0f, Time.timeScale, "Sorting keeps the game paused.");
-            string[] expected = { "Lâmina do Guardião", "Espada de Ferro", "Espada de Ferro", "Colete de couro", "Poção de vida", "Poção de vida" };
+            string[] expected = { "Lâmina do Guardião", "Espada de Ferro", "Espada de Ferro", "Poção de vida", "Poção de vida" };
             for (int i = 0; i < expected.Length; i++) Assert.AreEqual(expected[i], inventory.Slots[i].Definition.DisplayName, "slot " + i);
-            Assert.AreEqual(30, inventory.Slots[4].Potency);
-            Assert.AreEqual(15, inventory.Slots[5].Potency);
-            for (int i = 6; i < 16; i++) Assert.IsTrue(inventory.Slots[i].IsEmpty);
-            Assert.AreEqual(2, inventory.EquippedWeaponIndex, "The equipped duplicate (old slot 5) is the second iron sword.");
-            Assert.AreEqual(3, inventory.EquippedArmorIndex);
+            Assert.AreEqual(30, inventory.Slots[3].Potency);
+            Assert.AreEqual(15, inventory.Slots[4].Potency);
+            for (int i = 5; i < 16; i++) Assert.IsTrue(inventory.Slots[i].IsEmpty);
+            Assert.AreSame(equippedWeapon, inventory.EquippedWeapon, "Sort reorganizes the bag only.");
+            Assert.AreSame(equippedArmor, inventory.EquippedArmor);
             Assert.AreSame(equippedWeapon, progression.Weapon);
             Assert.AreEqual(damage, combat.CurrentDamage, .001f);
             Assert.AreEqual(defense, health.Defense, .001f);
@@ -359,8 +372,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.IsFalse(views[3].SelectionFrame.activeSelf);
             // D-006: the reading column opens with the DETALHES DO ITEM heading, then the selected item name.
             StringAssert.StartsWith("<b>DETALHES DO ITEM</b>\nLâmina do Guardião", details.text);
-            StringAssert.Contains("Equipado", views[2].Label.text);
-            StringAssert.DoesNotContain("Equipado", views[1].Label.text);
+            Assert.IsFalse(views.Any(view => view.Label.text.Contains("Equipado")), "Equipped items are not in the bag.");
 
             yield return Click(sort);
             Assert.AreEqual(1, changes, "Sorting an ordered bag publishes nothing.");
@@ -415,7 +427,7 @@ namespace DungeonCrawler.Tests.PlayerInput
                     yield return Click(views[3].Button);
                     yield return CaptureComparison(output, width + "x" + height + "-sort-before");
                     yield return Click(presenter.transform.Find("Window/Sort").GetComponent<Button>());
-                    Assert.AreEqual(2, inventory.EquippedWeaponIndex);
+                    Assert.IsNotNull(inventory.EquippedWeapon);
                     yield return CaptureComparison(output, width + "x" + height + "-sort-after");
                 }
                 InScene<GameMenuController>().ToggleInventory();

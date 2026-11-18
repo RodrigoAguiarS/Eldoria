@@ -13,6 +13,8 @@ namespace DungeonCrawler.Systems
             "run-checkpoint.json"));
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void Reset() => pending = null;
+        /// <summary>True while a continue/floor-arrival snapshot waits for the destination scene (not a new run).</summary>
+        public static bool HasPending => pending != null;
         public static void RequestContinue(RunCheckpointData data) => pending = data;
         public static RunCheckpointData Consume() { var result = pending; pending = null; return result; }
         public static bool BeginNew(out string message) { pending = null; return Store.TryDelete(out message); }

@@ -7,7 +7,10 @@ namespace DungeonCrawler.Systems
 {
     public enum InventoryCollectionFailure { Full, InvalidItem, PlayerDead }
 
-    /// <summary>Connects inventory commands to player state. UI never decides healing, defense or equipment.</summary>
+    /// <summary>
+    /// Connects inventory commands to player state. UI never decides healing, defense or equipment.
+    /// D-007: the bag and the six equipment slots are separate storage; each item unit lives in one place.
+    /// </summary>
     public sealed class PlayerInventory : MonoBehaviour
     {
         [SerializeField] private InventoryDefinition definition;
@@ -21,19 +24,16 @@ namespace DungeonCrawler.Systems
         private float dropDistance = 2.2f;
         private bool usingPotion;
         private float talentDefense;
+        private bool startingWeaponApplied;
 
+        /// <summary>The 16 bag slots only; equipped items live in <see cref="GetEquipped"/> (D-007).</summary>
         public IReadOnlyList<InventoryStack> Slots => model != null ? model.Slots : Array.Empty<InventoryStack>();
         public int Capacity => model?.Capacity ?? 0;
-        public int EquippedWeaponIndex => model?.EquippedWeaponIndex ?? -1;
-        public int EquippedArmorIndex => model?.EquippedArmorIndex ?? -1;
-        public int GetEquippedIndex(EquipmentSlot slot) => model?.GetEquippedIndex(slot) ?? -1;
+        public int OccupiedCount => model?.OccupiedCount ?? 0;
         public ItemDefinition GetEquipped(EquipmentSlot slot) => model?.GetEquipped(slot);
-        public bool IsEquipped(int index) => model != null && model.IsEquipped(index);
-        public bool TryGetEquippedSlot(int index, out EquipmentSlot slot)
-        {
-            slot = EquipmentSlot.Weapon;
-            return model != null && model.TryGetEquippedSlot(index, out slot);
-        }
+        public WeaponData EquippedWeapon => model?.EquippedWeapon;
+        public ArmorData EquippedArmor => model?.EquippedArmor;
+        public WeaponData StartingWeapon => definition != null ? definition.startingWeapon : null;
         /// <summary>Current six-slot contributions (read-only; the same values applied to combat and Health).</summary>
         public EquipmentTotals EquipmentTotals => model != null ? model.GetTotals() : default;
         public float BaseDefense => definition != null ? Mathf.Max(0f, definition.baseDefense) : 0f;
@@ -41,6 +41,8 @@ namespace DungeonCrawler.Systems
         public event Action Changed;
         public event Action<InventoryCollectionFailure> CollectionDenied;
         public event Action<Pickup> ItemDropped;
+        /// <summary>An unequip refused with a full bag; state was not changed.</summary>
+        public event Action<UnequipFailure> UnequipDenied;
 
         private void Awake()
         {
@@ -50,7 +52,9 @@ namespace DungeonCrawler.Systems
                 enabled = false;
                 return;
             }
-            model = new InventoryModel(definition.capacity, definition.autoEquipFirstWeapon);
+            model = new InventoryModel(definition.capacity);
+            // A pending continue/floor arrival restores the saved equipment instead (even an empty weapon slot).
+            if (!RunCheckpointSession.HasPending) TryEquipStartingWeapon();
             if (pickupPrefab != null && pickupPrefab.TryGetComponent(out SphereCollider trigger))
             {
                 float playerRadius = TryGetComponent(out CharacterController controller) ? controller.radius : .5f;
@@ -97,7 +101,24 @@ namespace DungeonCrawler.Systems
             return model.TryAdd(item, 1, potency) || Deny(InventoryCollectionFailure.Full, notifyFailure);
         }
 
-        public bool TryEquip(int index) => CanUseCommands && model.TryEquip(index);
+        /// <summary>
+        /// New run only: puts the configured common weapon straight into the empty weapon slot, at most once per
+        /// player instance. No bag copy, no pickup, no collection event.
+        /// </summary>
+        public bool TryEquipStartingWeapon()
+        {
+            if (startingWeaponApplied || model == null || definition == null || definition.startingWeapon == null) return false;
+            startingWeaponApplied = true;
+            return model.TryEquipDirect(definition.startingWeapon);
+        }
+
+        /// <summary>Moves the bag item to its slot; an occupied slot swaps into the freed bag slot (works with a full bag).</summary>
+        public bool TryEquip(int index) => TryEquip(index, out _);
+        public bool TryEquip(int index, out EquipmentSlot slot)
+        {
+            slot = EquipmentSlot.Weapon;
+            return CanUseCommands && model.TryEquip(index, out slot);
+        }
 
         /// <summary>
         /// Queries only: no item movement, equipment changes or events, including when dead. Compares the selected item
@@ -111,15 +132,26 @@ namespace DungeonCrawler.Systems
             if (!selected.TryGetEquipmentSlot(out EquipmentSlot slot) || !model.TryGetTotalsWith(slot, selected, out EquipmentTotals after))
                 return false;
             EquipmentTotals now = model.GetTotals();
-            comparison = new EquipmentComparison(slot, model.GetEquipped(slot), model.GetEquippedIndex(slot), selected, index,
+            comparison = new EquipmentComparison(slot, model.GetEquipped(slot), selected, index,
                 progression.GetBaseDamage(now), progression.GetBaseDamage(after), DefenseWith(now), DefenseWith(after), progression.Level);
             return true;
         }
 
-        public bool TryUnequip(InventoryItemKind kind) => CanUseCommands && model.TryUnequip(kind);
-        public bool TryUnequip(EquipmentSlot slot) => CanUseCommands && model.TryUnequip(slot);
-        /// <summary>Unequips only the slot bound to this bag index; the item stays in place.</summary>
-        public bool TryUnequipAt(int index) => CanUseCommands && model.TryUnequipAt(index);
+        public bool TryUnequip(InventoryItemKind kind) => EquipmentSlots.TryFromKind(kind, out EquipmentSlot slot) && TryUnequip(slot);
+        public bool TryUnequip(EquipmentSlot slot) => TryUnequip(slot, out _, out _);
+
+        /// <summary>
+        /// Moves the equipped item to a free bag slot. A full bag refuses with <see cref="UnequipFailure.BagFull"/>
+        /// (raising <see cref="UnequipDenied"/>) and keeps equipment, bag and stats intact; nothing is dropped.
+        /// </summary>
+        public bool TryUnequip(EquipmentSlot slot, out int bagIndex, out UnequipFailure failure)
+        {
+            bagIndex = -1;
+            if (!CanUseCommands) { failure = UnequipFailure.Unavailable; return false; }
+            if (model.TryUnequip(slot, out bagIndex, out failure)) return true;
+            if (failure == UnequipFailure.BagFull) UnequipDenied?.Invoke(failure);
+            return false;
+        }
 
         /// <summary>Sorts the bag in the domain model; see <see cref="InventoryModel.TrySort"/>. One Changed event when slots move.</summary>
         public bool TrySort(out int[] newIndexOf)
@@ -171,23 +203,23 @@ namespace DungeonCrawler.Systems
 
         private bool CanUseCommands => isActiveAndEnabled && model != null && health.IsAlive;
 
+        /// <summary>
+        /// Restores the saved bag and equipment exactly (v5), or migrates a v1-v4 snapshot whose equipment was bound to
+        /// bag indices. Never grants the starting weapon; an empty saved weapon slot stays empty.
+        /// </summary>
         public bool RestoreCheckpoint(RunCheckpointData data, RunCheckpointCatalog catalog)
         {
-            var slots = new InventoryStack[data.slots.Length];
-            for (int i = 0; i < slots.Length; i++)
-            {
-                var slot = data.slots[i];
-                slots[i] = new InventoryStack(catalog.Resolve(slot.itemId), slot.count, slot.potency);
-            }
-            return model != null && RunCheckpointCatalog.TryGetEquipment(data, out int[] equipped) && model.TryRestore(slots, equipped);
+            if (model == null || catalog == null || !catalog.TryGetLoadout(data, out InventoryStack[] bag, out ItemDefinition[] equipped)) return false;
+            startingWeaponApplied = true;
+            return model.TryRestore(bag, equipped);
         }
 
-        /// <summary>Checkpoint capture of the six bindings in <see cref="EquipmentSlot"/> order.</summary>
-        public int[] CaptureEquipment()
+        /// <summary>Checkpoint capture of the six slots as persistent IDs in <see cref="EquipmentSlot"/> order ("" = empty).</summary>
+        public string[] CaptureEquipment()
         {
-            var equipped = new int[EquipmentSlots.Count];
-            for (int i = 0; i < equipped.Length; i++) equipped[i] = GetEquippedIndex((EquipmentSlot)i);
-            return equipped;
+            var ids = new string[EquipmentSlots.Count];
+            for (int i = 0; i < ids.Length; i++) { var item = GetEquipped((EquipmentSlot)i); ids[i] = item != null ? item.PersistentId : ""; }
+            return ids;
         }
         private void OnOptionsChanged() => Changed?.Invoke();
         private bool Deny(InventoryCollectionFailure reason, bool notify)
@@ -196,7 +228,7 @@ namespace DungeonCrawler.Systems
             return false;
         }
 
-        // Absolute assignment from the current bindings: refresh, re-enable or restore never accumulate bonuses,
+        // Absolute assignment from the current equipment: refresh, re-enable or restore never accumulate bonuses,
         // and defense changes never heal (Health keeps its current HP).
         private void OnChanged()
         {

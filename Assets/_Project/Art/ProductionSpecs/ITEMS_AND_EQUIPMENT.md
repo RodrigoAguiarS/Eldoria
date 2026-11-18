@@ -74,7 +74,7 @@ Para trocar a espada no Hero, um integrador precisa ocultar a espada fixa e anex
 
 ## Aceite de inventário e recompensas
 
-Testar16 slots vazios/cheios, stacks1/5 e potências diferentes, primeira arma/troca/desequipar/armadura, HP cheio/ferido/morto, Q dentro/fora da bolsa, largar em espaço livre/bloqueado, recusa de pickup e nova coleta após liberar capacidade. Verificar que clique na UI não dispara combo, I/Tab pausa e Esc retorna. Exigir ícones legíveis a 32 px com alpha real e silhuetas distintas de ouro/XP/projétil. Campos `acceptance_criteria` de cada ID complementam esses passos; execução não realizada aqui.
+Testar16 slots vazios/cheios, stacks1/5 e potências diferentes, arma inicial equipada/troca/desequipar (D-007: equipamento fora da bolsa; desequipar com bolsa cheia é recusado)/armadura, HP cheio/ferido/morto, Q dentro/fora da bolsa, largar em espaço livre/bloqueado, recusa de pickup e nova coleta após liberar capacidade. Verificar que clique na UI não dispara combo, I/Tab pausa e Esc retorna. Exigir ícones legíveis a 32 px com alpha real e silhuetas distintas de ouro/XP/projétil. Campos `acceptance_criteria` de cada ID complementam esses passos; execução não realizada aqui.
 
 Sem baús, quests, arco/machado, escudos, capacetes/acessórios, mana ou drag-and-drop obrigatório. Sugestões de produto não entram no lote de produção como requisitos.
 

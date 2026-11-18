@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-11-18 — Arte dos equipamentos novos (ITEMS-GEAR)
+
+- Elmo de ferro, luvas de couro (par), botas de couro (par) e amuleto de cobre ganharam ícone 512 RGBA, modelo low-poly de chão (FBX), prefab e entrada no `ItemVisualCatalog`, no estilo e na paleta das espadas e do colete; só o cobre é material novo.
+- Fonte editável em `Tools/Lemo3DGenerator` (`GearModels.mjs`, `GearIcons.mjs`); integração idempotente pelo menu Production Visual › Gear; reaplicar o lote ITEMS-COMBAT preserva as entradas novas.
+- Aparência equipada no herói pendente. [Evidências](Reports/EquipmentArt/README.md).
+
+## 2026-11-18 — D-007: equipamento separado da bolsa e arma inicial
+
+- Cada unidade de item fica em um só lugar: bolsa, slot de equipamento ou chão. Equipar move o item para o slot (a peça trocada volta ao espaço liberado, inclusive com a bolsa cheia); desequipar devolve à bolsa e é recusado com a bolsa cheia, com mensagem e sem alterar nada.
+- Toda nova run começa com a Espada de Ferro (Comum) equipada, uma única vez; continuar e trocar de andar restauram o equipamento salvo. Armas coletadas não são mais equipadas automaticamente.
+- Contador e slots da bolsa mostram só o que está guardado; ordenar e largar agem só na bolsa; seleção distingue item da bolsa e peça equipada.
+- Checkpoint v5 (`equipment`), com v1–v4 migrados sem duplicação. [Regras](docs/EQUIPMENT-SLOTS.md), [evidências](Reports/EquipmentStorage/README.md).
+
 ## 2026-11-18 — D-006: seis slots de equipamento
 
 - Arma, armadura, capacete, luvas, botas e acessório podem ficar equipados ao mesmo tempo; os slots continuam vínculos a itens da bolsa de 16, sem espaço extra. `GearData` reutiliza bônus plano de dano e defesa; sem afixos, conjuntos ou crítico.

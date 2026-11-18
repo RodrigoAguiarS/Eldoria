@@ -122,14 +122,14 @@ namespace DungeonCrawler.Editor
             Debug.Log($"[ITEMS-COMBAT] Importação concluída: {copied.Count} arquivo(s) atualizados de staging, {prefabs.Count} prefabs, catálogo {CatalogPath}.");
         }
 
-        private static void RequireValid(string path)
+        internal static void RequireValid(string path)
         {
             if (!File.Exists(path)) throw new FileNotFoundException("[ITEMS-COMBAT] Validação de staging ausente", path);
             var v = JsonUtility.FromJson<Validation>(File.ReadAllText(path));
             if (!v.ok) throw new InvalidOperationException("[ITEMS-COMBAT] Staging reprovado: " + path + " " + string.Join("; ", v.issues ?? Array.Empty<string>()));
         }
 
-        private static void CopyIfChanged(string source, string target, List<string> copied)
+        internal static void CopyIfChanged(string source, string target, List<string> copied)
         {
             if (!File.Exists(source)) throw new FileNotFoundException("[ITEMS-COMBAT] Arquivo de staging ausente", source);
             byte[] bytes = File.ReadAllBytes(source);
@@ -138,7 +138,7 @@ namespace DungeonCrawler.Editor
             copied.Add(target);
         }
 
-        private static void ConfigureModelImporter(string path, bool skinned)
+        internal static void ConfigureModelImporter(string path, bool skinned)
         {
             var importer = (ModelImporter)AssetImporter.GetAtPath(path);
             if (importer == null) throw new InvalidOperationException("[ITEMS-COMBAT] FBX não importado: " + path);
@@ -160,7 +160,7 @@ namespace DungeonCrawler.Editor
             if (dirty) importer.SaveAndReimport();
         }
 
-        private static void ConfigureIconImporter(string path)
+        internal static void ConfigureIconImporter(string path)
         {
             var importer = (TextureImporter)AssetImporter.GetAtPath(path);
             bool dirty = importer.textureType != TextureImporterType.Sprite || importer.spriteImportMode != SpriteImportMode.Single ||
@@ -249,7 +249,7 @@ namespace DungeonCrawler.Editor
             }
         }
 
-        private static Mesh LoadMesh(string fbx)
+        internal static Mesh LoadMesh(string fbx)
         {
             Mesh mesh = AssetDatabase.LoadAllAssetsAtPath(fbx).OfType<Mesh>().FirstOrDefault();
             if (mesh == null) throw new InvalidOperationException("[ITEMS-COMBAT] Malha ausente no FBX: " + fbx);
@@ -309,11 +309,14 @@ namespace DungeonCrawler.Editor
                 };
             }).ToArray();
             var loot = LootMap.Select(e => new ItemVisualCatalog.LootVisual { assetId = e.id, kind = e.kind, groundPrefab = prefabs["Ground_" + e.model] }).ToArray();
-            catalog.EditorSet(items, loot);
+            // Keep entries for items outside this batch (e.g. ITEMS-GEAR), in their original order, after this batch's items.
+            var owned = new HashSet<ItemDefinition>(items.Select(e => e.item));
+            var others = Enumerable.Range(0, catalog.ItemCount).Select(catalog.GetItemEntry).Where(e => e.item != null && !owned.Contains(e.item));
+            catalog.EditorSet(items.Concat(others).ToArray(), loot);
             EditorUtility.SetDirty(catalog);
         }
 
-        private static Sprite LoadSprite(string path)
+        internal static Sprite LoadSprite(string path)
         {
             Sprite sprite = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().FirstOrDefault();
             if (sprite == null) throw new InvalidOperationException("[ITEMS-COMBAT] Sprite ausente: " + path);
@@ -628,7 +631,7 @@ namespace DungeonCrawler.Editor
         }
 
         // ————————————————————————————— utilidades —————————————————————————————
-        private static bool HasMissingScripts(GameObject root) =>
+        internal static bool HasMissingScripts(GameObject root) =>
             root.GetComponentsInChildren<Transform>(true).Any(t => GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(t.gameObject) > 0);
 
         private static void WithScene(string path, bool save, Action<Scene> action)
@@ -688,7 +691,7 @@ namespace DungeonCrawler.Editor
             t.localPosition = position; t.localRotation = Quaternion.identity; t.localScale = Vector3.one;
         }
 
-        private static void EnsureFolder(string path)
+        internal static void EnsureFolder(string path)
         {
             if (AssetDatabase.IsValidFolder(path)) return;
             string parent = Path.GetDirectoryName(path).Replace('\\', '/');
