@@ -539,7 +539,10 @@ namespace DungeonCrawler.Editor
         private static void ConfigureSceneInventoryVisuals(Scene scene, GameObject player)
         {
             GameObject hud = scene.GetRootGameObjects().Single(r => r.name == "HUD");
+            // F10 moves the slots into Window/Slots; same order as InventorySceneBuilder.ConfigureHud: flatten, configure, re-apply layout.
+            TextScaleSceneBuilder.PrepareInventoryRebuild(hud);
             InventorySceneBuilder.ConfigureItemVisuals(hud, player);
+            TextScaleSceneBuilder.ConfigureScene(scene);
         }
 
         // ————————————————————————————— 3. validação —————————————————————————————
