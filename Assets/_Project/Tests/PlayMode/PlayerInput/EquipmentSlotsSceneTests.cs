@@ -52,7 +52,11 @@ namespace DungeonCrawler.Tests.PlayerInput
         public override void TearDown()
         {
             Time.timeScale = 1f;
-            foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects()) Object.DestroyImmediate(root);
+            // Only clear scenes this fixture loads: an ignored test leaves the runner's init scene active,
+            // and destroying its roots kills the PlayMode test controller (the run then never finishes).
+            var active = SceneManager.GetActiveScene();
+            if (active.path == ReleaseFloor || active.path == Second || active.path == Menu)
+                foreach (var root in active.GetRootGameObjects()) Object.DestroyImmediate(root);
             if (longGloves != null) Object.DestroyImmediate(longGloves);
             RunCheckpointSession.BeginNew(out _); Environment.SetEnvironmentVariable("DUNGEON_CRAWLER_CHECKPOINT_DIR", previousDirectory);
             if (Directory.Exists(directory)) Directory.Delete(directory, true);
