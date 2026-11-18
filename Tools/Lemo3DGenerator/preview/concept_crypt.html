@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<title>A15 Crypt Sheet</title>
+<!-- A15 — folha de conceito da Cripta inundada. Servir com:
+       node preview/server.mjs --out "<projeto>/Assets/_Project/Art"
+     e abrir /concept_crypt.html?mode=sheet | ?mode=layout | ?mode=probe. Cada modo grava PNG (+ JSON de medidas e
+     máscaras) em preview/captures via POST /save. É render 2D de conceito: nenhum arquivo do jogo é escrito. -->
+<style>body{margin:0;background:#202125;color:#ddd;font:13px system-ui}#log{padding:12px;white-space:pre}canvas{max-width:100%}</style>
+<script type="importmap">{"imports":{"three":"/lemo/node_modules/three/build/three.module.js","three/addons/":"/lemo/node_modules/three/examples/jsm/"}}</script>
+</head><body><div id="log">renderizando…</div>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { clone as skClone } from 'three/addons/utils/SkeletonUtils.js';
+
+const q = new URLSearchParams(location.search), MODE = q.get('mode') || 'sheet';
+const D = Math.PI / 180, log = t => { document.getElementById('log').textContent += '\n' + t; };
+const BG = '#17171C', CARD = '#202127';
+const FILES = {
+  Crypt: '/out/Concepts/Source~/FloodedCrypt/FloodedCrypt_render.glb',
+  Hero: '/out/Models/Generated/Hero/Hero.glb',
+  SkeletonMelee: '/out/Models/Generated/SkeletonMelee/SkeletonMelee.glb',
+  SkeletonRanged: '/out/Models/Generated/SkeletonRanged/SkeletonRanged.glb',
+};
+const SRC = await (await fetch('/out/Concepts/Source~/FloodedCrypt/FloodedCrypt.source.json')).json();
+const loader = new GLTFLoader(), cache = {};
+const load = async n => cache[n] ??= await loader.loadAsync(FILES[n]);
+
+// ---------- luz: lua fria direcional (#9FB8FF, sombra), hemisférica lua/sombra, tochas #FF9A2E pontuais
+const scene = new THREE.Scene();
+const hemi = new THREE.HemisphereLight('#B4BACE', '#2E2838', 2.1); scene.add(hemi);
+const moon = new THREE.DirectionalLight('#D8DFF2', 4.6); moon.castShadow = true; moon.shadow.mapSize.set(4096, 4096);
+Object.assign(moon.shadow.camera, { left: -13, right: 13, top: 13, bottom: -13, near: .1, far: 60 }); moon.shadow.bias = -.0005; moon.shadow.normalBias = .02;
+scene.add(moon, moon.target);
+const torches = [];
+function torchLights(on, k = 1) {
+  torches.forEach(l => scene.remove(l)); torches.length = 0;
+  if (!on) return;
+  for (const t of SRC.layout.torches) {
+    const l = new THREE.PointLight('#FF9A2E', 12 * k, 6.5, 1.7); l.position.set(t.pos[0], t.pos[1] + .1, t.pos[2]); scene.add(l); torches.push(l);
+  }
+  for (const n of SRC.layout.niches) {   // brilho ciano contido saindo do nicho
+    const l = new THREE.PointLight('#4FD8FF', 2.0 * k, 2.4, 2); l.position.set(n.pos[0] * .97, n.pos[1], n.pos[2] * .97); scene.add(l); torches.push(l);
+  }
+}
+
+// ---------- conteúdo
+let actors = [], decor = [], crypt = null;
+async function cryptRoot() {
+  if (crypt) return crypt;
+  const g = await load('Crypt'); crypt = g.scene;
+  crypt.traverse(o => { if (o.isMesh) { o.castShadow = !/water|ripple|puddle/.test(o.name); o.receiveShadow = true; o.frustumCulled = false;
+    const m = o.material; if (/water|ripple/.test(m.name)) { m.transparent = true; m.depthWrite = !/ripple/.test(m.name); } } });
+  scene.add(crypt); return crypt;
+}
+function show(group) { crypt.children.forEach(c => c.visible = c.name === group); }
+async function actor(name, clip, { t = .3, x = 0, z = 0, ry = 0 } = {}) {
+  const g = await load(name), root = skClone(g.scene);
+  root.position.set(x, 0, z); root.rotation.set(0, ry * D, 0);
+  root.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
+  scene.add(root); actors.push(root);
+  const mixer = new THREE.AnimationMixer(root), c = g.animations.find(a => a.name === clip) || g.animations[0];
+  if (c) { const act = mixer.clipAction(c); act.play(); mixer.setTime(Math.min(t, c.duration - 1e-3)); }
+  root.updateMatrixWorld(true); return root;
+}
+function clearActors() { actors.forEach(a => scene.remove(a)); decor.forEach(d => scene.remove(d)); actors = []; decor = []; }
+
+// ---------- câmeras ortográficas (px por metro fixo)
+const ren = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+ren.shadowMap.enabled = true; ren.shadowMap.type = THREE.PCFSoftShadowMap; ren.outputColorSpace = THREE.SRGBColorSpace; ren.toneMapping = THREE.NeutralToneMapping;
+function cam(yaw, elev, W, H, ppm, center, moonFrom = [-.55, 1, -.6]) {
+  const c = new THREE.Vector3(...center);
+  const cm = new THREE.OrthographicCamera(-W / 2 / ppm, W / 2 / ppm, H / 2 / ppm, -H / 2 / ppm, .1, 120);
+  if (elev >= 89.9) { cm.up.set(0, 0, 1); cm.position.copy(c).add(new THREE.Vector3(0, 40, 0)); }
+  else { const dir = new THREE.Vector3(Math.sin(yaw * D) * Math.cos(elev * D), Math.sin(elev * D), Math.cos(yaw * D) * Math.cos(elev * D)); cm.position.copy(c).addScaledVector(dir, 40); }
+  cm.lookAt(c); cm.updateProjectionMatrix();
+  moon.position.copy(c).add(new THREE.Vector3(...moonFrom).multiplyScalar(20)); moon.target.position.copy(c);
+  return cm;
+}
+const black = new THREE.MeshBasicMaterial({ color: '#000000' }), white = new THREE.MeshBasicMaterial({ color: '#FFFFFF' });
+function swapForGlow(on) {
+  scene.traverse(o => {
+    if (!o.isMesh) return;
+    if (on) { o.userData.mats = o.material; const m = o.material;
+      o.material = (m.emissive && m.emissiveIntensity > 0 && m.emissive.getHex() !== 0) ? new THREE.MeshBasicMaterial({ color: m.emissive.clone().multiplyScalar(Math.min(1.5, .35 + m.emissiveIntensity * .3)) }) : black; }
+    else if (o.userData.mats) { o.material = o.userData.mats; delete o.userData.mats; }
+  });
+}
+function shot(cm, W, H, { bg = BG, glow = 1 } = {}) {
+  ren.setSize(W, H, false);
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H; const cx = cv.getContext('2d');
+  cx.fillStyle = bg; cx.fillRect(0, 0, W, H);
+  scene.background = null; ren.setClearColor(0x000000, 0);
+  ren.render(scene, cm); cx.drawImage(ren.domElement, 0, 0, W, H);
+  if (glow > 0) {
+    const sh = ren.shadowMap.enabled; ren.shadowMap.enabled = false; const tl = torches.map(l => l.visible); torches.forEach(l => l.visible = false);
+    decor.forEach(d => d.visible = false); swapForGlow(true); scene.background = new THREE.Color('#000000'); ren.toneMapping = THREE.NoToneMapping;
+    ren.render(scene, cm); swapForGlow(false); decor.forEach(d => d.visible = true); scene.background = null; ren.toneMapping = THREE.NeutralToneMapping;
+    torches.forEach((l, i) => l.visible = tl[i]); ren.shadowMap.enabled = sh;
+    cx.save(); cx.globalCompositeOperation = 'lighter';
+    for (const [r, a] of [[Math.max(8, W / 90), .75 * glow], [Math.max(2, W / 400), .5 * glow]]) { cx.filter = `blur(${r}px)`; cx.globalAlpha = a; cx.drawImage(ren.domElement, 0, 0, W, H); }
+    cx.restore();
+  }
+  return cv;
+}
+// máscara: objetos selecionados em branco, o resto em preto (com teste de profundidade)
+function mask(cm, W, H, isWhite, extra = []) {
+  ren.setSize(W, H, false); const sh = ren.shadowMap.enabled; ren.shadowMap.enabled = false;
+  extra.forEach(e => scene.add(e));
+  const saved = [];
+  scene.traverse(o => { if (o.isMesh) { saved.push([o, o.material, o.visible]); const w = isWhite(o); o.material = w ? white : black; if (/water|ripple|puddle/.test(o.name) && !w) o.visible = false; } });
+  scene.background = new THREE.Color('#000000'); ren.toneMapping = THREE.NoToneMapping; ren.render(scene, cm);
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H; cv.getContext('2d').drawImage(ren.domElement, 0, 0);
+  saved.forEach(([o, m, v]) => { o.material = m; o.visible = v; }); extra.forEach(e => scene.remove(e));
+  scene.background = null; ren.toneMapping = THREE.NeutralToneMapping; ren.shadowMap.enabled = sh;
+  return cv;
+}
+function count(cv) { const d = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data; let n = 0, x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1;
+  for (let y = 0; y < cv.height; y++) for (let x = 0; x < cv.width; x++) if (d[(y * cv.width + x) * 4] > 128) { n++; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+  return { area: n, x0, y0, x1, y1, w: x1 - x0 + 1, h: y1 - y0 + 1 }; }
+const quad = (x0, z0, x1, z1, y = .02) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, z1 - z0), white); m.rotation.x = -Math.PI / 2; m.position.set((x0 + x1) / 2, y, (z0 + z1) / 2); m.name = 'zone'; return m; };
+const project = (cm, W, H, p) => { const v = new THREE.Vector3(...p).project(cm); return [Math.round((v.x + 1) / 2 * W), Math.round((1 - v.y) / 2 * H)]; };
+async function save(name, cv) { await fetch('/save?name=' + name, { method: 'POST', body: cv.toDataURL('image/png') }); log('salvo ' + name); }
+async function saveJson(name, obj) { const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(obj, null, 2)))); await fetch('/save?name=' + name, { method: 'POST', body: 'data:application/json;base64,' + b64 }); log('salvo ' + name); }
+
+// câmera de jogo: offset (0, 10, −10) → vista do sul, elevação 45°, sem perspectiva
+const GAME = { yaw: 180, elev: 45 };
+// personagens do projeto só como escala/leitura (composição do encontro F14: 2 melee + 2 ranged)
+const CAST = [['Hero', 'Idle', 0, -2.6, 0], ['SkeletonMelee', 'Idle', -2.0, 1.6, 168], ['SkeletonMelee', 'Idle', 2.4, .8, 196], ['SkeletonRanged', 'Idle', -3.6, 4.0, 155], ['SkeletonRanged', 'Idle', 3.4, 4.3, 205]];
+async function cast() { for (const [n, c, x, z, ry] of CAST) await actor(n, c, { x, z, ry }); }
+const report = { mode: MODE, panels: [] };
+await cryptRoot();
+
+if (MODE === 'probe') {
+  show('Room'); torchLights(true); await cast();
+  const W = 1400, H = 1000, cm = cam(GAME.yaw, GAME.elev, W, H, 62, [0, 0, .4]);
+  const S = shot(cm, W, H); document.body.appendChild(S); await save('probe.png', S);
+}
+
+if (MODE === 'sheet') {
+  // 2048×1536 sem rótulos. Topo (2048×1160): sala na câmera de jogo 45° ortográfica com tochas, runas e o encontro F14
+  // de escala. Faixa inferior (2048×376): estudo de peças em 6 células sobre grade ciano de 2 m.
+  const S = document.createElement('canvas'); S.width = 2048; S.height = 1536; const sx = S.getContext('2d');
+  sx.fillStyle = BG; sx.fillRect(0, 0, 2048, 1536);
+  const W = 2048, H = 1160, PPM = 75, CENTER = [0, 0, .95];
+  show('Room'); torchLights(true); await cast();
+  const cm = cam(GAME.yaw, GAME.elev, W, H, PPM, CENTER);
+  sx.drawImage(shot(cm, W, H), 0, 0);
+  // medidas da vista principal: visibilidade do centro 10×10 (sem personagens), máscaras de personagens/zona/água
+  actors.forEach(a => a.visible = false);
+  const zoneAll = count(mask(cm, W, H, o => o.name === 'zone', [quad(-5, -5, 5, 5)]));
+  const zoneOnly = (() => { crypt.visible = false; const c = count(mask(cm, W, H, o => o.name === 'zone', [quad(-5, -5, 5, 5)])); crypt.visible = true; return c; })();
+  const zoneVis = mask(cm, W, H, o => o.name === 'zone', [quad(-5, -5, 5, 5)]);
+  const water = mask(cm, W, H, o => /_water_water|_water_ripple/.test(o.name));
+  actors.forEach(a => a.visible = true);
+  const actorsMask = mask(cm, W, H, o => { let p = o; while (p) { if (actors.includes(p)) return true; p = p.parent; } return false; });
+  actors.forEach(a => a.visible = true);
+  await save('mask_zone_visible.png', zoneVis); await save('mask_water.png', water); await save('mask_actors.png', actorsMask);
+  report.panels.push({ id: 'room45', ppm: PPM, region: [0, 0, W, H], camera: { yaw: GAME.yaw, elev: GAME.elev, ortho: true, center: CENTER },
+    zone: { visible: zoneAll.area, total: zoneOnly.area, fraction: +(zoneAll.area / zoneOnly.area).toFixed(4) },
+    water: count(water), actors: count(actorsMask), cast: CAST.map(([n, c, x, z, ry]) => ({ model: n, clip: c, x, z, ry })),
+    doors: SRC.layout.doors.map(d => ({ side: d.side, px: project(cm, W, H, [d.center[0], 0, d.center[1]]) })) });
+  clearActors();
+  // vinheta só na vista principal
+  const vg = sx.createRadialGradient(1024, 560, 560, 1024, 580, 1250); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.38)');
+  sx.fillStyle = vg; sx.fillRect(0, 0, 2048, 1160);
+  // estudo de peças: mesma luz, câmera 35°, mesma escala em todas as células, grade ciano de 2 m
+  sx.fillStyle = CARD; sx.fillRect(0, 1160, 2048, 376);
+  sx.fillStyle = '#2C2D35'; sx.fillRect(0, 1160, 2048, 2);
+  const KIT = SRC.kit.map(k => k.id), cw = 2048 / KIT.length, ch = 376, KPPM = 64;
+  const keep = [moon.intensity, hemi.intensity]; moon.intensity = 5.6; hemi.intensity = 2.4;   // peças sem tochas: luz de estúdio mais forte
+  torchLights(false);
+  const grid = new THREE.Group();
+  { const pts = []; for (let v = -3; v <= 3; v += 2) { pts.push(-3, -.55, v, 3, -.55, v, v, -.55, -3, v, -.55, 3); }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+    grid.add(new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: '#4FD8FF', transparent: true, opacity: .35 }))); }
+  scene.add(grid);
+  for (const [i, id] of KIT.entries()) {
+    show(id);
+    const kl = id === 'Kit_Niche' ? [new THREE.PointLight('#4FD8FF', 1.4, 2.4, 2)] : [];
+    kl.forEach(l => { l.position.set(0, .7, -.1); scene.add(l); });
+    const center = { Kit_Corner: [.45, .1, .45], Kit_Crossing: [.5, .2, .6], Kit_Channel: [0, .15, .45], Kit_Niche: [0, .3, .1], Kit_Pillar: [0, .5, 0], Kit_Floor: [0, -.1, 0] }[id];
+    const kc = cam(205, 35, Math.floor(cw), ch, KPPM, center, [-.5, 1, -.8]);
+    sx.drawImage(shot(kc, Math.floor(cw), ch, { bg: CARD, glow: .8 }), Math.round(i * cw), 1162);
+    grid.visible = false; const m = count(mask(kc, Math.floor(cw), ch, o => true)); grid.visible = true;
+    report.panels.push({ id, ppm: KPPM, cell: [Math.round(i * cw), 1162, Math.floor(cw), ch], px: m });
+    kl.forEach(l => scene.remove(l));
+    if (i > 0) { sx.fillStyle = '#2C2D35'; sx.fillRect(Math.round(i * cw) - 1, 1176, 2, 344); }
+  }
+  scene.remove(grid); [moon.intensity, hemi.intensity] = keep;
+  document.body.appendChild(S); await save('FloodedCrypt_Concept_01.png', S); await saveJson('sheet_measure.json', report);
+}
+
+if (MODE === 'layout') {
+  // evidência (não publicada na folha): planta de cima, ortográfica, sem personagens, iluminação plana;
+  // contornos: centro 10×10 (laranja), passarela x ∈ [−2, 2] (branco), grade de 2 m (ciano)
+  show('Room'); torchLights(true, .6);
+  const W = 1200, H = 1200, PPM = 60, cm = cam(0, 90, W, H, PPM, [0, 0, 0], [-.3, 1, -.2]);
+  const cv = shot(cm, W, H, { glow: .6 }), cx = cv.getContext('2d');
+  const water = count(mask(cm, W, H, o => /_water_water|_water_ripple|_puddle_/.test(o.name)));
+  const P = (x, z) => project(cm, W, H, [x, 0, z]);
+  // água dentro do centro e da passarela, medida na máscara de água vista de cima
+  const wm = mask(cm, W, H, o => /_water_water|_water_ripple|_puddle_/.test(o.name)), wd = wm.getContext('2d').getImageData(0, 0, W, H).data;
+  const inRect = (x0, z0, x1, z1) => { const [a, b] = P(x0, z0), [c, d] = P(x1, z1); const X0 = Math.min(a, c), X1 = Math.max(a, c), Y0 = Math.min(b, d), Y1 = Math.max(b, d); let n = 0, t = 0;
+    for (let y = Y0; y < Y1; y++) for (let x = X0; x < X1; x++) { t++; if (wd[(y * W + x) * 4] > 128) n++; } return { water: n, px: t }; };
+  report.panels.push({ id: 'plan', ppm: PPM, water: water, center10: inRect(-5, -5, 5, 5), walkway: inRect(-1.9, -9, 1.9, 9), dryCore12: inRect(-6, -6, 6, 6) });
+  cx.lineWidth = 3; cx.setLineDash([14, 8]);
+  const rect = (x0, z0, x1, z1, c) => { const [a, b] = P(x0, z0), [e, f] = P(x1, z1); cx.strokeStyle = c; cx.strokeRect(Math.min(a, e), Math.min(b, f), Math.abs(e - a), Math.abs(f - b)); };
+  rect(-5, -5, 5, 5, '#FF9A2E'); rect(-2, -9, 2, 9, 'rgba(255,255,255,.8)');
+  cx.setLineDash([]); cx.lineWidth = 1; cx.strokeStyle = 'rgba(79,216,255,.35)';
+  for (let v = -8; v <= 8; v += 2) { let [a, b] = P(v, -9), [c, d] = P(v, 9); cx.beginPath(); cx.moveTo(a, b); cx.lineTo(c, d); cx.stroke(); [a, b] = P(-9, v); [c, d] = P(9, v); cx.beginPath(); cx.moveTo(a, b); cx.lineTo(c, d); cx.stroke(); }
+  document.body.appendChild(cv); await save('review_layout.png', cv); await saveJson('layout_measure.json', report);
+}
+log('fim'); document.title = 'DONE ' + MODE;
+</script></body></html>
