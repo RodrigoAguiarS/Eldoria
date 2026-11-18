@@ -273,7 +273,11 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.AreEqual(EquipmentSlot.Weapon, presenter.SelectedEquipment);
             yield return Key(keyboard.tabKey);
             yield return Key(keyboard.iKey);
-            Assert.AreEqual(EquipmentSlot.Weapon, presenter.SelectedEquipment, "Reopening keeps the equipment selection.");
+            Assert.AreSame(views[0].Button.gameObject, UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject, "F10 initial bag focus unchanged.");
+            Assert.IsNull(presenter.SelectedEquipment, "The selection follows the focused bag slot.");
+            Assert.AreSame(iron, inventory.EquippedWeapon, "Closing and reopening never changes equipment.");
+            yield return Click(presenter.GetComponentsInChildren<EquipmentSlotView>(true).Single(v => v.Slot == EquipmentSlot.Weapon).Button);
+            Assert.AreEqual(EquipmentSlot.Weapon, presenter.SelectedEquipment);
             yield return Click(presenter.transform.Find("Window/Unequip").GetComponent<Button>());
             Assert.AreEqual(InventoryPresenter.BagFullNotice, presenter.Notice, "Full bag: unequip refused with a message.");
             Assert.AreSame(iron, inventory.EquippedWeapon);
