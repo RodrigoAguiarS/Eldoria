@@ -16,9 +16,9 @@
     "P2": "Polimento, futuro previsto ou proposta condicional."
   },
   "summary": {
-    "logical_resources": 137,
+    "logical_resources": 145,
     "by_status": {
-      "EXISTENTE": 126,
+      "EXISTENTE": 134,
       "AUSENTE": 3,
       "INCOMPLETO": 6,
       "NÃO VERIFICADO": 2
@@ -38,7 +38,7 @@
         "EXISTENTE": 10
       },
       "D": {
-        "EXISTENTE": 6
+        "EXISTENTE": 14
       },
       "E": {
         "EXISTENTE": 3
@@ -64,8 +64,8 @@
     },
     "by_priority": {
       "P0": 78,
-      "P2": 48,
-      "P1": 11
+      "P2": 52,
+      "P1": 15
     },
     "missing_p0": 0,
     "physical_asset_files_without_meta": 461,
@@ -7767,6 +7767,566 @@
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
       }
+    },
+    {
+      "id": "ICON-ITEM-HELMET",
+      "name": "Elmo de ferro — ícone",
+      "category": "D",
+      "category_name": "Inventário e itens",
+      "functionality": "Identidade visual do item em slots e detalhes",
+      "status": "EXISTENTE",
+      "priority": "P1",
+      "type": "ícone 2D",
+      "scope": "aprovado_1_0",
+      "evidence": [
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/Gear_IronHelmet.asset",
+          "detail": "Definição do item (D-006); atributos inalterados pela arte."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/GearIcons.mjs",
+          "detail": "Fonte editável do ícone (mesma página/luz/contorno de ItemIcons.mjs; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/ICON-ITEM-HELMET.png",
+          "detail": "Saída de staging (512×512 RGBA, alpha real, margem 48 px)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Icons/ICON-ITEM-HELMET.png",
+          "detail": "Sprite importado (Single, sRGB, sem mipmaps, bilinear, clamp, PPU 100, sem compressão)."
+        },
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset",
+          "detail": "Entrada do catálogo → bolsa, detalhes e slot equipado."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/review_icons.png",
+          "detail": "Prancha 48/32 px sobre claro/escuro/pedra/slot e silhueta em cinza, ao lado dos cinco ícones existentes."
+        }
+      ],
+      "depends_on": [
+        "MODEL-ITEM-HELMET"
+      ],
+      "technical_dependencies": [
+        "Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha."
+      ],
+      "integration_state": "Integrado por GearVisualIntegrator (Tools/Dungeon Crawler/Production Visual/Gear): sprite no ItemVisualCatalog, mostrado pela bolsa, pelos detalhes e pelo EquipmentSlotView. Raridade apresentada pela UI (faixa/cor), não pintada no ícone.",
+      "visual_specification": "Chunky faceted steel nasal helm: slightly elongated dome, brass rim with rivets, dark steel band and top button, short nasal and side cheek plates, leather lining at the rim.",
+      "acceptance_criteria": [
+        "Preservar identidade e regras atuais.",
+        "Validar no enquadramento real sem referências faltantes ou regressões.",
+        "Entregar formatos/dimensões/fonte/procedência da ficha.",
+        "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
+      ],
+      "validation": {
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1 em 18/11/2026: GearVisualIntegrator aplicado em batch (5 execuções; 4ª=5ª byte a byte), EditMode 345/345 e PlayMode 226 aprovados/0 falhas/20 [Explicit] ignorados; capturas PlayMode em Editor com janela (inventário 720p/1080p × texto 100/125/150% e chão da release a 2560×1440). Aprovação artística humana pendente; build Windows não executada.",
+        "historical_evidence": "Reports/EquipmentArt/README.md"
+      },
+      "production": {
+        "dimensions": "512×512; leitura 48 e 32 px",
+        "delivery_format": "PNG RGBA + fonte editável",
+        "production_gate": "Produzido no lote ITEMS-GEAR (autorizado pelo usuário em 18/11/2026).",
+        "technical_requirements": "PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.",
+        "prompt_en": "ASSET ID: ICON-ITEM-LEATHER\nPURPOSE AND VISUAL BRIEF: Inventory icon for the existing item Colete de couro. Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: One isolated three-quarter object, soft top-left light; no rarity frame, quantity or name baked.\nENGINE CONTRACT: Deliver one 512x512 PNG RGBA with genuine transparent alpha and editable source. Fit silhouette in a centred 416x416 area with 48px padding. Sprite Single, sRGB, no mipmaps, bilinear, clamp, PPU 100. No checkerboard, baked text, numbers, rarity border, labels, watermark, scenery or duplicate object. Verify at 48px and 32px on light, dark and stone backgrounds.\nVALIDATION: Verify real alpha and distinguish all five items by silhouette in greyscale at 32px.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
+        "staging_directory": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/",
+        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/ICON-ITEM-HELMET.png"
+      },
+      "source_and_rights": {
+        "kind": "produced_procedural",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/PROVENANCE.md",
+        "licence": "Produzido no projeto (sem assets de terceiros nem IA generativa de imagem); licença do projeto."
+      },
+      "production_state": "Produzido (GearIcons.mjs) e importado em Assets/_Project/Art/Items/Icons/ICON-ITEM-HELMET.png."
+    },
+    {
+      "id": "MODEL-ITEM-HELMET",
+      "name": "Elmo de ferro — malha dedicada",
+      "category": "D",
+      "category_name": "Inventário e itens",
+      "functionality": "Forma no chão (pickup); aparência equipada no Hero pendente",
+      "status": "EXISTENTE",
+      "priority": "P2",
+      "type": "modelo 3D",
+      "scope": "sugestão_polimento",
+      "evidence": [
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/Gear_IronHelmet.asset",
+          "detail": "Definição do item (D-006); atributos inalterados pela arte."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/GearModels.mjs",
+          "detail": "Fonte editável .mjs (Lemo3DGenerator; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Item_IronHelmet.fbx",
+          "detail": "FBX importado (escala 1, sem colliders, normais do arquivo); 632 triângulos."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Ground_Item_IronHelmet.prefab",
+          "detail": "Modelo de chão referenciado pelo ItemVisualCatalog (URP/Lit, materiais Item_* compartilhados)."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Review/Item_IronHelmet.glb",
+          "detail": "GLB de revisão (não importado)."
+        },
+        {
+          "path": "Reports/EquipmentArt/README.md",
+          "detail": "Validação no Editor e capturas PlayMode."
+        }
+      ],
+      "depends_on": [
+        "ICON-ITEM-HELMET"
+      ],
+      "technical_dependencies": [
+        "Visual equipado exigiria malha skinned/soquete e extensão do PlayerEquipmentVisualPresenter (hoje só arma e armadura)."
+      ],
+      "integration_state": "Integrado: Pickup.prefab → PickupVisualPresenter → ItemVisualCatalog (LootKind.Gear resolve por definição). Sem visual equipado (pendente).",
+      "visual_specification": "Chunky faceted steel nasal helm: slightly elongated dome, brass rim with rivets, dark steel band and top button, short nasal and side cheek plates, leather lining at the rim.",
+      "acceptance_criteria": [
+        "Preservar identidade e regras atuais.",
+        "Validar no enquadramento real sem referências faltantes ou regressões.",
+        "Entregar formatos/dimensões/fonte/procedência da ficha.",
+        "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
+      ],
+      "validation": {
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1 em 18/11/2026: GearVisualIntegrator aplicado em batch (5 execuções; 4ª=5ª byte a byte), EditMode 345/345 e PlayMode 226 aprovados/0 falhas/20 [Explicit] ignorados; capturas PlayMode em Editor com janela (inventário 720p/1080p × texto 100/125/150% e chão da release a 2560×1440). Aprovação artística humana pendente; build Windows não executada.",
+        "historical_evidence": "Reports/EquipmentArt/README.md"
+      },
+      "production": {
+        "dimensions": "0,40×0,35×0,41 m; pivô na base",
+        "delivery_format": "FBX + fonte .mjs; 300–900 tris (amuleto 150–500); materiais Item_* reutilizados",
+        "production_gate": "Produzido no lote ITEMS-GEAR (autorizado pelo usuário em 18/11/2026).",
+        "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
+        "prompt_en": "ASSET ID: MODEL-ITEM-LEATHER\nPURPOSE AND VISUAL BRIEF: Optional dedicated 3D visual for the existing item Colete de couro. Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Match the existing 2-metre hero. Nominal dimensions 0.60×0.65×0.25 m. Sword pivot at hand grip; vest/flask at base centre. Swords 300-800 triangles, vest 500-1200, flask 150-350, one or two reused URP material slots. Reuse the current Hero sword for the iron variant if suitable before authoring another mesh.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: Show floor and hand previews. A wearable vest needs a separate optional skinned variant bound to the current Generic rig; a static mesh alone is not wearable. Preserve damage, range, defence and current body/clothing.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
+        "staging_directory": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/",
+        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Models/Item_IronHelmet.fbx"
+      },
+      "source_and_rights": {
+        "kind": "produced_procedural",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/PROVENANCE.md",
+        "licence": "Produzido no projeto (sem assets de terceiros nem IA generativa de imagem); licença do projeto."
+      },
+      "production_state": "Produzido (GearModels.mjs; FBX + GLB de revisão em Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~) e importado em Assets/_Project/Art/Items/Models."
+    },
+    {
+      "id": "ICON-ITEM-GLOVES",
+      "name": "Luvas de couro — ícone",
+      "category": "D",
+      "category_name": "Inventário e itens",
+      "functionality": "Identidade visual do item em slots e detalhes",
+      "status": "EXISTENTE",
+      "priority": "P1",
+      "type": "ícone 2D",
+      "scope": "aprovado_1_0",
+      "evidence": [
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/Gear_LeatherGloves.asset",
+          "detail": "Definição do item (D-006); atributos inalterados pela arte."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/GearIcons.mjs",
+          "detail": "Fonte editável do ícone (mesma página/luz/contorno de ItemIcons.mjs; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/ICON-ITEM-GLOVES.png",
+          "detail": "Saída de staging (512×512 RGBA, alpha real, margem 48 px)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Icons/ICON-ITEM-GLOVES.png",
+          "detail": "Sprite importado (Single, sRGB, sem mipmaps, bilinear, clamp, PPU 100, sem compressão)."
+        },
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset",
+          "detail": "Entrada do catálogo → bolsa, detalhes e slot equipado."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/review_icons.png",
+          "detail": "Prancha 48/32 px sobre claro/escuro/pedra/slot e silhueta em cinza, ao lado dos cinco ícones existentes."
+        }
+      ],
+      "depends_on": [
+        "MODEL-ITEM-GLOVES"
+      ],
+      "technical_dependencies": [
+        "Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha."
+      ],
+      "integration_state": "Integrado por GearVisualIntegrator (Tools/Dungeon Crawler/Production Visual/Gear): sprite no ItemVisualCatalog, mostrado pela bolsa, pelos detalhes e pelo EquipmentSlotView. Raridade apresentada pela UI (faixa/cor), não pintada no ícone.",
+      "visual_specification": "A PAIR of chunky light-brown leather gloves lying palm-down, dark seam at the cuff, dark knuckle strap with two brass studs; the pair is one equipment unit.",
+      "acceptance_criteria": [
+        "Preservar identidade e regras atuais.",
+        "Validar no enquadramento real sem referências faltantes ou regressões.",
+        "Entregar formatos/dimensões/fonte/procedência da ficha.",
+        "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
+      ],
+      "validation": {
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1 em 18/11/2026: GearVisualIntegrator aplicado em batch (5 execuções; 4ª=5ª byte a byte), EditMode 345/345 e PlayMode 226 aprovados/0 falhas/20 [Explicit] ignorados; capturas PlayMode em Editor com janela (inventário 720p/1080p × texto 100/125/150% e chão da release a 2560×1440). Aprovação artística humana pendente; build Windows não executada.",
+        "historical_evidence": "Reports/EquipmentArt/README.md"
+      },
+      "production": {
+        "dimensions": "512×512; leitura 48 e 32 px",
+        "delivery_format": "PNG RGBA + fonte editável",
+        "production_gate": "Produzido no lote ITEMS-GEAR (autorizado pelo usuário em 18/11/2026).",
+        "technical_requirements": "PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.",
+        "prompt_en": "ASSET ID: ICON-ITEM-LEATHER\nPURPOSE AND VISUAL BRIEF: Inventory icon for the existing item Colete de couro. Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: One isolated three-quarter object, soft top-left light; no rarity frame, quantity or name baked.\nENGINE CONTRACT: Deliver one 512x512 PNG RGBA with genuine transparent alpha and editable source. Fit silhouette in a centred 416x416 area with 48px padding. Sprite Single, sRGB, no mipmaps, bilinear, clamp, PPU 100. No checkerboard, baked text, numbers, rarity border, labels, watermark, scenery or duplicate object. Verify at 48px and 32px on light, dark and stone backgrounds.\nVALIDATION: Verify real alpha and distinguish all five items by silhouette in greyscale at 32px.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
+        "staging_directory": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/",
+        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/ICON-ITEM-GLOVES.png"
+      },
+      "source_and_rights": {
+        "kind": "produced_procedural",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/PROVENANCE.md",
+        "licence": "Produzido no projeto (sem assets de terceiros nem IA generativa de imagem); licença do projeto."
+      },
+      "production_state": "Produzido (GearIcons.mjs) e importado em Assets/_Project/Art/Items/Icons/ICON-ITEM-GLOVES.png."
+    },
+    {
+      "id": "MODEL-ITEM-GLOVES",
+      "name": "Luvas de couro — malha dedicada",
+      "category": "D",
+      "category_name": "Inventário e itens",
+      "functionality": "Forma no chão (pickup); aparência equipada no Hero pendente",
+      "status": "EXISTENTE",
+      "priority": "P2",
+      "type": "modelo 3D",
+      "scope": "sugestão_polimento",
+      "evidence": [
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/Gear_LeatherGloves.asset",
+          "detail": "Definição do item (D-006); atributos inalterados pela arte."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/GearModels.mjs",
+          "detail": "Fonte editável .mjs (Lemo3DGenerator; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Item_LeatherGloves.fbx",
+          "detail": "FBX importado (escala 1, sem colliders, normais do arquivo); 836 triângulos."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Ground_Item_LeatherGloves.prefab",
+          "detail": "Modelo de chão referenciado pelo ItemVisualCatalog (URP/Lit, materiais Item_* compartilhados)."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Review/Item_LeatherGloves.glb",
+          "detail": "GLB de revisão (não importado)."
+        },
+        {
+          "path": "Reports/EquipmentArt/README.md",
+          "detail": "Validação no Editor e capturas PlayMode."
+        }
+      ],
+      "depends_on": [
+        "ICON-ITEM-GLOVES"
+      ],
+      "technical_dependencies": [
+        "Visual equipado exigiria malha skinned/soquete e extensão do PlayerEquipmentVisualPresenter (hoje só arma e armadura)."
+      ],
+      "integration_state": "Integrado: Pickup.prefab → PickupVisualPresenter → ItemVisualCatalog (LootKind.Gear resolve por definição). Sem visual equipado (pendente).",
+      "visual_specification": "A PAIR of chunky light-brown leather gloves lying palm-down, dark seam at the cuff, dark knuckle strap with two brass studs; the pair is one equipment unit.",
+      "acceptance_criteria": [
+        "Preservar identidade e regras atuais.",
+        "Validar no enquadramento real sem referências faltantes ou regressões.",
+        "Entregar formatos/dimensões/fonte/procedência da ficha.",
+        "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
+      ],
+      "validation": {
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1 em 18/11/2026: GearVisualIntegrator aplicado em batch (5 execuções; 4ª=5ª byte a byte), EditMode 345/345 e PlayMode 226 aprovados/0 falhas/20 [Explicit] ignorados; capturas PlayMode em Editor com janela (inventário 720p/1080p × texto 100/125/150% e chão da release a 2560×1440). Aprovação artística humana pendente; build Windows não executada.",
+        "historical_evidence": "Reports/EquipmentArt/README.md"
+      },
+      "production": {
+        "dimensions": "0,30×0,11×0,27 m (par); pivô na base",
+        "delivery_format": "FBX + fonte .mjs; 300–900 tris (amuleto 150–500); materiais Item_* reutilizados",
+        "production_gate": "Produzido no lote ITEMS-GEAR (autorizado pelo usuário em 18/11/2026).",
+        "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
+        "prompt_en": "ASSET ID: MODEL-ITEM-LEATHER\nPURPOSE AND VISUAL BRIEF: Optional dedicated 3D visual for the existing item Colete de couro. Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Match the existing 2-metre hero. Nominal dimensions 0.60×0.65×0.25 m. Sword pivot at hand grip; vest/flask at base centre. Swords 300-800 triangles, vest 500-1200, flask 150-350, one or two reused URP material slots. Reuse the current Hero sword for the iron variant if suitable before authoring another mesh.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: Show floor and hand previews. A wearable vest needs a separate optional skinned variant bound to the current Generic rig; a static mesh alone is not wearable. Preserve damage, range, defence and current body/clothing.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
+        "staging_directory": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/",
+        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Models/Item_LeatherGloves.fbx"
+      },
+      "source_and_rights": {
+        "kind": "produced_procedural",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/PROVENANCE.md",
+        "licence": "Produzido no projeto (sem assets de terceiros nem IA generativa de imagem); licença do projeto."
+      },
+      "production_state": "Produzido (GearModels.mjs; FBX + GLB de revisão em Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~) e importado em Assets/_Project/Art/Items/Models."
+    },
+    {
+      "id": "ICON-ITEM-BOOTS",
+      "name": "Botas de couro — ícone",
+      "category": "D",
+      "category_name": "Inventário e itens",
+      "functionality": "Identidade visual do item em slots e detalhes",
+      "status": "EXISTENTE",
+      "priority": "P1",
+      "type": "ícone 2D",
+      "scope": "aprovado_1_0",
+      "evidence": [
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/Gear_LeatherBoots.asset",
+          "detail": "Definição do item (D-006); atributos inalterados pela arte."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/GearIcons.mjs",
+          "detail": "Fonte editável do ícone (mesma página/luz/contorno de ItemIcons.mjs; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/ICON-ITEM-BOOTS.png",
+          "detail": "Saída de staging (512×512 RGBA, alpha real, margem 48 px)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Icons/ICON-ITEM-BOOTS.png",
+          "detail": "Sprite importado (Single, sRGB, sem mipmaps, bilinear, clamp, PPU 100, sem compressão)."
+        },
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset",
+          "detail": "Entrada do catálogo → bolsa, detalhes e slot equipado."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/review_icons.png",
+          "detail": "Prancha 48/32 px sobre claro/escuro/pedra/slot e silhueta em cinza, ao lado dos cinco ícones existentes."
+        }
+      ],
+      "depends_on": [
+        "MODEL-ITEM-BOOTS"
+      ],
+      "technical_dependencies": [
+        "Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha."
+      ],
+      "integration_state": "Integrado por GearVisualIntegrator (Tools/Dungeon Crawler/Production Visual/Gear): sprite no ItemVisualCatalog, mostrado pela bolsa, pelos detalhes e pelo EquipmentSlotView. Raridade apresentada pela UI (faixa/cor), não pintada no ícone.",
+      "visual_specification": "A PAIR of tall light-brown leather boots with dark folded cuffs, dark soles/heels and a strap with a small brass buckle; the pair is one equipment unit.",
+      "acceptance_criteria": [
+        "Preservar identidade e regras atuais.",
+        "Validar no enquadramento real sem referências faltantes ou regressões.",
+        "Entregar formatos/dimensões/fonte/procedência da ficha.",
+        "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
+      ],
+      "validation": {
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1 em 18/11/2026: GearVisualIntegrator aplicado em batch (5 execuções; 4ª=5ª byte a byte), EditMode 345/345 e PlayMode 226 aprovados/0 falhas/20 [Explicit] ignorados; capturas PlayMode em Editor com janela (inventário 720p/1080p × texto 100/125/150% e chão da release a 2560×1440). Aprovação artística humana pendente; build Windows não executada.",
+        "historical_evidence": "Reports/EquipmentArt/README.md"
+      },
+      "production": {
+        "dimensions": "512×512; leitura 48 e 32 px",
+        "delivery_format": "PNG RGBA + fonte editável",
+        "production_gate": "Produzido no lote ITEMS-GEAR (autorizado pelo usuário em 18/11/2026).",
+        "technical_requirements": "PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.",
+        "prompt_en": "ASSET ID: ICON-ITEM-LEATHER\nPURPOSE AND VISUAL BRIEF: Inventory icon for the existing item Colete de couro. Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: One isolated three-quarter object, soft top-left light; no rarity frame, quantity or name baked.\nENGINE CONTRACT: Deliver one 512x512 PNG RGBA with genuine transparent alpha and editable source. Fit silhouette in a centred 416x416 area with 48px padding. Sprite Single, sRGB, no mipmaps, bilinear, clamp, PPU 100. No checkerboard, baked text, numbers, rarity border, labels, watermark, scenery or duplicate object. Verify at 48px and 32px on light, dark and stone backgrounds.\nVALIDATION: Verify real alpha and distinguish all five items by silhouette in greyscale at 32px.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
+        "staging_directory": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/",
+        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/ICON-ITEM-BOOTS.png"
+      },
+      "source_and_rights": {
+        "kind": "produced_procedural",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/PROVENANCE.md",
+        "licence": "Produzido no projeto (sem assets de terceiros nem IA generativa de imagem); licença do projeto."
+      },
+      "production_state": "Produzido (GearIcons.mjs) e importado em Assets/_Project/Art/Items/Icons/ICON-ITEM-BOOTS.png."
+    },
+    {
+      "id": "MODEL-ITEM-BOOTS",
+      "name": "Botas de couro — malha dedicada",
+      "category": "D",
+      "category_name": "Inventário e itens",
+      "functionality": "Forma no chão (pickup); aparência equipada no Hero pendente",
+      "status": "EXISTENTE",
+      "priority": "P2",
+      "type": "modelo 3D",
+      "scope": "sugestão_polimento",
+      "evidence": [
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/Gear_LeatherBoots.asset",
+          "detail": "Definição do item (D-006); atributos inalterados pela arte."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/GearModels.mjs",
+          "detail": "Fonte editável .mjs (Lemo3DGenerator; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Item_LeatherBoots.fbx",
+          "detail": "FBX importado (escala 1, sem colliders, normais do arquivo); 632 triângulos."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Ground_Item_LeatherBoots.prefab",
+          "detail": "Modelo de chão referenciado pelo ItemVisualCatalog (URP/Lit, materiais Item_* compartilhados)."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Review/Item_LeatherBoots.glb",
+          "detail": "GLB de revisão (não importado)."
+        },
+        {
+          "path": "Reports/EquipmentArt/README.md",
+          "detail": "Validação no Editor e capturas PlayMode."
+        }
+      ],
+      "depends_on": [
+        "ICON-ITEM-BOOTS"
+      ],
+      "technical_dependencies": [
+        "Visual equipado exigiria malha skinned/soquete e extensão do PlayerEquipmentVisualPresenter (hoje só arma e armadura)."
+      ],
+      "integration_state": "Integrado: Pickup.prefab → PickupVisualPresenter → ItemVisualCatalog (LootKind.Gear resolve por definição). Sem visual equipado (pendente).",
+      "visual_specification": "A PAIR of tall light-brown leather boots with dark folded cuffs, dark soles/heels and a strap with a small brass buckle; the pair is one equipment unit.",
+      "acceptance_criteria": [
+        "Preservar identidade e regras atuais.",
+        "Validar no enquadramento real sem referências faltantes ou regressões.",
+        "Entregar formatos/dimensões/fonte/procedência da ficha.",
+        "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
+      ],
+      "validation": {
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1 em 18/11/2026: GearVisualIntegrator aplicado em batch (5 execuções; 4ª=5ª byte a byte), EditMode 345/345 e PlayMode 226 aprovados/0 falhas/20 [Explicit] ignorados; capturas PlayMode em Editor com janela (inventário 720p/1080p × texto 100/125/150% e chão da release a 2560×1440). Aprovação artística humana pendente; build Windows não executada.",
+        "historical_evidence": "Reports/EquipmentArt/README.md"
+      },
+      "production": {
+        "dimensions": "0,29×0,32×0,30 m (par); pivô na base",
+        "delivery_format": "FBX + fonte .mjs; 300–900 tris (amuleto 150–500); materiais Item_* reutilizados",
+        "production_gate": "Produzido no lote ITEMS-GEAR (autorizado pelo usuário em 18/11/2026).",
+        "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
+        "prompt_en": "ASSET ID: MODEL-ITEM-LEATHER\nPURPOSE AND VISUAL BRIEF: Optional dedicated 3D visual for the existing item Colete de couro. Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Match the existing 2-metre hero. Nominal dimensions 0.60×0.65×0.25 m. Sword pivot at hand grip; vest/flask at base centre. Swords 300-800 triangles, vest 500-1200, flask 150-350, one or two reused URP material slots. Reuse the current Hero sword for the iron variant if suitable before authoring another mesh.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: Show floor and hand previews. A wearable vest needs a separate optional skinned variant bound to the current Generic rig; a static mesh alone is not wearable. Preserve damage, range, defence and current body/clothing.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
+        "staging_directory": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/",
+        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Models/Item_LeatherBoots.fbx"
+      },
+      "source_and_rights": {
+        "kind": "produced_procedural",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/PROVENANCE.md",
+        "licence": "Produzido no projeto (sem assets de terceiros nem IA generativa de imagem); licença do projeto."
+      },
+      "production_state": "Produzido (GearModels.mjs; FBX + GLB de revisão em Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~) e importado em Assets/_Project/Art/Items/Models."
+    },
+    {
+      "id": "ICON-ITEM-AMULET",
+      "name": "Amuleto de cobre — ícone",
+      "category": "D",
+      "category_name": "Inventário e itens",
+      "functionality": "Identidade visual do item em slots e detalhes",
+      "status": "EXISTENTE",
+      "priority": "P1",
+      "type": "ícone 2D",
+      "scope": "aprovado_1_0",
+      "evidence": [
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/Gear_CopperAmulet.asset",
+          "detail": "Definição do item (D-006); atributos inalterados pela arte."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/GearIcons.mjs",
+          "detail": "Fonte editável do ícone (mesma página/luz/contorno de ItemIcons.mjs; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/ICON-ITEM-AMULET.png",
+          "detail": "Saída de staging (512×512 RGBA, alpha real, margem 48 px)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Icons/ICON-ITEM-AMULET.png",
+          "detail": "Sprite importado (Single, sRGB, sem mipmaps, bilinear, clamp, PPU 100, sem compressão)."
+        },
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset",
+          "detail": "Entrada do catálogo → bolsa, detalhes e slot equipado."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/review_icons.png",
+          "detail": "Prancha 48/32 px sobre claro/escuro/pedra/slot e silhueta em cinza, ao lado dos cinco ícones existentes."
+        }
+      ],
+      "depends_on": [
+        "MODEL-ITEM-AMULET"
+      ],
+      "technical_dependencies": [
+        "Tarefa futura: mapa serializado ItemDefinition→Sprite, Image dedicado no SlotView/detalhes. Arte não adiciona esse binding sozinha."
+      ],
+      "integration_state": "Integrado por GearVisualIntegrator (Tools/Dungeon Crawler/Production Visual/Gear): sprite no ItemVisualCatalog, mostrado pela bolsa, pelos detalhes e pelo EquipmentSlotView. Raridade apresentada pela UI (faixa/cor), não pintada no ícone.",
+      "visual_specification": "Round faceted copper medallion with an engraved dark-copper ring, four marks, a faceted brass centre, brass bail and a dark leather cord loop.",
+      "acceptance_criteria": [
+        "Preservar identidade e regras atuais.",
+        "Validar no enquadramento real sem referências faltantes ou regressões.",
+        "Entregar formatos/dimensões/fonte/procedência da ficha.",
+        "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
+      ],
+      "validation": {
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1 em 18/11/2026: GearVisualIntegrator aplicado em batch (5 execuções; 4ª=5ª byte a byte), EditMode 345/345 e PlayMode 226 aprovados/0 falhas/20 [Explicit] ignorados; capturas PlayMode em Editor com janela (inventário 720p/1080p × texto 100/125/150% e chão da release a 2560×1440). Aprovação artística humana pendente; build Windows não executada.",
+        "historical_evidence": "Reports/EquipmentArt/README.md"
+      },
+      "production": {
+        "dimensions": "512×512; leitura 48 e 32 px",
+        "delivery_format": "PNG RGBA + fonte editável",
+        "production_gate": "Produzido no lote ITEMS-GEAR (autorizado pelo usuário em 18/11/2026).",
+        "technical_requirements": "PNG RGBA 512×512 + fonte; alpha real, conteúdo 416×416 central/margem 48 px. Sprite Single, sRGB, mipmaps off, bilinear, clamp, PPU 100; testar a 48/32 px. Sem texto, números ou moldura de raridade baked.",
+        "prompt_en": "ASSET ID: ICON-ITEM-LEATHER\nPURPOSE AND VISUAL BRIEF: Inventory icon for the existing item Colete de couro. Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: One isolated three-quarter object, soft top-left light; no rarity frame, quantity or name baked.\nENGINE CONTRACT: Deliver one 512x512 PNG RGBA with genuine transparent alpha and editable source. Fit silhouette in a centred 416x416 area with 48px padding. Sprite Single, sRGB, no mipmaps, bilinear, clamp, PPU 100. No checkerboard, baked text, numbers, rarity border, labels, watermark, scenery or duplicate object. Verify at 48px and 32px on light, dark and stone backgrounds.\nVALIDATION: Verify real alpha and distinguish all five items by silhouette in greyscale at 32px.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
+        "staging_directory": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/",
+        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Icons/ICON-ITEM-AMULET.png"
+      },
+      "source_and_rights": {
+        "kind": "produced_procedural",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/PROVENANCE.md",
+        "licence": "Produzido no projeto (sem assets de terceiros nem IA generativa de imagem); licença do projeto."
+      },
+      "production_state": "Produzido (GearIcons.mjs) e importado em Assets/_Project/Art/Items/Icons/ICON-ITEM-AMULET.png."
+    },
+    {
+      "id": "MODEL-ITEM-AMULET",
+      "name": "Amuleto de cobre — malha dedicada",
+      "category": "D",
+      "category_name": "Inventário e itens",
+      "functionality": "Forma no chão (pickup); aparência equipada no Hero pendente",
+      "status": "EXISTENTE",
+      "priority": "P2",
+      "type": "modelo 3D",
+      "scope": "sugestão_polimento",
+      "evidence": [
+        {
+          "path": "Assets/_Project/ScriptableObjects/Items/Gear_CopperAmulet.asset",
+          "detail": "Definição do item (D-006); atributos inalterados pela arte."
+        },
+        {
+          "path": "Tools/Lemo3DGenerator/src/production/GearModels.mjs",
+          "detail": "Fonte editável .mjs (Lemo3DGenerator; three.js do Lemo somente leitura)."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Models/Item_CopperAmulet.fbx",
+          "detail": "FBX importado (escala 1, sem colliders, normais do arquivo); 332 triângulos."
+        },
+        {
+          "path": "Assets/_Project/Art/Items/Prefabs/Ground_Item_CopperAmulet.prefab",
+          "detail": "Modelo de chão referenciado pelo ItemVisualCatalog (URP/Lit, materiais Item_* compartilhados)."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Review/Item_CopperAmulet.glb",
+          "detail": "GLB de revisão (não importado)."
+        },
+        {
+          "path": "Reports/EquipmentArt/README.md",
+          "detail": "Validação no Editor e capturas PlayMode."
+        }
+      ],
+      "depends_on": [
+        "ICON-ITEM-AMULET"
+      ],
+      "technical_dependencies": [
+        "Visual equipado exigiria malha skinned/soquete e extensão do PlayerEquipmentVisualPresenter (hoje só arma e armadura)."
+      ],
+      "integration_state": "Integrado: Pickup.prefab → PickupVisualPresenter → ItemVisualCatalog (LootKind.Gear resolve por definição). Sem visual equipado (pendente).",
+      "visual_specification": "Round faceted copper medallion with an engraved dark-copper ring, four marks, a faceted brass centre, brass bail and a dark leather cord loop.",
+      "acceptance_criteria": [
+        "Preservar identidade e regras atuais.",
+        "Validar no enquadramento real sem referências faltantes ou regressões.",
+        "Entregar formatos/dimensões/fonte/procedência da ficha.",
+        "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
+      ],
+      "validation": {
+        "current_session": "VALIDADO NO EDITOR 6000.6.9f1 em 18/11/2026: GearVisualIntegrator aplicado em batch (5 execuções; 4ª=5ª byte a byte), EditMode 345/345 e PlayMode 226 aprovados/0 falhas/20 [Explicit] ignorados; capturas PlayMode em Editor com janela (inventário 720p/1080p × texto 100/125/150% e chão da release a 2560×1440). Aprovação artística humana pendente; build Windows não executada.",
+        "historical_evidence": "Reports/EquipmentArt/README.md"
+      },
+      "production": {
+        "dimensions": "0,20×0,37×0,05 m; pivô na base",
+        "delivery_format": "FBX + fonte .mjs; 300–900 tris (amuleto 150–500); materiais Item_* reutilizados",
+        "production_gate": "Produzido no lote ITEMS-GEAR (autorizado pelo usuário em 18/11/2026).",
+        "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
+        "prompt_en": "ASSET ID: MODEL-ITEM-LEATHER\nPURPOSE AND VISUAL BRIEF: Optional dedicated 3D visual for the existing item Colete de couro. Sleeveless chunky brown leather vest, broad plain panels, dark seams and two brass fasteners; no helmet, shield or accessory set.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: Match the existing 2-metre hero. Nominal dimensions 0.60×0.65×0.25 m. Sword pivot at hand grip; vest/flask at base centre. Swords 300-800 triangles, vest 500-1200, flask 150-350, one or two reused URP material slots. Reuse the current Hero sword for the iron variant if suitable before authoring another mesh.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: Show floor and hand previews. A wearable vest needs a separate optional skinned variant bound to the current Generic rig; a static mesh alone is not wearable. Preserve damage, range, defence and current body/clothing.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
+        "staging_directory": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/",
+        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/Models/Item_CopperAmulet.fbx"
+      },
+      "source_and_rights": {
+        "kind": "produced_procedural",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~/PROVENANCE.md",
+        "licence": "Produzido no projeto (sem assets de terceiros nem IA generativa de imagem); licença do projeto."
+      },
+      "production_state": "Produzido (GearModels.mjs; FBX + GLB de revisão em Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~) e importado em Assets/_Project/Art/Items/Models."
     }
   ],
   "file_index": [
@@ -13554,6 +14114,90 @@
         "Medição de GC sintética no Editor (GC.Alloc Count, não bytes), separando partículas de texto.",
         "Divergência FX-LOOT: pivô z aproxima 0,6 m da câmera; mesmo assim 2 dos 5 glints ficam atrás do corpo e ouro/marfim se parecem sobre o azul da capa (revisão de arte).",
         "Divergência FX-LEVEL: sinal de z invertido em relação ao número do contrato para cumprir a intenção declarada (arco da frente diante das pernas)."
+      ]
+    },
+    {
+      "id": "ITEMS-GEAR",
+      "date_local": "2026-11-18",
+      "branch": "claude/equipment-storage",
+      "main_merge": "pendente (PR para a main; sem merge sem aprovação do usuário)",
+      "produced": [
+        "ICON-ITEM-HELMET",
+        "MODEL-ITEM-HELMET",
+        "ICON-ITEM-GLOVES",
+        "MODEL-ITEM-GLOVES",
+        "ICON-ITEM-BOOTS",
+        "MODEL-ITEM-BOOTS",
+        "ICON-ITEM-AMULET",
+        "MODEL-ITEM-AMULET"
+      ],
+      "imported": [
+        "ICON-ITEM-HELMET",
+        "MODEL-ITEM-HELMET",
+        "ICON-ITEM-GLOVES",
+        "MODEL-ITEM-GLOVES",
+        "ICON-ITEM-BOOTS",
+        "MODEL-ITEM-BOOTS",
+        "ICON-ITEM-AMULET",
+        "MODEL-ITEM-AMULET"
+      ],
+      "integrated": [
+        "ICON-ITEM-HELMET",
+        "MODEL-ITEM-HELMET",
+        "ICON-ITEM-GLOVES",
+        "MODEL-ITEM-GLOVES",
+        "ICON-ITEM-BOOTS",
+        "MODEL-ITEM-BOOTS",
+        "ICON-ITEM-AMULET",
+        "MODEL-ITEM-AMULET"
+      ],
+      "validated_in_editor": [
+        "ICON-ITEM-HELMET",
+        "MODEL-ITEM-HELMET",
+        "ICON-ITEM-GLOVES",
+        "MODEL-ITEM-GLOVES",
+        "ICON-ITEM-BOOTS",
+        "MODEL-ITEM-BOOTS",
+        "ICON-ITEM-AMULET",
+        "MODEL-ITEM-AMULET"
+      ],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Scripts/Editor/ProductionVisualIntegrator.cs (helpers internal; catálogo preserva entradas de outros lotes)",
+        "Tools/Lemo3DGenerator/src/production/ItemIcons.mjs (PAGE exportada; render inalterado)",
+        "Assets/_Project/ScriptableObjects/Items/ItemVisualCatalog.asset (+4 entradas; existentes preservadas)",
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json"
+      ],
+      "new_code": [
+        "Tools/Lemo3DGenerator/src/production/GearModels.mjs",
+        "Tools/Lemo3DGenerator/src/production/GearIcons.mjs",
+        "Assets/_Project/Scripts/Editor/GearVisualIntegrator.cs",
+        "Assets/_Project/Tests/EditMode/GearArtTests.cs",
+        "Assets/_Project/Tests/PlayMode/PlayerInput/GearArtSceneTests.cs"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/Items/Models/Item_IronHelmet.fbx",
+        "Assets/_Project/Art/Items/Models/Item_LeatherGloves.fbx",
+        "Assets/_Project/Art/Items/Models/Item_LeatherBoots.fbx",
+        "Assets/_Project/Art/Items/Models/Item_CopperAmulet.fbx",
+        "Assets/_Project/Art/Items/Icons/ICON-ITEM-HELMET.png",
+        "Assets/_Project/Art/Items/Icons/ICON-ITEM-GLOVES.png",
+        "Assets/_Project/Art/Items/Icons/ICON-ITEM-BOOTS.png",
+        "Assets/_Project/Art/Items/Icons/ICON-ITEM-AMULET.png",
+        "Assets/_Project/Art/Items/Prefabs/Ground_Item_IronHelmet.prefab",
+        "Assets/_Project/Art/Items/Prefabs/Ground_Item_LeatherGloves.prefab",
+        "Assets/_Project/Art/Items/Prefabs/Ground_Item_LeatherBoots.prefab",
+        "Assets/_Project/Art/Items/Prefabs/Ground_Item_CopperAmulet.prefab",
+        "Assets/_Project/Art/Items/Materials/Item_copper.mat",
+        "Assets/_Project/Art/Items/Materials/Item_copperDark.mat"
+      ],
+      "tests": {
+        "summary": "VALIDADO NO EDITOR 6000.6.9f1 em 18/11/2026: GearVisualIntegrator aplicado em batch (5 execuções; 4ª=5ª byte a byte), EditMode 345/345 e PlayMode 226 aprovados/0 falhas/20 [Explicit] ignorados; capturas PlayMode em Editor com janela (inventário 720p/1080p × texto 100/125/150% e chão da release a 2560×1440). Aprovação artística humana pendente; build Windows não executada."
+      },
+      "limitations": [
+        "Sem aparência equipada no Hero (presenter só cobre arma e armadura).",
+        "Aprovação artística humana pendente.",
+        "Capturas em tamanhos emulados do Game view, sem monitor físico; build Windows não executada."
       ]
     }
   ]

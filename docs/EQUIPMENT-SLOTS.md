@@ -147,13 +147,29 @@ Largar (item da bolsa). Atributos e detalhes ficam no ScrollRect existente (rola
 Abaixo da bolsa, uma nota explica que equipar move o item para o slot e que desequipar devolve
 à bolsa e precisa de um espaço livre.
 
-## Arte pendente
+## Arte (lote ITEMS-GEAR)
 
-- Ícones `ICON-ITEM-*` para as quatro peças (o `ItemVisualCatalog` não tem entrada; os
-  slots e detalhes funcionam só com texto e marcadores).
-- Modelos de chão: os pickups usam o fallback tingido por `LootKind.Gear`.
-- Peças vestíveis no Hero (capacete, luvas, botas, acessório): fora deste incremento; nenhuma
-  mudança no rig Generic ou no `PlayerEquipmentVisualPresenter` além de ler a arma/armadura do
-  slot em vez do índice da bolsa.
+Produzida e integrada em 18/11/2026 no mesmo estilo low-poly do lote ITEMS-COMBAT (espadas,
+colete, poção), com a mesma paleta e os mesmos materiais `Item_*`; só o cobre do amuleto é novo.
+
+| Peça | Ícone | Modelo de chão | Fonte |
+| --- | --- | --- | --- |
+| Elmo de ferro | `Art/Items/Icons/ICON-ITEM-HELMET.png` | `Art/Items/Models/Item_IronHelmet.fbx` → `Prefabs/Ground_Item_IronHelmet.prefab` | `Tools/Lemo3DGenerator/src/production/GearModels.mjs` / `GearIcons.mjs` |
+| Luvas de couro (par = 1 unidade) | `ICON-ITEM-GLOVES.png` | `Item_LeatherGloves.fbx` → `Ground_Item_LeatherGloves.prefab` | idem |
+| Botas de couro (par = 1 unidade) | `ICON-ITEM-BOOTS.png` | `Item_LeatherBoots.fbx` → `Ground_Item_LeatherBoots.prefab` | idem |
+| Amuleto de cobre | `ICON-ITEM-AMULET.png` | `Item_CopperAmulet.fbx` → `Ground_Item_CopperAmulet.prefab` | idem |
+
+Acessório inicial: **amuleto** (medalhão de cobre com cordão), porque a definição existente é
+"Amuleto de cobre" e a silhueta circular se distingue das outras três categorias a 32 px.
+Integração idempotente pelo menu `Tools/Dungeon Crawler/Production Visual/Gear (Helmet, Gloves,
+Boots, Amulet)`; o lote ITEMS-COMBAT preserva estas entradas ao ser reaplicado. Procedência em
+`Art/ProductionStaging/ITEMS-GEAR/Source~/PROVENANCE.md`; evidências em
+[Reports/EquipmentArt](../Reports/EquipmentArt/README.md).
+
+Pendências:
+- **Aparência equipada no Hero** (capacete, luvas, botas, amuleto): o `PlayerEquipmentVisualPresenter`
+  só cobre arma (soquete) e armadura (malha skinned). Vestir as quatro peças exige malhas skinned no
+  rig Generic do Hero ou soquetes novos e uma extensão do presenter — trabalho próprio, fora deste lote.
+- Aprovação artística humana.
 - Segundo andar (F14): recebe os slots e o layout F10, mas continua sem o UI-SKIN (pendência
   já registrada em V04).
