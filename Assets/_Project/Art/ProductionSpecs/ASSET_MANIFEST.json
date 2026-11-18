@@ -16,11 +16,11 @@
     "P2": "Polimento, futuro previsto ou proposta condicional."
   },
   "summary": {
-    "logical_resources": 134,
+    "logical_resources": 135,
     "by_status": {
       "EXISTENTE": 126,
       "AUSENTE": 3,
-      "INCOMPLETO": 3,
+      "INCOMPLETO": 4,
       "NÃO VERIFICADO": 2
     },
     "by_category": {
@@ -31,7 +31,8 @@
       },
       "B": {
         "EXISTENTE": 41,
-        "AUSENTE": 1
+        "AUSENTE": 1,
+        "INCOMPLETO": 1
       },
       "C": {
         "EXISTENTE": 10
@@ -63,7 +64,7 @@
     },
     "by_priority": {
       "P0": 78,
-      "P2": 45,
+      "P2": 46,
       "P1": 11
     },
     "missing_p0": 0,
@@ -4447,6 +4448,67 @@
         "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
         "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
       }
+    },
+    {
+      "id": "REF-CONCEPT-10",
+      "name": "SkeletonLancer_Concept_01.png",
+      "category": "B",
+      "category_name": "Inimigos e boss",
+      "functionality": "Referência visual do lanceiro F13 (A13); guia para modelagem/rig futuros, não substituto runtime",
+      "status": "INCOMPLETO",
+      "priority": "P2",
+      "type": "textura (conceito 2D)",
+      "scope": "planejado_futuro_condicional",
+      "evidence": [
+        {
+          "path": "Assets/_Project/Art/Concepts/SkeletonLancer_Concept_01.png",
+          "detail": "Folha 2048×1536 RGB, fundo neutro, sem rótulos (A13)."
+        },
+        {
+          "path": "Assets/_Project/Art/Concepts/Source~/SkeletonLancer/README.md",
+          "detail": "Leitura da folha, reprodução, aceite medido e limites."
+        },
+        {
+          "path": "docs/LANCER-F13.md",
+          "detail": "Comportamento e hitRadius 0,75 m usados para conferir que a lança não promete alcance de dano."
+        }
+      ],
+      "depends_on": [
+        "REF-CONCEPT-03",
+        "REF-CONCEPT-04",
+        "CHAR-MELEE-MODEL",
+        "CHAR-ELITE-MODEL"
+      ],
+      "technical_dependencies": [
+        "F13 (EnemyLungeAttack: telegraph ≥ 1 s, contato por segmento, eventos TelegraphStarted/DashStarted/TargetHit)"
+      ],
+      "integration_state": "Conceito produzido em 17/11/2026 (A13) em Art/Concepts com .meta de referência (Default/sRGB, NPOT None, sem mipmaps); NÃO é sprite, FBX, rig ou clip. Em jogo a F13 continua com o lanceiro de primitivas na sala de teste. Modelagem, rig Generic, clips e integração são tarefas posteriores separadas.",
+      "visual_specification": "Esqueleto da família SkeletonMelee/Elite (mesmo crânio angular oversized e corpo do _skeleton_kit, 2 m) com lança curta e grossa de 1,28 m segurada com as duas mãos, ombreira assimétrica em três lâminas com aba alta só no ombro esquerdo, braçadeiras/grevas nos dois lados e tassetes largos. Guarda = postura de aviso de base larga, lança nivelada à frente; Windup = mesmo corpo mais baixo, lança recolhida na linha reta. Osso #CFC6A8, ferro #3E4152, ferrugem #8A4A22, olhos #FF2A2A.",
+      "acceptance_criteria": [
+        "Identidade entre vistas: frente/lado/costas com a mesma altura e linha de chão.",
+        "Distinção em silhueta a 128 px na câmera de jogo 45°.",
+        "Arma não torna hitbox implícita: ponta perto do hitRadius 0,75 m da F13; dano só pelo TargetHit.",
+        "Design F13 validado antes de encomendar 3D; aprovação artística humana antes de modelar."
+      ],
+      "validation": {
+        "current_session": "Análise fora da Unity em 17/11/2026: ConceptLancer.validation.json 13/13 (PNG e medidas relidos do disco): 2048×1536 opaco; fundo neutro (croma ≤ 6); paleta da ficha; frente/lado/costas 1,763/1,761/1,763 m com topo do crânio na mesma linha; lança a 3,5° da linha do avanço na guarda e 12,1° no windup; ponta a 0,92 m do pivô (hitRadius 0,75 m, excesso +0,17 m); silhueta 128 px com IoU máximo 0,54 contra melee/ataque/elite/ranged/herói e L/A 0,91; guarda × windup IoU 0,49. GLB de render determinístico (2 execuções, mesmo SHA256). NÃO VALIDADO NO EDITOR.",
+        "historical_evidence": "Reports/F13/README.md (lanceiro de primitivas); não confundir com execução nova."
+      },
+      "production": {
+        "dimensions": "2048×1536 px",
+        "delivery_format": "PNG RGB + fonte (gerador e página de render versionados, GLB de render, medidas e quadros de revisão em Source~)",
+        "production_gate": "Condição F13 cumprida (protótipo de primitivas integrado). Produzido no lote A13 (17/11/2026); sem 3D prometido.",
+        "technical_requirements": "Importar como Default/sRGB para referência, não Sprite de gameplay; Unity 6000.6.9f1.",
+        "prompt_en": "A13 em PROMPT_CATALOG.md (Create a 2048x1536 concept sheet for an original corrupted skeleton spearman ...).",
+        "staging_directory": "Assets/_Project/Art/Concepts/",
+        "suggested_primary_file": "Assets/_Project/Art/Concepts/SkeletonLancer_Concept_01.png"
+      },
+      "source_and_rights": {
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
+        "licence": "Projeto Eldoria; render de geometria própria gerada por código (Tools/Lemo3DGenerator/src/production/ConceptLancer.mjs + preview/concept_lancer.html; three.js r170 MIT, somente leitura no Lemo-Opuscar; validador Python com Pillow MIT-CMU/HPND). Sem IA generativa nem asset de terceiros."
+      },
+      "production_state": "Produzido por render 3D próprio (kit da família + lança/ombreira/tassetes; poses Guarda e Windup com pegada resolvida numericamente por ConceptLancer_grip.mjs): SkeletonLancer_Concept_01.png + .meta; fonte e evidências em Concepts/Source~/SkeletonLancer. GLB de render (2130 tris) não é malha de produção."
     },
     {
       "id": "REF-SURFACE-HERO",
@@ -13122,6 +13184,49 @@
         "Vaso intacto × quebrado com razão de área 0,843 (limite 0,85); a distinção principal é a aparência (0,801).",
         "Previews são do rasterizador próprio (ortográfico), rotulados PREVIEW; não são captura da Unity.",
         "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "A13-CONCEPT-LANCER",
+      "date_local": "2026-11-17",
+      "branch": "claude/a13-concept-lancer",
+      "produced": [
+        "REF-CONCEPT-10"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "Assets/_Project/Art/Concepts/PROVENANCE.md",
+        "NEXT_STEPS.md",
+        "docs/LANCER-F13.md"
+      ],
+      "new_code": [
+        "Tools/Lemo3DGenerator/src/production/ConceptLancer.mjs",
+        "Tools/Lemo3DGenerator/src/production/ConceptLancer_grip.mjs",
+        "Tools/Lemo3DGenerator/src/production/ConceptLancer_check.py",
+        "Tools/Lemo3DGenerator/preview/concept_lancer.html"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/Concepts/SkeletonLancer_Concept_01.png",
+        "Assets/_Project/Art/Concepts/SkeletonLancer_Concept_01.png.meta",
+        "Assets/_Project/Art/Concepts/Source~/SkeletonLancer/"
+      ],
+      "import_settings": "TextureImporter copiado de SkeletonMelee_Concept_01.png.meta (Default, sRGB, nPOTScale 0, sem mipmaps, máx. 2048) mudando só o GUID (SHA256 de Eldoria/A13/SkeletonLancer_Concept_01).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "ConceptLancer.validation.json ok (13/13); GLB de render determinístico (2 execuções, mesmo SHA256); render observado no navegador embutido (sheet/review/scale)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: importação do PNG/.meta não observada na Unity.",
+        "Conceito 2D: sem FBX, rig, clip, prefab ou sprite; GLB de render em Source~ não é malha de produção.",
+        "Vista de frente com a lança apontada para o observador (quase invisível); a leitura da arma está no perfil, na 45° e nas silhuetas.",
+        "Na 45° a lança aponta como a espada do melee/herói; a distinção a 128 px vem da base larga e da massa (L/A 0,91).",
+        "Windup desvia 12° da linha reta (alcance do braço da família); rig futuro deve travar a lança na direção da faixa.",
+        "Aprovação artística humana pendente; valores da F13 seguem como propostas de playtest."
       ]
     }
   ]

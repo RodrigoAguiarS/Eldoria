@@ -68,8 +68,9 @@ dash (0,25 s de invulnerabilidade) é a resposta preferida ou basta sair da faix
 - Sem áudio dedicado: `EnemyAudioBridge` escuta `EnemyCombat`, que o lanceiro não usa.
 - Reiniciar pelo HUD na cena de teste não funciona (a cena não está nas Build Settings);
   saia do PlayMode para repetir.
-- **A13/rig Generic não integrado**: A13 é um conceito 2D ainda não produzido e o catálogo pede o
-  design F13 validado antes de encomendar 3D. `EnemyLungeAttack` publica `TelegraphStarted`,
+- **A13/rig Generic não integrado**: o conceito 2D A13 existe desde 17/11/2026
+  (`Assets/_Project/Art/Concepts/SkeletonLancer_Concept_01.png`, ponta da lança a ~0,9 m do pivô na guarda),
+  mas não há modelo, rig nem clip; o catálogo pede o design F13 validado antes de encomendar 3D. `EnemyLungeAttack` publica `TelegraphStarted`,
   `DashStarted`, `TargetHit` (dano aceito, autoritativo), `DashEnded`, `Finished` e `Cancelled`
   para uma futura ponte Generic alinhar a pose de impacto ao dano, sem AnimationEvent de dano.
 

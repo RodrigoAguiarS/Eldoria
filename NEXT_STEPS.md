@@ -41,8 +41,10 @@ Balanceamento sem playtest humano; integração na main aguarda revisão do usu�
 
 F13 implementado em 16/11/2026 como experimento isolado: lanceiro com investida
 linear numa sala de teste fora do build. [Regras](docs/LANCER-F13.md) e
-[evidências](Reports/F13/README.md). Pendências: playtest dos valores, A13/rig
-Generic. O achado de portas sem bloqueio foi corrigido na main; ver Reports/DoorNavMesh.
+[evidências](Reports/F13/README.md). Pendências: playtest dos valores e rig
+Generic. A13 produzido em 17/11/2026 como conceito 2D
+(`Art/Concepts/SkeletonLancer_Concept_01.png`, fonte em `Concepts/Source~/SkeletonLancer`);
+modelagem 3D só depois da aprovação artística. O achado de portas sem bloqueio foi corrigido na main; ver Reports/DoorNavMesh.
 
 F15 implementada como protótipo de uma fase em arena separada, sem integrar
 F14/release ou alterar loot/Guardião. Leque com aviso ≥1 s, dano único,

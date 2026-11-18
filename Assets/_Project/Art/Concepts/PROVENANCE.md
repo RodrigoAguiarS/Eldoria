@@ -37,3 +37,12 @@ Gerados por script Node (sem dependências) usando o codificador PNG de `Tools/L
 - **Conceitos (7):** Texture Type *Default*, sRGB, *Non-Power of 2 = None* (sem isso o Unity redimensionava 1600×1200 para 2048×1024 e distorcia a proporção), **mipmaps desligados** (imagem de consulta; com mipmaps o Unity recusa comprimir textura NPOT), Max Size 2048, Normal Quality → 1600×1200 BC1 sRGB (~0,9 MB cada).
 - **Estudos (2):** Default, sRGB, mipmaps ligados, 512×512 BC1 sRGB (~171 KB). Sem mapa de emissão: a emissão dos olhos/runas continua nos materiais URP.
 - Console sem erros nem avisos após a importação. `Hero_Concept_01*.png` não foram reimportados nem alterados.
+
+## A13 — 17/11/2026 (Claude Code): `SkeletonLancer_Concept_01.png`
+
+**Ferramenta:** a mesma técnica da Task 01: render 3D em tempo real com **three.js r170** (somente leitura no Lemo-Opuscar, MIT) no navegador embutido do Claude Code (Chromium/WebGL2), tone mapping Neutral, sRGB. O brilho dos olhos é um blur 2D só dos materiais emissivos, sem bloom.
+**Não é geração por IA de imagem.** O lanceiro é montado com o kit de esqueleto do próprio projeto (`Tools/Lemo3DGenerator/src/characters/_skeleton_kit.mjs`) mais lança, ombreira assimétrica e tassetes modelados por código em `Tools/Lemo3DGenerator/src/production/ConceptLancer.mjs`, posado e renderizado por `Tools/Lemo3DGenerator/preview/concept_lancer.html`. Nenhuma arte de terceiros. Desta vez os scripts **estão versionados**.
+**Conteúdo:** folha 2048×1536 sem rótulos e fundo cinza neutro #2B2C31: frente/lado/costas ortográficas (380 px/m), vista de jogo 45° (guinada −40°), pose de windup e silhuetas pretas. Paleta da ficha A13: osso #CFC6A8, ferro #3E4152, ferrugem #8A4A22, olhos #FF2A2A.
+**Fonte e evidências:** `Source~/SkeletonLancer/` (README, GLB de render, source.json, medidas, quadros de silhueta a 128 px e de escala, `ConceptLancer.validation.json` 13/13).
+**Importação:** `.meta` copiado do `SkeletonMelee_Concept_01.png.meta` (Default, sRGB, NPOT None, sem mipmaps, máx. 2048), só com o GUID novo. **NÃO VALIDADO NO EDITOR** nesta sessão.
+**Condições de uso:** projeto Eldoria; three.js MIT; Pillow (validador) MIT-CMU/HPND. É conceito 2D: não há FBX, rig nem clip. Aprovação artística pendente.
