@@ -1,0 +1,182 @@
+{
+  "asset_id": "FX-SLAM",
+  "catalog_id": "A10",
+  "sheet": "../FX-SLAM-Sheet.png",
+  "sheet_size": [
+    1024,
+    512
+  ],
+  "grid": {
+    "columns": 4,
+    "rows": 2,
+    "cell": [
+      256,
+      256
+    ],
+    "order": "linha a linha, da esquerda para a direita, de cima para baixo"
+  },
+  "frames": [
+    {
+      "index": 0,
+      "cell": [
+        0,
+        0
+      ],
+      "start_s": 0.0,
+      "duration_s": 0.0437,
+      "file": "frames/FX-SLAM-F0.png"
+    },
+    {
+      "index": 1,
+      "cell": [
+        1,
+        0
+      ],
+      "start_s": 0.0437,
+      "duration_s": 0.0437,
+      "file": "frames/FX-SLAM-F1.png"
+    },
+    {
+      "index": 2,
+      "cell": [
+        2,
+        0
+      ],
+      "start_s": 0.0875,
+      "duration_s": 0.0437,
+      "file": "frames/FX-SLAM-F2.png"
+    },
+    {
+      "index": 3,
+      "cell": [
+        3,
+        0
+      ],
+      "start_s": 0.1312,
+      "duration_s": 0.0437,
+      "file": "frames/FX-SLAM-F3.png"
+    },
+    {
+      "index": 4,
+      "cell": [
+        0,
+        1
+      ],
+      "start_s": 0.175,
+      "duration_s": 0.0437,
+      "file": "frames/FX-SLAM-F4.png"
+    },
+    {
+      "index": 5,
+      "cell": [
+        1,
+        1
+      ],
+      "start_s": 0.2188,
+      "duration_s": 0.0437,
+      "file": "frames/FX-SLAM-F5.png"
+    },
+    {
+      "index": 6,
+      "cell": [
+        2,
+        1
+      ],
+      "start_s": 0.2625,
+      "duration_s": 0.0437,
+      "file": "frames/FX-SLAM-F6.png"
+    },
+    {
+      "index": 7,
+      "cell": [
+        3,
+        1
+      ],
+      "start_s": 0.3062,
+      "duration_s": 0.0437,
+      "file": "frames/FX-SLAM-F7.png"
+    }
+  ],
+  "duration_s": 0.35,
+  "fps": 22.857,
+  "loop": false,
+  "final_frame": "quadro 7 totalmente transparente (fim do efeito, nada persiste no chão)",
+  "view": "ortográfica de cima, plano do piso; +X da imagem = +X do mundo, topo da imagem = +Z do mundo",
+  "pivot": {
+    "meaning": "ponto do impacto = transform.position do Guardião no ResolveSlam, no piso",
+    "cell_px_from_top_left": [
+      128.0,
+      128.0
+    ],
+    "cell_normalized": [
+      0.5,
+      0.5
+    ]
+  },
+  "scale": {
+    "unit_radius_px": 116.0,
+    "rule": "lado do quad (m) = 2 × R × (CELL/2) / UNIT_PX = R × 2.206897",
+    "ring_final_outer_R": 0.985,
+    "centre_open_R": 0.22,
+    "phase1": {
+      "radius_m": 3.5,
+      "quad_side_m": 7.7241,
+      "source": "Boss_Warden_Data.slamRadius"
+    },
+    "phase2": {
+      "radius_m": 4.55,
+      "quad_side_m": 10.0414,
+      "source": "slamRadius × phase2SlamRadiusMultiplier (BossBrain.SlamRadius)"
+    },
+    "note": "Usar sempre o SlamRadius efetivo no momento da resolução, nunca um tamanho fixo de imagem."
+  },
+  "unity_integration_proposal": {
+    "status": "Proposta; NÃO VALIDADO NO EDITOR. Hook e prefab são tarefa Codex separada.",
+    "hook": {
+      "event": "BossBrain: evento público de apresentação, p. ex. 'event Action<Vector3, float> SlamResolved'",
+      "raise": "Em ResolveAttack, logo depois de ResolveSlam(), com (transform.position, SlamRadius), acerte ou não o Hero",
+      "rules": [
+        "O efeito só escuta; nunca chama ResolveSlam, TakeDamage nem altera tempos, raios ou estado do BossBrain.",
+        "Não publicar em EnterIdle, morte do Boss, transição de fase ou cancelamento do windup.",
+        "Telegraph intacto: BossAttackTelegraph continua com mínimo de 1 s e é escondido antes do impacto."
+      ]
+    },
+    "texture_import": "Default, sRGB, alphaIsTransparency, clamp, bilinear, mipmaps on (template FX_Spark/FX-HEAL).",
+    "material": "URP/Particles/Unlit, Surface Transparent, Blend Alpha, cor branca, sem emissão/bloom; material compartilhado (sharedMaterial), nada criado por golpe.",
+    "particle_system": {
+      "max_particles": 1,
+      "looping": false,
+      "play_on_awake": false,
+      "emission": "nenhuma automática; Emit(1) por SlamResolved",
+      "start_lifetime_s": 0.35,
+      "start_size_m": "quad_side_m do SlamRadius recebido (7,7241 m fase 1; 10,0414 m fase 2)",
+      "start_rotation": "0 (o efeito é quase radial; a luz das facetas vem de cima/esquerda da imagem)",
+      "simulation_space": "World",
+      "scaling_mode": "Local",
+      "texture_sheet_animation": {
+        "mode": "Grid",
+        "tiles": [
+          4,
+          2
+        ],
+        "animation": "Whole Sheet",
+        "frame_over_time": "linear 0→1",
+        "cycles": 1
+      },
+      "renderer": {
+        "render_mode": "Horizontal Billboard",
+        "sorting_fudge": 0,
+        "position_y_m": 0.04,
+        "note": "Acima do piso e abaixo do telegraph (0,03/0,05), que já está escondido no impacto. Conferir no Editor a orientação de +Z da textura no Horizontal Billboard."
+      }
+    },
+    "reuse_and_reset": [
+      "Um único ParticleSystem filho do Boss (ou do arena root), reutilizado; nada de Instantiate/Destroy por golpe.",
+      "Retrigger (duas ativações rápidas): Clear() + Emit(1) reinicia do quadro 0 no novo centro/raio.",
+      "Pausa: simulação em tempo escalado; com timeScale 0 o quadro congela (conferir).",
+      "Morte do Boss, reset do andar, desativação e retorno de pool: Stop(true, StopEmittingAndClear) / Clear().",
+      "Sem flash nem shake próprios: não adiciona trauma de câmera; opções existentes de flash/shake ficam intactas."
+    ],
+    "budget": "1 partícula visível por golpe (≤ 24 da ficha); 6 lascas e o anel estão desenhados na sheet."
+  }
+}
