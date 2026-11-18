@@ -70,6 +70,8 @@ V01 (18/11/2026, estático, NÃO VALIDADO NO EDITOR): F01–F05, F07–F15 e A01
 
 D-006 (18/11/2026, branch `claude/equipment-six-slots`): seis categorias de equipamento ativas ao mesmo tempo, vinculadas à bolsa de 16 (sem armazenamento extra), com grade Capacete | Arma | Acessório / Armadura | Luvas | Botas, ATRIBUTOS do domínio e DETALHES com comparação do mesmo slot. Bônus plano de dano e defesa compostos uma vez; checkpoint v4 com v1–v3 legíveis; transferência entre andares preservada. Tabelas de loot da release inalteradas; peças novas no cenário diagnóstico. Valores sem playtest humano; arte das peças pendente. [Regras](docs/EQUIPMENT-SLOTS.md) e [evidências](Reports/EquipmentSlots/README.md).
 
+D-007 (18/11/2026, branch `claude/equipment-storage`, empilhada sobre D-006): equipamento passa a ter armazenamento próprio — cada unidade em um só lugar (bolsa, slot ou chão), equipar/trocar/desequipar movem itens, desequipar com bolsa cheia é recusado sem alteração, ordenar/largar agem só na bolsa e coletar nunca equipa. Nova run começa com a Espada de Ferro (Comum) equipada uma única vez. Checkpoint v5 com migração v1–v4 sem duplicação. [Regras](docs/EQUIPMENT-SLOTS.md) e [evidências](Reports/EquipmentStorage/README.md).
+
 ## Relatório por tarefa
 
 Informar objetivo, base/branch, arquivos alterados, comportamento, critérios atendidos com evidência, testes executados, validação pendente, riscos e próximo passo. Se não houve execução na Unity, escrever `NÃO VALIDADO NO EDITOR`. Uma cena jogável, testada e reproduzível precede expansão de escopo.
