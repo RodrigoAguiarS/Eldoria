@@ -7539,7 +7539,7 @@
       "technical_dependencies": [
         "PlayerDash expõe IsDashing, sem evento; ponte atual detecta início por borda."
       ],
-      "integration_state": "Produzido em staging (A07, 17/11/2026) como textura 2D estática de faixa 256×64 RGBA para TrailRenderer (três dobras de capa azul, borda ciano contida, alpha zerando nas pontas); NÃO integrado. Hoje o dash não tem rastro. A ponte de início/fim do dash (borda de PlayerDash.IsDashing, Clear em reset/morte/reativação/teleporte, sem alterar duração/invulnerabilidade) e o TrailRenderer reutilizado são tarefa Codex separada; proposta em Source~/FX-DASH.trail.json.",
+      "integration_state": "Integrado em V06 (18/11/2026, branch claude/v06-dash-trail): DashTrailArtIntegrator (Tools/Dungeon Crawler/Feedback/Apply Dash Trail Art (A07) e Validate Dash Trail Art (A07)) lê Source~/FX-DASH.trail.json e recusa divergências; cria Materials/DashFx/Mat_FxDash.mat (URP/Particles/Unlit, Blend Alpha, tiling 1 = U 0 na cabeça) e o filho DashTrail no Player.prefab (0; 0,8; −0,15 m; TrailRenderer 0,16 s × 0,6 m, curva 1→0,85→0,55, Stretch, View, desligado por padrão), herdado por MVP_Arena, Floor_01, release e Floor_02_Fixed. DashTrailPresenter observa PlayerDash.DashStarted/DashFinished/DashInterrupted (gancho mínimo, sem mudar movimento/custo/cooldown/invulnerabilidade) e Health.Died/ResetPerformed. Divergência medida: na 6000.6 emitting = false ainda grava pontos e a cauda parada não envelhece; o presenter congela a cauda (minVertexDistance 10000) e a apaga após trail.time; limpa em interrupção, morte, reset, desativação, teleporte > 6 m e flash 0. Aprovação artística humana pendente.",
       "visual_specification": "Two or three faint blue cape sweeps or broad dust puffs; never opaque full-character duplicates.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7548,7 +7548,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: FxDash.validation.json (PNG decodificado 256×64 RGBA; 0 px transparentes com RGB sujo; moldura de 1 px com alpha 0; margem vertical 6 px; alpha máx. 163 (0,64); nos 15 px de cada ponta alpha ≤ 29 e 0; 8 colunas junto ao Hero com alpha ≤ 8; perfil por coluna sem degrau > 6; cobertura alpha>50% 13,0%; ≥ 36% do telegraph visível sob o pixel mais opaco; 0 px verdes, de ameaça 0–36° ou branco opaco; média 222°/sat. 0,79 (capa #2F6BFF); 2,4% de ciano; três dobras; distância RGB ≥ 80 da pedra (WCAG 1,26–1,58, discreto); saturação 0,79 vs. 0,00 do FX_SlashTrail; cauda proposta 0,16 s ≤ 0,20 s, rastro ≈ 2,56 m × 0,60 m; PlayerDash.cs só lido) e asset_report.py (--expect-size 256x64 --require-alpha, exit 0); prévias a 45° sobre a captura real F05 1920×1080, rotuladas PREVIEW. NÃO VALIDADO NO EDITOR: importação, material URP, TrailRenderer, ponte e PlayMode não observados.",
+        "current_session": "V06 (18/11/2026, Unity 6000.6.9f1): Apply idempotente (2ª execução sem gravar, hashes iguais); Validate ok no Player.prefab e nas 4 cenas; EditMode 349/350 (1 falha preexistente na main@4a9c93c: GearArtTests.ReapplyingBothItemIntegrators_…, reproduzida isolada na base); PlayMode 233 passed, 0 failed, 22 skipped ([Explicit]/GPU); DashTrailSceneTests 8/8 com GPU (inclui UV u<0,1 na cabeça e u>0,9 na cauda assada pelo TrailRenderer); GC 0 alocações nos callbacks (controle positivo 1); captura gráfica 1/1 (720p/1080p: dash para cima em 0,06/0,12 s, cauda, limpo, dash lateral, flash 0). Evidências: Reports/Validation/V06/20261118-4a9c93c/README.md. Anterior: Técnica fora da Unity em 17/11/2026: FxDash.validation.json (PNG decodificado 256×64 RGBA; 0 px transparentes com RGB sujo; moldura de 1 px com alpha 0; margem vertical 6 px; alpha máx. 163 (0,64); nos 15 px de cada ponta alpha ≤ 29 e 0; 8 colunas junto ao Hero com alpha ≤ 8; perfil por coluna sem degrau > 6; cobertura alpha>50% 13,0%; ≥ 36% do telegraph visível sob o pixel mais opaco; 0 px verdes, de ameaça 0–36° ou branco opaco; média 222°/sat. 0,79 (capa #2F6BFF); 2,4% de ciano; três dobras; distância RGB ≥ 80 da pedra (WCAG 1,26–1,58, discreto); saturação 0,79 vs. 0,00 do FX_SlashTrail; cauda proposta 0,16 s ≤ 0,20 s, rastro ≈ 2,56 m × 0,60 m; PlayerDash.cs só lido) e asset_report.py (--expect-size 256x64 --require-alpha, exit 0); prévias a 45° sobre a captura real F05 1920×1080, rotuladas PREVIEW. NÃO VALIDADO NO EDITOR: importação, material URP, TrailRenderer, ponte e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -14198,6 +14198,51 @@
         "Sem aparência equipada no Hero (presenter só cobre arma e armadura).",
         "Aprovação artística humana pendente.",
         "Capturas em tamanhos emulados do Game view, sem monitor físico; build Windows não executada."
+      ]
+    },
+    {
+      "id": "V06-DASH-TRAIL-INTEGRATION",
+      "date_local": "2026-11-18",
+      "branch": "claude/v06-dash-trail",
+      "main_merge": "pendente (PR para a main; sem merge sem aprovação do usuário)",
+      "produced": [],
+      "imported": [
+        "FX-DASH"
+      ],
+      "integrated": [
+        "FX-DASH"
+      ],
+      "validated_in_editor": [
+        "FX-DASH"
+      ],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Scripts/Player/PlayerDash.cs (só eventos)",
+        "Assets/_Project/Prefabs/Player/Player.prefab (filho DashTrail; diff aditivo)",
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Assets/_Project/Scripts/Player/DashTrailPresenter.cs",
+        "Assets/_Project/Scripts/Editor/DashTrailArtIntegrator.cs",
+        "Assets/_Project/Tests/EditMode/DashTrailArtTests.cs",
+        "Assets/_Project/Tests/PlayMode/PlayerInput/DashTrailSceneTests.cs",
+        "Assets/_Project/Tests/PlayMode/PlayerInput/DashTrailVisualTests.cs"
+      ],
+      "new_assets": [
+        "Assets/_Project/Materials/DashFx/Mat_FxDash.mat"
+      ],
+      "import_settings": "FX-DASH-Trail.png sem alteração (256×64 POT; EnsureImport do V05 não mudou nada).",
+      "tests": {
+        "editmode": "349/350 (1 falha preexistente na main@4a9c93c: GearArtTests.ReapplyingBothItemIntegrators_…, reproduzida isolada na base)",
+        "playmode": "233 passed, 0 failed, 22 skipped ([Explicit]/GPU)",
+        "technical": "Validate Dash Trail Art ok; Apply 2× sem mudança; DashTrailSceneTests 8/8 com GPU; captura gráfica 1/1 (720p/1080p: dash para cima em 0,06/0,12 s, cauda, limpo, dash lateral, flash 0)"
+      },
+      "limitations": [
+        "Aprovação artística humana pendente; capturas em tamanhos emulados do Game view.",
+        "Divergência da ponte do contrato: emitting = false sozinho não para o rastro na 6000.6 (sondas em Reports/Validation/V06/…/trail-probe); presenter controla enabled/Clear e congela a cauda.",
+        "Achado a confirmar fora do escopo: o SlashTrail do combo depende só de emitting = false e pode gravar pontos entre golpes.",
+        "Build Windows não medido nesta tarefa."
       ]
     }
   ]

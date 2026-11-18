@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="8" result="Passed" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 20:30:25Z" end-time="2026-11-18 20:30:32Z" duration="7,1728856">
+  <test-suite type="TestSuite" id="1323" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="255" result="Passed" start-time="2026-11-18 20:30:25Z" end-time="2026-11-18 20:30:32Z" duration="7.172886" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1464" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="115" result="Passed" start-time="2026-11-18 20:30:25Z" end-time="2026-11-18 20:30:32Z" duration="7.155993" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="12200" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1465" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="115" result="Passed" start-time="2026-11-18 20:30:25Z" end-time="2026-11-18 20:30:32Z" duration="7.108729" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1466" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="115" result="Passed" start-time="2026-11-18 20:30:25Z" end-time="2026-11-18 20:30:32Z" duration="7.105483" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1467" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="115" result="Passed" start-time="2026-11-18 20:30:25Z" end-time="2026-11-18 20:30:32Z" duration="7.102175" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1338" name="DashTrailSceneTests" fullname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests" classname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-18 20:30:25Z" end-time="2026-11-18 20:30:32Z" duration="7.094577" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1339" name="AcceptedDash_StartsOneTrail_CooldownAttemptStartsNone_DashRulesUnchanged" fullname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests.AcceptedDash_StartsOneTrail_CooldownAttemptStartsNone_DashRulesUnchanged" methodname="AcceptedDash_StartsOneTrail_CooldownAttemptStartsNone_DashRulesUnchanged" classname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests" runstate="Runnable" seed="546255668" result="Passed" start-time="2026-11-18 20:30:25Z" end-time="2026-11-18 20:30:27Z" duration="1.793876" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1342" name="CheckpointDisableReactivationAndDeath_ClearImmediately" fullname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests.CheckpointDisableReactivationAndDeath_ClearImmediately" methodname="CheckpointDisableReactivationAndDeath_ClearImmediately" classname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests" runstate="Runnable" seed="1715062175" result="Passed" start-time="2026-11-18 20:30:27Z" end-time="2026-11-18 20:30:28Z" duration="0.779005" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1344" name="DashAndComboVfx_StayIndependent" fullname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests.DashAndComboVfx_StayIndependent" methodname="DashAndComboVfx_StayIndependent" classname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests" runstate="Runnable" seed="3485774" result="Passed" start-time="2026-11-18 20:30:28Z" end-time="2026-11-18 20:30:29Z" duration="0.685897" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1343" name="FlashZero_SuppressesTrailButKeepsDash" fullname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests.FlashZero_SuppressesTrailButKeepsDash" methodname="FlashZero_SuppressesTrailButKeepsDash" classname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests" runstate="Runnable" seed="1032222244" result="Passed" start-time="2026-11-18 20:30:29Z" end-time="2026-11-18 20:30:29Z" duration="0.532010" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1341" name="Pause_FreezesWithoutNewPoints_ResumeFinishesNormally" fullname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests.Pause_FreezesWithoutNewPoints_ResumeFinishesNormally" methodname="Pause_FreezesWithoutNewPoints_ResumeFinishesNormally" classname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests" runstate="Runnable" seed="601350478" result="Passed" start-time="2026-11-18 20:30:29Z" end-time="2026-11-18 20:30:30Z" duration="0.517866" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1340" name="SecondDashAndTeleport_ClearOldSegments" fullname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests.SecondDashAndTeleport_ClearOldSegments" methodname="SecondDashAndTeleport_ClearOldSegments" classname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests" runstate="Runnable" seed="1970650667" result="Passed" start-time="2026-11-18 20:30:30Z" end-time="2026-11-18 20:30:30Z" duration="0.502899" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1345" name="TrailGeometry_HeadAtHeroWithinContractLength" fullname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests.TrailGeometry_HeadAtHeroWithinContractLength" methodname="TrailGeometry_HeadAtHeroWithinContractLength" classname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests" runstate="Runnable" seed="351149927" result="Passed" start-time="2026-11-18 20:30:30Z" end-time="2026-11-18 20:30:31Z" duration="0.493781" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1346" name="WarmDashUse_ZeroAllocationsAndNoNewObjects" fullname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests.WarmDashUse_ZeroAllocationsAndNoNewObjects" methodname="WarmDashUse_ZeroAllocationsAndNoNewObjects" classname="DungeonCrawler.Tests.PlayerInput.DashTrailSceneTests" runstate="Runnable" seed="1008625870" result="Passed" start-time="2026-11-18 20:30:31Z" end-time="2026-11-18 20:30:32Z" duration="1.749348" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
