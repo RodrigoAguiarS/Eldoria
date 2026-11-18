@@ -7,7 +7,9 @@ namespace DungeonCrawler.UI
 {
     /// <summary>Presentation only. Three authored, reusable emitters and four pending messages.
     /// World particles and message lifetime use scaled time; a potion accepted in the paused bag
-    /// is queued immediately and resumes with gameplay. No flash, shake or gameplay RNG writes.</summary>
+    /// is queued immediately and resumes with gameplay. No flash, shake or gameplay RNG writes.
+    /// V05: with an <see cref="RewardFxProfile"/>, the same emitters play the A04–A06 sheets/atlas
+    /// (one flipbook for healing/level, fixed atlas cell per loot kind); without it, the F05 motes stay.</summary>
     public sealed class PlayerRewardFeedback : MonoBehaviour
     {
         public const int QueueCapacity = 4;
@@ -19,6 +21,7 @@ namespace DungeonCrawler.UI
         [SerializeField] private ParticleSystem levelEffect;
         [SerializeField] private Text message;
         [SerializeField, Min(.1f)] private float messageSeconds = 1.4f;
+        [SerializeField] private RewardFxProfile art;
 
         private enum Kind { Heal, Collection, Level }
         private struct Notice { public Kind Kind; public float Amount; public LootDrop Drop; }
@@ -29,6 +32,9 @@ namespace DungeonCrawler.UI
         public int HealingBursts { get; private set; }
         public int CollectionBursts { get; private set; }
         public int LevelBursts { get; private set; }
+        public bool UsesArt => art != null;
+        /// <summary>Atlas cell of the last emitted collection glint; -1 after reset/reactivation.</summary>
+        public int LastLootFrame { get; private set; } = -1;
 
         private void OnEnable()
         {
@@ -55,23 +61,38 @@ namespace DungeonCrawler.UI
             // Level-up already has its own cue. Reset/HP Changed are never treated as healing.
             if (!CanPresent || heal.Source == HealingSource.LevelUp) return;
             Enqueue(new Notice { Kind = Kind.Heal, Amount = heal.Amount });
-            Burst(healingEffect, new Color(.92f, .32f, .42f), 7, .38f, .7f);
+            if (art != null) EmitArt(healingEffect, art.healing);
+            else Burst(healingEffect, new Color(.92f, .32f, .42f), 7, .38f, .7f);
             HealingBursts++;
         }
         private void OnCollected(LootDrop drop)
         {
             if (!CanPresent) return;
             Enqueue(new Notice { Kind = Kind.Collection, Drop = drop });
-            Color color = drop.Kind == LootKind.Xp ? new Color(.3f, .85f, .95f) :
-                drop.Kind == LootKind.Gold ? new Color(.85f, .65f, .25f) : new Color(.9f, .86f, .72f);
-            Burst(collectionEffect, color, 4, .48f, .42f);
+            if (art != null)
+            {
+                if (EffectsEnabled && collectionEffect != null)
+                {
+                    // Atlas cell only; the drop itself (kind, amount, definition) is never touched.
+                    LastLootFrame = art.LootFrame(drop.Kind);
+                    SetLootFrame(art.LootFrameOverTime(drop.Kind));
+                }
+                EmitArt(collectionEffect, art.collection);
+            }
+            else
+            {
+                Color color = drop.Kind == LootKind.Xp ? new Color(.3f, .85f, .95f) :
+                    drop.Kind == LootKind.Gold ? new Color(.85f, .65f, .25f) : new Color(.9f, .86f, .72f);
+                Burst(collectionEffect, color, 4, .48f, .42f);
+            }
             CollectionBursts++;
         }
         private void OnLevel(int level)
         {
             if (!CanPresent) return;
             Enqueue(new Notice { Kind = Kind.Level, Amount = level });
-            Burst(levelEffect, new Color(.9f, .76f, .42f), 12, .72f, .95f);
+            if (art != null) EmitArt(levelEffect, art.level);
+            else Burst(levelEffect, new Color(.9f, .76f, .42f), 12, .72f, .95f);
             LevelBursts++;
         }
         private void Enqueue(Notice notice)
@@ -130,6 +151,33 @@ namespace DungeonCrawler.UI
                 effect.Emit(emit, 1);
             }
         }
+        /// <summary>Restarts the emitter from frame 0 with white × flash alpha; the sheet carries colour and fade.
+        /// Fixed positions and seed: no UnityEngine.Random, no allocation after warm-up.</summary>
+        private void EmitArt(ParticleSystem effect, in RewardFxProfile.Emission style)
+        {
+            if (effect == null || !EffectsEnabled) return;
+            effect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            effect.Play(false);
+            var main = effect.main;
+            float intensity = options != null ? Mathf.Clamp01(options.Current.flash) : 1f;
+            var emit = new ParticleSystem.EmitParams { applyShapeToPosition = false, startColor = new Color(1f, 1f, 1f, intensity),
+                startLifetime = style.lifetime, startSize = style.size, rotation = 0f, velocity = Vector3.up * style.riseSpeed,
+                randomSeed = RewardFxProfile.EmitSeed };
+            // Level follows the Hero (local space); healing and glints stay on the floor where they started (world).
+            Vector3 origin = main.simulationSpace == ParticleSystemSimulationSpace.Local ? Vector3.zero : effect.transform.position;
+            int particles = Mathf.Clamp(style.particles, 1, main.maxParticles);
+            for (int i = 0; i < particles; i++)
+            {
+                float angle = i * (Mathf.PI * 2f / particles);
+                emit.position = origin + new Vector3(Mathf.Cos(angle) * style.radius, style.height, Mathf.Sin(angle) * style.radius);
+                effect.Emit(emit, 1);
+            }
+        }
+        private void SetLootFrame(float normalized)
+        {
+            var sheet = collectionEffect.textureSheetAnimation;
+            if (sheet.enabled) sheet.frameOverTime = new ParticleSystem.MinMaxCurve(normalized);
+        }
         private void OnOptionsChanged() { if (!EffectsEnabled) ClearEffects(); }
         private void ClearEffects()
         {
@@ -142,6 +190,9 @@ namespace DungeonCrawler.UI
             System.Array.Clear(queue, 0, queue.Length); head = count = 0; remaining = 0f;
             if (message != null) { message.enabled = false; message.text = ""; }
             ClearEffects();
+            // Reactivation never resumes the previous glint cell.
+            LastLootFrame = -1;
+            if (art != null && collectionEffect != null) SetLootFrame(art.LootFrameOverTime(LootKind.Xp));
         }
     }
 }

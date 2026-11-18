@@ -81,6 +81,8 @@ namespace DungeonCrawler.Editor
             Set(feedback, "healingEffect", Emitter(player.transform, "RewardHealing"));
             Set(feedback, "collectionEffect", Emitter(player.transform, "RewardCollection"));
             Set(feedback, "levelEffect", Emitter(player.transform, "RewardLevel"));
+            // V05: depois de recompor os emissores primitivos, reaplica as sheets A04–A06 quando já integradas.
+            RewardFxArtIntegrator.ConfigureFeedback(feedback);
             return feedback;
         }
         public static void ConfigureHud(GameObject hud, GameObject player)
