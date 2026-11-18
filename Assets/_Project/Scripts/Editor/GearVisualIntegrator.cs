@@ -23,13 +23,17 @@ namespace DungeonCrawler.Editor
         public const string Staging = "Assets/_Project/Art/ProductionStaging/ITEMS-GEAR/Source~";
         private const string Items = ProjectPaths.ScriptableObjects + "/Items";
 
-        /// <summary>asset IDs → item definition, model, icon and ground pose (relative to the hovering pickup root).</summary>
+        /// <summary>
+        /// asset IDs → item definition, model, icon and ground pose (relative to the hovering pickup root, which floats .6 m
+        /// up and spins). Scales give each piece a readable footprint next to the sword (~1 m) and vest (~0.6 m) at the
+        /// isometric camera; the tilted amulet never shows only its edge while spinning.
+        /// </summary>
         public static readonly (string modelId, string iconId, string definition, string model, Vector3 position, Vector3 euler, float scale)[] Map =
         {
             ("MODEL-ITEM-HELMET", "ICON-ITEM-HELMET", Items + "/Gear_IronHelmet.asset", "Item_IronHelmet", new Vector3(0f, -.3f, 0f), new Vector3(0f, 0f, 0f), 1.35f),
-            ("MODEL-ITEM-GLOVES", "ICON-ITEM-GLOVES", Items + "/Gear_LeatherGloves.asset", "Item_LeatherGloves", new Vector3(0f, -.22f, 0f), new Vector3(-28f, 0f, 0f), 1.55f),
-            ("MODEL-ITEM-BOOTS", "ICON-ITEM-BOOTS", Items + "/Gear_LeatherBoots.asset", "Item_LeatherBoots", new Vector3(0f, -.32f, 0f), new Vector3(0f, 0f, 0f), 1.45f),
-            ("MODEL-ITEM-AMULET", "ICON-ITEM-AMULET", Items + "/Gear_CopperAmulet.asset", "Item_CopperAmulet", new Vector3(0f, -.3f, 0f), new Vector3(0f, 0f, 0f), 1.6f),
+            ("MODEL-ITEM-GLOVES", "ICON-ITEM-GLOVES", Items + "/Gear_LeatherGloves.asset", "Item_LeatherGloves", new Vector3(0f, -.24f, 0f), new Vector3(-28f, 0f, 0f), 2f),
+            ("MODEL-ITEM-BOOTS", "ICON-ITEM-BOOTS", Items + "/Gear_LeatherBoots.asset", "Item_LeatherBoots", new Vector3(0f, -.36f, 0f), new Vector3(0f, 0f, 0f), 1.75f),
+            ("MODEL-ITEM-AMULET", "ICON-ITEM-AMULET", Items + "/Gear_CopperAmulet.asset", "Item_CopperAmulet", new Vector3(0f, -.42f, 0f), new Vector3(-20f, 0f, 0f), 2.3f),
         };
 
         [Serializable] private sealed class UnityJson { public string batch; public string[] reusedMaterials; public UnityModel[] models; }
