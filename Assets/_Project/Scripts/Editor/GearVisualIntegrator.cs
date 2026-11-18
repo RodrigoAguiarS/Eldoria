@@ -95,10 +95,10 @@ namespace DungeonCrawler.Editor
                 if (index >= 0) entries[index] = visual; else entries.Add(visual);
             }
             var loot = Enumerable.Range(0, catalog.LootCount).Select(catalog.GetLootEntry).ToArray();
-            catalog.EditorSet(entries.ToArray(), loot);
-            EditorUtility.SetDirty(catalog);
+            bool catalogChanged = ProductionVisualIntegrator.SetCatalogIfChanged(catalog, entries.ToArray(), loot);   // no-op re-run: catalog bytes untouched
             AssetDatabase.SaveAssets();
-            Debug.Log($"[ITEMS-GEAR] Integração concluída: {copied.Count} arquivo(s) atualizados de staging; {Map.Length} entradas no catálogo.");
+            Debug.Log($"[ITEMS-GEAR] Integração concluída: {copied.Count} arquivo(s) atualizados de staging; {Map.Length} entradas no catálogo" +
+                      (catalogChanged ? " (catálogo atualizado)." : " (catálogo inalterado)."));
         }
 
         public static string ModelPath(string model) => ProductionVisualIntegrator.ModelsFolder + "/" + model + ".fbx";
@@ -130,11 +130,13 @@ namespace DungeonCrawler.Editor
                 var spec = JsonUtility.FromJson<PaletteEntry>(block.Substring(objOpen, objClose - objOpen + 1));
                 string path = ProductionVisualIntegrator.MaterialsFolder + "/" + name + ".mat";
                 var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
-                if (mat == null) { mat = new Material(lit) { name = name }; AssetDatabase.CreateAsset(mat, path); }
-                else if (mat.shader != lit) mat.shader = lit;
+                bool changed = false;
+                if (mat == null) { mat = new Material(lit) { name = name }; AssetDatabase.CreateAsset(mat, path); changed = true; }
+                else if (mat.shader != lit) { mat.shader = lit; changed = true; }
                 ColorUtility.TryParseHtmlString(spec.color, out Color baseColor);
-                bool changed = mat.GetColor("_BaseColor") != baseColor || !Mathf.Approximately(mat.GetFloat("_Metallic"), spec.metallic) ||
-                               !Mathf.Approximately(mat.GetFloat("_Smoothness"), spec.smoothness) || mat.IsKeywordEnabled("_EMISSION");
+                changed |= mat.GetColor("_BaseColor") != baseColor || !Mathf.Approximately(mat.GetFloat("_Metallic"), spec.metallic) ||
+                           !Mathf.Approximately(mat.GetFloat("_Smoothness"), spec.smoothness) || mat.IsKeywordEnabled("_EMISSION") ||
+                           mat.GetColor("_EmissionColor") != Color.black;
                 if (changed)
                 {
                     mat.SetColor("_BaseColor", baseColor); mat.SetFloat("_Metallic", spec.metallic); mat.SetFloat("_Smoothness", spec.smoothness);
@@ -172,14 +174,24 @@ namespace DungeonCrawler.Editor
             finally { Object.DestroyImmediate(root); }
         }
 
+        /// <summary>
+        /// True when the saved prefab already has this pose, mesh, materials and renderer settings, so it is not re-saved.
+        /// Rotation is compared as a quaternion: Unity stores only the quaternion and reads localEulerAngles back in [0, 360),
+        /// so a pose of -28° comes back as 332° and an euler comparison would rewrite the prefab on every run.
+        /// </summary>
         private static bool Matches(GameObject prefab, Mesh mesh, Material[] materials, Vector3 position, Vector3 euler, float scale)
         {
             Transform child = prefab.transform.Find("Model");
-            if (child == null || prefab.transform.childCount != 1) return false;
+            if (child == null || prefab.transform.childCount != 1 || child.childCount != 0) return false;
             var filter = child.GetComponent<MeshFilter>(); var renderer = child.GetComponent<MeshRenderer>();
             return filter != null && filter.sharedMesh == mesh && renderer != null && renderer.sharedMaterials.SequenceEqual(materials) &&
-                   child.localPosition == position && child.localEulerAngles == euler && child.localScale == Vector3.one * scale;
+                   renderer.shadowCastingMode == ShadowCastingMode.On && renderer.lightProbeUsage == LightProbeUsage.Off &&
+                   renderer.reflectionProbeUsage == ReflectionProbeUsage.Off &&
+                   child.localPosition == position && Quaternion.Angle(child.localRotation, Quaternion.Euler(euler)) < RotationToleranceDegrees &&
+                   child.localScale == Vector3.one * scale;
         }
+
+        private const float RotationToleranceDegrees = .01f;
 
         /// <summary>Submesh order → material by imported material name (robust to FBX ordering), as in ITEMS-COMBAT.</summary>
         private static Material[] MaterialsFor(string fbx, string[] fallbackOrder, Dictionary<string, Material> materials)
