@@ -1,0 +1,515 @@
+{
+  "asset_id": "FX-PROJECTILE-TRAIL",
+  "catalog_id": "A09",
+  "generator": "Tools/FxProjectileTrailGenerator/generate.py",
+  "supersampling": 8,
+  "size": [
+    128,
+    32
+  ],
+  "head_at_u0": true,
+  "palette": {
+    "core": "#FFB866",
+    "head": "#FF9A2E",
+    "rust": "#8A4A22",
+    "shade": "#6A3618"
+  },
+  "drop": {
+    "x0": 2.0,
+    "x1": 121.0,
+    "cy": 16.0,
+    "hw": 9.0,
+    "peak": 0.17,
+    "head_hw": 0.74,
+    "tail_power": 1.2,
+    "segments": 7,
+    "alpha": 1.0
+  },
+  "core": {
+    "from": 0.02,
+    "to": 0.58,
+    "half_px": 1.5,
+    "alpha": 0.95
+  },
+  "gradient": {
+    "head_hold": 0.18,
+    "rust_at": 0.66
+  },
+  "envelope": {
+    "head_in": 0.07,
+    "tail_from": 0.3,
+    "tail_power": 1.5,
+    "peak": 0.92
+  },
+  "trail_proposal": {
+    "time_s": 0.05,
+    "width_m": 0.26,
+    "width_curve": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.8
+      ]
+    ],
+    "mount_back_m": 0.14,
+    "min_vertex_distance_m": 0.05
+  },
+  "limits": {
+    "tail_s": 0.15,
+    "tail_m": 0.6,
+    "max_width_frac_of_orb": 0.75,
+    "extra_particles": 6
+  },
+  "facets": [
+    {
+      "role": "upper",
+      "alpha": 1.0,
+      "colour": "#FFA440",
+      "points": [
+        [
+          2.0,
+          9.34
+        ],
+        [
+          10.6,
+          7.89
+        ],
+        [
+          10.6,
+          16.0
+        ],
+        [
+          2.0,
+          16.0
+        ]
+      ]
+    },
+    {
+      "role": "lower",
+      "alpha": 1.0,
+      "colour": "#DE8429",
+      "points": [
+        [
+          2.0,
+          16.0
+        ],
+        [
+          10.6,
+          16.0
+        ],
+        [
+          10.6,
+          24.11
+        ],
+        [
+          2.0,
+          22.66
+        ]
+      ]
+    },
+    {
+      "role": "upper",
+      "alpha": 1.0,
+      "colour": "#FF9A2E",
+      "points": [
+        [
+          10.6,
+          7.89
+        ],
+        [
+          23.93,
+          7.19
+        ],
+        [
+          23.93,
+          16.0
+        ],
+        [
+          10.6,
+          16.0
+        ]
+      ]
+    },
+    {
+      "role": "lower",
+      "alpha": 1.0,
+      "colour": "#C67426",
+      "points": [
+        [
+          10.6,
+          16.0
+        ],
+        [
+          23.93,
+          16.0
+        ],
+        [
+          23.93,
+          24.81
+        ],
+        [
+          10.6,
+          24.11
+        ]
+      ]
+    },
+    {
+      "role": "upper",
+      "alpha": 1.0,
+      "colour": "#FAA03F",
+      "points": [
+        [
+          23.93,
+          7.19
+        ],
+        [
+          39.91,
+          8.9
+        ],
+        [
+          39.91,
+          16.0
+        ],
+        [
+          23.93,
+          16.0
+        ]
+      ]
+    },
+    {
+      "role": "lower",
+      "alpha": 1.0,
+      "colour": "#D98028",
+      "points": [
+        [
+          23.93,
+          16.0
+        ],
+        [
+          39.91,
+          16.0
+        ],
+        [
+          39.91,
+          23.1
+        ],
+        [
+          23.93,
+          24.81
+        ]
+      ]
+    },
+    {
+      "role": "upper",
+      "alpha": 1.0,
+      "colour": "#D37B2A",
+      "points": [
+        [
+          39.91,
+          8.9
+        ],
+        [
+          57.9,
+          10.74
+        ],
+        [
+          57.9,
+          16.0
+        ],
+        [
+          39.91,
+          16.0
+        ]
+      ]
+    },
+    {
+      "role": "lower",
+      "alpha": 1.0,
+      "colour": "#A85F23",
+      "points": [
+        [
+          39.91,
+          16.0
+        ],
+        [
+          57.9,
+          16.0
+        ],
+        [
+          57.9,
+          21.26
+        ],
+        [
+          39.91,
+          23.1
+        ]
+      ]
+    },
+    {
+      "role": "upper",
+      "alpha": 1.0,
+      "colour": "#BA7439",
+      "points": [
+        [
+          57.9,
+          10.74
+        ],
+        [
+          77.56,
+          12.64
+        ],
+        [
+          77.56,
+          16.0
+        ],
+        [
+          57.9,
+          16.0
+        ]
+      ]
+    },
+    {
+      "role": "lower",
+      "alpha": 1.0,
+      "colour": "#8F4D21",
+      "points": [
+        [
+          57.9,
+          16.0
+        ],
+        [
+          77.56,
+          16.0
+        ],
+        [
+          77.56,
+          19.36
+        ],
+        [
+          57.9,
+          21.26
+        ]
+      ]
+    },
+    {
+      "role": "upper",
+      "alpha": 1.0,
+      "colour": "#965223",
+      "points": [
+        [
+          77.56,
+          12.64
+        ],
+        [
+          98.64,
+          14.49
+        ],
+        [
+          98.64,
+          16.0
+        ],
+        [
+          77.56,
+          16.0
+        ]
+      ]
+    },
+    {
+      "role": "lower",
+      "alpha": 1.0,
+      "colour": "#7E421E",
+      "points": [
+        [
+          77.56,
+          16.0
+        ],
+        [
+          98.64,
+          16.0
+        ],
+        [
+          98.64,
+          17.51
+        ],
+        [
+          77.56,
+          19.36
+        ]
+      ]
+    },
+    {
+      "role": "upper",
+      "alpha": 1.0,
+      "colour": "#AF6D38",
+      "points": [
+        [
+          98.64,
+          14.49
+        ],
+        [
+          121.0,
+          16.0
+        ],
+        [
+          121.0,
+          16.0
+        ],
+        [
+          98.64,
+          16.0
+        ]
+      ]
+    },
+    {
+      "role": "lower",
+      "alpha": 1.0,
+      "colour": "#834620",
+      "points": [
+        [
+          98.64,
+          16.0
+        ],
+        [
+          121.0,
+          16.0
+        ],
+        [
+          121.0,
+          16.0
+        ],
+        [
+          98.64,
+          17.51
+        ]
+      ]
+    },
+    {
+      "role": "core",
+      "alpha": 0.95,
+      "colour": "#FFB866",
+      "points": [
+        [
+          2.0,
+          16.0
+        ],
+        [
+          10.6,
+          15.07
+        ],
+        [
+          10.6,
+          16.56
+        ],
+        [
+          2.0,
+          16.0
+        ]
+      ]
+    },
+    {
+      "role": "core",
+      "alpha": 0.95,
+      "colour": "#FFB866",
+      "points": [
+        [
+          10.6,
+          15.07
+        ],
+        [
+          23.93,
+          14.5
+        ],
+        [
+          23.93,
+          16.9
+        ],
+        [
+          10.6,
+          16.56
+        ]
+      ]
+    },
+    {
+      "role": "core",
+      "alpha": 0.95,
+      "colour": "#FFB866",
+      "points": [
+        [
+          23.93,
+          14.5
+        ],
+        [
+          39.91,
+          14.9
+        ],
+        [
+          39.91,
+          16.66
+        ],
+        [
+          23.93,
+          16.9
+        ]
+      ]
+    },
+    {
+      "role": "core",
+      "alpha": 0.95,
+      "colour": "#FFB866",
+      "points": [
+        [
+          39.91,
+          14.9
+        ],
+        [
+          57.9,
+          15.45
+        ],
+        [
+          57.9,
+          16.33
+        ],
+        [
+          39.91,
+          16.66
+        ]
+      ]
+    },
+    {
+      "role": "core",
+      "alpha": 0.95,
+      "colour": "#FFB866",
+      "points": [
+        [
+          57.9,
+          15.45
+        ],
+        [
+          77.56,
+          16.0
+        ],
+        [
+          77.56,
+          16.0
+        ],
+        [
+          57.9,
+          16.33
+        ]
+      ]
+    }
+  ],
+  "references": {
+    "palette": "Ficha A09 (PROMPT_CATALOG.md): #FF9A2E → #8A4A22 → alpha 0; ameaça #FF9A2E em Art/Concepts/ART_DIRECTION_AND_PROMPTS.md",
+    "projectile_core_a08": "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE (brasa #FF9A2E, fenda #8A4A22)",
+    "current_sphere": "Assets/_Project/Materials/Mat_Projectile.mat _BaseColor (1, .55, .1); Sphere × 0,4",
+    "projectile": "Assets/_Project/Scripts/Systems/Projectile.cs, ProjectilePool.cs (só leitura)",
+    "speeds": "Assets/_Project/ScriptableObjects/Enemies/*.asset projectileSpeed (só leitura)",
+    "slash_trail": "Assets/_Project/Art/Items/VFX/FX_SlashTrail.png",
+    "dash_trail": "Assets/_Project/Art/ProductionStaging/FX-DASH/FX-DASH-Trail.png",
+    "floor_capture": "Reports/F05/Visual-final/1920-collection.png"
+  }
+}
