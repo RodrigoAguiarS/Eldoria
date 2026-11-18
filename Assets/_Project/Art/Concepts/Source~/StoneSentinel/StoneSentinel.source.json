@@ -1,0 +1,243 @@
+{
+  "id": "A14",
+  "resource": "REF-CONCEPT-11",
+  "kind": "fonte de render do conceito 2D (não é malha de produção)",
+  "generator": "Tools/Lemo3DGenerator/src/production/ConceptSentinel.mjs",
+  "three": "0.170.0",
+  "palette": {
+    "stone": "#55596B",
+    "stoneDark": "#3E4152",
+    "moss": "#4C5A44",
+    "rune": "#4FD8FF",
+    "core": "#4FD8FF",
+    "crack": "#1E1830",
+    "ember": "#FF9A2E"
+  },
+  "emissive": {
+    "rune": 1.6,
+    "core": 2.6,
+    "ember": 1.2
+  },
+  "proportions": {
+    "height": 2.7,
+    "hipY": 0.78,
+    "spineY": 1.02,
+    "chestY": 1.32,
+    "neckY": 1.98,
+    "headY": 2.06,
+    "clavicle": 0.6,
+    "shoulderY": 2,
+    "shoulderX": 1.22,
+    "elbowY": 1.4,
+    "wristY": 0.8,
+    "gripDrop": 0.25,
+    "gripFwd": 0,
+    "legX": 0.48,
+    "legTopY": 0.74,
+    "kneeY": 0.42,
+    "ankleY": 0.14,
+    "toeZ": 0.22
+  },
+  "triangles": 2424,
+  "meshes": 1,
+  "f15Reference": {
+    "collider": [
+      2.5,
+      2.7,
+      1.4
+    ],
+    "torso": [
+      1.8,
+      2.2,
+      1.3
+    ],
+    "armX": 1.25,
+    "core": [
+      0.18,
+      1.3
+    ],
+    "fan": {
+      "angle": 100,
+      "radius": 6
+    },
+    "note": "primitiva/dados F15 usados só para escala e leitura; o conceito não define colisor, dano nem área"
+  },
+  "poses": {
+    "Stand": {
+      "$hips": [
+        0,
+        -0.03,
+        0
+      ],
+      "Spine": [
+        4,
+        0,
+        0
+      ],
+      "Chest": [
+        4,
+        0,
+        0
+      ],
+      "Head": [
+        -6,
+        0,
+        0
+      ],
+      "UpperArm_L": [
+        -4,
+        0,
+        3
+      ],
+      "UpperArm_R": [
+        -4,
+        0,
+        -3
+      ],
+      "LowerArm_L": [
+        -6,
+        0,
+        -2
+      ],
+      "LowerArm_R": [
+        -6,
+        0,
+        2
+      ],
+      "UpperLeg_L": [
+        -6,
+        0,
+        4
+      ],
+      "UpperLeg_R": [
+        -6,
+        0,
+        -4
+      ],
+      "LowerLeg_L": [
+        10,
+        0,
+        0
+      ],
+      "LowerLeg_R": [
+        10,
+        0,
+        0
+      ],
+      "Foot_L": [
+        -4,
+        0,
+        -4
+      ],
+      "Foot_R": [
+        -4,
+        0,
+        4
+      ]
+    },
+    "Windup": {
+      "$hips": [
+        0,
+        -0.12,
+        -0.03
+      ],
+      "Spine": [
+        -4,
+        0,
+        0
+      ],
+      "Chest": [
+        -7,
+        0,
+        0
+      ],
+      "Neck": [
+        6,
+        0,
+        0
+      ],
+      "Head": [
+        12,
+        0,
+        0
+      ],
+      "UpperArm_L": [
+        14,
+        -8,
+        60
+      ],
+      "LowerArm_L": [
+        -34,
+        0,
+        4
+      ],
+      "Hand_L": [
+        -10,
+        0,
+        0
+      ],
+      "UpperArm_R": [
+        16,
+        8,
+        -56
+      ],
+      "LowerArm_R": [
+        -38,
+        0,
+        -4
+      ],
+      "Hand_R": [
+        -10,
+        0,
+        0
+      ],
+      "UpperLeg_L": [
+        -16,
+        0,
+        12
+      ],
+      "LowerLeg_L": [
+        26,
+        0,
+        0
+      ],
+      "Foot_L": [
+        -8,
+        0,
+        -12
+      ],
+      "UpperLeg_R": [
+        -12,
+        0,
+        -13
+      ],
+      "LowerLeg_R": [
+        24,
+        0,
+        0
+      ],
+      "Foot_R": [
+        -10,
+        0,
+        13
+      ]
+    }
+  },
+  "clipsInGlb": [
+    {
+      "name": "Stand",
+      "groundLift": 0.029,
+      "note": "pose estática de render, não take de produção"
+    },
+    {
+      "name": "Windup",
+      "groundLift": 0.112,
+      "note": "pose estática de render, não take de produção"
+    },
+    {
+      "name": "Bind",
+      "groundLift": 0.003,
+      "note": "pose estática de render, não take de produção"
+    }
+  ]
+}

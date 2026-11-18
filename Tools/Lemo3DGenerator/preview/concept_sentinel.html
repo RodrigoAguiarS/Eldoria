@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<title>A14 Sentinel Sheet</title>
+<!-- A14 — folha de conceito da Sentinela de Pedra. Servir com:
+       node preview/server.mjs --out "<projeto>/Assets/_Project/Art"
+     e abrir /concept_sentinel.html?mode=sheet | ?mode=review | ?mode=scale | ?mode=probe. Cada modo grava PNG
+     (+ JSON de medidas) em preview/captures via POST /save. É render 2D de conceito: nenhum arquivo do jogo é escrito. -->
+<style>body{margin:0;background:#202125;color:#ddd;font:13px system-ui}#log{padding:12px;white-space:pre}canvas{max-width:100%}</style>
+<script type="importmap">{"imports":{"three":"/lemo/node_modules/three/build/three.module.js","three/addons/":"/lemo/node_modules/three/examples/jsm/"}}</script>
+</head><body><div id="log">renderizando…</div>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const q = new URLSearchParams(location.search), MODE = q.get('mode') || 'sheet';
+const D = Math.PI / 180, log = t => { document.getElementById('log').textContent += '\n' + t; };
+const BG = '#2B2C31', CARD = '#C4C5C9';
+const FILES = {
+  Sentinel: '/out/Concepts/Source~/StoneSentinel/StoneSentinel_render.glb',
+  Warden: '/out/Models/Generated/Warden/Warden.glb',
+  Hero: '/out/Models/Generated/Hero/Hero.glb',
+  SkeletonElite: '/out/Models/Generated/SkeletonElite/SkeletonElite.glb',
+  SkeletonMelee: '/out/Models/Generated/SkeletonMelee/SkeletonMelee.glb',
+};
+const F15 = { angle: 100, radius: 6 };   // Boss_StoneSentinel_Data (protótipo): só para desenhar a leitura do aviso
+const loader = new GLTFLoader(), cache = {};
+const load = async n => cache[n] ??= await loader.loadAsync(FILES[n]);
+
+// ---------- cena: luz da família (hemisférica lua/sombra, key fria seguindo a câmera, contorno quente de tocha)
+const scene = new THREE.Scene();
+const hemi = new THREE.HemisphereLight('#AAB6D6', '#1E1830', 1.05); scene.add(hemi);
+const key = new THREE.DirectionalLight('#ECEEF6', 2.9); key.castShadow = true; key.shadow.mapSize.set(4096, 4096);
+Object.assign(key.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: .1, far: 50 }); key.shadow.bias = -.0004; scene.add(key, key.target);
+const rim = new THREE.DirectionalLight('#FF9A2E', 1.7); scene.add(rim, rim.target);
+const catcher = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.ShadowMaterial({ opacity: .38 }));
+catcher.rotation.x = -Math.PI / 2; catcher.receiveShadow = true; scene.add(catcher);
+const black = new THREE.MeshBasicMaterial({ color: '#000000' });
+
+// ---------- atores: vários modelos na mesma cena (Sentinela + herói de escala, etc.)
+let actors = [], decor = [];
+// intensidade dos emissivos por pose: no windup o núcleo e a rachadura acendem (proposta visual do aviso, não regra)
+const GLOW = { Stand: { core: 2.6, ember: 1.2, rune: 1.6 }, Windup: { core: 5.5, ember: 3.2, rune: 2.4 } };
+async function place(name, clip, { t = .1, x = 0, z = 0, ry = 0 } = {}) {
+  const g = await load(name), root = g.scene;
+  root.position.set(x, 0, z); root.rotation.set(0, ry * D, 0);
+  root.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
+  scene.add(root); actors.push(root);
+  const mixer = new THREE.AnimationMixer(root), c = g.animations.find(a => a.name === clip) || g.animations[0];
+  mixer.stopAllAction(); const act = mixer.clipAction(c); act.play(); mixer.setTime(Math.min(t, c.duration - 1e-3)); root.updateMatrixWorld(true);
+  if (name === 'Sentinel') {
+    const lv = GLOW[clip] || GLOW.Stand;
+    root.traverse(o => { if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => { const k = m.name.split('_').pop(); if (lv[k] != null) m.emissiveIntensity = lv[k]; }); });
+  }
+  return root;
+}
+function clear() { actors.forEach(a => scene.remove(a)); decor.forEach(d => scene.remove(d)); actors = []; decor = []; }
+function bounds(list = actors) { const b = new THREE.Box3(); list.forEach(a => b.expandByObject(a)); return b; }
+
+// ---------- leitura do leque frontal no chão (cores do aviso da F15: setor escuro inteiro + laranja crescendo)
+function fanDecal(root, grow = .62) {
+  // RingGeometry fica no plano XY; girada −90° em X, o ângulo θ vira a direção (cos θ, 0, −sin θ): frente +Z = −90°.
+  const th0 = -(Math.PI / 2 + F15.angle / 2 * D), th = F15.angle * D;
+  let order = 1; const mk = (r0, r1, color, op, y) => {
+    const m = new THREE.Mesh(new THREE.RingGeometry(r0, r1, 96, 1, th0, th), new THREE.MeshBasicMaterial({ color, transparent: true, opacity: op, depthWrite: false }));
+    m.rotation.x = -Math.PI / 2; m.position.y = y; m.renderOrder = order++;
+    const g = new THREE.Group(); g.add(m); g.position.set(root.position.x, 0, root.position.z); g.rotation.y = root.rotation.y;
+    scene.add(g); decor.push(g);
+  };
+  mk(.05, F15.radius, '#1E1830', .5, .012);              // área inteira (escura)
+  mk(.05, F15.radius * grow, '#FF9A2E', .4, .016);       // aviso crescendo até a borda
+  mk(F15.radius - .09, F15.radius, '#FF9A2E', .9, .02);  // borda
+}
+// piso de pedra só no painel de leitura: placas de 2 m #55596B com juntas #3E4152, borda esmaecendo no fundo
+function floorPatch(cx, cz, R = 7.5) {
+  const cv = document.createElement('canvas'); cv.width = cv.height = 1024; const c = cv.getContext('2d');
+  const px = 1024 / (2 * R);
+  c.fillStyle = '#55596B'; c.fillRect(0, 0, 1024, 1024);
+  for (let i = 0; i < 400; i++) { const x = (i * 97) % 1024, y = (i * 211) % 1024; c.fillStyle = i % 2 ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.035)'; c.fillRect(x, y, 2 * px * ((i % 3) + 1) / 3, 2 * px * ((i % 5) + 1) / 5); }
+  c.strokeStyle = '#3E4152'; c.lineWidth = 3;
+  for (let v = -R - ((R) % 2); v <= R; v += 2) { const p = (v + R) * px; c.beginPath(); c.moveTo(p, 0); c.lineTo(p, 1024); c.stroke(); c.beginPath(); c.moveTo(0, p); c.lineTo(1024, p); c.stroke(); }
+  const g = c.createRadialGradient(512, 512, 300, 512, 512, 512); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+  c.globalCompositeOperation = 'destination-in'; c.fillStyle = g; c.fillRect(0, 0, 1024, 1024);
+  const tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.SRGBColorSpace;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(2 * R, 2 * R), new THREE.MeshStandardMaterial({ map: tex, transparent: true, roughness: 1, depthWrite: false }));
+  m.rotation.x = -Math.PI / 2; m.position.set(cx, .004, cz); m.receiveShadow = true; scene.add(m); decor.push(m);
+}
+
+// ---------- render de um painel ortográfico com escala fixa (px por metro)
+const ren = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+ren.shadowMap.enabled = true; ren.shadowMap.type = THREE.PCFSoftShadowMap; ren.outputColorSpace = THREE.SRGBColorSpace; ren.toneMapping = THREE.NeutralToneMapping;
+function camFor(yaw, elev, W, H, ppm, baseline, center) {
+  const c = center ? new THREE.Vector3(...center) : bounds().getCenter(new THREE.Vector3());
+  const dir = new THREE.Vector3(Math.sin(yaw * D) * Math.cos(elev * D), Math.sin(elev * D), Math.cos(yaw * D) * Math.cos(elev * D));
+  const cam = new THREE.OrthographicCamera(-W / 2 / ppm, W / 2 / ppm, H / 2 / ppm, -H / 2 / ppm, .1, 80);
+  if (elev === 0 && baseline != null) {   // vistas planas: chão (y 0) sempre na mesma linha de base
+    const look = new THREE.Vector3(c.x, 0, c.z); cam.position.copy(look).addScaledVector(dir, 30); cam.lookAt(look);
+    cam.bottom = -baseline / ppm; cam.top = (H - baseline) / ppm;
+  } else { cam.position.copy(c).addScaledVector(dir, 30); cam.lookAt(c); }
+  cam.updateProjectionMatrix();
+  const right = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize();
+  key.position.copy(c).addScaledVector(dir, 10).addScaledVector(right, 6).add(new THREE.Vector3(0, 11, 0)); key.target.position.copy(c);
+  rim.position.copy(c).addScaledVector(dir, -10).addScaledVector(right, -6).add(new THREE.Vector3(0, 5, 0)); rim.target.position.copy(c);
+  return cam;
+}
+const glowBlack = new THREE.MeshBasicMaterial({ color: '#000000' });
+function swapForGlow(on) {
+  scene.traverse(o => {
+    if (!o.isMesh || o === catcher) return;
+    if (on) { o.userData.mats = o.material; const arr = Array.isArray(o.material) ? o.material : [o.material];
+      const rep = arr.map(m => (m.emissive && m.emissiveIntensity > 0 && m.emissive.getHex() !== 0) ? new THREE.MeshBasicMaterial({ color: m.emissive.clone().multiplyScalar(Math.min(1.6, .35 + m.emissiveIntensity * .3)) }) : glowBlack);
+      o.material = Array.isArray(o.material) ? rep : rep[0]; }
+    else if (o.userData.mats) { o.material = o.userData.mats; delete o.userData.mats; }
+  });
+}
+function shot(cam, W, H, { silhouette = false, bg = BG } = {}) {
+  ren.setSize(W, H, false);
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H; const cx = cv.getContext('2d');
+  cx.fillStyle = silhouette ? CARD : bg; cx.fillRect(0, 0, W, H);
+  scene.background = null; ren.setClearColor(0x000000, 0);
+  if (silhouette) {
+    decor.forEach(d => d.visible = false);
+    scene.overrideMaterial = black; catcher.visible = false; ren.toneMapping = THREE.NoToneMapping; ren.render(scene, cam);
+    cx.drawImage(ren.domElement, 0, 0, W, H); scene.overrideMaterial = null; catcher.visible = true; ren.toneMapping = THREE.NeutralToneMapping;
+    decor.forEach(d => d.visible = true);
+    return cv;
+  }
+  ren.render(scene, cam); cx.drawImage(ren.domElement, 0, 0, W, H);
+  catcher.visible = false; decor.forEach(d => d.visible = false); swapForGlow(true); scene.background = new THREE.Color('#000000'); ren.toneMapping = THREE.NoToneMapping;
+  ren.render(scene, cam); swapForGlow(false); catcher.visible = true; decor.forEach(d => d.visible = true); scene.background = null; ren.toneMapping = THREE.NeutralToneMapping;
+  cx.save(); cx.globalCompositeOperation = 'lighter';
+  for (const [r, a] of [[Math.max(6, W / 70), .8], [Math.max(2, W / 260), .55]]) { cx.filter = `blur(${r}px)`; cx.globalAlpha = a; cx.drawImage(ren.domElement, 0, 0, W, H); }
+  cx.restore();
+  return cv;
+}
+// silhueta só de um ator (os outros escondidos)
+function onlyShot(actor, cam, W, H) { const vis = actors.map(a => a.visible); actors.forEach(a => a.visible = a === actor); const s = shot(cam, W, H, { silhouette: true }); actors.forEach((a, i) => a.visible = vis[i]); return s; }
+function measure(cv) {
+  const d = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data; let x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1, n = 0;
+  for (let y = 0; y < cv.height; y++) for (let x = 0; x < cv.width; x++) { const i = (y * cv.width + x) * 4; if (d[i] < 60) { n++; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } }
+  return { x0, y0, x1, y1, w: x1 - x0 + 1, h: y1 - y0 + 1, area: n };
+}
+async function save(name, cv) { await fetch('/save?name=' + name, { method: 'POST', body: cv.toDataURL('image/png') }); log('salvo ' + name); }
+async function saveJson(name, obj) { const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(obj, null, 2)))); await fetch('/save?name=' + name, { method: 'POST', body: 'data:application/json;base64,' + b64 }); log('salvo ' + name); }
+const box3 = a => { const b = bounds([a]); return { min: b.min.toArray().map(v => +v.toFixed(3)), max: b.max.toArray().map(v => +v.toFixed(3)), size: b.getSize(new THREE.Vector3()).toArray().map(v => +v.toFixed(3)) }; };
+
+const ISO = { yaw: -40, elev: 45 };      // mesma vista isométrica das folhas da família (PROVENANCE, Task 01)
+const report = { mode: MODE, panels: [] };
+
+if (MODE === 'probe') {
+  // inspeção rápida (não publicada): poses lado a lado
+  const S = document.createElement('canvas'); S.width = 2700; S.height = 600; const sx = S.getContext('2d');
+  let i = 0;
+  for (const [clip, yaw, elev] of [['Stand', 0, 0], ['Stand', 90, 0], ['Stand', -40, 45], ['Windup', 0, 0], ['Windup', 90, 0], ['Windup', -40, 45]]) {
+    clear(); const r = await place('Sentinel', clip); sx.drawImage(shot(camFor(yaw, elev, 450, 600, 85, elev ? null : 40), 450, 600), i++ * 450, 0);
+    report.panels.push({ clip, yaw, box: box3(r) });
+  }
+  clear(); document.body.appendChild(S); await save('probe.png', S); await saveJson('probe.json', report);
+}
+
+if (MODE === 'sheet') {
+  // 2048×1536, sem rótulos. Linha 1 (210 px/m, chão na mesma linha): frente | lado com herói de escala | costas.
+  // Linha 2: 45° de jogo (Stand) | antecipação do leque a 45° sobre piso, com a área F15 e o herói | silhuetas pretas.
+  const S = document.createElement('canvas'); S.width = 2048; S.height = 1536; const sx = S.getContext('2d');
+  sx.fillStyle = BG; sx.fillRect(0, 0, 2048, 1536);
+  const PPM1 = 200, BASE1 = 96;
+  const row1 = [
+    { id: 'front', yaw: 0, x: 0, w: 760 },
+    { id: 'side', yaw: 90, x: 760, w: 528, hero: true },
+    { id: 'back', yaw: 180, x: 1288, w: 760 },
+  ];
+  for (const p of row1) {
+    clear(); const s = await place('Sentinel', 'Stand');
+    let h = null; if (p.hero) h = await place('Hero', 'Idle', { t: .3, z: 1.45, ry: 180 });
+    const b = bounds(), c = b.getCenter(new THREE.Vector3());
+    const cam = camFor(p.yaw, 0, p.w, 760, PPM1, BASE1, [c.x, c.y, c.z]);
+    sx.drawImage(shot(cam, p.w, 760), p.x, 0);
+    const m = measure(onlyShot(s, cam, p.w, 760));
+    const entry = { id: p.id, clip: 'Stand', ppm: PPM1, px: m, meters: { h: +(m.h / PPM1).toFixed(3), w: +(m.w / PPM1).toFixed(3) }, box: box3(s) };
+    if (h) { const mh = measure(onlyShot(h, cam, p.w, 760)); entry.hero = { px: mh, meters: { h: +(mh.h / PPM1).toFixed(3) }, box: box3(h) }; }
+    report.panels.push(entry);
+  }
+  // 45° de jogo, postura neutra
+  clear(); { const s = await place('Sentinel', 'Stand'); const cam = camFor(ISO.yaw, ISO.elev, 600, 776, 168); sx.drawImage(shot(cam, 600, 776), 0, 760);
+    const m = measure(onlyShot(s, cam, 600, 776)); report.panels.push({ id: 'iso45', clip: 'Stand', ppm: 168, px: m }); }
+  // antecipação do leque frontal: mesma câmera 45°, piso, área F15 (100°, 6 m) com o laranja a 62 % e herói dentro
+  clear(); {
+    const s = await place('Sentinel', 'Windup'); const h = await place('Hero', 'Idle', { t: .3, x: -1.1, z: 3.6, ry: 197 });
+    fanDecal(s, .62); floorPatch(0, 2.6, 7.6);
+    const cam = camFor(ISO.yaw, ISO.elev, 900, 776, 94, null, [.25, .9, 2.45]);
+    sx.drawImage(shot(cam, 900, 776), 600, 760);
+    const m = measure(onlyShot(s, cam, 900, 776)), mh = measure(onlyShot(h, cam, 900, 776));
+    report.panels.push({ id: 'windup_fan', clip: 'Windup', ppm: 94, px: m, hero: mh, fan: F15, box: box3(s) });
+  }
+  // cartão de silhuetas (preto sólido), 45°, mesma escala: Stand em cima, Windup embaixo
+  sx.fillStyle = CARD; sx.fillRect(1518, 784, 506, 728);
+  for (const [i, clip] of ['Stand', 'Windup'].entries()) {
+    clear(); await place('Sentinel', clip); const cam = camFor(ISO.yaw, ISO.elev, 490, 352, 96, null, [0, 1.2, 0]);
+    const cv = shot(cam, 490, 352, { silhouette: true }); sx.drawImage(cv, 1526, 792 + i * 360);
+    report.panels.push({ id: 'silhouette_' + clip, ppm: 96, px: measure(cv) });
+  }
+  const vg = sx.createRadialGradient(1024, 700, 520, 1024, 768, 1420); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.33)');
+  sx.fillStyle = vg; sx.fillRect(0, 0, 2048, 1536);
+  clear(); document.body.appendChild(S); await save('StoneSentinel_Concept_01.png', S); await saveJson('sheet_measure.json', report);
+}
+
+if (MODE === 'review') {
+  // Silhuetas a 128 px de altura na câmera 45°: linha 1 normalizada (forma), linha 2 escala relativa (Warden = 128 px)
+  const items = [['Sentinel', 'Stand'], ['Sentinel', 'Windup'], ['Warden', 'Idle'], ['Warden', 'SlamWindup', .5], ['SkeletonElite', 'Idle'], ['SkeletonMelee', 'Idle'], ['Hero', 'Idle']];
+  const cell = 200, S = document.createElement('canvas'); S.width = cell * items.length; S.height = cell * 2; const sx = S.getContext('2d');
+  sx.fillStyle = CARD; sx.fillRect(0, 0, S.width, S.height);
+  clear(); await place('Warden', 'Idle', { t: .3 }); const ref = measure(shot(camFor(ISO.yaw, ISO.elev, 600, 600, 100), 600, 600, { silhouette: true }));
+  const ppmRel = 100 * 128 / ref.h;
+  report.masks = {};
+  for (const [i, [n, clip, t]] of items.entries()) {
+    clear(); await place(n, clip, { t: t ?? .3 });
+    const big = measure(shot(camFor(ISO.yaw, ISO.elev, 700, 700, 100), 700, 700, { silhouette: true }));
+    const ppmN = 100 * 128 / big.h;
+    const a = shot(camFor(ISO.yaw, ISO.elev, cell, cell, ppmN), cell, cell, { silhouette: true }); sx.drawImage(a, i * cell, 0);
+    const b = shot(camFor(ISO.yaw, ISO.elev, cell, cell, ppmRel), cell, cell, { silhouette: true }); sx.drawImage(b, i * cell, cell);
+    report.panels.push({ model: n, clip, normalized128: measure(a), relative: measure(b) });
+    const d = a.getContext('2d').getImageData(0, 0, cell, cell).data; let bits = '';
+    for (let k = 0; k < cell * cell; k++) bits += d[k * 4] < 60 ? '1' : '0';
+    report.masks[`${n}:${clip}`] = bits;
+  }
+  clear(); report.cell = cell; report.note = 'linha 1: cada silhueta normalizada a 128 px de altura; linha 2: escala relativa com Warden Idle = 128 px';
+  document.body.appendChild(S); await save('review_silhouette_128.png', S); await saveJson('review_measure.json', report);
+}
+
+if (MODE === 'scale') {
+  // Escala na câmera de jogo (cor, 45°): Hero · Sentinela · Warden · Elite, lado a lado
+  const items = [['Hero', 'Idle', -3.4], ['Sentinel', 'Stand', -1.0], ['Warden', 'Idle', 2.3], ['SkeletonElite', 'Idle', 4.9]];
+  const w = 1600, h = 760, S = document.createElement('canvas'); S.width = w; S.height = h; const sx = S.getContext('2d');
+  clear(); for (const [n, clip, x] of items) { const r = await place(n, clip, { t: .3, x }); report.panels.push({ model: n, clip, box: box3(r) }); }
+  sx.drawImage(shot(camFor(ISO.yaw, ISO.elev, w, h, 118, null, [.7, 1.4, 0]), w, h), 0, 0);
+  clear(); document.body.appendChild(S); await save('review_scale.png', S); await saveJson('scale_measure.json', report);
+}
+log('fim'); document.title = 'DONE ' + MODE;
+</script></body></html>

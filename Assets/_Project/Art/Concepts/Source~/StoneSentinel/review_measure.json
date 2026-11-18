@@ -1,0 +1,162 @@
+{
+  "mode": "review",
+  "panels": [
+    {
+      "model": "Sentinel",
+      "clip": "Stand",
+      "normalized128": {
+        "x0": 45,
+        "y0": 38,
+        "x1": 157,
+        "y1": 165,
+        "w": 113,
+        "h": 128,
+        "area": 8916
+      },
+      "relative": {
+        "x0": 59,
+        "y0": 54,
+        "x1": 142,
+        "y1": 148,
+        "w": 84,
+        "h": 95,
+        "area": 4992
+      }
+    },
+    {
+      "model": "Sentinel",
+      "clip": "Windup",
+      "normalized128": {
+        "x0": 28,
+        "y0": 38,
+        "x1": 192,
+        "y1": 165,
+        "w": 165,
+        "h": 128,
+        "area": 10306
+      },
+      "relative": {
+        "x0": 46,
+        "y0": 54,
+        "x1": 168,
+        "y1": 148,
+        "w": 123,
+        "h": 95,
+        "area": 5743
+      }
+    },
+    {
+      "model": "Warden",
+      "clip": "Idle",
+      "normalized128": {
+        "x0": 57,
+        "y0": 15,
+        "x1": 125,
+        "y1": 142,
+        "w": 69,
+        "h": 128,
+        "area": 3920
+      },
+      "relative": {
+        "x0": 57,
+        "y0": 15,
+        "x1": 125,
+        "y1": 142,
+        "w": 69,
+        "h": 128,
+        "area": 3920
+      }
+    },
+    {
+      "model": "Warden",
+      "clip": "SlamWindup",
+      "normalized128": {
+        "x0": 67,
+        "y0": 32,
+        "x1": 145,
+        "y1": 158,
+        "w": 79,
+        "h": 127,
+        "area": 4003
+      },
+      "relative": {
+        "x0": 66,
+        "y0": 30,
+        "x1": 146,
+        "y1": 160,
+        "w": 81,
+        "h": 131,
+        "area": 4175
+      }
+    },
+    {
+      "model": "SkeletonElite",
+      "clip": "Idle",
+      "normalized128": {
+        "x0": 51,
+        "y0": 33,
+        "x1": 116,
+        "y1": 160,
+        "w": 66,
+        "h": 128,
+        "area": 4052
+      },
+      "relative": {
+        "x0": 75,
+        "y0": 66,
+        "x1": 108,
+        "y1": 130,
+        "w": 34,
+        "h": 65,
+        "area": 1040
+      }
+    },
+    {
+      "model": "SkeletonMelee",
+      "clip": "Idle",
+      "normalized128": {
+        "x0": 59,
+        "y0": 32,
+        "x1": 119,
+        "y1": 160,
+        "w": 61,
+        "h": 129,
+        "area": 4016
+      },
+      "relative": {
+        "x0": 86,
+        "y0": 76,
+        "x1": 105,
+        "y1": 120,
+        "w": 20,
+        "h": 45,
+        "area": 475
+      }
+    },
+    {
+      "model": "Hero",
+      "clip": "Idle",
+      "normalized128": {
+        "x0": 58,
+        "y0": 36,
+        "x1": 119,
+        "y1": 162,
+        "w": 62,
+        "h": 127,
+        "area": 4468
+      },
+      "relative": {
+        "x0": 83,
+        "y0": 74,
+        "x1": 107,
+        "y1": 125,
+        "w": 25,
+        "h": 52,
+        "area": 723
+      }
+    }
+  ],
+  "cell": 200,
+  "note": "linha 1: cada silhueta normalizada a 128 px de altura; linha 2: escala relativa com Warden Idle = 128 px",
+  "masks": "omitidas (bits 200x200 por silhueta); regenerar com ?mode=review"
+}
