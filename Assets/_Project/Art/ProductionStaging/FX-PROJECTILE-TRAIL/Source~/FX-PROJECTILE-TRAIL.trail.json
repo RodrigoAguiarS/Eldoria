@@ -1,0 +1,83 @@
+{
+  "asset_id": "FX-PROJECTILE-TRAIL",
+  "texture": "../FX-PROJECTILE-TRAIL.png",
+  "texture_size": [
+    128,
+    32
+  ],
+  "uv_convention": {
+    "u": "ao longo do trajeto; u = 0 na cabeça (junto ao projétil, ponto mais novo), u = 1 na ponta da cauda",
+    "v": "através da faixa; v = 0,5 no centro (centro quente fino)",
+    "head_at_u0": true,
+    "note": "Mesma convenção do FX_SlashTrail.png e do FX-DASH. Conferir no Editor; se aparecer invertida, gerar com HEAD_AT_U0 = False (ou tiling X = −1)."
+  },
+  "unity_integration_proposal": {
+    "status": "Proposta; NÃO VALIDADO NO EDITOR. TrailRenderer no Projectile.prefab e o reset no Projectile.cs são tarefa Codex separada.",
+    "texture_import": "Default, sRGB, alphaIsTransparency, clamp, bilinear, mipmaps on (template FX_Spark).",
+    "material": "UM material compartilhado (sharedMaterial) URP/Particles/Unlit, Surface Transparent, Blend Alpha, cor branca (a cor vem da textura), sem emissão HDR; nunca material/textura por tiro.",
+    "trail_renderer": {
+      "parent": "filho \"Trail\" do Projectile.prefab, já presente no prefab: as instâncias do pool o herdam; nada é criado por disparo",
+      "local_offset_world_m": [
+        0.0,
+        0.0,
+        -0.14
+      ],
+      "local_offset_note": "Atrás do centro, ainda dentro do orbe (raio 0,20 m). Com a raiz em escala 0,4, localPosition z = −0,35; com a raiz em 1 (opção do A08), z = −0,14.",
+      "time_s": 0.05,
+      "width_multiplier_m": 0.26,
+      "width_curve": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.8
+        ]
+      ],
+      "min_vertex_distance_m": 0.05,
+      "texture_mode": "Stretch",
+      "alignment": "View",
+      "num_cap_vertices": 0,
+      "num_corner_vertices": 0,
+      "color_gradient": "branco; alpha 1 → 1 (o fade já está na textura)",
+      "emitting": "false no prefab; true só depois do Clear() em Launch",
+      "autodestruct": false,
+      "shadows_lighting_probes": "desligados, como o SlashTrail",
+      "expected_length_m": {
+        "Enemy_Elite": 0.6,
+        "Enemy_Lancer": 0.6,
+        "Enemy_Ranged": 0.55
+      }
+    },
+    "extra_particles": 0,
+    "reset_rules": [
+      "Launch: depois de definir transform.position/rotation, trail.Clear() e emitting = true. O Clear vem DEPOIS do teleporte: sem ele a faixa liga o ponto onde o objeto saiu do pool ao novo disparo.",
+      "OnDespawned (retorno ao pool por colisão, timeout ou ForceRelease): emitting = false e Clear(). A cauda some junto com o orbe; nenhuma trilha antiga sobrevive à reutilização.",
+      "OnEnable/OnDisable do objeto (pool.Get/Release, troca de sala, reset de checkpoint, morte do Hero): Clear(); nunca Instantiate/Destroy de TrailRenderer, material ou textura por tiro.",
+      "Pausa (timeScale 0): Projectile.Update já retorna sem mover; conferir no Editor que a cauda congela em vez de encolher (o TrailRenderer envelhece pelo tempo escalado) e que não salta ao despausar.",
+      "Dois tiros rápidos do mesmo objeto do pool: cada Launch chama Clear(); sem emenda entre tiros.",
+      "Só apresentação: não altera radius (SphereCast 0,25 m), lifetime, hitMask, velocidade, dano, pool nem colisão. Sem collider no filho.",
+      "A cauda é sinal estável de ameaça, não flash: não depender da opção de flash; se a opção de reduzir efeitos for aplicada a ela, manter no mínimo o orbe visível."
+    ],
+    "projectile_defaults_read_only": {
+      "radius": 0.25,
+      "lifetime": 4.0,
+      "defaultCapacity": 16,
+      "maxSize": 64,
+      "projectile_speeds": {
+        "Enemy_Elite": 12.0,
+        "Enemy_Lancer": 12.0,
+        "Enemy_Ranged": 11.0
+      },
+      "max_speed": 12.0,
+      "mat_projectile_base": [
+        1.0,
+        0.55,
+        0.1
+      ],
+      "timescale_guard": true,
+      "pause_guard_note": "Projectile.Update retorna com timeScale 0 (não anda nem expira)."
+    }
+  }
+}

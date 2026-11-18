@@ -1,0 +1,309 @@
+{
+  "checks": [
+    {
+      "name": "size_mode",
+      "ok": true,
+      "detail": "(128, 32) RGBA"
+    },
+    {
+      "name": "no_dirty_transparent_px",
+      "ok": true,
+      "detail": "0 px com alpha 0 e RGB != 0"
+    },
+    {
+      "name": "transparent_border",
+      "ok": true,
+      "detail": "alpha máx. na moldura de 1 px = 0"
+    },
+    {
+      "name": "v_margin",
+      "ok": true,
+      "detail": "margem vertical 7 px (≥ 3)"
+    },
+    {
+      "name": "alpha_ceiling",
+      "ok": true,
+      "detail": "alpha máx. 235 ≤ 240 (sem miolo totalmente opaco)"
+    },
+    {
+      "name": "fade_both_ends",
+      "ok": true,
+      "detail": "alpha máx. nas 3 colunas da cabeça 30 ≤ 25% do pico (59); nos últimos 10 px da cauda 2 ≤ 10% (24)"
+    },
+    {
+      "name": "smooth_column_profile",
+      "ok": true,
+      "detail": "maior salto do alpha máx. entre colunas vizinhas = 39 (≤ 40)"
+    },
+    {
+      "name": "teardrop_profile",
+      "ok": true,
+      "detail": "mais larga na coluna 15 (18 px, ≤ 35% de U); depois afina sem alargar mais de 1 px (máx. 0)"
+    },
+    {
+      "name": "compact_tip",
+      "ok": true,
+      "detail": "nos últimos 20% de U a largura com alpha ≥ 64 é ≤ 2 px (0); último px visível na coluna 120"
+    },
+    {
+      "name": "no_sparks_outside_envelope",
+      "ok": true,
+      "detail": "1 componente(s) com alpha ≥ 8 (1 = só a gota)"
+    },
+    {
+      "name": "thin_hot_centre",
+      "ok": true,
+      "detail": "centro quente em 50 colunas (≥ 20% de U), altura máx. 3 px (≤ 4)"
+    },
+    {
+      "name": "no_explosive_area",
+      "ok": true,
+      "detail": "cobertura alpha>50% 21.1% ≤ 35%"
+    },
+    {
+      "name": "no_cyan_friendly_magic",
+      "ok": true,
+      "detail": "0 px em matiz ciano/azul (165.0, 265.0)"
+    },
+    {
+      "name": "no_green_hue",
+      "ok": true,
+      "detail": "0 px em matiz (70.0, 165.0)"
+    },
+    {
+      "name": "no_opaque_white",
+      "ok": true,
+      "detail": "0 px de branco opaco"
+    },
+    {
+      "name": "reads_hostile_orange",
+      "ok": true,
+      "detail": "média HSV [29.7, 0.766, 0.842] (laranja #FF9A2E = 31°, ferrugem #8A4A22 = 23°)"
+    },
+    {
+      "name": "orange_to_rust_gradient",
+      "ok": true,
+      "detail": "cabeça média [231, 142, 51] a 27 de #FF9A2E; cauda [151, 85, 39] a 18 de #8A4A22 (≤ 45); a cabeça é mais clara"
+    },
+    {
+      "name": "readable_on_stone",
+      "ok": true,
+      "detail": "contraste WCAG da cauda composta (alpha>50%) sobre a pedra ['#3E4152', '#55596B']: mín. 2.14 ≥ 2,0"
+    },
+    {
+      "name": "distinct_from_hero_trails",
+      "ok": true,
+      "detail": "matiz 30° vs. FX-DASH 222° (distância 168° ≥ 150); saturação 0.77 vs. FX_SlashTrail 0.00"
+    },
+    {
+      "name": "tail_time_and_length",
+      "ok": true,
+      "detail": "time 0.05 s < 0.15 s; a 12.0 m/s (maior projectileSpeed) a cauda tem 0.60 m ≤ 0.6 m"
+    },
+    {
+      "name": "danger_area_not_exaggerated",
+      "ok": true,
+      "detail": "largura 0.26 m = 65% do orbe de 0.4 m (≤ 75%); a gota afina para 0 dentro dela"
+    },
+    {
+      "name": "texture_aspect_matches_trail",
+      "ok": true,
+      "detail": "cauda ≈ 0.60 m × 0.26 m (razão 2.31; textura 4:1, faixa 1,5–6)"
+    },
+    {
+      "name": "projectile_rules_untouched",
+      "ok": true,
+      "detail": "Projectile.cs/ProjectilePool.cs só lidos: radius 0.25 m, lifetime 4.0 s, pool 16/64, velocidades {'Enemy_Elite': 12.0, 'Enemy_Lancer': 12.0, 'Enemy_Ranged': 11.0}; guarda de pausa presente"
+    }
+  ],
+  "alpha_max": 235,
+  "width_profile_px": [
+    0,
+    0,
+    0,
+    0,
+    14,
+    14,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    16,
+    14,
+    14,
+    14,
+    14,
+    14,
+    14,
+    14,
+    14,
+    14,
+    14,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "core_columns": 50,
+  "cover_over_50pct": 0.2114,
+  "mean_rgb": [
+    215,
+    132,
+    50
+  ],
+  "mean_hsv": [
+    29.7,
+    0.766,
+    0.842
+  ],
+  "head_mean_rgb": [
+    231,
+    142,
+    51
+  ],
+  "tail_mean_rgb": [
+    151,
+    85,
+    39
+  ],
+  "contrast_on_stone": {
+    "#3E4152": 2.96,
+    "#55596B": 2.14
+  },
+  "compare": {
+    "dash_mean_hue": 221.7,
+    "hue_gap_vs_dash": 168.0,
+    "slash_mean_sat": 0.0,
+    "trail_mean_sat": 0.766
+  },
+  "projectile_defaults": {
+    "radius": 0.25,
+    "lifetime": 4.0,
+    "defaultCapacity": 16,
+    "maxSize": 64,
+    "projectile_speeds": {
+      "Enemy_Elite": 12.0,
+      "Enemy_Lancer": 12.0,
+      "Enemy_Ranged": 11.0
+    },
+    "max_speed": 12.0,
+    "mat_projectile_base": [
+      1.0,
+      0.55,
+      0.1
+    ],
+    "timescale_guard": true,
+    "pause_guard_note": "Projectile.Update retorna com timeScale 0 (não anda nem expira)."
+  },
+  "trail_length_m_at_max_speed": 0.6,
+  "ok": true,
+  "meta_created": false,
+  "folder_meta_created": false,
+  "sha256": {
+    "FX-PROJECTILE-TRAIL.png": "845bcebf55c3331081b58db33b12482863cf3b92cdd9e13e050204791c62e15f",
+    "preview_projectile.gif": "a2a523b796113fe2056c90e689cd5ae748a750c75915c6d9d2d3039fbb9ff43d"
+  }
+}

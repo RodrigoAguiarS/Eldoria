@@ -18,8 +18,8 @@
   "summary": {
     "logical_resources": 133,
     "by_status": {
-      "EXISTENTE": 124,
-      "AUSENTE": 6,
+      "EXISTENTE": 125,
+      "AUSENTE": 5,
       "INCOMPLETO": 1,
       "NÃO VERIFICADO": 2
     },
@@ -57,9 +57,9 @@
         "AUSENTE": 1
       },
       "J": {
-        "EXISTENTE": 13,
+        "EXISTENTE": 14,
         "INCOMPLETO": 1,
-        "AUSENTE": 2
+        "AUSENTE": 1
       }
     },
     "by_priority": {
@@ -7318,7 +7318,7 @@
       "category": "J",
       "category_name": "VFX e animações adicionais",
       "functionality": "Polimento opcional de ação existente",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "VFX",
       "scope": "sugestão_polimento",
@@ -7346,7 +7346,7 @@
       "technical_dependencies": [
         "Reset OnEnable/retorno do ProjectilePool; não criar nova instância a cada tiro."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Produzido em staging (A09, 17/11/2026) como textura 2D estática de faixa 128×32 RGBA para TrailRenderer (gota compacta laranja #FF9A2E → ferrugem #8A4A22 → alpha 0, centro fino quente, bordas com alpha 0); NÃO integrado. Em jogo o projétil continua sem cauda. O filho Trail no Projectile.prefab (sharedMaterial, time 0,05 s, largura 0,26 m, 0,14 m atrás do centro) e o Clear() em Launch/OnDespawned/OnEnable são tarefa Codex separada; proposta em Source~/FX-PROJECTILE-TRAIL.trail.json.",
       "visual_specification": "Compact tapered orange tail on existing hostile orb, clear against stone, no explosion or larger danger radius.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7355,7 +7355,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "Técnica fora da Unity em 17/11/2026: FxProjectileTrail.validation.json (PNG relido 128×32 RGBA; 0 px transparentes com RGB sujo; moldura de 1 px com alpha 0; margem vertical 7 px; alpha máx. 235; 3 colunas da cabeça ≤ 30 e últimos 10 px ≤ 2; gota mais larga no primeiro terço e afinando sem realargar; um único componente (sem faíscas); centro quente ≤ 3 px em 50 colunas; cobertura alpha>50% 21,1%; 0 px ciano/azul, verde ou branco opaco; média 30°/sat. 0,77; cabeça (231,142,51) e cauda (151,85,39); contraste WCAG 2,96/2,14 sobre a pedra; 168° do FX-DASH; time 0,05 s e 0,60 m a 12 m/s; largura 65% do orbe; Projectile.cs/ProjectilePool.cs só lidos) e asset_report.py (--expect-size 128x32 --require-alpha, exit 0); prévias a 45° sobre a captura real F05, rotuladas PREVIEW. NÃO VALIDADO NO EDITOR: importação, material URP, TrailRenderer, reset no pool, pausa e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -7368,10 +7368,11 @@
         "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE-TRAIL/FX-PROJECTILE-TRAIL.prefab"
       },
       "source_and_rights": {
-        "kind": "not_produced",
-        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
-        "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE-TRAIL/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria e render próprios (Tools/FxProjectileTrailGenerator/generate.py, Pillow MIT-CMU/HPND, NumPy BSD). Sem IA generativa de imagem nem asset de terceiros."
+      },
+      "production_state": "Produzido por gerador próprio (generate.py: uma gota facetada de 7 segmentos com faceta de cima clara e de baixo escura, laranja #FF9A2E → ferrugem #8A4A22/#6A3618, centro fino #FFB866; envelope de alpha por coluna (sobe em 7% de U, cai a partir de 30%) × pico 0,92; supersampling 8× com alpha pré-multiplicado): FX-PROJECTILE-TRAIL.png 128×32, u = 0 na cabeça como o FX_SlashTrail/FX-DASH; fonte vetorial Source~/FX-PROJECTILE-TRAIL.source.svg, parâmetros/facetas em FX-PROJECTILE-TRAIL.source.json e proposta de TrailRenderer/reset em FX-PROJECTILE-TRAIL.trail.json. Prefab sugerido pela ficha não criado (integração em tarefa separada)."
     },
     {
       "id": "UI-TRANSITION",
@@ -12875,6 +12876,46 @@
         "Leitura: a cor média do núcleo tem menos contraste com o piso que a esfera atual (2,54/1,75 vs. 3,22/2,22); a brasa tem mais (6,35/4,37). Comparar em PlayMode; ajuste preferido por _EmissionColor/paleta, sem refazer a malha.",
         "Fendas de 10 cm e 6 cm em vez da 'pequena fenda' da ficha (a variante fina sumia no piso); desvio registrado no README.",
         "Previews são do rasterizador próprio (ortográfico, ambiente+difusa+emissão), rotulados PREVIEW; não são captura da Unity.",
+        "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "A09-FX-PROJECTILE-TRAIL",
+      "date_local": "2026-11-17",
+      "branch": "claude/a09-fx-projectile-trail",
+      "produced": [
+        "FX-PROJECTILE-TRAIL"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/FxProjectileTrailGenerator/generate.py"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE-TRAIL.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE-TRAIL/FX-PROJECTILE-TRAIL.png",
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE-TRAIL/FX-PROJECTILE-TRAIL.png.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-PROJECTILE-TRAIL/Source~/"
+      ],
+      "import_settings": "Template de FX_Spark/FX-HEAL (Tools/FxHealGenerator/texture.meta.template) sem mudanças: Default, sRGB, alphaIsTransparency, bilinear, clamp, mipmaps on; 128×32 é potência de 2; GUID novo e estável (SHA256 de Eldoria/A09/<nome>).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "FxProjectileTrail.validation.json ok (23/23); asset_report.py exit 0; geração determinística (2 execuções, mesmos SHA256 de PNG/GIF)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: .meta derivada do template de FX_Spark; a Unity pode reserializá-la na primeira importação. Conferir o sentido de U no TrailRenderer (u = 0 esperado na cabeça) e os mips na ponta afilada.",
+        "Sem integração: o projétil continua sem cauda. Filho Trail no Projectile.prefab (sharedMaterial, nada por tiro) e Clear() depois do teleporte em Launch, em OnDespawned e OnEnable são tarefa Codex separada; proposta em Source~/FX-PROJECTILE-TRAIL.trail.json, sem alterar radius, lifetime, hitMask, velocidade, dano ou pool.",
+        "Pausa: Projectile.Update já para com timeScale 0, mas o envelhecimento do TrailRenderer com timeScale 0 não foi observado; conferir que a cauda congela e não salta.",
+        "Comprimento depende da velocidade (0,60 m a 12 m/s, 0,55 m a 11 m/s); velocidade futura > 12 m/s exige reduzir time.",
+        "review_floor_preview.png, review_vs_current_sphere.png e preview_projectile.gif são PRÉVIAS: faixa projetada sobre a captura F05 com a esfera como disco sombreado, sem luz real/bloom/ordenação com o Hero; o núcleo A08 não foi rasterizado nelas. Não são captura da Unity.",
+        "FX-PROJECTILE-TRAIL.prefab sugerido pela ficha não criado: prefab exige coordenação.",
         "Aprovação artística humana pendente."
       ]
     }
