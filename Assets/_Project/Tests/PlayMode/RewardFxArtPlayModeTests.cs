@@ -125,6 +125,8 @@ namespace DungeonCrawler.Tests.PlayMode
             AssertFeetPivot(heal, profile.healing.size, "FX-HEAL");
             Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Xp, 71)));
             Assert.Greater(progression.Level, 1); Assert.AreEqual(1, level.particleCount);
+            AssertTowardCamera(level, profile.level.size, "FX-LEVEL");
+            AssertFeetPivot(level, profile.level.size, "FX-LEVEL");
             StepThroughSheet(level, profile.level.lifetime, "FX-LEVEL");
         }
         private void StepThroughSheet(ParticleSystem effect, float lifetime, string id)
@@ -179,6 +181,25 @@ namespace DungeonCrawler.Tests.PlayMode
             }
             Assert.AreEqual(5, progression.Gold); Assert.AreEqual(random, UnityEngine.Random.state);
             Assert.AreEqual(5, feedback.CollectionBursts);
+            AssertTowardCamera(collect, profile.collection.size, "FX-LOOT");
+        }
+        /// <summary>V05: na Unity, pivô z positivo aproxima o quad da câmera (fica à frente da capa/pernas) sem tirá-lo do ponto na tela.</summary>
+        private void AssertTowardCamera(ParticleSystem effect, float size, string id)
+        {
+            var renderer = effect.GetComponent<ParticleSystemRenderer>();
+            Assert.Greater(renderer.pivot.z, 0f, id + " pivô z");
+            renderer.BakeMesh(baked, camera, ParticleSystemBakeMeshOptions.BakePosition | ParticleSystemBakeMeshOptions.BakeRotationAndScale);
+            var vertices = baked.vertices; var particles = Particles(effect);
+            Assert.AreEqual(particles.Length * 4, vertices.Length, id + " um quad por partícula");
+            for (int i = 0; i < particles.Length; i++)
+            {
+                Vector3 centre = (vertices[i * 4] + vertices[i * 4 + 1] + vertices[i * 4 + 2] + vertices[i * 4 + 3]) * .25f;
+                Vector3 world = effect.main.simulationSpace == ParticleSystemSimulationSpace.Local ? effect.transform.TransformPoint(particles[i].position) : particles[i].position;
+                Vector3 offset = centre - world;
+                Assert.AreEqual(-renderer.pivot.z * size, Vector3.Dot(offset, camera.transform.forward), .01f, id + " profundidade (negativo = mais perto da câmera) " + i);
+                Vector2 screen = camera.WorldToScreenPoint(centre - camera.transform.up * Vector3.Dot(offset, camera.transform.up)), origin = camera.WorldToScreenPoint(world);
+                Assert.Less((screen - origin).magnitude, .05f * Screen.height, id + " mesma região da tela " + i);
+            }
         }
 
         [UnityTest]

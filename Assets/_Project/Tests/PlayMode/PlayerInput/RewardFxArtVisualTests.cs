@@ -41,25 +41,36 @@ namespace DungeonCrawler.Tests.PlayerInput
                     var inventory = player.GetComponent<PlayerInventory>();
                     Assert.IsTrue(feedback.UsesArt, "release sem perfil V05");
                     options.Current.flash = 1f;
-                    health.Configure(100f); health.SetInvulnerableFor(60f);
+                    health.Configure(100f);
                     player.TryCollect(new LootDrop(LootKind.Potion, 25));
                     Restart(feedback);
-                    health.TakeDamage(60f, Vector3.zero);
-                    Assert.IsTrue(inventory.TryUseQuickPotion());
+                    // Dano antes da invulnerabilidade: com HP cheio a poção é (corretamente) recusada.
+                    health.TakeDamage(60f, Vector3.zero); health.SetInvulnerableFor(60f);
+                    Assert.IsTrue(inventory.TryUseQuickPotion()); Assert.AreEqual(65f, health.Current);
                     yield return new WaitForSeconds(.15f); yield return Capture(directory, width + "-heal-f3.png");
                     foreach (var (kind, name) in new[] { (LootKind.Xp, "loot-xp"), (LootKind.Gold, "loot-gold"), (LootKind.Potion, "loot-stored") })
                     {
                         Restart(feedback);
                         Assert.IsTrue(player.TryCollect(new LootDrop(kind, 12)));
                         yield return new WaitForSeconds(.09f); yield return Capture(directory, width + "-" + name + ".png");
+                        Diagnose(directory, width, name, feedback);
                     }
+                    // Diagnóstico: mesmo glint com os renderers do herói ocultos, para separar oclusão de falta de emissão.
                     Restart(feedback);
+                    var hero = player.GetComponentsInChildren<Renderer>(true).Where(value => !(value is ParticleSystemRenderer) && value.enabled).ToArray();
+                    foreach (var value in hero) value.enabled = false;
+                    Assert.IsTrue(player.TryCollect(new LootDrop(LootKind.Gold, 12)));
+                    yield return new WaitForSeconds(.09f); yield return Capture(directory, width + "-loot-gold-hero-hidden.png");
+                    Diagnose(directory, width, "loot-gold-hero-hidden", feedback);
+                    foreach (var value in hero) value.enabled = true;
+                    // Flash 0: cura diagnóstica aceita (HP 65 → 75), aviso visível e nenhuma sheet.
+                    Restart(feedback); options.Current.flash = 0f;
+                    health.Heal(10f); Assert.AreEqual(75f, health.Current);
+                    yield return new WaitForSeconds(.15f); yield return Capture(directory, width + "-flash0-heal.png");
+                    options.Current.flash = 1f; Restart(feedback);
                     player.TryCollect(new LootDrop(LootKind.Xp, 71));
                     Assert.Greater(player.Level, 1); Assert.Greater(feedback.LevelBursts, 0);
                     yield return new WaitForSeconds(.3f); yield return Capture(directory, width + "-level-f5.png");
-                    Restart(feedback); options.Current.flash = 0f;
-                    health.TakeDamage(20f, Vector3.zero); health.Heal(10f);
-                    yield return new WaitForSeconds(.15f); yield return Capture(directory, width + "-flash0-heal.png");
                     Assert.AreEqual(2, feedback.HealingBursts, "potion + diagnostic heal; level heal has no healing sheet");
                 }
             }
@@ -71,6 +82,21 @@ namespace DungeonCrawler.Tests.PlayerInput
             }
         }
         private static void Restart(PlayerRewardFeedback feedback) { feedback.enabled = false; feedback.enabled = true; }
+        /// <summary>Grava contagem, célula e posição de tela dos glints vivos em diagnostics.txt.</summary>
+        private static void Diagnose(string directory, int width, string name, PlayerRewardFeedback feedback)
+        {
+            var effect = feedback.transform.Find("RewardCollection").GetComponent<ParticleSystem>();
+            var particles = new ParticleSystem.Particle[effect.main.maxParticles];
+            int count = effect.GetParticles(particles);
+            var camera = Camera.main; var line = new System.Text.StringBuilder();
+            line.Append($"{width} {name}: particles={count} cell={feedback.LastLootFrame} camera={(camera != null ? camera.name : "null")}");
+            for (int i = 0; i < count; i++)
+            {
+                Vector3 screen = camera != null ? camera.WorldToScreenPoint(particles[i].position) : Vector3.zero;
+                line.Append($" | p{i} world={particles[i].position:F2} screen=({screen.x:F0},{screen.y:F0}) depth={screen.z:F2} alpha={particles[i].GetCurrentColor(effect).a}");
+            }
+            File.AppendAllText(Path.Combine(directory, "diagnostics.txt"), line.AppendLine().ToString());
+        }
         private static IEnumerator Capture(string directory, string name)
         {
             string path = Path.Combine(directory, name);

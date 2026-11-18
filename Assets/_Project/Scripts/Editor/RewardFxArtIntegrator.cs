@@ -38,6 +38,10 @@ namespace DungeonCrawler.Editor
         // FX-LOOT particle_system.positions é texto no contrato: "5 posições fixas num círculo de 0.2 m
         // a 0.15 m do piso, subindo 0.4 m/s". Os demais números vêm dos campos numéricos dos JSONs.
         public const float LootRadius = .2f, LootHeight = .15f, LootRiseSpeed = .4f;
+        /// <summary>Divergência V05 do contrato FX-LOOT (pivô 0,0,0): na câmera real (~19,6 m) o círculo de 0,2 m fica
+        /// inteiro atrás da capa/botas e nenhum glint aparece. Aproxima o quad 0,6 m da câmera no espaço de visão,
+        /// como o FX-LEVEL já faz com z = −0,2; a posição na tela praticamente não muda.</summary>
+        public const float LootTowardCameraMetres = .6f;
 
         /// <summary>Cenas F05 e o segundo andar (F14), cópia do shell de release com o mesmo presenter.</summary>
         public static readonly string[] Scenes = RewardFeedbackSceneBuilder.Scenes.Concat(new[] { SecondFloorSceneBuilder.ScenePath }).ToArray();
@@ -105,8 +109,11 @@ namespace DungeonCrawler.Editor
             var atlas = LoadAtlas(LootAtlasMapPath);
             ValidateAtlas(atlas);
             var particles = atlas.unity_integration_proposal.particle_system;
+            // Pivô do renderer em unidades do tamanho da partícula; na Unity z POSITIVO aproxima da câmera (medido em PlayMode).
+            Vector3 pivot = ToVector(particles.renderer.pivot);
+            pivot.z = LootTowardCameraMetres / particles.start_size_m;
             return new EmitterSpec(atlas.asset_id, LootMaterialPath, LootAtlasPath, atlas.rects.Length, 1, particles.max_particles,
-                particles.start_lifetime_s, particles.start_size_m, false, false, true, ToVector(particles.renderer.pivot));
+                particles.start_lifetime_s, particles.start_size_m, false, false, true, pivot);
         }
 
         private static EmitterSpec SheetSpec(SheetContract sheet, string texturePath, string materialPath)
@@ -116,8 +123,12 @@ namespace DungeonCrawler.Editor
             bool local = particles.simulation_space.StartsWith("Local", StringComparison.OrdinalIgnoreCase);
             if (!local && !particles.simulation_space.StartsWith("World", StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException(sheet.asset_id + ": simulation_space desconhecido: " + particles.simulation_space);
+            // Os contratos escrevem z < 0 com a intenção "aproximar da câmera" e pedem conferir o sinal no Editor.
+            // Medido em PlayMode (BakeMesh): na Unity z negativo AFASTA o quad; por isso o sinal é invertido.
+            Vector3 pivot = ToVector(particles.renderer.pivot);
+            pivot.z = -pivot.z;
             return new EmitterSpec(sheet.asset_id, materialPath, texturePath, sheet.grid.columns, sheet.grid.rows, particles.max_particles,
-                particles.start_lifetime_s, particles.start_size_m, local, true, false, ToVector(particles.renderer.pivot));
+                particles.start_lifetime_s, particles.start_size_m, local, true, false, pivot);
         }
 
         /// <summary>Grade linha a linha a partir do canto superior esquerdo (a mesma ordem do Texture Sheet
