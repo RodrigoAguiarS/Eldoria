@@ -357,7 +357,8 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.AreEqual(defense, health.Defense, .001f);
             Assert.IsTrue(views[0].SelectionFrame.activeSelf, "Selection follows the selected item.");
             Assert.IsFalse(views[3].SelectionFrame.activeSelf);
-            StringAssert.StartsWith("Lâmina do Guardião", details.text);
+            // D-006: the reading column opens with the DETALHES DO ITEM heading, then the selected item name.
+            StringAssert.StartsWith("<b>DETALHES DO ITEM</b>\nLâmina do Guardião", details.text);
             StringAssert.Contains("Equipado", views[2].Label.text);
             StringAssert.DoesNotContain("Equipado", views[1].Label.text);
 

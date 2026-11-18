@@ -271,9 +271,13 @@ namespace DungeonCrawler.Tests.PlayerInput
             var equipment = player.GetComponent<PlayerEquipmentVisualPresenter>();
             Assert.AreSame(Asset<WeaponData>("Weapon_AncientEdge"), equipment.ShownWeapon);
             Assert.AreSame(Asset<ArmorData>("Armor_Leather"), equipment.ShownArmor);
-            Assert.AreEqual(38f, combat.CurrentDamage, .001f, "Shortcut uses the normal rules (+18).");
+            // D-006: the shortcut also equips helmet/gloves/boots/amulet; gloves +2 and amulet +1 join the flat sum.
+            var inventory = player.GetComponent<PlayerInventory>();
+            foreach (EquipmentSlot slot in System.Enum.GetValues(typeof(EquipmentSlot))) Assert.GreaterOrEqual(inventory.GetEquippedIndex(slot), 0, slot.ToString());
+            Assert.AreEqual(41f, combat.CurrentDamage, .001f, "Shortcut uses the normal rules (20 + 18 + 2 + 1).");
+            Assert.AreEqual(10f + 4f + 3f + 2f, player.GetComponent<Health>().Defense, .001f);
             Assert.AreEqual(3, InScene<PotionHudPresenter>().Total);
-            Assert.AreEqual(before + 7, Object.FindObjectsByType<Pickup>().Length);
+            Assert.AreEqual(before + 7 + 4, Object.FindObjectsByType<Pickup>().Length, "One pickup of each new category as well.");
         }
 
         /// <summary>Visual evidence (Game view captures). Not an assertion of art approval.
