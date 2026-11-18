@@ -1,0 +1,241 @@
+{
+  "id": "A13",
+  "resource": "REF-CONCEPT-10",
+  "kind": "fonte de render do conceito 2D (não é malha de produção)",
+  "generator": "Tools/Lemo3DGenerator/src/production/ConceptLancer.mjs",
+  "three": "0.170.0",
+  "family": "Tools/Lemo3DGenerator/src/characters/_skeleton_kit.mjs (mesmo skull/skeletonBody/paleta do SkeletonMelee/Elite)",
+  "palette": {
+    "bone": "#CFC6A8",
+    "boneDark": "#8F8770",
+    "armor": "#3E4152",
+    "rust": "#8A4A22",
+    "socket": "#1E1830",
+    "eyes": "#FF2A2A"
+  },
+  "triangles": 2130,
+  "meshes": 2,
+  "spear": {
+    "butt": -0.3,
+    "shaftEnd": 0.7,
+    "headLen": 0.26,
+    "headW": 0.15,
+    "shaftR": 0.036,
+    "totalLength": 1.28,
+    "note": "visual; não implica hitbox (F13 usa hitRadius 0,75 m ao longo do segmento)"
+  },
+  "poses": {
+    "Guard": {
+      "$hips": [
+        0,
+        -0.12,
+        0
+      ],
+      "Hips": [
+        0,
+        -12,
+        0
+      ],
+      "Spine": [
+        6,
+        -8,
+        0
+      ],
+      "Chest": [
+        6,
+        -14,
+        0
+      ],
+      "Neck": [
+        0,
+        12,
+        0
+      ],
+      "Head": [
+        -6,
+        18,
+        0
+      ],
+      "UpperLeg_L": [
+        -40,
+        10,
+        16
+      ],
+      "LowerLeg_L": [
+        42,
+        0,
+        0
+      ],
+      "Foot_L": [
+        -2,
+        0,
+        -6
+      ],
+      "UpperLeg_R": [
+        23,
+        -10,
+        -18
+      ],
+      "LowerLeg_R": [
+        18,
+        0,
+        0
+      ],
+      "Foot_R": [
+        -1,
+        0,
+        8
+      ],
+      "Shoulder_L": [
+        0,
+        18,
+        0
+      ],
+      "UpperArm_L": [
+        -32,
+        -16,
+        -14
+      ],
+      "LowerArm_L": [
+        -93,
+        0,
+        0
+      ],
+      "Hand_L": [
+        0,
+        0,
+        0
+      ],
+      "UpperArm_R": [
+        34,
+        37,
+        30
+      ],
+      "LowerArm_R": [
+        -63,
+        0,
+        0
+      ],
+      "Hand_R": [
+        10,
+        0,
+        0
+      ]
+    },
+    "Windup": {
+      "$hips": [
+        0,
+        -0.24,
+        -0.05
+      ],
+      "Hips": [
+        10,
+        -20,
+        0
+      ],
+      "Spine": [
+        14,
+        -10,
+        0
+      ],
+      "Chest": [
+        10,
+        -20,
+        0
+      ],
+      "Neck": [
+        -4,
+        16,
+        0
+      ],
+      "Head": [
+        -22,
+        22,
+        0
+      ],
+      "UpperLeg_L": [
+        -68,
+        12,
+        14
+      ],
+      "LowerLeg_L": [
+        74,
+        0,
+        0
+      ],
+      "Foot_L": [
+        -6,
+        0,
+        -6
+      ],
+      "UpperLeg_R": [
+        23,
+        -12,
+        -16
+      ],
+      "LowerLeg_R": [
+        21,
+        0,
+        0
+      ],
+      "Foot_R": [
+        0,
+        0,
+        8
+      ],
+      "Shoulder_L": [
+        0,
+        14,
+        0
+      ],
+      "UpperArm_L": [
+        39,
+        -35,
+        -22
+      ],
+      "LowerArm_L": [
+        -76,
+        0,
+        0
+      ],
+      "Hand_L": [
+        0,
+        0,
+        0
+      ],
+      "UpperArm_R": [
+        10,
+        2,
+        15
+      ],
+      "LowerArm_R": [
+        8,
+        0,
+        0
+      ],
+      "Hand_R": [
+        16,
+        0,
+        0
+      ]
+    },
+    "base": "HUNCH (família)"
+  },
+  "clipsInGlb": [
+    {
+      "name": "Guard",
+      "groundLift": 0.138,
+      "note": "pose estática de render, não clip de produção"
+    },
+    {
+      "name": "Windup",
+      "groundLift": 0.197,
+      "note": "pose estática de render, não clip de produção"
+    },
+    {
+      "name": "Bind",
+      "groundLift": 0.038,
+      "note": "pose estática de render, não clip de produção"
+    }
+  ]
+}

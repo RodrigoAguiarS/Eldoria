@@ -1,0 +1,244 @@
+{
+  "id": "A13",
+  "resource": "REF-CONCEPT-10",
+  "ok": true,
+  "passed": 13,
+  "total": 13,
+  "scope": "análise de imagem e medidas do render fora da Unity; importação no Editor NÃO VALIDADA",
+  "checks": [
+    {
+      "item": "formato PNG 2048x1536",
+      "ok": true,
+      "detail": "(2048, 1536), modo RGBA, alpha mínimo 255"
+    },
+    {
+      "item": "opaco (publicado em RGB sem alpha)",
+      "ok": true,
+      "detail": "canvas totalmente opaco; publicação converte para RGB"
+    },
+    {
+      "item": "fundo neutro (cinza, sem matiz)",
+      "ok": true,
+      "detail": "croma máximo 6 em 7 amostras; centro #27282D (alvo #2B2C31 antes da vinheta)"
+    },
+    {
+      "item": "paleta da ficha nos materiais",
+      "ok": true,
+      "detail": "{\"bone\": \"#CFC6A8\", \"armor\": \"#3E4152\", \"rust\": \"#8A4A22\", \"eyes\": \"#FF2A2A\"}"
+    },
+    {
+      "item": "olhos vermelhos visíveis",
+      "ok": true,
+      "detail": "136 px vermelhos saturados (só olhos são emissivos)"
+    },
+    {
+      "item": "frente/lado/costas com a mesma altura",
+      "ok": true,
+      "detail": "alturas [1.763, 1.761, 1.763] m; topo do crânio y [164, 164, 164] px; 380 px/m"
+    },
+    {
+      "item": "frente e costas espelhadas (mesma largura)",
+      "ok": true,
+      "detail": "0.716 / 0.716 m"
+    },
+    {
+      "item": "lança à frente na guarda (desvio horizontal ≤ 15°)",
+      "ok": true,
+      "detail": "desvio 3.5°, inclinação 10.1° para cima, mãos a 0.517 m"
+    },
+    {
+      "item": "windup na mesma linha reta (desvio ≤ 15°)",
+      "ok": true,
+      "detail": "desvio 12.1°, mãos a 0.333 m, lança recolhida 0.43 m"
+    },
+    {
+      "item": "windup mais baixo que a guarda, mesmas proporções",
+      "ok": true,
+      "detail": "1.6 m vs 1.761 m (mesma malha/escala; só a pose muda)"
+    },
+    {
+      "item": "ponta da lança perto do raio de contato F13",
+      "ok": true,
+      "detail": "ponta a 0.92 m do pivô na guarda, 0.68 m no windup; hitRadius 0.75 m (excesso visual +0.17 m)"
+    },
+    {
+      "item": "silhueta 128 px distinta da família",
+      "ok": true,
+      "detail": "guarda: proporção L/A 0.91; IoU máx 0.54; SkeletonMelee:Idle IoU 0.472 L/A 0.473; SkeletonMelee:Attack IoU 0.393 L/A 0.758; SkeletonElite:Idle IoU 0.501 L/A 0.516; SkeletonRanged:Idle IoU 0.49 L/A 0.5; Hero:Idle IoU 0.536 L/A 0.488"
+    },
+    {
+      "item": "windup distinguível da guarda a 128 px",
+      "ok": true,
+      "detail": "IoU guarda×windup 0.49"
+    }
+  ],
+  "silhouette128": [
+    {
+      "vs": "SkeletonMelee:Idle",
+      "iou": 0.472,
+      "aspect": 0.473
+    },
+    {
+      "vs": "SkeletonMelee:Attack",
+      "iou": 0.393,
+      "aspect": 0.758
+    },
+    {
+      "vs": "SkeletonElite:Idle",
+      "iou": 0.501,
+      "aspect": 0.516
+    },
+    {
+      "vs": "SkeletonRanged:Idle",
+      "iou": 0.49,
+      "aspect": 0.5
+    },
+    {
+      "vs": "Hero:Idle",
+      "iou": 0.536,
+      "aspect": 0.488
+    }
+  ],
+  "measures": {
+    "sheet": [
+      {
+        "id": "front",
+        "clip": "Guard",
+        "ppm": 380,
+        "meters": {
+          "h": 1.763,
+          "w": 0.716
+        },
+        "px": {
+          "x0": 144,
+          "y0": 164,
+          "x1": 415,
+          "y1": 833,
+          "w": 272,
+          "h": 670,
+          "area": 98469
+        }
+      },
+      {
+        "id": "side",
+        "clip": "Guard",
+        "ppm": 380,
+        "meters": {
+          "h": 1.761,
+          "w": 1.374
+        },
+        "px": {
+          "x0": 206,
+          "y0": 164,
+          "x1": 727,
+          "y1": 832,
+          "w": 522,
+          "h": 669,
+          "area": 103507
+        }
+      },
+      {
+        "id": "back",
+        "clip": "Guard",
+        "ppm": 380,
+        "meters": {
+          "h": 1.763,
+          "w": 0.716
+        },
+        "px": {
+          "x0": 144,
+          "y0": 164,
+          "x1": 415,
+          "y1": 833,
+          "w": 272,
+          "h": 670,
+          "area": 98409
+        }
+      },
+      {
+        "id": "iso45",
+        "clip": "Guard",
+        "ppm": 300,
+        "meters": {
+          "h": 1.213,
+          "w": 1.103
+        },
+        "px": {
+          "x0": 176,
+          "y0": 114,
+          "x1": 506,
+          "y1": 477,
+          "w": 331,
+          "h": 364,
+          "area": 51929
+        }
+      },
+      {
+        "id": "windup_side",
+        "clip": "Windup",
+        "ppm": 300,
+        "meters": {
+          "h": 1.6,
+          "w": 1.41
+        },
+        "px": {
+          "x0": 135,
+          "y0": 55,
+          "x1": 557,
+          "y1": 534,
+          "w": 423,
+          "h": 480,
+          "area": 66413
+        }
+      }
+    ],
+    "grip": {
+      "guard": {
+        "R": [
+          0.014,
+          0.883,
+          -0.043
+        ],
+        "L": [
+          0.045,
+          0.974,
+          0.465
+        ],
+        "gap": 0.517,
+        "tip": [
+          0.073,
+          1.056,
+          0.92
+        ],
+        "dir": [
+          0.06,
+          0.176,
+          0.983
+        ]
+      },
+      "windup": {
+        "R": [
+          -0.037,
+          0.811,
+          -0.291
+        ],
+        "L": [
+          0.033,
+          0.778,
+          0.034
+        ],
+        "gap": 0.333,
+        "tip": [
+          0.168,
+          0.714,
+          0.663
+        ],
+        "dir": [
+          0.209,
+          -0.099,
+          0.973
+        ]
+      }
+    }
+  }
+}

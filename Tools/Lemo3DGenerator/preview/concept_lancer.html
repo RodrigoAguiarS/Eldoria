@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<title>A13 Lancer Sheet</title>
+<!-- A13 — folha de conceito do lanceiro corrompido. Servir com:
+       node preview/server.mjs --out "<projeto>/Assets/_Project/Art"
+     e abrir /concept_lancer.html?mode=sheet | ?mode=review | ?mode=scale. Cada modo grava PNG (+ JSON de medidas)
+     em preview/captures via POST /save. É render 2D de conceito: nenhum arquivo do jogo é escrito. -->
+<style>body{margin:0;background:#202125;color:#ddd;font:13px system-ui}#log{padding:12px;white-space:pre}</style>
+<script type="importmap">{"imports":{"three":"/lemo/node_modules/three/build/three.module.js","three/addons/":"/lemo/node_modules/three/examples/jsm/"}}</script>
+</head><body><div id="log">renderizando…</div>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const q = new URLSearchParams(location.search), MODE = q.get('mode') || 'sheet';
+const D = Math.PI / 180, log = t => { document.getElementById('log').textContent += '\n' + t; };
+const BG = '#2B2C31', CARD = '#C4C5C9';
+const FILES = {
+  Lancer: '/out/Concepts/Source~/SkeletonLancer/SkeletonLancer_render.glb',
+  SkeletonMelee: '/out/Models/Generated/SkeletonMelee/SkeletonMelee.glb',
+  SkeletonElite: '/out/Models/Generated/SkeletonElite/SkeletonElite.glb',
+  SkeletonRanged: '/out/Models/Generated/SkeletonRanged/SkeletonRanged.glb',
+  Hero: '/out/Models/Generated/Hero/Hero.glb',
+};
+const loader = new GLTFLoader(), cache = {};
+const load = async n => cache[n] ??= await loader.loadAsync(FILES[n]);
+
+// ---------- cena: luz da família (hemisférica lua/sombra, key fria seguindo a câmera, contorno quente de tocha)
+const scene = new THREE.Scene();
+const hemi = new THREE.HemisphereLight('#9FB8FF', '#1E1830', 1.15); scene.add(hemi);
+const key = new THREE.DirectionalLight('#DCE4FF', 2.7); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+Object.assign(key.shadow.camera, { left: -3, right: 3, top: 3, bottom: -3, near: .1, far: 40 }); key.shadow.bias = -.0004; scene.add(key, key.target);
+const rim = new THREE.DirectionalLight('#FF9A2E', 1.7); scene.add(rim, rim.target);
+const catcher = new THREE.Mesh(new THREE.PlaneGeometry(12, 12), new THREE.ShadowMaterial({ opacity: .38 }));
+catcher.rotation.x = -Math.PI / 2; catcher.receiveShadow = true; scene.add(catcher);
+const black = new THREE.MeshBasicMaterial({ color: '#000000' });
+
+let current = null;
+// instancia um modelo numa pose (clip/tempo); para o lanceiro, reorienta a lança da mão direita para a esquerda
+async function pose(name, clip, t = .1) {
+  unpose();
+  const g = await load(name), root = g.scene; root.position.set(0, 0, 0); root.rotation.set(0, 0, 0);
+  root.traverse(o => { if (o.isMesh) { o.castShadow = true; o.frustumCulled = false; } });
+  scene.add(root); current = root;
+  const mixer = new THREE.AnimationMixer(root), c = g.animations.find(a => a.name === clip) || g.animations[0];
+  const act = mixer.clipAction(c); act.play(); mixer.setTime(Math.min(t, c.duration - 1e-3)); root.updateMatrixWorld(true);
+  // a lança sai da hierarquia na primeira pose (vai para a cena); a referência fica no gltf para as poses seguintes
+  const spear = g.userData.spear ??= root.getObjectByName('SkeletonLancer_Spear');
+  if (spear) {
+    const R = new THREE.Vector3(), L = new THREE.Vector3();
+    root.getObjectByName('Socket_Hand_R').getWorldPosition(R); root.getObjectByName('Socket_Hand_L').getWorldPosition(L);
+    if (spear.parent) spear.parent.remove(spear); scene.add(spear); spear.rotation.set(0, 0, 0); spear.scale.set(1, 1, 1); spear.position.copy(R); spear.up.set(0, 1, 0); spear.lookAt(L); spear.updateMatrixWorld(true);
+    let maxZ = -1e9; spear.traverse(o => { if (o.isMesh) { o.geometry.computeBoundingBox(); maxZ = Math.max(maxZ, o.geometry.boundingBox.max.z); } });
+    const tip = spear.localToWorld(new THREE.Vector3(0, 0, maxZ)), dir = new THREE.Vector3().subVectors(L, R).normalize();
+    root.userData.spear = spear;
+    root.userData.grip = { R: R.toArray().map(v => +v.toFixed(3)), L: L.toArray().map(v => +v.toFixed(3)), gap: +R.distanceTo(L).toFixed(3), tip: tip.toArray().map(v => +v.toFixed(3)), dir: dir.toArray().map(v => +v.toFixed(3)) };
+  }
+  return root;
+}
+function unpose() { if (current) { scene.remove(current); if (current.userData.spear) scene.remove(current.userData.spear); current = null; } }
+function bounds() { const b = new THREE.Box3(); b.expandByObject(current); if (current.userData.spear) b.expandByObject(current.userData.spear); return b; }
+
+// ---------- render de um painel ortográfico com escala fixa (px por metro) — mesma câmera para todas as vistas
+const ren = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+ren.shadowMap.enabled = true; ren.shadowMap.type = THREE.PCFSoftShadowMap; ren.outputColorSpace = THREE.SRGBColorSpace; ren.toneMapping = THREE.NeutralToneMapping;
+function camFor(yaw, elev, W, H, ppm, baseline) {
+  const b = bounds(), c = b.getCenter(new THREE.Vector3());
+  const dir = new THREE.Vector3(Math.sin(yaw * D) * Math.cos(elev * D), Math.sin(elev * D), Math.cos(yaw * D) * Math.cos(elev * D));
+  const cam = new THREE.OrthographicCamera(-W / 2 / ppm, W / 2 / ppm, H / 2 / ppm, -H / 2 / ppm, .1, 60);
+  if (elev === 0 && baseline != null) {   // vistas planas: chão (y 0) sempre na mesma linha de base → alturas comparáveis
+    const look = new THREE.Vector3(c.x, 0, c.z); cam.position.copy(look).addScaledVector(dir, 20); cam.lookAt(look);
+    cam.bottom = -baseline / ppm; cam.top = (H - baseline) / ppm;
+  } else { cam.position.copy(c).addScaledVector(dir, 20); cam.lookAt(c); }
+  cam.updateProjectionMatrix();
+  // key fria acima-esquerda da câmera; contorno quente de trás-direita
+  const right = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize();
+  key.position.copy(c).addScaledVector(dir, 8).addScaledVector(right, 5).add(new THREE.Vector3(0, 9, 0)); key.target.position.copy(c);
+  rim.position.copy(c).addScaledVector(dir, -8).addScaledVector(right, -5).add(new THREE.Vector3(0, 4, 0)); rim.target.position.copy(c);
+  return cam;
+}
+// Render com fundo transparente + brilho 2D só dos materiais emissivos (olhos): o fundo da folha fica exatamente
+// no cinza neutro pedido, sem passar pelo tone mapping, e o brilho não vaza para o resto.
+const glowBlack = new THREE.MeshBasicMaterial({ color: '#000000' });
+function swapForGlow(on) {
+  scene.traverse(o => {
+    if (!o.isMesh || o === catcher) return;
+    if (on) { o.userData.mats = o.material; const arr = Array.isArray(o.material) ? o.material : [o.material];
+      const rep = arr.map(m => (m.emissive && m.emissiveIntensity > 0 && m.emissive.getHex() !== 0) ? new THREE.MeshBasicMaterial({ color: m.emissive.clone().multiplyScalar(1.2) }) : glowBlack);
+      o.material = Array.isArray(o.material) ? rep : rep[0]; }
+    else if (o.userData.mats) { o.material = o.userData.mats; delete o.userData.mats; }
+  });
+}
+function shot(cam, W, H, { silhouette = false, bg = BG } = {}) {
+  ren.setSize(W, H, false);
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H; const cx = cv.getContext('2d');
+  cx.fillStyle = silhouette ? CARD : bg; cx.fillRect(0, 0, W, H);
+  scene.background = null; ren.setClearColor(0x000000, 0);
+  if (silhouette) {
+    scene.overrideMaterial = black; catcher.visible = false; ren.toneMapping = THREE.NoToneMapping; ren.render(scene, cam);
+    cx.drawImage(ren.domElement, 0, 0, W, H); scene.overrideMaterial = null; catcher.visible = true; ren.toneMapping = THREE.NeutralToneMapping;
+    return cv;
+  }
+  ren.render(scene, cam); cx.drawImage(ren.domElement, 0, 0, W, H);
+  // passe de brilho
+  catcher.visible = false; swapForGlow(true); scene.background = new THREE.Color('#000000'); ren.toneMapping = THREE.NoToneMapping;
+  ren.render(scene, cam); swapForGlow(false); catcher.visible = true; scene.background = null; ren.toneMapping = THREE.NeutralToneMapping;
+  cx.save(); cx.globalCompositeOperation = 'lighter';
+  for (const [r, a] of [[Math.max(6, W / 70), .9], [Math.max(2, W / 260), .6]]) { cx.filter = `blur(${r}px)`; cx.globalAlpha = a; cx.drawImage(ren.domElement, 0, 0, W, H); }
+  cx.restore();
+  return cv;
+}
+// caixa de pixels ocupados pelo personagem num painel de silhueta (para medir altura/largura/área)
+function measure(cv) {
+  const d = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data; let x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1, n = 0;
+  for (let y = 0; y < cv.height; y++) for (let x = 0; x < cv.width; x++) { const i = (y * cv.width + x) * 4; if (d[i] < 60) { n++; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } }
+  return { x0, y0, x1, y1, w: x1 - x0 + 1, h: y1 - y0 + 1, area: n };
+}
+async function save(name, cv) { await fetch('/save?name=' + name, { method: 'POST', body: cv.toDataURL('image/png') }); log('salvo ' + name); }
+async function saveJson(name, obj) { const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(obj, null, 2)))); await fetch('/save?name=' + name, { method: 'POST', body: 'data:application/json;base64,' + b64 }); log('salvo ' + name); }
+
+const ISO = { yaw: -40, elev: 45 };      // mesma vista isométrica das folhas da família (PROVENANCE, Task 01)
+const report = { mode: MODE, panels: [] };
+
+if (MODE === 'sheet') {
+  // 2048×1536, sem rótulos. Linha 1: frente | lado | costas (ortográficas, 380 px/m, chão na mesma linha).
+  // Linha 2: 45° isométrica de jogo | pose de windup (lado) | silhuetas pretas (45° guarda e windup) num cartão neutro.
+  const S = document.createElement('canvas'); S.width = 2048; S.height = 1536; const sx = S.getContext('2d');
+  sx.fillStyle = BG; sx.fillRect(0, 0, 2048, 1536);
+  const PPM1 = 380, BASE1 = 96, PPM2 = 300;
+  const panels = [
+    { id: 'front', clip: 'Guard', yaw: 0, elev: 0, x: 0, y: 0, w: 560, h: 930, ppm: PPM1, base: BASE1 },
+    { id: 'side', clip: 'Guard', yaw: 90, elev: 0, x: 560, y: 0, w: 928, h: 930, ppm: PPM1, base: BASE1 },
+    { id: 'back', clip: 'Guard', yaw: 180, elev: 0, x: 1488, y: 0, w: 560, h: 930, ppm: PPM1, base: BASE1 },
+    { id: 'iso45', clip: 'Guard', ...ISO, x: 0, y: 930, w: 720, h: 606, ppm: PPM2 },
+    { id: 'windup_side', clip: 'Windup', yaw: 90, elev: 0, x: 720, y: 930, w: 720, h: 606, ppm: PPM2, base: 70 },
+  ];
+  for (const p of panels) {
+    await pose('Lancer', p.clip); const cam = camFor(p.yaw, p.elev, p.w, p.h, p.ppm, p.base);
+    sx.drawImage(shot(cam, p.w, p.h), p.x, p.y);
+    const m = measure(shot(cam, p.w, p.h, { silhouette: true }));
+    report.panels.push({ id: p.id, clip: p.clip, ppm: p.ppm, px: m, meters: { h: +(m.h / p.ppm).toFixed(3), w: +(m.w / p.ppm).toFixed(3) }, grip: current.userData.grip });
+  }
+  // cartão de silhuetas (preto sólido): 45° guarda e 45° windup, mesma escala
+  sx.fillStyle = CARD; sx.fillRect(1464, 954, 560, 558);
+  for (const [i, clip] of ['Guard', 'Windup'].entries()) {
+    await pose('Lancer', clip); const w = 272, h = 540; const cam = camFor(ISO.yaw, ISO.elev, w, h, 205);
+    sx.drawImage(shot(cam, w, h, { silhouette: true }), 1468 + i * 280, 963);
+  }
+  // vinheta leve (uniforme sobre a folha inteira, sem emendas entre painéis)
+  const vg = sx.createRadialGradient(1024, 700, 500, 1024, 768, 1400); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.35)');
+  sx.fillStyle = vg; sx.fillRect(0, 0, 2048, 1536);
+  unpose(); await save('SkeletonLancer_Concept_01.png', S); await saveJson('sheet_measure.json', report);
+}
+
+if (MODE === 'review') {
+  // Silhuetas a 128 px de altura na câmera de jogo 45°: família normalizada (forma) e escala relativa (melee = 128 px).
+  const items = [['Lancer', 'Guard'], ['Lancer', 'Windup'], ['SkeletonMelee', 'Idle'], ['SkeletonMelee', 'Attack', .35], ['SkeletonElite', 'Idle'], ['SkeletonRanged', 'Idle'], ['Hero', 'Idle']];
+  const cell = 200, rows = 2, S = document.createElement('canvas'); S.width = cell * items.length; S.height = cell * rows; const sx = S.getContext('2d');
+  sx.fillStyle = CARD; sx.fillRect(0, 0, S.width, S.height);
+  // escala que deixa o melee Idle com 128 px de altura nesta câmera
+  await pose('SkeletonMelee', 'Idle', .3); const ref = measure(shot(camFor(ISO.yaw, ISO.elev, 400, 400, 100), 400, 400, { silhouette: true }));
+  const ppmRel = 100 * 128 / ref.h;
+  report.masks = {};
+  for (const [i, [n, clip, t]] of items.entries()) {
+    await pose(n, clip, t ?? .3);
+    const big = measure(shot(camFor(ISO.yaw, ISO.elev, 600, 600, 100), 600, 600, { silhouette: true }));
+    const ppmN = 100 * 128 / big.h;                                  // linha 1: cada um normalizado a 128 px de altura
+    const a = shot(camFor(ISO.yaw, ISO.elev, cell, cell, ppmN), cell, cell, { silhouette: true }); sx.drawImage(a, i * cell, 0);
+    const b = shot(camFor(ISO.yaw, ISO.elev, cell, cell, ppmRel), cell, cell, { silhouette: true }); sx.drawImage(b, i * cell, cell);   // linha 2: escala real relativa
+    const ma = measure(a), mb = measure(b);
+    report.panels.push({ model: n, clip, normalized128: ma, relative: mb });
+    // máscara normalizada (para IoU no checador): 1 bit por pixel, linha 1
+    const d = a.getContext('2d').getImageData(0, 0, cell, cell).data; let bits = '';
+    for (let k = 0; k < cell * cell; k++) bits += d[k * 4] < 60 ? '1' : '0';
+    report.masks[`${n}:${clip}`] = bits;
+  }
+  unpose(); report.cell = cell; report.note = 'linha 1: cada silhueta normalizada a 128 px de altura; linha 2: escala relativa com SkeletonMelee Idle = 128 px';
+  await save('review_silhouette_128.png', S); await saveJson('review_measure.json', report);
+}
+
+if (MODE === 'scale') {
+  // Escala com o herói e a família (cor, 45°): Hero · Lancer guarda · SkeletonMelee · SkeletonElite (1,4×)
+  const items = [['Hero', 'Idle', 0], ['Lancer', 'Guard', 0], ['SkeletonMelee', 'Idle', 0], ['SkeletonElite', 'Idle', 0]];
+  const w = 1600, h = 760, S = document.createElement('canvas'); S.width = w; S.height = h; const sx = S.getContext('2d');
+  // um único render com todos lado a lado (instâncias clonadas na mesma cena)
+  const group = [];
+  let x = -3.0;
+  for (const [n, clip] of items) {
+    const r = await pose(n, clip, .3); current = null; r.position.x = x; r.updateMatrixWorld(true);
+    if (r.userData.spear) { r.userData.spear.position.x += x; r.userData.spear.updateMatrixWorld(true); }
+    group.push(r); x += n === 'Lancer' ? 2.1 : 1.8;
+  }
+  const holder = new THREE.Group(); group.forEach(r => holder.add(r)); group.forEach(r => r.userData.spear && holder.add(r.userData.spear)); scene.add(holder);
+  current = holder; const cam = camFor(ISO.yaw, ISO.elev, w, h, 150);
+  sx.drawImage(shot(cam, w, h), 0, 0); scene.remove(holder); current = null;
+  await save('review_scale.png', S);
+}
+log('fim'); document.title = 'DONE ' + MODE;
+</script></body></html>
