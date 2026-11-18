@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="5" result="Failed(Child)" total="5" passed="4" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0,6191856">
+  <test-suite type="TestSuite" id="1000" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="345" result="Failed" site="Child" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0.619186" total="5" passed="4" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1420" name="DungeonCrawler.Tests.EditMode.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.EditMode.dll" runstate="Runnable" testcasecount="345" result="Failed" site="Child" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0.604721" total="5" passed="4" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="13660" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1421" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="345" result="Failed" site="Child" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0.600267" total="5" passed="4" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1422" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="345" result="Failed" site="Child" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0.593954" total="5" passed="4" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1423" name="EditMode" fullname="DungeonCrawler.Tests.EditMode" runstate="Runnable" testcasecount="345" result="Failed" site="Child" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0.587720" total="5" passed="4" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1141" name="GearArtTests" fullname="DungeonCrawler.Tests.EditMode.GearArtTests" classname="DungeonCrawler.Tests.EditMode.GearArtTests" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0.579613" total="5" passed="4" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1142" name="EachGearItem_HasItsOwnIconAndGroundModelInTheCatalog" fullname="DungeonCrawler.Tests.EditMode.GearArtTests.EachGearItem_HasItsOwnIconAndGroundModelInTheCatalog" methodname="EachGearItem_HasItsOwnIconAndGroundModelInTheCatalog" classname="DungeonCrawler.Tests.EditMode.GearArtTests" runstate="Runnable" seed="1913443386" result="Passed" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0.031634" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1145" name="GearStats_AreUnchangedByTheArt" fullname="DungeonCrawler.Tests.EditMode.GearArtTests.GearStats_AreUnchangedByTheArt" methodname="GearStats_AreUnchangedByTheArt" classname="DungeonCrawler.Tests.EditMode.GearArtTests" runstate="Runnable" seed="586417018" result="Passed" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0.002013" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1143" name="GroundPrefabs_UseTheirFbxMeshWithUrpLitMaterialsAndNoColliders" fullname="DungeonCrawler.Tests.EditMode.GearArtTests.GroundPrefabs_UseTheirFbxMeshWithUrpLitMaterialsAndNoColliders" methodname="GroundPrefabs_UseTheirFbxMeshWithUrpLitMaterialsAndNoColliders" classname="DungeonCrawler.Tests.EditMode.GearArtTests" runstate="Runnable" seed="1833360173" result="Passed" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0.021990" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1146" name="ReapplyingBothItemIntegrators_KeepsGearAndCombatArtByteIdentical" fullname="DungeonCrawler.Tests.EditMode.GearArtTests.ReapplyingBothItemIntegrators_KeepsGearAndCombatArtByteIdentical" methodname="ReapplyingBothItemIntegrators_KeepsGearAndCombatArtByteIdentical" classname="DungeonCrawler.Tests.EditMode.GearArtTests" runstate="Runnable" seed="1274813473" result="Failed" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0.494377" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Re-running ITEMS-GEAR changes nothing.
+  String lengths are both 3984. Strings differ at index 833.
+  Expected: "...und_Item_LeatherGloves.prefab=02-49-01-24-FD-69-49-9A-E1-3..."
+  But was:  "...und_Item_LeatherGloves.prefab=52-E6-12-DF-5C-E4-49-62-8B-5..."
+  --------------------------------------------^
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.EditMode.GearArtTests.ReapplyingBothItemIntegrators_KeepsGearAndCombatArtByteIdentical () [0x0007c] in G:\DungeonCrawler\My project\Assets\_Project\Tests\EditMode\GearArtTests.cs:95
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[ITEMS-GEAR] Integração concluída: 0 arquivo(s) atualizados de staging; 4 entradas no catálogo.
+]]></output>
+              </test-case>
+              <test-case id="1144" name="SharedMaterials_AreReusedAndOnlyCopperIsNew" fullname="DungeonCrawler.Tests.EditMode.GearArtTests.SharedMaterials_AreReusedAndOnlyCopperIsNew" methodname="SharedMaterials_AreReusedAndOnlyCopperIsNew" classname="DungeonCrawler.Tests.EditMode.GearArtTests" runstate="Runnable" seed="817913386" result="Passed" start-time="2026-11-18 20:39:49Z" end-time="2026-11-18 20:39:49Z" duration="0.003010" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
