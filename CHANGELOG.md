@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-17 — Tarefas de integração e validação V01–V21
+
+- Catálogo com 21 tarefas e prompts completos para outro modelo executar: baseline/PRs e regressões, integração A01–A12, avaliação e produção condicional de conteúdo, validação Editor/Windows/save, playtest, desempenho, empacotamento e teste externo.
+- NEXT_STEPS passa a apontar para a fila V; briefs F/A e registros de entrega preservados como contexto. AGENTS inclui a rota de leitura por ID. Aprovação de arte/escopo e merge continuam com o usuário; nenhum trabalho opcional foi aprovado implicitamente.
+- Escopo desta alteração: documentação. Nenhuma feature/asset foi criada ou integrada, teste Unity rodado ou aceite humano declarado. Worktree separada da A15 em andamento; validação executada apenas sobre documentos e referências.
+
 ## 2026-11-17 — F15: Sentinela de Pedra experimental
 
 - Boss de primitivas com uma fase, leque frontal travado, aviso ≥1 s, impacto
