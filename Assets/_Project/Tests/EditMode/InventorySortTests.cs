@@ -125,8 +125,10 @@ namespace DungeonCrawler.Tests.EditMode
             Assert.AreEqual(4, model.Slots[1].Count);
             Assert.AreEqual(3, model.Slots[2].Count);
             Assert.IsTrue(model.TryEquip(0));
-            Assert.IsFalse(model.TrySort(out _), "Potions already ordered; the equipped sword is not in the bag.");
+            Assert.IsTrue(model.TrySort(out _), "The freed first slot is compacted; the equipped sword is not in the bag.");
             Assert.AreSame(sword, model.EquippedWeapon);
+            Assert.AreEqual(4, model.Slots[0].Count); Assert.AreEqual(3, model.Slots[1].Count);
+            Assert.IsFalse(model.Slots.Any(s => s.Definition == sword), "Sorting never pulls equipment back into the bag.");
         }
 
         [Test]

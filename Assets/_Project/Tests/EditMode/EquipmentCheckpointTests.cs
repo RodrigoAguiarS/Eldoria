@@ -60,7 +60,7 @@ namespace DungeonCrawler.Tests.EditMode
         private RunCheckpointData V5()
         {
             var data = Base(RunCheckpointData.CurrentVersion);
-            data.slots = new[] { Slot("helmet"), Slot("potion", 2, 15), Slot(""), Slot(""), Slot(""), Slot(""), Slot(""), Slot("") };
+            data.slots = new[] { Slot("helmet"), Slot("potion", 2, 15), Slot("", 0), Slot("", 0), Slot("", 0), Slot("", 0), Slot("", 0), Slot("", 0) };
             data.weaponIndex = -1; data.armorIndex = -1; data.gearIndices = Array.Empty<int>();
             data.equipment = new[] { "weapon", "armor", "helmet", "gloves", "boots", "accessory" };
             data.pickups = new[] { new CheckpointPickup { id = Guid.NewGuid().ToString("N"), itemId = "gloves", kind = LootKind.Gear,
@@ -171,11 +171,14 @@ namespace DungeonCrawler.Tests.EditMode
                     data.pickups = new[] { new CheckpointPickup { id = Guid.NewGuid().ToString("N"), itemId = "gloves", kind = LootKind.Gear,
                         position = new Vector3(2f, .6f, 3f), persistent = true } };
                     break;
-                case "v4EmptySlotBound": data.slots[6] = Slot(""); break;
+                case "v4EmptySlotBound": data.slots[6] = Slot("", 0); break;
             }
             Assert.IsFalse(catalog.Validate(data, out _), scenario);
-            Assert.IsFalse(catalog.TryGetLoadout(data, out var bag, out var equipped), scenario);
-            Assert.IsNull(bag); Assert.IsNull(equipped);
+            if (scenario != "gearPickupInV3") // world loot is validated by Validate; the loadout itself is legal there
+            {
+                Assert.IsFalse(catalog.TryGetLoadout(data, out var bag, out var equipped), scenario);
+                Assert.IsNull(bag); Assert.IsNull(equipped);
+            }
             Directory.CreateDirectory(directory);
             File.WriteAllText(store.Path, JsonUtility.ToJson(data));
             Assert.IsFalse(store.TryLoad(catalog, out var loaded, out _)); Assert.IsNull(loaded);

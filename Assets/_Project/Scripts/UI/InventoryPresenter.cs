@@ -73,7 +73,12 @@ namespace DungeonCrawler.UI
             notice = null;
             Refresh();
             if (readingScroll != null) readingScroll.verticalNormalizedPosition = 1f;
-            if (eventSystem != null && slots.Length > 0) eventSystem.SetSelectedGameObject(slots[selected].Button.gameObject);
+            if (eventSystem == null) return;
+            // Focus returns to the current selection: the equipment slot when one is selected, otherwise the bag slot.
+            EquipmentSlotView selectedView = null;
+            foreach (EquipmentSlotView view in equipmentSlots) if (view != null && (int)view.Slot == selectedSlot) selectedView = view;
+            if (selectedView != null) eventSystem.SetSelectedGameObject(selectedView.Button.gameObject);
+            else if (slots.Length > 0) eventSystem.SetSelectedGameObject(slots[selected].Button.gameObject);
         }
         private void OnDisable()
         {
