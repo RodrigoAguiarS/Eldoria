@@ -1,0 +1,173 @@
+{
+  "id": "FX-PROJECTILE",
+  "batch": "A08",
+  "name": "FX-PROJECTILE-Core",
+  "generator": "Tools/Lemo3DGenerator/src/production/FxProjectileCore.mjs",
+  "three": "0.170.0",
+  "lemoRoot": "G:/lemo-opuscar/lemo-opuscar",
+  "node": "v24.18.0",
+  "units": "metros, +Y para cima, +Z frente (direção de voo: Projectile.Launch usa LookRotation(direção)), pivô no centro",
+  "shape": {
+    "envelopeRadius": 0.2,
+    "shellRadius": [
+      0.19,
+      0.2
+    ],
+    "shellDirections": 1,
+    "rimRadius": 0.194,
+    "rimStepDeg": 30,
+    "coreRadius": 0.172,
+    "coreJitter": 0.008,
+    "coreRotationDeg": [
+      17,
+      31,
+      9
+    ],
+    "fissures": [
+      {
+        "name": "spine",
+        "normal": [
+          1,
+          0,
+          0
+        ],
+        "d": 0,
+        "halfGap": 0.05
+      },
+      {
+        "name": "brow",
+        "normal": [
+          0,
+          0.34,
+          1
+        ],
+        "d": 0.05,
+        "halfGap": 0.03
+      }
+    ],
+    "seed": 8
+  },
+  "palette": {
+    "iron": {
+      "cell": [
+        0,
+        0
+      ],
+      "base": "#3E4152",
+      "emission": "#000000",
+      "note": "ferro escuro (pedra/ferro oficial #3E4152)"
+    },
+    "fissureWall": {
+      "cell": [
+        1,
+        0
+      ],
+      "base": "#8A4A22",
+      "emission": "#8A4A22",
+      "note": "parede da fenda: ferrugem #8A4A22 com emissão média (alarga a leitura da fenda)"
+    },
+    "ember": {
+      "cell": [
+        0,
+        1
+      ],
+      "base": "#FF9A2E",
+      "emission": "#FF9A2E",
+      "note": "brasa (laranja de ameaça oficial #FF9A2E)"
+    },
+    "spare": {
+      "cell": [
+        1,
+        1
+      ],
+      "base": "#3E4152",
+      "emission": "#000000",
+      "note": "reserva (= ferro)"
+    }
+  },
+  "material": {
+    "name": "FX-PROJECTILE-Core",
+    "shader": "Universal Render Pipeline/Lit",
+    "surface": "Opaque",
+    "baseMap": "FX-PROJECTILE-Core_Base.png",
+    "baseColor": "#FFFFFF",
+    "emissionMap": "FX-PROJECTILE-Core_Emission.png",
+    "emissionColorHDR": [
+      1,
+      1,
+      1
+    ],
+    "keyword": "_EMISSION",
+    "metallic": 0.2,
+    "smoothness": 0.35,
+    "note": "Uma instância compartilhada por todos os projéteis do pool (nenhuma cópia por tiro). GI de emissão: None."
+  },
+  "pieces": [
+    {
+      "name": "plate_Rfront",
+      "triangles": 28,
+      "signedVolume": 0.0015899
+    },
+    {
+      "name": "plate_Rrear",
+      "triangles": 40,
+      "signedVolume": 0.0049871
+    },
+    {
+      "name": "plate_Lfront",
+      "triangles": 28,
+      "signedVolume": 0.0014979
+    },
+    {
+      "name": "plate_Lrear",
+      "triangles": 40,
+      "signedVolume": 0.0049577
+    },
+    {
+      "name": "ember_core",
+      "triangles": 20,
+      "signedVolume": 0.0129328
+    }
+  ],
+  "triangles": 156,
+  "fbx": {
+    "file": "FX-PROJECTILE-Core.fbx",
+    "polygons": 156,
+    "controlPoints": 88,
+    "materials": 1,
+    "textures": [
+      "FX-PROJECTILE-Core_Base.png",
+      "FX-PROJECTILE-Core_Emission.png"
+    ]
+  },
+  "guids": {
+    "folder": "4b422fd7010c37ba8901b20c1d979ff5",
+    "fbx": "bd62853185cc888b412fcc2dd8e1d9dd",
+    "base": "fc22236898e675edc083bb24653ed9a0",
+    "emission": "c713d6a30316da82abc6b7837ee750a2"
+  },
+  "import": {
+    "model": "ModelImporter copiado de Assets/_Project/Art/Items/Models/Loot_XpOrb.fbx.meta (Unity 6000.6, serializedVersion 24600): globalScale 1, useFileUnits, addColliders 0, importAnimation 0, animationType 0 (None), normais importadas, materialImportMode 2; só o GUID muda.",
+    "textures": "Template FX_Spark (Tools/FxHealGenerator/texture.meta.template) com point, sem mipmaps, sem compressão, sem alpha, max 32; sRGB nos dois (a cor de emissão também é sRGB)."
+  },
+  "integration_proposal": {
+    "status": "NÃO INTEGRADO — tarefa Codex separada; Projectile.prefab, Projectile.cs, ProjectilePool.cs e Mat_Projectile não foram alterados.",
+    "child": "Filho \"Visual\" de Projectile.prefab com MeshFilter(FX-PROJECTILE-Core) + MeshRenderer(material FX-PROJECTILE-Core, compartilhado). A raiz tem localScale 0,4 (a esfera Unity de 1 m vira 0,4 m): ou o filho usa localScale 2,5, ou a raiz passa para escala 1 — Projectile.cs não usa a escala (SphereCast com radius = 0,25 m em unidades de mundo).",
+    "root": "Desligar (não remover) o MeshRenderer da esfera da raiz, ou trocar a malha; nenhum Collider existe nem deve ser criado.",
+    "preserve": [
+      "hitMask",
+      "radius 0,25",
+      "lifetime 4",
+      "Launch/ForceRelease/OnDespawned",
+      "ProjectilePool defaultCapacity 16 / maxSize 64 e aquecimento"
+    ],
+    "renderer": "Cast Shadows: opcional (a esfera atual projeta sombra); Light Probes/Reflection Probes como a esfera; sem luz pontual por projétil.",
+    "tests": [
+      "16 tiros simultâneos (capacidade padrão do pool) sem Instantiate após aquecimento",
+      "reset: ForceRelease / OnDisable do pool / pausa (timeScale 0) — visual some/volta com o objeto",
+      "medir GPU (Frame Debugger/Profiler) antes e depois; não declarar ganho sem medição",
+      "legibilidade sobre o piso #3E4152/#55596B e telegraph do Warden"
+    ]
+  },
+  "licence": "Projeto Eldoria; geometria própria gerada por código (three.js r170 MIT, somente leitura no Lemo-Opuscar). Sem IA generativa nem asset de terceiros."
+}
