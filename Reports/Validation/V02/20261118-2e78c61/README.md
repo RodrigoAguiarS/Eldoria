@@ -64,9 +64,23 @@ Cada etapa regravou assets versionados. Esses arquivos foram identificados como 
 
 Snapshots de hash: [h0-clean.sha256](idempotency/h0-clean.sha256) (árvore limpa) e [InventorySceneBuilder.Integrate-run2.sha256](idempotency/InventorySceneBuilder.Integrate-run2.sha256) (estado final). As snapshots intermediárias foram substituídas por [snapshot-digests.txt](idempotency/snapshot-digests.txt), em que run1 = run2 nos três integradores, e por [diffs.txt](idempotency/diffs.txt).
 
+## Verificação no Editor gráfico (18/11/2026, 00:46–00:51)
+
+Execução feita por Claude via controle de tela, a pedido do usuário, no Unity 6000.6.9f1 já aberto pelo usuário na branch `claude/v02-regression-idempotency` (`78e7494`).
+
+| Passo | Resultado | Evidência |
+| --- | --- | --- |
+| Test Runner › EditMode, filtro `IntegrateTwice`: `ItemsCombatAssetTests.IntegrateTwice_IsIdempotentAndPreservesPickupIdentity` e `InventoryAssetIntegrationTests.IntegrateTwice…` | 2/2 verdes (3,2 s) | [test-runner-integrate-twice.jpg](manual/test-runner-integrate-twice.jpg) |
+| Menu **Tools › Dungeon Crawler › Production Visual › Items & Combat › 2 - Integrate Into Game**, executado 2× | As duas execuções registraram "Integração concluída" sem exceção. Após cada uma, `git status` ficou igual e os SHA-256 da cena de release (`546b777…`) e do `Pickup.prefab` (`a568add…`, o mesmo da HEAD) ficaram idênticos | — |
+| Cena de release em Play, com o inventário vazio (tecla I) | Layout F10 (grade 4×4, slots 301×149, painel de leitura com rolagem) e marcador de seleção no slot 0 | — |
+| **▶ 2. Testar itens e combate** e depois I | Ícones e raridades nos 6 itens, quantidade ×2 na poção, ícones de arma/armadura/detalhe, comparação e detalhes. HUD de poção com ícone. Console: 0 avisos, 0 erros | [inventory-release-floor-showcase.jpg](manual/inventory-release-floor-showcase.jpg) |
+| `git status` antes e depois do Play | Sem nenhuma alteração causada pelo Play | — |
+
+Escala de texto 125/150% e os testes `[Explicit]` de captura não foram exercitados nesta verificação.
+
 ## Limitações
 
-- **NÃO VALIDADO NO EDITOR GRÁFICO.** Não houve PlayMode com janela, capturas nem inspeção visual do inventário depois do reparo. A preservação do layout foi comprovada só pela igualdade de bytes da cena (ver § Causa), não por imagem.
+- **Verificação visual limitada:** além da inspeção manual acima, não houve capturas `[Explicit]` nem a matriz de escala de texto e resoluções. A preservação do layout foi comprovada pela igualdade de bytes da cena (ver § Causa) e pela inspeção do inventário a 100%.
 - Resultados históricos (F10–F13: 244/245 e semelhantes) não pertencem a esta execução. Os números acima vêm dos XMLs desta pasta.
 - A regravação das cenas e prefabs defasados (efeito 1) e a reimportação das `.meta` (efeito 2) ficaram pendentes, porque exigem tarefa coordenada.
 
