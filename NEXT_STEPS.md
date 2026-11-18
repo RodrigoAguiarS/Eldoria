@@ -32,7 +32,7 @@ Estados futuros: Planejada → Em execução → Implementada/medida, validaçã
 
 **D-006 — seis slots de equipamento (18/11/2026, branch `claude/equipment-six-slots`, fora da fila V por pedido explícito do usuário):** arma, armadura, capacete, luvas, botas e acessório; checkpoint v4; UI em três áreas. Pendências: ícones/modelos de chão e vestíveis das quatro peças, eventual inclusão em tabelas de loot (tarefa própria com chances justificadas), playtest dos valores e skin no `Floor_02_Fixed` (junto da pendência V04). [Regras](docs/EQUIPMENT-SLOTS.md), [evidências](Reports/EquipmentSlots/README.md).
 
-**D-007 — equipamento separado da bolsa e arma inicial (18/11/2026, branch `claude/equipment-storage`, empilhada sobre D-006):** pendências: playtest do ritmo da primeira sala com dano inicial 26, opção de largar direto do slot (hoje é preciso desequipar antes) e as mesmas pendências de arte/skin de D-006. [Evidências](Reports/EquipmentStorage/README.md).
+**D-007 — equipamento separado da bolsa e arma inicial (18/11/2026, branch `claude/equipment-storage`, empilhada sobre D-006):** pendências: playtest do ritmo da primeira sala com dano inicial 26, opção de largar direto do slot (hoje é preciso desequipar antes) e skin no `Floor_02_Fixed` (V04). Arte das quatro peças (ícones e modelos de chão) entregue no lote ITEMS-GEAR ([evidências](Reports/EquipmentArt/README.md)); falta a aparência equipada no herói (exige malhas skinned/soquetes e extensão do `PlayerEquipmentVisualPresenter`) e a aprovação artística humana. [Evidências](Reports/EquipmentStorage/README.md).
 
 ## Histórico F/A — fotografia das entregas
 
