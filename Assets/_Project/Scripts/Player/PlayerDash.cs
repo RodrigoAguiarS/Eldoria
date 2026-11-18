@@ -1,3 +1,4 @@
+using System;
 using DungeonCrawler.Core;
 using UnityEngine;
 
@@ -18,12 +19,21 @@ namespace DungeonCrawler.Player
         private float dashEndsAt;
         private bool dashing;
 
+        /// <summary>V06: dash aceito (fora do cooldown), depois de o estado, a velocidade e a invulnerabilidade serem aplicados.
+        /// Só notificação para apresentação; nenhum ouvinte controla o movimento.</summary>
+        public event Action DashStarted;
+        /// <summary>V06: fim normal da janela de dash.</summary>
+        public event Action DashFinished;
+        /// <summary>V06: fim abrupto (componente desativado durante o dash) ou estado restaurado por checkpoint.</summary>
+        public event Action DashInterrupted;
+
         public bool IsDashing => dashing;
         public float CooldownRemaining => cooldownTimer.Remaining(Time.time);
         public void RestoreCheckpoint(float remaining)
         {
             dashing = false; movement.ExternalVelocity = Vector3.zero;
             cooldownTimer.Start(Time.time, remaining);
+            DashInterrupted?.Invoke();
         }
 
         /// <summary>0 = pronto, 1 = recém-usado.</summary>
@@ -31,8 +41,10 @@ namespace DungeonCrawler.Player
 
         private void OnDisable()
         {
+            bool wasDashing = dashing;
             dashing = false;
             if (movement != null) movement.ExternalVelocity = Vector3.zero;
+            if (wasDashing) DashInterrupted?.Invoke();
         }
 
         private void Update()
@@ -44,6 +56,7 @@ namespace DungeonCrawler.Player
             {
                 dashing = false;
                 movement.ExternalVelocity = Vector3.zero;
+                DashFinished?.Invoke();
             }
 
             if (dashing || !input.DashPressedThisFrame || !cooldownTimer.IsReady(now)) return;
@@ -58,6 +71,7 @@ namespace DungeonCrawler.Player
             cooldownTimer.Start(now, cooldown);
             movement.ExternalVelocity = direction * dashSpeed;
             health.SetInvulnerableFor(invulnerabilityDuration);
+            DashStarted?.Invoke();
         }
     }
 }
