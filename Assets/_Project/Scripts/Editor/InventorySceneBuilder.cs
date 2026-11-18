@@ -204,6 +204,8 @@ namespace DungeonCrawler.Editor
             RewardFeedbackSceneBuilder.ConfigureHud(hud, player);
             // GameShell resets the screen list above; F12 re-appends its screen and pause entry.
             TalentSceneBuilder.ConfigureHud(scene);
+            // V03: PlayerSpecialSceneBuilder reinicia o rótulo do giro; os ícones A01/A02 são reaplicados antes da F10.
+            ActionIconSceneBuilder.ConfigureHud(hud, player);
             TextScaleSceneBuilder.ConfigureScene(scene);
         }
 

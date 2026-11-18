@@ -6633,7 +6633,7 @@
       ],
       "depends_on": [],
       "technical_dependencies": [],
-      "integration_state": "Produzido em staging (A01, 17/11/2026); NÃO integrado ao HUD. Integração pelo presenter/builder do dash em tarefa separada, sem mudar a regra do dash; atalho e cooldown continuam UI nativa.",
+      "integration_state": "Integrado ao HUD em V03 (18/11/2026, branch claude/v03-action-icons): DashBar/DashAction/Icon (48 unidades; 32 px em 720p, 48 px em 1080p) por referência explícita em DashCooldownPresenter, nas cenas MVP_Arena, Floor_01, andar de release e Floor_02_Fixed (F14). Rótulo nativo 'DASH [binding efetivo] pronto/Ns/indisponível'; ícone só tinge por estado. Integrador idempotente ActionIconSceneBuilder (Tools/Dungeon Crawler/UI/Integrate Action Icons (A01-A02)), reaplicado por InventorySceneBuilder.ConfigureHud. Regra do dash inalterada. Aprovação artística humana pendente.",
       "visual_specification": "Blue cape sweep with a broad forward chevron-shaped cutout, no weapon arrow, no text.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -6642,7 +6642,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: DashIcon.validation.json (PNG decodificado: 512×512 RGBA, cantos alpha 0, margem 48 px, 0 pixels transparentes com RGB sujo) e asset_report.py (--expect-size 512x512 --require-alpha, exit 0); revisão a 48/32 px em claro/escuro/pedra e em tons de cinza. NÃO VALIDADO NO EDITOR: importação, aparência no HUD e PlayMode não observados. Comparação com o ícone de giro feita na revisão do A02 (17/11/2026): cunha × círculo distintos em cor e cinza a 48/32 px.",
+        "current_session": "V03 (18/11/2026, Unity 6000.6.9f1): importação conforme a ficha (Sprite Single, sRGB, alpha real, mipmaps off, bilinear, clamp, PPU 100) verificada por teste; EditMode 281/281, PlayMode 201/0/16 skipped (Explicit) e captura gráfica 1/1 em 720p/1080p × 100%/150% com recortes a 32/48 px em cor e cinza. Evidências: Reports/Validation/V03/20261118-cc391c8/README.md. Anterior: Técnica fora da Unity em 17/11/2026: DashIcon.validation.json (PNG decodificado: 512×512 RGBA, cantos alpha 0, margem 48 px, 0 pixels transparentes com RGB sujo) e asset_report.py (--expect-size 512x512 --require-alpha, exit 0); revisão a 48/32 px em claro/escuro/pedra e em tons de cinza. NÃO VALIDADO NO EDITOR: importação, aparência no HUD e PlayMode não observados. Comparação com o ícone de giro feita na revisão do A02 (17/11/2026): cunha × círculo distintos em cor e cinza a 48/32 px.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -6683,7 +6683,7 @@
       ],
       "depends_on": [],
       "technical_dependencies": [],
-      "integration_state": "Produzido em staging (A02, 17/11/2026); NÃO integrado ao HUD. Ligar ao HUD por referência explícita (presenter/builder do especial) em tarefa separada, sem mudar custo, dano, tempo ou regra do giro; atalho e cooldown continuam UI nativa.",
+      "integration_state": "Integrado ao HUD em V03 (18/11/2026, branch claude/v03-action-icons): PlayerResource/Icon (48 unidades; 32 px em 720p, 48 px em 1080p) por referência explícita em PlayerResourcePresenter, nas cenas MVP_Arena, Floor_01, andar de release e Floor_02_Fixed (F14). Estamina, custo, segundos e binding efetivo continuam no rótulo nativo; morto mostra 'indisponível'; ícone só tinge por estado. Mesmo integrador idempotente do A01. Custo, dano, alcance e cooldown do giro inalterados. Aprovação artística humana pendente.",
       "visual_specification": "Short steel sword inside a broad cyan circular sweep, open centre, suggesting one complete rotation.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -6692,7 +6692,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: SpinIcon.validation.json (PNG decodificado: 512×512 RGBA, cantos alpha 0, margem 48 px, 0 pixels transparentes com RGB sujo; médias renderizadas ciano #52E2F4, aço #CBD5DE, latão #F6CF56) e asset_report.py (--expect-size 512x512 --require-alpha, exit 0); revisão a 48/32 px em claro/escuro/pedra, em cor e tons de cinza, ao lado do A01 (silhueta circular × cunha). NÃO VALIDADO NO EDITOR: importação, aparência no HUD e PlayMode não observados.",
+        "current_session": "V03 (18/11/2026, Unity 6000.6.9f1): mesma verificação do A01 (importação conforme a ficha, suítes completas e captura gráfica 720p/1080p × 100%/150%, recortes a 32/48 px em cor e cinza). Evidências: Reports/Validation/V03/20261118-cc391c8/README.md. Anterior: Técnica fora da Unity em 17/11/2026: SpinIcon.validation.json (PNG decodificado: 512×512 RGBA, cantos alpha 0, margem 48 px, 0 pixels transparentes com RGB sujo; médias renderizadas ciano #52E2F4, aço #CBD5DE, latão #F6CF56) e asset_report.py (--expect-size 512x512 --require-alpha, exit 0); revisão a 48/32 px em claro/escuro/pedra, em cor e tons de cinza, ao lado do A01 (silhueta circular × cunha). NÃO VALIDADO NO EDITOR: importação, aparência no HUD e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {

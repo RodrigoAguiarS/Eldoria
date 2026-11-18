@@ -66,7 +66,7 @@ propostas; A14 e integração em andares ficam para outra tarefa.
 build jogável isolada com zero erros. Sem aprovação humana de balanceamento.
 [Regras](docs/STONE-SENTINEL-F15.md) e [evidências/limites](Reports/F15/README.md).
 
-V01 (18/11/2026, estático, NÃO VALIDADO NO EDITOR): F01–F05, F07–F15 e A01–A15 estão na main (PRs #1–#31; F01/F02 por commit direto). As notas acima de "merge depende da revisão" estão superadas. F06 não foi implementado. Candidato base proposto: sem F06, com F13/F15 isolados e A13–A15 como conceito. [Matriz e limites](Reports/Validation/V01/20261118-21b702c/README.md). V02 (18/11/2026, batchmode): EditMode 269/269 e PlayMode 199/0/15 Explicit. A regressão `IntegrateTwice_…` da F10 foi corrigida e os integradores estão idempotentes. [Evidências](Reports/Validation/V02/20261118-2e78c61/README.md).
+V01 (18/11/2026, estático, NÃO VALIDADO NO EDITOR): F01–F05, F07–F15 e A01–A15 estão na main (PRs #1–#31; F01/F02 por commit direto). As notas acima de "merge depende da revisão" estão superadas. F06 não foi implementado. Candidato base proposto: sem F06, com F13/F15 isolados e A13–A15 como conceito. [Matriz e limites](Reports/Validation/V01/20261118-21b702c/README.md). V02 (18/11/2026, batchmode): EditMode 269/269 e PlayMode 199/0/15 Explicit. A regressão `IntegrateTwice_…` da F10 foi corrigida e os integradores estão idempotentes. [Evidências](Reports/Validation/V02/20261118-2e78c61/README.md). V03 (18/11/2026): ícones de dash/giro (A01/A02) integrados ao HUD das quatro cenas de gameplay, incluindo F14, sem mudar regras. EditMode 281/281, PlayMode 201/0/16 Explicit e captura 720p/1080p × 100%/150%. Sem aprovação artística humana. [Evidências](Reports/Validation/V03/20261118-cc391c8/README.md).
 
 ## Relatório por tarefa
 
