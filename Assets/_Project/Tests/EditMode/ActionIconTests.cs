@@ -21,20 +21,20 @@ namespace DungeonCrawler.Tests.EditMode
 
         [TestCase(ActionIconSceneBuilder.DashIconPath)]
         [TestCase(ActionIconSceneBuilder.SpecialIconPath)]
-        public void Import_IsUiSpriteWithRealAlphaSrgbAndMipmaps(string path)
+        public void Import_MatchesSheet_UiSpriteRealAlphaSrgbNoMipmaps(string path)
         {
             var importer = (TextureImporter)AssetImporter.GetAtPath(path);
             Assert.AreEqual(TextureImporterType.Sprite, importer.textureType);
             Assert.AreEqual(SpriteImportMode.Single, importer.spriteImportMode);
             Assert.IsTrue(importer.sRGBTexture); Assert.IsTrue(importer.alphaIsTransparency);
             Assert.AreEqual(TextureImporterAlphaSource.FromInput, importer.alphaSource);
-            Assert.IsTrue(importer.mipmapEnabled, "512 → 32/48 px exige mipmaps para não serrilhar.");
+            Assert.IsFalse(importer.mipmapEnabled, "Ficha A01/A02: mipmaps off."); Assert.AreEqual(100f, importer.spritePixelsPerUnit);
             Assert.IsFalse(importer.borderMipmap); Assert.IsFalse(importer.isReadable);
             Assert.AreEqual(TextureWrapMode.Clamp, importer.wrapMode); Assert.AreEqual(FilterMode.Bilinear, importer.filterMode);
             Assert.AreEqual(TextureImporterCompression.Uncompressed, importer.textureCompression);
             var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
             Assert.AreEqual(512, texture.width); Assert.AreEqual(512, texture.height);
-            Assert.Greater(texture.mipmapCount, 1);
+            Assert.AreEqual(1, texture.mipmapCount);
             Assert.IsTrue(GraphicsFormatHasAlpha(texture), "Formato importado sem canal alpha: " + texture.format);
             Assert.NotNull(AssetDatabase.LoadAssetAtPath<Sprite>(path));
             Assert.IsFalse(ActionIconSceneBuilder.EnsureImport(path), "Importação já integrada não deve reimportar.");

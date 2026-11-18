@@ -123,6 +123,8 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return Tap(keyboard.spaceKey);
             hud.AssertDash(ActionIconState.Cooldown, Mathf.CeilToInt(hud.PlayerDash.CooldownRemaining));
             Assert.AreEqual(2, Mathf.CeilToInt(hud.PlayerDash.CooldownRemaining), "Regra do dash alterada.");
+            // PlayerSpecial recusa o giro durante o dash (0,18 s): esperar o fim do deslocamento.
+            yield return new WaitForSeconds(.3f);
             yield return Tap(keyboard.eKey);
             Assert.AreEqual(max - cost, hud.Special.Stamina, .1f, "Custo do giro alterado.");
             hud.AssertSpin(ActionIconState.Cooldown, Mathf.CeilToInt(hud.Special.CooldownRemaining));
@@ -164,7 +166,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.AreSame(UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>("Assets/_Project/Art/ProductionStaging/ICON-ACTION-SPECIAL/ICON-ACTION-SPECIAL.png"), hud.SpinIcon.sprite);
             hud.AssertDash(ActionIconState.Ready, 0); hud.AssertSpin(ActionIconState.Ready, 0);
             yield return Tap(keyboard.spaceKey); hud.AssertDash(ActionIconState.Cooldown, 2);
-            yield return Tap(keyboard.eKey); hud.AssertSpin(ActionIconState.Cooldown, Mathf.CeilToInt(hud.Special.CooldownRemaining));
+            yield return new WaitForSeconds(.3f); yield return Tap(keyboard.eKey); hud.AssertSpin(ActionIconState.Cooldown, Mathf.CeilToInt(hud.Special.CooldownRemaining));
         }
 
         [UnityTest, Explicit("Graphical PlayMode matrix (720p/1080p × 100%/150%); emulated Game view sizes.")]
@@ -189,7 +191,7 @@ namespace DungeonCrawler.Tests.PlayerInput
                     var hud = Hud.Find(); hud.Health.SetInvulnerableFor(999f);
                     string prefix = $"{size.x}x{size.y}-{percent}-{(scene == Release ? "release" : "f14")}";
                     yield return Shot(directory, prefix + "-ready", hud, measurements);
-                    yield return Tap(keyboard.spaceKey); yield return Tap(keyboard.eKey);
+                    yield return Tap(keyboard.spaceKey); yield return new WaitForSeconds(.3f); yield return Tap(keyboard.eKey);
                     yield return Shot(directory, prefix + "-cooldown", hud, measurements);
                     hud.Special.RestoreCheckpoint(hud.Special.StaminaCost - 18f, 0f, 30f);
                     yield return new WaitForSeconds(2.1f);

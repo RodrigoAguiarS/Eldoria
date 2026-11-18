@@ -56,7 +56,7 @@ namespace DungeonCrawler.Editor
             Debug.Log($"[DungeonCrawler] V03 ícones de ação: {imports} importação(ões) ajustada(s), {saved} cena(s) salva(s).");
         }
 
-        /// <summary>Sprite UI sRGB, alpha do arquivo com dilatação de cor, sem compressão e com mipmaps para 32/48 px.</summary>
+        /// <summary>Sprite UI conforme a ficha: Single, sRGB, alpha real com dilatação de cor, sem mipmaps, bilinear, clamp, PPU 100.</summary>
         public static bool EnsureImport(string path)
         {
             var importer = AssetImporter.GetAtPath(path) as TextureImporter;
@@ -68,11 +68,9 @@ namespace DungeonCrawler.Editor
             Apply(importer.sRGBTexture, true, v => importer.sRGBTexture = v);
             Apply(importer.alphaSource, TextureImporterAlphaSource.FromInput, v => importer.alphaSource = v);
             Apply(importer.alphaIsTransparency, true, v => importer.alphaIsTransparency = v);
-            // 512 → 48/32 px é redução de 10,7×/16×: sem mipmaps a amostragem bilinear serrilha o contorno.
-            Apply(importer.mipmapEnabled, true, v => importer.mipmapEnabled = v);
-            Apply(importer.mipmapFilter, TextureImporterMipFilter.BoxFilter, v => importer.mipmapFilter = v);
-            Apply(importer.borderMipmap, false, v => importer.borderMipmap = v);
-            Apply(importer.mipMapsPreserveCoverage, false, v => importer.mipMapsPreserveCoverage = v);
+            // Ficha A01/A02 (ASSET_MANIFEST technical_requirements): mipmaps off, PPU 100. Ver relatório V03 sobre 32 px.
+            Apply(importer.mipmapEnabled, false, v => importer.mipmapEnabled = v);
+            Apply(importer.spritePixelsPerUnit, 100f, v => importer.spritePixelsPerUnit = v);
             Apply(importer.wrapMode, TextureWrapMode.Clamp, v => importer.wrapMode = v);
             Apply(importer.filterMode, FilterMode.Bilinear, v => importer.filterMode = v);
             Apply(importer.npotScale, TextureImporterNPOTScale.None, v => importer.npotScale = v);
