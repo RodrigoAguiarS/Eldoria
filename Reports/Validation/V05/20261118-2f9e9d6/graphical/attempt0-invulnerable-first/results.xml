@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 05:47:48Z" end-time="2026-11-18 05:47:49Z" duration="1,1774421">
+  <test-suite type="TestSuite" id="1293" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="230" result="Failed" site="Child" start-time="2026-11-18 05:47:48Z" end-time="2026-11-18 05:47:49Z" duration="1.177442" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1412" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="97" result="Failed" site="Child" start-time="2026-11-18 05:47:48Z" end-time="2026-11-18 05:47:49Z" duration="1.164089" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="17232" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1413" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="97" result="Failed" site="Child" start-time="2026-11-18 05:47:48Z" end-time="2026-11-18 05:47:49Z" duration="1.159522" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1414" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="97" result="Failed" site="Child" start-time="2026-11-18 05:47:48Z" end-time="2026-11-18 05:47:49Z" duration="1.155121" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1415" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="97" result="Failed" site="Child" start-time="2026-11-18 05:47:48Z" end-time="2026-11-18 05:47:49Z" duration="1.150560" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1365" name="RewardFxArtVisualTests" fullname="DungeonCrawler.Tests.PlayerInput.RewardFxArtVisualTests" classname="DungeonCrawler.Tests.PlayerInput.RewardFxArtVisualTests" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2026-11-18 05:47:48Z" end-time="2026-11-18 05:47:49Z" duration="1.144413" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1366" name="Capture_RewardFxArt720pAnd1080p" fullname="DungeonCrawler.Tests.PlayerInput.RewardFxArtVisualTests.Capture_RewardFxArt720pAnd1080p" methodname="Capture_RewardFxArt720pAnd1080p" classname="DungeonCrawler.Tests.PlayerInput.RewardFxArtVisualTests" runstate="Explicit" seed="733863030" result="Failed" start-time="2026-11-18 05:47:48Z" end-time="2026-11-18 05:47:49Z" duration="1.126108" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Opens the release scene in graphical PlayMode and writes screenshots." />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.PlayerInput.RewardFxArtVisualTests+<Capture_RewardFxArt720pAnd1080p>d__1.MoveNext () [0x00289] in G:\DungeonCrawler\My project\Assets\_Project\Tests\PlayMode\PlayerInput\RewardFxArtVisualTests.cs:48
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

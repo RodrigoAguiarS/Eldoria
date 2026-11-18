@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="19" result="Failed(Child)" total="19" passed="18" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:43Z" duration="1,3263468">
+  <test-suite type="TestSuite" id="1293" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="230" result="Failed" site="Child" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:43Z" duration="1.326347" total="19" passed="18" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1579" name="DungeonCrawler.Tests.PlayMode.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayMode.dll" runstate="Runnable" testcasecount="133" result="Failed" site="Child" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:43Z" duration="1.302274" total="19" passed="18" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="18184" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1580" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="133" result="Failed" site="Child" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:43Z" duration="1.297898" total="19" passed="18" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1581" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="133" result="Failed" site="Child" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:43Z" duration="1.294562" total="19" passed="18" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1582" name="PlayMode" fullname="DungeonCrawler.Tests.PlayMode" runstate="Runnable" testcasecount="133" result="Failed" site="Child" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:43Z" duration="1.291227" total="19" passed="18" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1543" name="RewardFeedbackPlayModeTests" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:43Z" duration="0.648947" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1546" name="AcceptedCollection_PayloadAndLegacyAudioEventExactlyOnce" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.AcceptedCollection_PayloadAndLegacyAudioEventExactlyOnce" methodname="AcceptedCollection_PayloadAndLegacyAudioEventExactlyOnce" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="2137077894" result="Passed" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:42Z" duration="0.058425" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1548" name="Collection_ReentrantCallbacksCannotRepeatRewardsOrLevels" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.Collection_ReentrantCallbacksCannotRepeatRewardsOrLevels" methodname="Collection_ReentrantCallbacksCannotRepeatRewardsOrLevels" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="1133555033" result="Passed" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:42Z" duration="0.003779" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1550" name="DeathResetDisableAndReactivation_ClearAndNeverDuplicateSubscriptions" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.DeathResetDisableAndReactivation_ClearAndNeverDuplicateSubscriptions" methodname="DeathResetDisableAndReactivation_ClearAndNeverDuplicateSubscriptions" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="875647261" result="Passed" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:42Z" duration="0.004998" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1552" name="FlashZero_SuppressesOptionalEffectsButKeepsMessages" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.FlashZero_SuppressesOptionalEffectsButKeepsMessages" methodname="FlashZero_SuppressesOptionalEffectsButKeepsMessages" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="2030083743" result="Passed" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:42Z" duration="0.001894" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1544" name="FullAndDeadPotion_RejectedWithoutConsumptionOrSuccess" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.FullAndDeadPotion_RejectedWithoutConsumptionOrSuccess" methodname="FullAndDeadPotion_RejectedWithoutConsumptionOrSuccess" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="259432929" result="Passed" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:42Z" duration="0.003707" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1545" name="FullBag_PreservesPickupUntilRetryAccepted" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.FullBag_PreservesPickupUntilRetryAccepted" methodname="FullBag_PreservesPickupUntilRetryAccepted" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="1099902593" result="Passed" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:42Z" duration="0.317560" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1549" name="PauseFreezesMessagesAndParticles_ThenResumes" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.PauseFreezesMessagesAndParticles_ThenResumes" methodname="PauseFreezesMessagesAndParticles_ThenResumes" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="1345623574" result="Passed" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:42Z" duration="0.163748" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1547" name="Potion_ReentrantChangedAndHealedCannotConsumeAgain" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.Potion_ReentrantChangedAndHealedCannotConsumeAgain" methodname="Potion_ReentrantChangedAndHealedCannotConsumeAgain" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="463130292" result="Passed" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:42Z" duration="0.001390" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1551" name="SaturatedQueueAndEffects_AreBoundedWithoutNewObjectsOrGameplayRng" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.SaturatedQueueAndEffects_AreBoundedWithoutNewObjectsOrGameplayRng" methodname="SaturatedQueueAndEffects_AreBoundedWithoutNewObjectsOrGameplayRng" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="1132433271" result="Passed" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:42Z" duration="0.002460" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1553" name="WarmCallbacksAndEffects_RecordAllocationsWithPositiveControl" fullname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests.WarmCallbacksAndEffects_RecordAllocationsWithPositiveControl" methodname="WarmCallbacksAndEffects_RecordAllocationsWithPositiveControl" classname="DungeonCrawler.Tests.PlayMode.RewardFeedbackPlayModeTests" runstate="Runnable" seed="457371542" result="Passed" start-time="2026-11-18 05:53:42Z" end-time="2026-11-18 05:53:43Z" duration="0.066932" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1554" name="RewardFxArtPlayModeTests" fullname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests" classname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests" runstate="Runnable" testcasecount="9" result="Failed" site="Child" start-time="2026-11-18 05:53:43Z" end-time="2026-11-18 05:53:43Z" duration="0.636612" total="9" passed="8" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1558" name="CloseEvents_RestartTheSameEmitterFromFirstCellWithoutNewObjects" fullname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests.CloseEvents_RestartTheSameEmitterFromFirstCellWithoutNewObjects" methodname="CloseEvents_RestartTheSameEmitterFromFirstCellWithoutNewObjects" classname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests" runstate="Runnable" seed="2135338780" result="Passed" start-time="2026-11-18 05:53:43Z" end-time="2026-11-18 05:53:43Z" duration="0.071983" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1562" name="FlashZero_SuppressesArtButKeepsMessages" fullname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests.FlashZero_SuppressesArtButKeepsMessages" methodname="FlashZero_SuppressesArtButKeepsMessages" classname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests" runstate="Runnable" seed="599843252" result="Passed" start-time="2026-11-18 05:53:43Z" end-time="2026-11-18 05:53:43Z" duration="0.009539" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1555" name="HealAndLevelSheets_PlayEveryCellInContractOrderWithFeetPivot" fullname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests.HealAndLevelSheets_PlayEveryCellInContractOrderWithFeetPivot" methodname="HealAndLevelSheets_PlayEveryCellInContractOrderWithFeetPivot" classname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests" runstate="Runnable" seed="221927125" result="Passed" start-time="2026-11-18 05:53:43Z" end-time="2026-11-18 05:53:43Z" duration="0.155738" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1556" name="LootAtlas_UsesOneFixedCellPerKindAndNeverTouchesDropOrRng" fullname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests.LootAtlas_UsesOneFixedCellPerKindAndNeverTouchesDropOrRng" methodname="LootAtlas_UsesOneFixedCellPerKindAndNeverTouchesDropOrRng" classname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests" runstate="Runnable" seed="1264458848" result="Failed" start-time="2026-11-18 05:53:43Z" end-time="2026-11-18 05:53:43Z" duration="0.010207" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  FX-LOOT profundidade 0
+  Expected: -0.60000000894069672d +/- 0.0099999997764825821d
+  But was:  0.59999996423721313d
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests.AssertTowardCamera (UnityEngine.ParticleSystem effect, System.Single size, System.String id) [0x000db] in G:\DungeonCrawler\My project\Assets\_Project\Tests\PlayMode\RewardFxArtPlayModeTests.cs:196
+at DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests.LootAtlas_UsesOneFixedCellPerKindAndNeverTouchesDropOrRng () [0x00292] in G:\DungeonCrawler\My project\Assets\_Project\Tests\PlayMode\RewardFxArtPlayModeTests.cs:182
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1559" name="MultipleLevelsInOneGain_OneLevelSheetAndNoHealingSheet" fullname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests.MultipleLevelsInOneGain_OneLevelSheetAndNoHealingSheet" methodname="MultipleLevelsInOneGain_OneLevelSheetAndNoHealingSheet" classname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests" runstate="Runnable" seed="1395834140" result="Passed" start-time="2026-11-18 05:53:43Z" end-time="2026-11-18 05:53:43Z" duration="0.002050" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1560" name="PauseWithPotionAcceptedInBag_FreezesSheetUntilResume" fullname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests.PauseWithPotionAcceptedInBag_FreezesSheetUntilResume" methodname="PauseWithPotionAcceptedInBag_FreezesSheetUntilResume" classname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests" runstate="Runnable" seed="696739047" result="Passed" start-time="2026-11-18 05:53:43Z" end-time="2026-11-18 05:53:43Z" duration="0.325932" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1557" name="Rejections_FullHpDeadAndFullBag_EmitNoArtAndNoSuccess" fullname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests.Rejections_FullHpDeadAndFullBag_EmitNoArtAndNoSuccess" methodname="Rejections_FullHpDeadAndFullBag_EmitNoArtAndNoSuccess" classname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests" runstate="Runnable" seed="995954373" result="Passed" start-time="2026-11-18 05:53:43Z" end-time="2026-11-18 05:53:43Z" duration="0.005583" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1561" name="ResetDeathAndReactivation_ClearFrameSeedAndAlpha" fullname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests.ResetDeathAndReactivation_ClearFrameSeedAndAlpha" methodname="ResetDeathAndReactivation_ClearFrameSeedAndAlpha" classname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests" runstate="Runnable" seed="2059907391" result="Passed" start-time="2026-11-18 05:53:43Z" end-time="2026-11-18 05:53:43Z" duration="0.005307" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1563" name="WarmArtCallbacks_ZeroAllocationsSeparatedFromStrings" fullname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests.WarmArtCallbacks_ZeroAllocationsSeparatedFromStrings" methodname="WarmArtCallbacks_ZeroAllocationsSeparatedFromStrings" classname="DungeonCrawler.Tests.PlayMode.RewardFxArtPlayModeTests" runstate="Runnable" seed="506626147" result="Passed" start-time="2026-11-18 05:53:43Z" end-time="2026-11-18 05:53:43Z" duration="0.045258" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
