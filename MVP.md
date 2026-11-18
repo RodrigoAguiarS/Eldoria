@@ -66,6 +66,8 @@ propostas; A14 e integração em andares ficam para outra tarefa.
 build jogável isolada com zero erros. Sem aprovação humana de balanceamento.
 [Regras](docs/STONE-SENTINEL-F15.md) e [evidências/limites](Reports/F15/README.md).
 
+V01 (18/11/2026, estático, NÃO VALIDADO NO EDITOR): F01–F05, F07–F15 e A01–A15 estão na main (PRs #1–#31; F01/F02 por commit direto). As notas acima de "merge depende da revisão" estão superadas. F06 não foi implementado. Candidato base proposto: sem F06, com F13/F15 isolados e A13–A15 como conceito. [Matriz e limites](Reports/Validation/V01/20261118-21b702c/README.md).
+
 ## Relatório por tarefa
 
 Informar objetivo, base/branch, arquivos alterados, comportamento, critérios atendidos com evidência, testes executados, validação pendente, riscos e próximo passo. Se não houve execução na Unity, escrever `NÃO VALIDADO NO EDITOR`. Uma cena jogável, testada e reproduzível precede expansão de escopo.
