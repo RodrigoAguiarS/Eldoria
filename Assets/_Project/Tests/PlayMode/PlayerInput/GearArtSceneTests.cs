@@ -8,6 +8,7 @@ using DungeonCrawler.Systems;
 using DungeonCrawler.UI;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
@@ -15,8 +16,12 @@ using Object = UnityEngine.Object;
 
 namespace DungeonCrawler.Tests.PlayerInput
 {
-    /// <summary>ITEMS-GEAR in the release floor: icons in the bag, details and equipment slots; ground model on drop/recollect.</summary>
-    public sealed class GearArtSceneTests
+    /// <summary>
+    /// ITEMS-GEAR in the release floor: icons in the bag, details and equipment slots; ground model on drop/recollect.
+    /// InputTestFixture like the other UI scene tests: the UI input module must not bind to the real device state,
+    /// otherwise later keyboard/mouse UI tests in this assembly lose navigation.
+    /// </summary>
+    public sealed class GearArtSceneTests : InputTestFixture
     {
         private const string ReleaseFloor = "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity";
         private const string Items = "Assets/_Project/ScriptableObjects/Items/";
@@ -28,7 +33,8 @@ namespace DungeonCrawler.Tests.PlayerInput
         private static GearData Load(string name) => UnityEditor.AssetDatabase.LoadAssetAtPath<GearData>(Items + name + ".asset");
         private static ItemVisualCatalog Catalog => UnityEditor.AssetDatabase.LoadAssetAtPath<ItemVisualCatalog>(Items + "ItemVisualCatalog.asset");
 
-        [TearDown] public void TearDown() { Time.timeScale = 1f; }
+        public override void Setup() { base.Setup(); InputSystem.AddDevice<Keyboard>(); InputSystem.AddDevice<Mouse>(); }
+        public override void TearDown() { Time.timeScale = 1f; base.TearDown(); }
 
         [UnityTest]
         public IEnumerator ReleaseFloor_GearIconsShowInBagDetailsAndSlots_AndGroundModelOnDropAndRecollect()
