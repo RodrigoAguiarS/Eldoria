@@ -190,7 +190,7 @@ namespace DungeonCrawler.Editor
             for (int i = 0; i < commands.Length; i++) Place(window, commands[i], 32 + i * 313, 922, 301, 64);
             Place(window, "Close", 1300, 922, 488, 64);
             // EQUIPAMENTOS: 3×2 grid at the top of the right column (helmet | weapon | accessory / armor | gloves | boots).
-            Place(window, EquipmentSlotsSceneBuilder.HeaderName, 1300, 108, 488, 34);
+            Place(window, EquipmentSlotsSceneBuilder.HeaderName, 1300, 106, 488, 38); // 38: fits 22 px bold at 150% text scale
             var equipment = window.Find(EquipmentSlotsSceneBuilder.GridName) as RectTransform;
             if (equipment != null)
             {

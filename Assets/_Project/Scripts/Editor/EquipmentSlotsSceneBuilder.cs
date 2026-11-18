@@ -82,7 +82,7 @@ namespace DungeonCrawler.Editor
             Transform windowTransform = hud.transform.Find("InventoryUI/InventoryPanel/Window");
             if (windowTransform == null) throw new InvalidOperationException("Inventory window missing; integrate the inventory first.");
             var presenter = windowTransform.parent.GetComponent<InventoryPresenter>();
-            Label(windowTransform, HeaderName, "EQUIPAMENTOS", new Vector2(1300f, -108f), new Vector2(488f, 34f), 22).fontStyle = FontStyle.Bold;
+            Label(windowTransform, HeaderName, "EQUIPAMENTOS", new Vector2(1300f, -106f), new Vector2(488f, 38f), 22).fontStyle = FontStyle.Bold;
             var note = Label(windowTransform, NoteName,
                 "Equipamentos continuam na bolsa: equipar ou trocar não ocupa espaço extra. Clique num slot de equipamento para ver o item; " +
                 "use Desequipar para remover.", new Vector2(32f, -800f), new Vector2(1240f, 102f), 20);
