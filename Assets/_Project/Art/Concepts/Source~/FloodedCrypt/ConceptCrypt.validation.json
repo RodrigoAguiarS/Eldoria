@@ -1,0 +1,321 @@
+{
+  "id": "A15",
+  "resource": "REF-CONCEPT-12",
+  "ok": true,
+  "passed": 14,
+  "total": 14,
+  "scope": "análise de imagem e das caixas da geometria de render fora da Unity; não é colisão, NavMesh nem navegação; importação no Editor NÃO VALIDADA",
+  "checks": [
+    {
+      "item": "formato PNG 2048x1536",
+      "ok": true,
+      "detail": "(2048, 1536), modo RGBA, alpha mínimo 255"
+    },
+    {
+      "item": "opaco (publicado em RGB sem alpha)",
+      "ok": true,
+      "detail": "canvas totalmente opaco; publicação converte para RGB"
+    },
+    {
+      "item": "paleta da ficha nos materiais",
+      "ok": true,
+      "detail": "{\"stone\": \"#55596B\", \"stoneDark\": \"#3E4152\", \"moss\": \"#4C5A44\", \"flame\": \"#FF9A2E\", \"rune\": \"#4FD8FF\"}"
+    },
+    {
+      "item": "água azul-escura dessaturada (material e render)",
+      "ok": true,
+      "detail": "material #313E55 (matiz 218°, S 0.42, V 0.33); render médio rgb(43, 43, 64) (matiz 239°, S 0.34, V 0.25) em 28511 amostras"
+    },
+    {
+      "item": "interior 16x16 com paredes de 1 m",
+      "ok": true,
+      "detail": "face interna x 7.93 m, z 7.93 m; face externa x 9.07 m"
+    },
+    {
+      "item": "vãos de porta de 4 m (norte e sul)",
+      "ok": true,
+      "detail": "largura livre entre batentes {'N': 3.972, 'S': 3.973} m"
+    },
+    {
+      "item": "ritmo modular de 2 m",
+      "ok": true,
+      "detail": "comprimentos de bloco de parede [1.0, 2.0] m (módulos de 2 m e cantos de 1 m); placas de piso em grade de 2 m"
+    },
+    {
+      "item": "centro 10x10 sem volumes nem água",
+      "ok": true,
+      "detail": "0 peças acima de 0.06 m e 0 de água em [-5, 5]²; planta de cima: 0 px de água em 360000 px"
+    },
+    {
+      "item": "água rasa só nas bordas",
+      "ok": true,
+      "detail": "114 peças de água, todas na faixa da borda (|x| ou |z| ≥ 7.17 m), topo ≤ meio-fio (0.04 m); poças rasas só nas placas da borda"
+    },
+    {
+      "item": "rota seca porta-centro-porta",
+      "ok": true,
+      "detail": "0 peças de água na faixa x ∈ [-2, 2]; planta: 0 px de água na passarela; lajes secas em z [(-9.0, -8.0), (-8.0, -6.0), (6.0, 8.0), (8.0, 9.0)]"
+    },
+    {
+      "item": "centro inteiro visível na câmera de jogo",
+      "ok": true,
+      "detail": "397500/397500 px do quadrado 10x10 sem oclusão por paredes/pilares (100.0%)"
+    },
+    {
+      "item": "piso legível e personagens destacados",
+      "ok": true,
+      "detail": "piso do centro L* 35.9 rgb(76, 83, 117) (95408 amostras); personagens rgb(115, 114, 120); ΔE76 21.6"
+    },
+    {
+      "item": "tochas laranja e runas ciano presentes e discretas",
+      "ok": true,
+      "detail": "laranja 3110 px (0.13%), ciano 774 px (0.03%) na vista principal; 8 tochas, 4 nichos"
+    },
+    {
+      "item": "estudo de peças separado (6 células)",
+      "ok": true,
+      "detail": "Kit_Floor 179×112 px; Kit_Channel 198×224 px; Kit_Corner 261×253 px; Kit_Crossing 215×288 px; Kit_Pillar 152×155 px; Kit_Niche 168×189 px"
+    }
+  ],
+  "measures": {
+    "sheet": [
+      {
+        "id": "room45",
+        "ppm": 75,
+        "region": [
+          0,
+          0,
+          2048,
+          1160
+        ],
+        "camera": {
+          "yaw": 180,
+          "elev": 45,
+          "ortho": true,
+          "center": [
+            0,
+            0,
+            0.95
+          ]
+        },
+        "zone": {
+          "visible": 397500,
+          "total": 397500,
+          "fraction": 1
+        },
+        "water": {
+          "area": 113802,
+          "x0": 427,
+          "y0": 213,
+          "x1": 1623,
+          "y1": 1063,
+          "w": 1197,
+          "h": 851
+        },
+        "actors": {
+          "area": 20653,
+          "x0": 737,
+          "y0": 296,
+          "x1": 1321,
+          "y1": 774,
+          "w": 585,
+          "h": 479
+        },
+        "cast": [
+          {
+            "model": "Hero",
+            "clip": "Idle",
+            "x": 0,
+            "z": -2.6,
+            "ry": 0
+          },
+          {
+            "model": "SkeletonMelee",
+            "clip": "Idle",
+            "x": -2,
+            "z": 1.6,
+            "ry": 168
+          },
+          {
+            "model": "SkeletonMelee",
+            "clip": "Idle",
+            "x": 2.4,
+            "z": 0.8,
+            "ry": 196
+          },
+          {
+            "model": "SkeletonRanged",
+            "clip": "Idle",
+            "x": -3.6,
+            "z": 4,
+            "ry": 155
+          },
+          {
+            "model": "SkeletonRanged",
+            "clip": "Idle",
+            "x": 3.4,
+            "z": 4.3,
+            "ry": 205
+          }
+        ],
+        "doors": [
+          {
+            "side": "N",
+            "px": [
+              1024,
+              180
+            ]
+          },
+          {
+            "side": "S",
+            "px": [
+              1024,
+              1081
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Kit_Floor",
+        "ppm": 64,
+        "cell": [
+          0,
+          1162,
+          341,
+          376
+        ],
+        "px": {
+          "area": 12098,
+          "x0": 81,
+          "y0": 136,
+          "x1": 259,
+          "y1": 247,
+          "w": 179,
+          "h": 112
+        }
+      },
+      {
+        "id": "Kit_Channel",
+        "ppm": 64,
+        "cell": [
+          341,
+          1162,
+          341,
+          376
+        ],
+        "px": {
+          "area": 27861,
+          "x0": 75,
+          "y0": 49,
+          "x1": 272,
+          "y1": 272,
+          "w": 198,
+          "h": 224
+        }
+      },
+      {
+        "id": "Kit_Corner",
+        "ppm": 64,
+        "cell": [
+          683,
+          1162,
+          341,
+          376
+        ],
+        "px": {
+          "area": 47519,
+          "x0": 38,
+          "y0": 25,
+          "x1": 298,
+          "y1": 277,
+          "w": 261,
+          "h": 253
+        }
+      },
+      {
+        "id": "Kit_Crossing",
+        "ppm": 64,
+        "cell": [
+          1024,
+          1162,
+          341,
+          376
+        ],
+        "px": {
+          "area": 32586,
+          "x0": 79,
+          "y0": 3,
+          "x1": 293,
+          "y1": 290,
+          "w": 215,
+          "h": 288
+        }
+      },
+      {
+        "id": "Kit_Pillar",
+        "ppm": 64,
+        "cell": [
+          1365,
+          1162,
+          341,
+          376
+        ],
+        "px": {
+          "area": 15376,
+          "x0": 94,
+          "y0": 102,
+          "x1": 245,
+          "y1": 256,
+          "w": 152,
+          "h": 155
+        }
+      },
+      {
+        "id": "Kit_Niche",
+        "ppm": 64,
+        "cell": [
+          1707,
+          1162,
+          341,
+          376
+        ],
+        "px": {
+          "area": 22901,
+          "x0": 86,
+          "y0": 79,
+          "x1": 253,
+          "y1": 267,
+          "w": 168,
+          "h": 189
+        }
+      }
+    ],
+    "layout": [
+      {
+        "id": "plan",
+        "ppm": 60,
+        "water": {
+          "area": 154149,
+          "x0": 122,
+          "y0": 123,
+          "x1": 1077,
+          "y1": 1077,
+          "w": 956,
+          "h": 955
+        },
+        "center10": {
+          "water": 0,
+          "px": 360000
+        },
+        "walkway": {
+          "water": 0,
+          "px": 246240
+        },
+        "dryCore12": {
+          "water": 2382,
+          "px": 518400
+        }
+      }
+    ]
+  }
+}

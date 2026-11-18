@@ -16,11 +16,11 @@
     "P2": "Polimento, futuro previsto ou proposta condicional."
   },
   "summary": {
-    "logical_resources": 136,
+    "logical_resources": 137,
     "by_status": {
       "EXISTENTE": 126,
       "AUSENTE": 3,
-      "INCOMPLETO": 5,
+      "INCOMPLETO": 6,
       "NÃO VERIFICADO": 2
     },
     "by_category": {
@@ -55,7 +55,7 @@
       },
       "I": {
         "EXISTENTE": 12,
-        "INCOMPLETO": 2
+        "INCOMPLETO": 3
       },
       "J": {
         "EXISTENTE": 15,
@@ -64,7 +64,7 @@
     },
     "by_priority": {
       "P0": 78,
-      "P2": 47,
+      "P2": 48,
       "P1": 11
     },
     "missing_p0": 0,
@@ -4570,6 +4570,65 @@
         "licence": "Projeto Eldoria; render de geometria própria gerada por código (Tools/Lemo3DGenerator/src/production/ConceptSentinel.mjs + preview/concept_sentinel.html; three.js r170 MIT, somente leitura no Lemo-Opuscar; validador Python com Pillow MIT-CMU/HPND). Herói/Warden/esqueletos do próprio projeto só como escala. Sem IA generativa nem asset de terceiros."
       },
       "production_state": "Produzido por render 3D próprio (blocos chanfrados sobre o rig de pose do gerador; poses Stand e Windup): StoneSentinel_Concept_01.png + .meta; fonte e evidências em Concepts/Source~/StoneSentinel. GLB de render (2424 tris) não é malha de produção."
+    },
+    {
+      "id": "REF-CONCEPT-12",
+      "name": "FloodedCrypt_Concept_01.png",
+      "category": "I",
+      "category_name": "Cenários e objetos interativos",
+      "functionality": "Referência visual de identidade para o segundo andar fixo (A15); ambiente proposto, não nível aprovado nem substituto runtime",
+      "status": "INCOMPLETO",
+      "priority": "P2",
+      "type": "textura (conceito 2D)",
+      "scope": "planejado_futuro_condicional",
+      "evidence": [
+        {
+          "path": "Assets/_Project/Art/Concepts/FloodedCrypt_Concept_01.png",
+          "detail": "Folha 2048×1536 RGB opaca, sem rótulos (A15): sala 16×16 na câmera de jogo 45° + estudo de 6 peças."
+        },
+        {
+          "path": "Assets/_Project/Art/Concepts/Source~/FloodedCrypt/README.md",
+          "detail": "Leitura da folha, reprodução, aceite medido e limites."
+        },
+        {
+          "path": "Reports/F14/README.md",
+          "detail": "F14 integrada (sala de primitivas Room_F14_Entry); condição do catálogo para A15."
+        }
+      ],
+      "depends_on": [
+        "REF-CONCEPT-08",
+        "REF-CONCEPT-09"
+      ],
+      "technical_dependencies": [
+        "F14 (FixedFloorSequence, Floor_02_Fixed, SecondFloorSceneBuilder): geometria jogável construída por builder antes de qualquer malha"
+      ],
+      "integration_state": "Conceito produzido em 17/11/2026 (A15) em Art/Concepts com .meta de referência (Default/sRGB, NPOT None, sem mipmaps); NÃO é kit 3D, cena, collider, NavMesh, material ou shader de água. Em jogo o segundo andar continua com a sala de primitivas F14 (20 m, coberturas em x ±5). Malhas, água, materiais, colliders e NavMesh são integração posterior separada.",
+      "visual_specification": "Cripta de pedra úmida no gabarito Room_Normal: interior 16×16 m, paredes de 1 m × 1,4 m em módulos de 2 m, vãos de 4 m ao norte e ao sul com batentes de 2,1 m. Cada módulo de borda 2×2 m = 1 m de calçada úmida + meio-fio claro + canal raso de 1 m (água 0,20 m abaixo do piso); nos vãos o canal passa sob lajes secas da passarela porta-centro-porta. Piso seco central 12×12 m em placas de 2 m, centro 10×10 m sem volumes nem água, quatro pilares baixos (1,47 m) em (±6, ±6), quatro nichos com runa ciano, oito tochas, duas bicas no norte, musgo contido. Pedra #55596B/#3E4152, musgo #4C5A44, água #313E55, tochas #FF9A2E, runas #4FD8FF.",
+      "acceptance_criteria": [
+        "Rotas claras e espaço de combate preservado: centro 10×10 sem volumes nem água, passarela seca porta-centro-porta.",
+        "Água rasa só nas bordas; sem prometer água interativa, shader ou colisão.",
+        "Distinguir ambiente proposto de nível aprovado: F14 constrói primeiro geometria jogável por builder.",
+        "Aprovação artística humana antes de encomendar kit 3D."
+      ],
+      "validation": {
+        "current_session": "Análise fora da Unity em 17/11/2026: ConceptCrypt.validation.json 14/14 (PNG, máscaras e caixas relidos do disco): 2048×1536 opaco; paleta da ficha; água #313E55 (218°, S 0,42, V 0,33), render médio rgb(43,43,64); interior 16×16 (faces a 7,93 m por causa do jitter), paredes de 1 m; vãos de 3,97 m entre batentes; blocos de parede de 2 m e cantos de 1 m; 0 peças acima de 0,06 m e 0 de água no centro 10×10; 114 peças de água só na faixa |x| ou |z| ≥ 7,17 m; 0 px de água na passarela (planta de cima); centro 100 % visível na câmera 45° ortográfica; piso do centro L* 35,9 rgb(76,83,117) e personagens a ΔE76 21,6; tochas 0,13 % e ciano 0,03 % da vista; 6 peças inteiras nas células. GLB e source.json de render determinísticos (2 execuções, mesmo SHA256). NÃO VALIDADO NO EDITOR.",
+        "historical_evidence": "Reports/F14/README.md (sala de primitivas F14); não confundir com execução nova."
+      },
+      "production": {
+        "dimensions": "2048×1536 px",
+        "delivery_format": "PNG RGB + fonte (gerador e página de render versionados, GLB de render, source.json com caixas por peça, planta de revisão, medidas e validação em Source~)",
+        "production_gate": "Condição do catálogo (F14) cumprida: primeira sala do segundo andar integrada pelo PR #15. Produzido no lote A15 (17/11/2026); sem kit 3D prometido.",
+        "technical_requirements": "Importar como Default/sRGB para referência, não Sprite nem textura de nível; Unity 6000.6.9f1.",
+        "prompt_en": "A15 em PROMPT_CATALOG.md (Create a 2048x1536 environment concept for a proposed fixed second dungeon floor ...).",
+        "staging_directory": "Assets/_Project/Art/Concepts/",
+        "suggested_primary_file": "Assets/_Project/Art/Concepts/FloodedCrypt_Concept_01.png"
+      },
+      "source_and_rights": {
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
+        "licence": "Projeto Eldoria; render de geometria própria gerada por código (Tools/Lemo3DGenerator/src/production/ConceptCrypt.mjs + preview/concept_crypt.html; three.js r170 MIT, somente leitura no Lemo-Opuscar; validador Python com Pillow MIT-CMU/HPND). Herói e esqueletos do próprio projeto só como escala. Sem IA generativa nem asset de terceiros."
+      },
+      "production_state": "Produzido por render 3D próprio (módulos de 2 m em blocos chanfrados; sala e 6 peças): FloodedCrypt_Concept_01.png + .meta; fonte e evidências em Concepts/Source~/FloodedCrypt. GLB de render (20040 tris) não é kit de produção."
     },
     {
       "id": "REF-SURFACE-HERO",
@@ -13330,6 +13389,48 @@
         "Escala segue a primitiva F15 (2,7 m), menor que o Warden (4,6 m); largura 3,3 m excede o colisor da primitiva (2,5 m), que é proposta de protótipo.",
         "Windup simétrico (braços abertos) é proposta de leitura; a direção da varredura e takes reais ficam para o rig.",
         "Luz do render levemente neutralizada (key #ECEEF6, hemisférica #AAB6D6) para a pedra não virar azul-marinho; mesma composição de luz da família.",
+        "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "A15-CONCEPT-CRYPT",
+      "date_local": "2026-11-17",
+      "branch": "claude/a15-concept-crypt",
+      "produced": [
+        "REF-CONCEPT-12"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "Assets/_Project/Art/Concepts/PROVENANCE.md",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/Lemo3DGenerator/src/production/ConceptCrypt.mjs",
+        "Tools/Lemo3DGenerator/src/production/ConceptCrypt_check.py",
+        "Tools/Lemo3DGenerator/preview/concept_crypt.html"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/Concepts/FloodedCrypt_Concept_01.png",
+        "Assets/_Project/Art/Concepts/FloodedCrypt_Concept_01.png.meta",
+        "Assets/_Project/Art/Concepts/Source~/FloodedCrypt/"
+      ],
+      "import_settings": "TextureImporter copiado de SkeletonMelee_Concept_01.png.meta (Default, sRGB, nPOTScale 0, sem mipmaps, máx. 2048) mudando só o GUID (SHA256 de Eldoria/A15/FloodedCrypt_Concept_01).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "ConceptCrypt.validation.json ok (14/14); GLB e source.json de render determinísticos (2 execuções, mesmo SHA256); render observado no navegador embutido (sheet/layout)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: importação do PNG/.meta não observada na Unity.",
+        "Conceito 2D de ambiente proposto: sem kit 3D, cena, collider, NavMesh, material ou shader de água; GLB de render em Source~ não é kit de produção. As caixas do source.json conferem só o layout do render, não colisão nem navegação.",
+        "Divergência: a ficha A15 pede a sala normal 16×16 com centro 10×10; a sala de primitivas F14 tem 20 m e coberturas de 1,5×3×3 m em x ±5, que entram no quadrado 10×10. Decidir na F14 se as coberturas ficam; o conceito não altera a sala atual.",
+        "Parede de 1,4 m (DungeonMvpSceneBuilder.WallHeight) em vez dos 2 m do texto histórico de direção de arte; batentes de 2,1 m.",
+        "Luz do render mais forte e neutra (lua #D8DFF2 4,6, hemisférica #B4BACE 2,1) para o piso sair perto de #55596B; a câmera é ortográfica, sem a perspectiva da câmera real.",
+        "Personagens (herói, 2 melee, 2 ranged = composição F14) só para escala e leitura; posições não são spawn.",
         "Aprovação artística humana pendente."
       ]
     }
