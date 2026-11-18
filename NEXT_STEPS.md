@@ -20,6 +20,8 @@ Estados futuros: Planejada → Em execução → Implementada/medida, validaçã
 
 **Achados para a primeira tarefa:** na main `79f0968`, a busca inicial não localizou implementação/relatório F06 e A15 tinha arquivos de outro agente não versionados na pasta original. Isso exige conferência, não conclusão automática de ausência. O empacotador ainda fixa versão 1.0.0 e XMLs históricos de Leadership: V20 precisa validar/adaptar a rastreabilidade antes de usá-lo. A falha de idempotência registrada após F10 deve ser reexecutada em V02; não se afirma que ainda falha hoje.
 
+**Estado V01 (18/11/2026, `main@21b702c`, análise estática, NÃO VALIDADO NO EDITOR):** a V01 foi executada e aguarda o PR. Os 32 PRs estão mergeados e não há PR aberto nem branch fora da main, então as menções a "merge pendente" abaixo estão superadas. F06 não tem nenhuma origem: sem commit, branch, código, teste ou relatório. A15 está versionado pelo PR #31. A01–A12 estão produzidos e A13–A15 são conceitos, todos sem consumidor na Unity. Oito cenas, entre elas os dois andares do build, estão em formato binário. Matriz, schemas, baseline e plano em [Reports/Validation/V01](Reports/Validation/V01/20261118-21b702c/README.md). Próximo: V02 com suítes completas, pois não há suíte completa depois de F14/F15.
+
 ## Histórico F/A — fotografia das entregas
 
 Os registros abaixo conservam contexto das entregas. Menções antigas de merge/integração pendentes devem ser confrontadas com main/PRs em V01; não constituem a fila atual nem autorizam reexecutar F/A. O estado por ID será atualizado pelo executor com evidência real.
