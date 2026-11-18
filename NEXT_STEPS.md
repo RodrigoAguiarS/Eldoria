@@ -21,8 +21,13 @@ As cinco primeiras funcionalidades sugeridas para escolha são **F01 comparaçã
 
 F09 implementado em 16/11/2026: vasos destrutíveis simples, sem drops, um por sala
 de release, quebra única e sem interferir na limpeza/NavMesh. 163 EditMode e
-146 PlayMode aprovados; [evidências e limites](Reports/F09/README.md). Integração
-na main aguarda revisão do usuário; A12 continua opcional e não foi executado.
+146 PlayMode aprovados; [evidências e limites](Reports/F09/README.md). Integrado
+na main pelo PR #8. A12 produzido em staging em 17/11/2026
+(`ProductionStaging/MODEL-DESTRUCTIBLE`, vaso de barro e caixa de madeira em
+quatro FBX estáticos intacto/quebrado, 180–360 triângulos, um material, dentro do
+footprint do vaso F09); visuais sob `Intact`/`Rubble`, `DamageFlash` no nó
+`*_Intact` e material único são tarefa Codex pendente, proposta em
+`MODEL-DESTRUCTIBLE/Source~/MODEL-DESTRUCTIBLE.source.json`.
 
 F11 implementado em 16/11/2026 (D-004): checkpoint local entre salas, JSON v1
 com escrita atômica e backup, Continuar run no menu e restauração sem XP/loot

@@ -1,0 +1,832 @@
+{
+  "id": "MODEL-DESTRUCTIBLE",
+  "batch": "A12",
+  "name": "MODEL-DESTRUCTIBLE",
+  "generator": "Tools/Lemo3DGenerator/src/production/ModelDestructible.mjs",
+  "three": "0.170.0",
+  "lemoRoot": "G:/lemo-opuscar/lemo-opuscar",
+  "node": "v24.18.0",
+  "units": "metros, +Y para cima, +Z frente (ficha A12); origem de cada FBX = pivô do prop na base central; nós *_Intact e *_Broken_Base na origem, fragmentos com pivô na base central da própria peça",
+  "footprint_f09": {
+    "halfX": 0.45,
+    "halfZ": 0.45,
+    "height": 1.04,
+    "source": "Assets/_Project/Scripts/Editor/DestructiblePropSceneBuilder.cs (Body Sphere 0.9×1×0.9 @ y 0.5; Rim Cylinder 0.52×0.08×0.52 @ y 0.96)"
+  },
+  "budget": {
+    "trianglesPerProp": 600,
+    "materials": 1
+  },
+  "shape": {
+    "jar": {
+      "sides": 10,
+      "rings": [
+        [
+          0.25,
+          0
+        ],
+        [
+          0.3,
+          0.05
+        ],
+        [
+          0.39,
+          0.27
+        ],
+        [
+          0.35,
+          0.47
+        ],
+        [
+          0.17,
+          0.58
+        ],
+        [
+          0.16,
+          0.62
+        ]
+      ],
+      "lip": {
+        "r": 0.19,
+        "y0": 0.62,
+        "y1": 0.655,
+        "rTop": 0.175,
+        "yTop": 0.675
+      },
+      "mouth": {
+        "r": 0.12,
+        "y": [
+          0.668,
+          0.68
+        ]
+      },
+      "cracks": [
+        [
+          "belly_low",
+          0,
+          [
+            [
+              0.3,
+              0.97
+            ],
+            [
+              0.46,
+              0.62
+            ],
+            [
+              0.36,
+              0.3
+            ]
+          ]
+        ],
+        [
+          "belly_high",
+          9,
+          [
+            [
+              0.62,
+              0.04
+            ],
+            [
+              0.5,
+              0.42
+            ],
+            [
+              0.58,
+              0.66
+            ]
+          ]
+        ]
+      ],
+      "crackWidth": 0.0075,
+      "moss": {
+        "faces": [
+          8,
+          9
+        ],
+        "s": [
+          0.08,
+          0.92
+        ],
+        "t": [
+          0.1,
+          0.85
+        ]
+      },
+      "broken": {
+        "floorY": 0.14,
+        "wall": 0.035,
+        "jagged": [
+          0.22,
+          0.19,
+          0.31,
+          0.22,
+          0.28,
+          0.18,
+          0.26,
+          0.34,
+          0.27,
+          0.21
+        ],
+        "missing": [
+          0
+        ],
+        "rim": {
+          "tiltX": 40,
+          "tiltZ": 12,
+          "pos": [
+            -0.03,
+            0.28,
+            -0.02
+          ]
+        },
+        "shards": [
+          {
+            "c": [
+              0.305,
+              0.27
+            ],
+            "r": 0.075,
+            "yaw": 20,
+            "h": 0.03
+          },
+          {
+            "c": [
+              -0.3,
+              0.27
+            ],
+            "r": 0.068,
+            "yaw": -35,
+            "h": 0.028
+          },
+          {
+            "c": [
+              -0.3,
+              -0.27
+            ],
+            "r": 0.072,
+            "yaw": 60,
+            "h": 0.03
+          },
+          {
+            "c": [
+              0.31,
+              -0.265
+            ],
+            "r": 0.06,
+            "yaw": 5,
+            "h": 0.026
+          }
+        ]
+      }
+    },
+    "crate": {
+      "w": 0.7,
+      "h": 0.62,
+      "post": 0.075,
+      "coreInset": 0.035,
+      "boardInset": 0.008,
+      "rows": 3,
+      "gap": 0.012,
+      "y0": 0.03,
+      "top": {
+        "planks": 3,
+        "gap": 0.01,
+        "thick": 0.026,
+        "battenH": 0.05
+      },
+      "brace": {
+        "width": 0.06,
+        "thick": 0.018,
+        "margin": 0.05
+      },
+      "crack": {
+        "side": "+Z",
+        "row": 1,
+        "points": [
+          [
+            -0.12,
+            1
+          ],
+          [
+            -0.06,
+            0.58
+          ],
+          [
+            -0.1,
+            0.3
+          ],
+          [
+            -0.02,
+            0
+          ]
+        ],
+        "width": 0.008
+      },
+      "moss": {
+        "side": "+Z",
+        "u": [
+          -0.275,
+          -0.06
+        ],
+        "v": [
+          0,
+          0.12
+        ]
+      },
+      "broken": {
+        "postHeights": {
+          "-x-z": [
+            0.3,
+            0.36
+          ],
+          "+x-z": [
+            0.34,
+            0.27
+          ],
+          "-x+z": [
+            0.17,
+            0.22
+          ],
+          "+x+z": [
+            0.24,
+            0.16
+          ]
+        },
+        "backRow1": [
+          [
+            -1,
+            0
+          ],
+          [
+            0.1,
+            0
+          ],
+          [
+            -0.05,
+            -0.05
+          ],
+          [
+            -1,
+            -0.05
+          ]
+        ],
+        "leftRow1": [
+          [
+            -1,
+            0
+          ],
+          [
+            -0.1,
+            0
+          ],
+          [
+            -0.18,
+            -0.09
+          ],
+          [
+            -1,
+            -0.09
+          ]
+        ],
+        "braceTop": 0.3,
+        "planks": [
+          {
+            "size": [
+              0.5,
+              0.026,
+              0.15
+            ],
+            "rot": [
+              0,
+              28,
+              18
+            ],
+            "pos": [
+              0.02,
+              0.12,
+              -0.01
+            ]
+          },
+          {
+            "size": [
+              0.44,
+              0.026,
+              0.13
+            ],
+            "rot": [
+              -20,
+              -62,
+              0
+            ],
+            "pos": [
+              -0.05,
+              0.11,
+              0.06
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "palette": {
+    "clay": {
+      "cell": [
+        0,
+        0
+      ],
+      "hex": "#7B4E32",
+      "note": "barro: ferrugem oficial #8A4A22 dessaturado (30% para o próprio cinza de luminância)"
+    },
+    "clayLight": {
+      "cell": [
+        1,
+        0
+      ],
+      "hex": "#915C3B",
+      "note": "barro iluminado (ombro, chanfro da boca, topo dos cacos): derivado ×1,18 de #7B4E32 — gradiente pintado"
+    },
+    "clayDark": {
+      "cell": [
+        2,
+        0
+      ],
+      "hex": "#593824",
+      "note": "barro escuro (pé, gargalo, aro, laterais dos cacos): derivado ×0,72 de #7B4E32"
+    },
+    "interior": {
+      "cell": [
+        3,
+        0
+      ],
+      "hex": "#2A1D16",
+      "note": "interior/boca/corte do barro e fundo da caixa quebrada: derivado escurecido (lê \"aberto\" pela câmera)"
+    },
+    "crack": {
+      "cell": [
+        0,
+        1
+      ],
+      "hex": "#3A2519",
+      "note": "rachadura: entre interior e barro escuro, discreta"
+    },
+    "wood": {
+      "cell": [
+        1,
+        1
+      ],
+      "hex": "#7A4B2A",
+      "note": "madeira oficial (tábuas e tampo)"
+    },
+    "woodDark": {
+      "cell": [
+        2,
+        1
+      ],
+      "hex": "#53331D",
+      "note": "madeira escura (montantes, travessas, diagonais, frestas): derivado ×0,68 de #7A4B2A"
+    },
+    "woodFresh": {
+      "cell": [
+        3,
+        1
+      ],
+      "hex": "#9B7048",
+      "note": "madeira partida (pontas quebradas): derivado clareado de #7A4B2A, sem saturar"
+    },
+    "moss": {
+      "cell": [
+        0,
+        2
+      ],
+      "hex": "#4C5A44",
+      "note": "musgo oficial do cenário (desgaste no pé)"
+    }
+  },
+  "material": {
+    "name": "MODEL-DESTRUCTIBLE_Prop",
+    "shader": "Universal Render Pipeline/Lit",
+    "surface": "Opaque",
+    "baseMap": "MODEL-DESTRUCTIBLE_Palette.png",
+    "baseColor": "#FFFFFF",
+    "metallic": 0,
+    "smoothness": 0.15,
+    "note": "fosco, único e compartilhado pelos quatro FBX (mesmo nome em todos → remapeamento por nome para um único .mat na integração)"
+  },
+  "variants": {
+    "MODEL-DESTRUCTIBLE_Jar_Intact.fbx": {
+      "family": "jar",
+      "state": "intact",
+      "triangles": 344,
+      "bounds": {
+        "min": [
+          -0.39,
+          0,
+          -0.3709
+        ],
+        "max": [
+          0.39,
+          0.68,
+          0.3723
+        ],
+        "size": [
+          0.78,
+          0.68,
+          0.7432
+        ],
+        "center": [
+          0,
+          0.34,
+          0.0007
+        ]
+      },
+      "nodes": [
+        {
+          "name": "Jar_Intact",
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "triangles": 344,
+          "pieces": 13
+        }
+      ]
+    },
+    "MODEL-DESTRUCTIBLE_Jar_Broken.fbx": {
+      "family": "jar",
+      "state": "broken",
+      "triangles": 344,
+      "bounds": {
+        "min": [
+          -0.39,
+          0,
+          -0.367
+        ],
+        "max": [
+          0.3755,
+          0.4312,
+          0.3515
+        ],
+        "size": [
+          0.7655,
+          0.4312,
+          0.7185
+        ],
+        "center": [
+          -0.0073,
+          0.2156,
+          -0.0078
+        ]
+      },
+      "nodes": [
+        {
+          "name": "Jar_Broken_Base",
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "triangles": 204,
+          "pieces": 13
+        },
+        {
+          "name": "Jar_Broken_Rim",
+          "origin": [
+            -0.032079,
+            0.132115,
+            -0.018075
+          ],
+          "triangles": 76,
+          "pieces": 1
+        },
+        {
+          "name": "Jar_Broken_Shard_0",
+          "origin": [
+            0.300586,
+            0,
+            0.272046
+          ],
+          "triangles": 16,
+          "pieces": 1
+        },
+        {
+          "name": "Jar_Broken_Shard_1",
+          "origin": [
+            -0.295945,
+            0,
+            0.275449
+          ],
+          "triangles": 16,
+          "pieces": 1
+        },
+        {
+          "name": "Jar_Broken_Shard_2",
+          "origin": [
+            -0.30378,
+            0,
+            -0.263885
+          ],
+          "triangles": 16,
+          "pieces": 1
+        },
+        {
+          "name": "Jar_Broken_Shard_3",
+          "origin": [
+            0.311599,
+            0,
+            -0.267606
+          ],
+          "triangles": 16,
+          "pieces": 1
+        }
+      ]
+    },
+    "MODEL-DESTRUCTIBLE_Crate_Intact.fbx": {
+      "family": "crate",
+      "state": "intact",
+      "triangles": 360,
+      "bounds": {
+        "min": [
+          -0.36,
+          0,
+          -0.36
+        ],
+        "max": [
+          0.36,
+          0.62,
+          0.36
+        ],
+        "size": [
+          0.72,
+          0.62,
+          0.72
+        ],
+        "center": [
+          0,
+          0.31,
+          0
+        ]
+      },
+      "nodes": [
+        {
+          "name": "Crate_Intact",
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "triangles": 360,
+          "pieces": 30
+        }
+      ]
+    },
+    "MODEL-DESTRUCTIBLE_Crate_Broken.fbx": {
+      "family": "crate",
+      "state": "broken",
+      "triangles": 180,
+      "bounds": {
+        "min": [
+          -0.35,
+          0,
+          -0.36
+        ],
+        "max": [
+          0.35,
+          0.38,
+          0.35
+        ],
+        "size": [
+          0.7,
+          0.38,
+          0.71
+        ],
+        "center": [
+          0,
+          0.19,
+          -0.005
+        ]
+      },
+      "nodes": [
+        {
+          "name": "Crate_Broken_Base",
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "triangles": 156,
+          "pieces": 13
+        },
+        {
+          "name": "Crate_Broken_Plank_0",
+          "origin": [
+            0.02,
+            0.030382,
+            -0.01
+          ],
+          "triangles": 12,
+          "pieces": 1
+        },
+        {
+          "name": "Crate_Broken_Plank_1",
+          "origin": [
+            -0.05,
+            0.02091,
+            0.06
+          ],
+          "triangles": 12,
+          "pieces": 1
+        }
+      ]
+    }
+  },
+  "fbx": {
+    "MODEL-DESTRUCTIBLE_Jar_Intact.fbx": {
+      "family": "jar",
+      "state": "intact",
+      "nodes": [
+        "Jar_Intact"
+      ],
+      "info": {
+        "Jar_Intact": {
+          "polygons": 344,
+          "controlPoints": 198,
+          "translation": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "bytes": 34740
+    },
+    "MODEL-DESTRUCTIBLE_Jar_Broken.fbx": {
+      "family": "jar",
+      "state": "broken",
+      "nodes": [
+        "Jar_Broken_Base",
+        "Jar_Broken_Rim",
+        "Jar_Broken_Shard_0",
+        "Jar_Broken_Shard_1",
+        "Jar_Broken_Shard_2",
+        "Jar_Broken_Shard_3"
+      ],
+      "info": {
+        "Jar_Broken_Base": {
+          "polygons": 204,
+          "controlPoints": 128,
+          "translation": [
+            0,
+            0,
+            0
+          ]
+        },
+        "Jar_Broken_Rim": {
+          "polygons": 76,
+          "controlPoints": 40,
+          "translation": [
+            -0.032079,
+            0.132115,
+            -0.018075
+          ]
+        },
+        "Jar_Broken_Shard_0": {
+          "polygons": 16,
+          "controlPoints": 10,
+          "translation": [
+            0.300586,
+            0,
+            0.272046
+          ]
+        },
+        "Jar_Broken_Shard_1": {
+          "polygons": 16,
+          "controlPoints": 10,
+          "translation": [
+            -0.295945,
+            0,
+            0.275449
+          ]
+        },
+        "Jar_Broken_Shard_2": {
+          "polygons": 16,
+          "controlPoints": 10,
+          "translation": [
+            -0.30378,
+            0,
+            -0.263885
+          ]
+        },
+        "Jar_Broken_Shard_3": {
+          "polygons": 16,
+          "controlPoints": 10,
+          "translation": [
+            0.311599,
+            0,
+            -0.267606
+          ]
+        }
+      },
+      "bytes": 44805
+    },
+    "MODEL-DESTRUCTIBLE_Crate_Intact.fbx": {
+      "family": "crate",
+      "state": "intact",
+      "nodes": [
+        "Crate_Intact"
+      ],
+      "info": {
+        "Crate_Intact": {
+          "polygons": 360,
+          "controlPoints": 240,
+          "translation": [
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "bytes": 24839
+    },
+    "MODEL-DESTRUCTIBLE_Crate_Broken.fbx": {
+      "family": "crate",
+      "state": "broken",
+      "nodes": [
+        "Crate_Broken_Base",
+        "Crate_Broken_Plank_0",
+        "Crate_Broken_Plank_1"
+      ],
+      "info": {
+        "Crate_Broken_Base": {
+          "polygons": 156,
+          "controlPoints": 104,
+          "translation": [
+            0,
+            0,
+            0
+          ]
+        },
+        "Crate_Broken_Plank_0": {
+          "polygons": 12,
+          "controlPoints": 8,
+          "translation": [
+            0.02,
+            0.030382,
+            -0.01
+          ]
+        },
+        "Crate_Broken_Plank_1": {
+          "polygons": 12,
+          "controlPoints": 8,
+          "translation": [
+            -0.05,
+            0.02091,
+            0.06
+          ]
+        }
+      },
+      "bytes": 18361
+    }
+  },
+  "glb": {
+    "file": "MODEL-DESTRUCTIBLE.glb",
+    "layoutX": {
+      "MODEL-DESTRUCTIBLE_Jar_Intact.fbx": -1.65,
+      "MODEL-DESTRUCTIBLE_Jar_Broken.fbx": -0.55,
+      "MODEL-DESTRUCTIBLE_Crate_Intact.fbx": 0.55,
+      "MODEL-DESTRUCTIBLE_Crate_Broken.fbx": 1.65
+    },
+    "note": "somente revisão; não é importado pela Unity"
+  },
+  "guids": {
+    "folder": "299a0bb740fe52edd59f1615d8558788",
+    "palette": "1930a0b249e025d06416e09bb749bfd1",
+    "MODEL-DESTRUCTIBLE_Jar_Intact.fbx": "b8b287b64f26825c25932b6e363951c5",
+    "MODEL-DESTRUCTIBLE_Jar_Broken.fbx": "64a3469928bc5328a77dbd042c98820c",
+    "MODEL-DESTRUCTIBLE_Crate_Intact.fbx": "5ca2df7ef493ed72ddfe02ae57728a67",
+    "MODEL-DESTRUCTIBLE_Crate_Broken.fbx": "6f41388b8c960bd223b4fcb8effd6860"
+  },
+  "import": {
+    "model": "ModelImporter copiado de Assets/_Project/Art/Items/Models/Loot_XpOrb.fbx.meta (Unity 6000.6, serializedVersion 24600) mudando só o GUID: estático (importAnimation 0, animationType 0), globalScale 1, useFileUnits, addColliders 0, normais importadas, materialImportMode 2 (descrição do FBX; o material sai embutido em cada FBX — remapear para um .mat único na integração).",
+    "texture": "Template FX_Spark (Tools/FxHealGenerator/texture.meta.template) com point, sem mipmaps, sem compressão, sem alpha, max 32, sRGB."
+  },
+  "integration_proposal": {
+    "status": "NÃO INTEGRADO — tarefa Codex separada. DestructibleProp.cs, DestructiblePropPresenter.cs, DestructiblePropDefinition.cs, DestructiblePropSceneBuilder.cs, Prop_Vase_F09.asset, Mat_Vase_F09, cenas e prefabs não foram alterados.",
+    "presenter": "DestructiblePropPresenter já alterna os GameObjects \"intact\" e \"rubble\" por estado: instanciar *_Intact.fbx como filho de Intact e *_Broken.fbx como filho de Rubble. Nada no código muda.",
+    "flash": "DamageFlash.targetRenderer → MeshRenderer do nó Jar_Intact (ou Crate_Intact). O intacto é um único nó/renderer de propósito: o tint por MaterialPropertyBlock em _BaseColor multiplica a paleta, então um único renderer cobre o prop inteiro.",
+    "colliders": "Colliders e layer continuam do domínio (layer Destructible, fora da NavMesh/visão/projéteis). Preferência: manter os colliders atuais do vaso (Sphere do Body + Capsule do Rim) sem MeshRenderer, como volumes de acerto, e desligar só os renderers das primitivas Body/Rim/Shard_*; o jar A12 (0,78 × 0,69 m) cabe dentro deles. Para a caixa, um BoxCollider ~0,70 × 0,62 × 0,70 m centrado em y 0,31, definido pela tarefa de domínio. Os FBX não trazem colisor.",
+    "placement": "Ambos cabem no footprint do vaso F09 (±0,45 m, 1,04 m) e a variante quebrada nunca sai dos bounds da intacta, então a posição lateral atual (sala + (−5,5; 0; −2)) e as distâncias de portas/spawns/centro continuam válidas. Caixa: +Z é a frente (rachadura e musgo); qualquer rotação Y serve.",
+    "family": "Qual família vai em cada sala (vaso, caixa ou ambos alternados) é decisão de design da tarefa de integração; ambos usam a mesma definição de 40 HP sem regra nova. Não registrar como inimigo da sala nem participar da limpeza.",
+    "material": "Um único Material URP/Lit \"MODEL-DESTRUCTIBLE_Prop\" (metallic 0, smoothness 0,15, _BaseMap = MODEL-DESTRUCTIBLE_Palette.png) compartilhado pelos quatro FBX: Search and Remap por nome ou externalObjects nos .meta via builder. Não reutilizar Mat_Vase_F09 (cor sólida, sem paleta).",
+    "burst": "Não há burst de quebra no F09 atual (troca estática). Se um burst for adicionado depois, reutilizar um efeito existente (por exemplo partículas do FX-SLAM/FX-LOOT) disparado pelo evento Broken; não faz parte deste lote.",
+    "tests": [
+      "quebra única troca Intact → Rubble sem dano/drops repetidos",
+      "flash de dano visível no renderer A12 intacto e respeitando a opção de flash",
+      "desativar/reativar mantém o estado; reiniciar volta intacto",
+      "NavMesh e portas inalterados (layer e colliders do domínio)",
+      "leitura do vaso e da caixa na câmera real das cinco salas, ao lado do Hero"
+    ]
+  },
+  "licence": "Projeto Eldoria; geometria própria gerada por código (three.js r170 MIT, somente leitura no Lemo-Opuscar). Sem IA generativa nem asset de terceiros; desenho genérico, sem referência comercial."
+}
