@@ -9,5 +9,7 @@ namespace DungeonCrawler.Systems
         [Min(0f)] public float defense = 10f;
         public override string DisplayName => displayName;
         public override InventoryItemKind Kind => InventoryItemKind.Armor;
+        public override bool TryGetEquipmentSlot(out EquipmentSlot slot) { slot = EquipmentSlot.Armor; return true; }
+        public override float EquipmentDefenseBonus => defense;
     }
 }

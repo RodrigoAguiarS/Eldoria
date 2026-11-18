@@ -72,6 +72,18 @@ EditMode/PlayMode e inspeção gráfica com a Unity 6000.6.9f1 instalada. Evidê
 novas em Reports/F11, sem substituir resultados históricos.
 
 
+## Extensão D-006 — schema v4
+
+Seis slots de equipamento ([EQUIPMENT-SLOTS](EQUIPMENT-SLOTS.md)). O documento acrescenta
+`gearIndices` com exatamente quatro índices de slot da bolsa, na ordem capacete, luvas,
+botas, acessório (−1 = vazio), além de `weaponIndex`/`armorIndex`. Validação antes de qualquer
+mutação: cada índice é −1 ou aponta para um item da categoria correspondente; v4 sem o campo
+ou com tamanho diferente é recusado, de modo que campo ausente nunca é lido como zero. v1, v2
+e v3 continuam legíveis com os quatro slots novos desequipados; um documento anterior ao v4
+que traga `gearIndices` é malformado. Pickups `Gear` exigem v4. A chegada ao segundo andar
+normaliza uma origem antiga para v4 com os slots novos vazios. Talentos, loot no chão,
+fronteiras seguras, backup e regras de restauração inalterados; nenhum segundo sistema de save.
+
 ## Extensão F14 — schema v3
 
 O payload continua preservando talentos de v2 e aceita leitura v1/v2. Apenas o catálogo do segundo andar habilita uma fronteira com zero salas limpas (v3), resumeRoom igual ao primeiro ID e âncora fora do trigger. É gravada ao descer, antes da carga, preservando HP/XP/nível/ouro/bolsa/equipamento/talentos/recursos e removendo estado de salas/baús/pickups do andar anterior. Sem cura ou concessão de recompensa. Combate não sobrescreve essa entrada; Continuar retoma a entrada até a primeira limpeza. A seleção de andar valida o principal em todos os catálogos antes de usar backup. Nova run, Reiniciar e morte mantêm descarte de ambos; reinício parte do primeiro andar. Ver [F14](../Reports/F14/PROPOSAL.md).

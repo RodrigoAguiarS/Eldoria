@@ -199,6 +199,8 @@ namespace DungeonCrawler.Editor
             ConfigureItemVisuals(hud, player);
             ConfigureEquipmentComparison(hud);
             ConfigureInventorySort(hud);
+            // Six equipment slots; reapplying the full inventory keeps the new grid and the reading column.
+            EquipmentSlotsSceneBuilder.ConfigureHud(hud, player);
             root.SetAsLastSibling();
             ControlBindingsSceneBuilder.ConfigureScene(scene);
             RewardFeedbackSceneBuilder.ConfigureHud(hud, player);
@@ -229,7 +231,10 @@ namespace DungeonCrawler.Editor
                 if (opened) scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
                 try
                 {
-                    configure(scene.GetRootGameObjects().Single(root => root.name == "HUD"));
+                    var hud = scene.GetRootGameObjects().Single(root => root.name == "HUD");
+                    // Text/icon nodes may live in the F10 reading column; bring them back so steps find (not duplicate) them.
+                    TextScaleSceneBuilder.PrepareInventoryRebuild(hud);
+                    configure(hud);
                     TextScaleSceneBuilder.ConfigureScene(scene);
                     EditorSceneManager.MarkSceneDirty(scene);
                     EditorSceneManager.SaveScene(scene);
@@ -306,11 +311,10 @@ namespace DungeonCrawler.Editor
                 Set(view, "icon", icon); Set(view, "quantity", quantity); Set(view, "selectionFrame", frame.gameObject);
             }
             Image detailsIcon = IconImage(window, "DetailsIcon", new Vector2(1076f, -366f), new Vector2(72f, 72f));
-            Image weaponIcon = IconImage(window, "EquippedWeaponIcon", new Vector2(1100f, -118f), new Vector2(46f, 46f));
-            Image armorIcon = IconImage(window, "EquippedArmorIcon", new Vector2(1100f, -193f), new Vector2(46f, 46f));
-            foreach (Image image in new[] { detailsIcon, weaponIcon, armorIcon }) { image.preserveAspect = true; image.enabled = false; }
+            detailsIcon.preserveAspect = true; detailsIcon.enabled = false;
             Set(presenter, "catalog", catalog); Set(presenter, "detailsIcon", detailsIcon);
-            Set(presenter, "equippedWeaponIcon", weaponIcon); Set(presenter, "equippedArmorIcon", armorIcon);
+            // Equipped icons now live in the six equipment slot views.
+            EquipmentSlotsSceneBuilder.RemoveLegacyEquipmentIcons(window);
 
             // HUD-POTIONS: top-left, under the stamina bar.
             RectTransform potionHud = Box(hud.transform, "PotionHud", new Vector2(24f, -178f), new Vector2(240f, 60f));

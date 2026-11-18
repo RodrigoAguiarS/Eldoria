@@ -87,7 +87,8 @@ namespace DungeonCrawler.Systems
                 if (definition == null) { error = "Definição de item ausente: " + slot.itemId; return false; }
                 stacks[i] = new InventoryStack(definition, slot.count, slot.potency);
             }
-            if (!new InventoryModel(capacity).TryRestore(stacks, data.weaponIndex, data.armorIndex)) return false;
+            if (!TryGetEquipment(data, out int[] equipped)) { error = "Equipamentos do checkpoint inválidos."; return false; }
+            if (!new InventoryModel(capacity).TryRestore(stacks, equipped)) return false;
             ids.Clear();
             if (data.pickups == null || data.pickups.Length > MaxPickups) return false;
             foreach (var pickup in data.pickups)
@@ -103,6 +104,9 @@ namespace DungeonCrawler.Systems
                     case LootKind.Armor:
                         if (!(definition is ArmorData) || pickup.amount != 0) return false;
                         break;
+                    case LootKind.Gear:
+                        if (!(definition is GearData gear) || !gear.TryGetEquipmentSlot(out _) || pickup.amount != 0 || data.version < RunCheckpointData.GearVersion) return false;
+                        break;
                     case LootKind.Potion:
                         if (!(definition is PotionData) || pickup.amount < 1 || pickup.amount > MaxAmount) return false;
                         break;
@@ -114,6 +118,29 @@ namespace DungeonCrawler.Systems
                 }
             }
             error = "";
+            return true;
+        }
+
+        /// <summary>
+        /// The six bindings in EquipmentSlot order. Before v4 the four new slots are unequipped (-1) and a document
+        /// that carries gear indices is malformed; from v4 exactly four indices are required, so an absent field is
+        /// never read as index zero.
+        /// </summary>
+        public static bool TryGetEquipment(RunCheckpointData data, out int[] equipped)
+        {
+            equipped = null;
+            if (data == null) return false;
+            int[] gear = data.gearIndices;
+            if (data.version < RunCheckpointData.GearVersion)
+            {
+                if (gear != null && gear.Length != 0) return false;
+                gear = new[] { -1, -1, -1, -1 };
+            }
+            else if (gear == null || gear.Length != EquipmentSlots.GearCount) return false;
+            equipped = new int[EquipmentSlots.Count];
+            equipped[(int)EquipmentSlot.Weapon] = data.weaponIndex;
+            equipped[(int)EquipmentSlot.Armor] = data.armorIndex;
+            for (int i = 0; i < EquipmentSlots.GearCount; i++) equipped[(int)EquipmentSlots.FromGearIndex(i)] = gear[i];
             return true;
         }
 

@@ -26,6 +26,17 @@ namespace DungeonCrawler.Systems
         public int Capacity => model?.Capacity ?? 0;
         public int EquippedWeaponIndex => model?.EquippedWeaponIndex ?? -1;
         public int EquippedArmorIndex => model?.EquippedArmorIndex ?? -1;
+        public int GetEquippedIndex(EquipmentSlot slot) => model?.GetEquippedIndex(slot) ?? -1;
+        public ItemDefinition GetEquipped(EquipmentSlot slot) => model?.GetEquipped(slot);
+        public bool IsEquipped(int index) => model != null && model.IsEquipped(index);
+        public bool TryGetEquippedSlot(int index, out EquipmentSlot slot)
+        {
+            slot = EquipmentSlot.Weapon;
+            return model != null && model.TryGetEquippedSlot(index, out slot);
+        }
+        /// <summary>Current six-slot contributions (read-only; the same values applied to combat and Health).</summary>
+        public EquipmentTotals EquipmentTotals => model != null ? model.GetTotals() : default;
+        public float BaseDefense => definition != null ? Mathf.Max(0f, definition.baseDefense) : 0f;
         public int QuickPotionIndex => model?.GetPotionIndex(options != null ? options.Current.quickPotionPolicy : QuickPotionPolicy.First) ?? -1;
         public event Action Changed;
         public event Action<InventoryCollectionFailure> CollectionDenied;
@@ -71,6 +82,10 @@ namespace DungeonCrawler.Systems
             {
                 case LootKind.Weapon: item = drop.Weapon; break;
                 case LootKind.Armor: item = drop.Armor; break;
+                case LootKind.Gear:
+                    item = drop.Gear;
+                    if (item != null && !item.TryGetEquipmentSlot(out _)) return Deny(InventoryCollectionFailure.InvalidItem, notifyFailure);
+                    break;
                 case LootKind.Potion:
                     item = definition.healthPotion;
                     potency = drop.Amount;
@@ -84,31 +99,27 @@ namespace DungeonCrawler.Systems
 
         public bool TryEquip(int index) => CanUseCommands && model.TryEquip(index);
 
-        /// <summary>Queries only: no item movement, equipment changes or events, including when dead.</summary>
+        /// <summary>
+        /// Queries only: no item movement, equipment changes or events, including when dead. Compares the selected item
+        /// with the one bound to its own slot; the other five slots and the talents stay constant.
+        /// </summary>
         public bool TryGetEquipmentComparison(int index, out EquipmentComparison comparison)
         {
             comparison = default;
             if (model == null || index < 0 || index >= model.Capacity || model.Slots[index].IsEmpty) return false;
-            if (model.Slots[index].Definition is WeaponData weapon)
-            {
-                WeaponData current = model.EquippedWeapon;
-                comparison = new EquipmentComparison(InventoryItemKind.Weapon,
-                    current != null ? current.damageBonus : 0f, weapon.damageBonus,
-                    progression.GetBaseDamage(current), progression.GetBaseDamage(weapon), progression.Level);
-                return true;
-            }
-            if (model.Slots[index].Definition is ArmorData armor)
-            {
-                ArmorData current = model.EquippedArmor;
-                comparison = new EquipmentComparison(InventoryItemKind.Armor,
-                    current != null ? current.defense : 0f, armor.defense,
-                    DefenseWith(current), DefenseWith(armor), progression.Level);
-                return true;
-            }
-            return false;
+            ItemDefinition selected = model.Slots[index].Definition;
+            if (!selected.TryGetEquipmentSlot(out EquipmentSlot slot) || !model.TryGetTotalsWith(slot, selected, out EquipmentTotals after))
+                return false;
+            EquipmentTotals now = model.GetTotals();
+            comparison = new EquipmentComparison(slot, model.GetEquipped(slot), model.GetEquippedIndex(slot), selected, index,
+                progression.GetBaseDamage(now), progression.GetBaseDamage(after), DefenseWith(now), DefenseWith(after), progression.Level);
+            return true;
         }
 
         public bool TryUnequip(InventoryItemKind kind) => CanUseCommands && model.TryUnequip(kind);
+        public bool TryUnequip(EquipmentSlot slot) => CanUseCommands && model.TryUnequip(slot);
+        /// <summary>Unequips only the slot bound to this bag index; the item stays in place.</summary>
+        public bool TryUnequipAt(int index) => CanUseCommands && model.TryUnequipAt(index);
 
         /// <summary>Sorts the bag in the domain model; see <see cref="InventoryModel.TrySort"/>. One Changed event when slots move.</summary>
         public bool TrySort(out int[] newIndexOf)
@@ -138,6 +149,7 @@ namespace DungeonCrawler.Systems
             LootDrop drop;
             if (item.Definition is WeaponData weapon) drop = new LootDrop(LootKind.Weapon, 0, weapon);
             else if (item.Definition is ArmorData armor) drop = new LootDrop(LootKind.Armor, 0, armor: armor);
+            else if (item.Definition is GearData gear) drop = new LootDrop(LootKind.Gear, 0, gear: gear);
             else if (item.Definition is PotionData) drop = new LootDrop(LootKind.Potion, item.Potency);
             else return false;
             Vector3 origin = transform.position + Vector3.up * .6f;
@@ -167,7 +179,15 @@ namespace DungeonCrawler.Systems
                 var slot = data.slots[i];
                 slots[i] = new InventoryStack(catalog.Resolve(slot.itemId), slot.count, slot.potency);
             }
-            return model != null && model.TryRestore(slots, data.weaponIndex, data.armorIndex);
+            return model != null && RunCheckpointCatalog.TryGetEquipment(data, out int[] equipped) && model.TryRestore(slots, equipped);
+        }
+
+        /// <summary>Checkpoint capture of the six bindings in <see cref="EquipmentSlot"/> order.</summary>
+        public int[] CaptureEquipment()
+        {
+            var equipped = new int[EquipmentSlots.Count];
+            for (int i = 0; i < equipped.Length; i++) equipped[i] = GetEquippedIndex((EquipmentSlot)i);
+            return equipped;
         }
         private void OnOptionsChanged() => Changed?.Invoke();
         private bool Deny(InventoryCollectionFailure reason, bool notify)
@@ -176,10 +196,13 @@ namespace DungeonCrawler.Systems
             return false;
         }
 
+        // Absolute assignment from the current bindings: refresh, re-enable or restore never accumulate bonuses,
+        // and defense changes never heal (Health keeps its current HP).
         private void OnChanged()
         {
-            progression.SetEquippedWeapon(model.EquippedWeapon);
-            health.SetDefense(DefenseWith(model.EquippedArmor));
+            EquipmentTotals totals = model.GetTotals();
+            progression.SetEquipment(model.EquippedWeapon, totals.GearDamage);
+            health.SetDefense(DefenseWith(totals));
             Changed?.Invoke();
         }
 
@@ -191,11 +214,12 @@ namespace DungeonCrawler.Systems
             if (talentDefense == value) return;
             talentDefense = value;
             if (model == null || health == null) return;
-            health.SetDefense(DefenseWith(model.EquippedArmor));
+            health.SetDefense(DefenseWith(model.GetTotals()));
             Changed?.Invoke();
         }
 
-        private float DefenseWith(ArmorData armor) =>
-            Mathf.Max(0f, definition.baseDefense + (armor != null ? armor.defense : 0f) + talentDefense);
+        /// <summary>base + armor + other slots + talent (F12). The single defense composition used by Health and F01.</summary>
+        private float DefenseWith(in EquipmentTotals totals) =>
+            Mathf.Max(0f, definition.baseDefense + totals.ArmorDefense + totals.GearDefense + talentDefense);
     }
 }

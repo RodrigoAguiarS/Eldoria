@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-18 — D-006: seis slots de equipamento
+
+- Arma, armadura, capacete, luvas, botas e acessório podem ficar equipados ao mesmo tempo; os slots continuam vínculos a itens da bolsa de 16, sem espaço extra. `GearData` reutiliza bônus plano de dano e defesa; sem afixos, conjuntos ou crítico.
+- Bolsa reorganizada: EQUIPAMENTOS (grade 3×2), ATRIBUTOS do domínio e DETALHES DO ITEM com comparação do mesmo slot, na rolagem existente. Consultar um slot nunca desequipa.
+- Checkpoint v4 (`gearIndices`), v1–v3 legíveis com os slots novos vazios; transferência entre andares preservada.
+- Quatro peças iniciais como proposta de playtest, no cenário diagnóstico; tabelas de loot da release inalteradas. [Regras](docs/EQUIPMENT-SLOTS.md), [evidências](Reports/EquipmentSlots/README.md).
+
 ## 2026-11-17 — Tarefas de integração e validação V01–V21
 
 - Catálogo com 21 tarefas e prompts completos para outro modelo executar: baseline/PRs e regressões, integração A01–A12, avaliação e produção condicional de conteúdo, validação Editor/Windows/save, playtest, desempenho, empacotamento e teste externo.

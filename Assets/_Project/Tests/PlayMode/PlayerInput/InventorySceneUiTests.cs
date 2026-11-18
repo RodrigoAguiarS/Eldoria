@@ -202,7 +202,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.AreEqual(0f, Time.timeScale);
             var presenter = InScene<InventoryPresenter>();
             var views = presenter.GetComponentsInChildren<InventorySlotView>(true);
-            var comparison = presenter.transform.Find("Window/Comparison").GetComponent<Text>();
+            var comparison = presenter.transform.Find("Window/ItemReading/Viewport/Content/Comparison").GetComponent<Text>();
             Assert.AreEqual(16, views.Length);
             yield return Click(views[1].Button);
             StringAssert.Contains("Bônus plano da arma: +6 → +12 (+6)", comparison.text);
@@ -257,7 +257,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return Key(keyboard.iKey);
             var presenter = InScene<InventoryPresenter>();
             var views = presenter.GetComponentsInChildren<InventorySlotView>(true);
-            var comparison = presenter.transform.Find("Window/Comparison").GetComponent<Text>();
+            var comparison = presenter.transform.Find("Window/ItemReading/Viewport/Content/Comparison").GetComponent<Text>();
             Assert.IsFalse(comparison.gameObject.activeSelf);
             var iron = UnityEditor.AssetDatabase.LoadAssetAtPath<WeaponData>("Assets/_Project/ScriptableObjects/Items/Weapon_IronSword.asset");
             for (int i = 0; i < 16; i++) Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron)));
@@ -357,7 +357,8 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.AreEqual(defense, health.Defense, .001f);
             Assert.IsTrue(views[0].SelectionFrame.activeSelf, "Selection follows the selected item.");
             Assert.IsFalse(views[3].SelectionFrame.activeSelf);
-            StringAssert.StartsWith("Lâmina do Guardião", details.text);
+            // D-006: the reading column opens with the DETALHES DO ITEM heading, then the selected item name.
+            StringAssert.StartsWith("<b>DETALHES DO ITEM</b>\nLâmina do Guardião", details.text);
             StringAssert.Contains("Equipado", views[2].Label.text);
             StringAssert.DoesNotContain("Equipado", views[1].Label.text);
 
@@ -446,7 +447,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return null;
             var presenter = InScene<InventoryPresenter>();
             var views = presenter.GetComponentsInChildren<InventorySlotView>(true);
-            var comparison = presenter.transform.Find("Window/Comparison").GetComponent<Text>();
+            var comparison = presenter.transform.Find("Window/ItemReading/Viewport/Content/Comparison").GetComponent<Text>();
             foreach (int width in new[] { 1280, 1920 })
             {
                 int height = width == 1280 ? 720 : 1080;

@@ -130,7 +130,20 @@ namespace DungeonCrawler.UI
                 case LootKind.Potion: return "Poção guardada";
                 case LootKind.Weapon: return "Arma coletada";
                 case LootKind.Armor: return "Armadura coletada";
+                case LootKind.Gear: return GearMessage(drop.Gear);
                 default: return "Item coletado";
+            }
+        }
+        // Constant strings: no allocation beyond the existing notice swap.
+        private static string GearMessage(GearData gear)
+        {
+            if (gear == null || !gear.TryGetEquipmentSlot(out EquipmentSlot slot)) return "Equipamento coletado";
+            switch (slot)
+            {
+                case EquipmentSlot.Helmet: return "Capacete coletado";
+                case EquipmentSlot.Gloves: return "Luvas coletadas";
+                case EquipmentSlot.Boots: return "Botas coletadas";
+                default: return "Acessório coletado";
             }
         }
         private void Burst(ParticleSystem effect, Color color, int particles, float radius, float lifetime)

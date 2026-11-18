@@ -26,10 +26,28 @@ namespace DungeonCrawler.Systems
         private readonly bool autoEquipFirstWeapon;
         public IReadOnlyList<InventoryStack> Slots { get; }
         public int Capacity => slots.Length;
-        public int EquippedWeaponIndex { get; private set; } = -1;
-        public int EquippedArmorIndex { get; private set; } = -1;
+        // One bag index per EquipmentSlot (-1 = empty). Bindings only: equipped items stay in their bag slot.
+        private readonly int[] equipped = { -1, -1, -1, -1, -1, -1 };
+        public int EquippedWeaponIndex => equipped[(int)EquipmentSlot.Weapon];
+        public int EquippedArmorIndex => equipped[(int)EquipmentSlot.Armor];
         public WeaponData EquippedWeapon => EquippedWeaponIndex >= 0 ? slots[EquippedWeaponIndex].Definition as WeaponData : null;
         public ArmorData EquippedArmor => EquippedArmorIndex >= 0 ? slots[EquippedArmorIndex].Definition as ArmorData : null;
+
+        public int GetEquippedIndex(EquipmentSlot slot) => EquipmentSlots.IsValid(slot) ? equipped[(int)slot] : -1;
+        public ItemDefinition GetEquipped(EquipmentSlot slot)
+        {
+            int index = GetEquippedIndex(slot);
+            return index >= 0 ? slots[index].Definition : null;
+        }
+        public bool IsEquipped(int index) => TryGetEquippedSlot(index, out _);
+        /// <summary>The slot bound to this bag index, if any. A bag index is bound to at most one slot.</summary>
+        public bool TryGetEquippedSlot(int index, out EquipmentSlot slot)
+        {
+            for (int i = 0; i < equipped.Length; i++)
+                if (index >= 0 && equipped[i] == index) { slot = (EquipmentSlot)i; return true; }
+            slot = EquipmentSlot.Weapon;
+            return false;
+        }
         public event Action Changed;
 
         public InventoryModel(int capacity = 16, bool autoEquipFirstWeapon = true)
@@ -70,37 +88,64 @@ namespace DungeonCrawler.Systems
                 slots[i] = new InventoryStack(definition, adding, power);
                 remaining -= adding;
                 if (autoEquipFirstWeapon && EquippedWeaponIndex < 0 && definition is WeaponData)
-                    EquippedWeaponIndex = i;
+                    equipped[(int)EquipmentSlot.Weapon] = i;
             }
             Changed?.Invoke();
             return true;
         }
 
+        /// <summary>Binds the bag item to its own slot; a same-slot item stays where it is. No space is required.</summary>
         public bool TryEquip(int index)
         {
-            if (!Valid(index) || slots[index].IsEmpty) return false;
-            if (slots[index].Definition is WeaponData)
-            {
-                if (EquippedWeaponIndex == index) return false;
-                EquippedWeaponIndex = index;
-            }
-            else if (slots[index].Definition is ArmorData)
-            {
-                if (EquippedArmorIndex == index) return false;
-                EquippedArmorIndex = index;
-            }
-            else return false;
+            if (!Valid(index) || slots[index].IsEmpty || !slots[index].Definition.TryGetEquipmentSlot(out EquipmentSlot slot) ||
+                !EquipmentSlots.IsValid(slot)) return false;
+            if (equipped[(int)slot] == index) return false;
+            equipped[(int)slot] = index;
             Changed?.Invoke();
             return true;
         }
 
-        public bool TryUnequip(InventoryItemKind kind)
+        public bool TryUnequip(InventoryItemKind kind) => EquipmentSlots.TryFromKind(kind, out EquipmentSlot slot) && TryUnequip(slot);
+
+        /// <summary>Clears only this slot binding; the item and the other five bindings are untouched.</summary>
+        public bool TryUnequip(EquipmentSlot slot)
         {
-            if (kind == InventoryItemKind.Weapon && EquippedWeaponIndex >= 0) EquippedWeaponIndex = -1;
-            else if (kind == InventoryItemKind.Armor && EquippedArmorIndex >= 0) EquippedArmorIndex = -1;
-            else return false;
+            if (!EquipmentSlots.IsValid(slot) || equipped[(int)slot] < 0) return false;
+            equipped[(int)slot] = -1;
             Changed?.Invoke();
             return true;
+        }
+
+        /// <summary>Unequips the slot bound to this exact bag index (never another copy of the same definition).</summary>
+        public bool TryUnequipAt(int index) => TryGetEquippedSlot(index, out EquipmentSlot slot) && TryUnequip(slot);
+
+        /// <summary>Current flat contributions of the six slots, each counted once in a fixed order.</summary>
+        public EquipmentTotals GetTotals() => Totals(-1, null);
+
+        /// <summary>
+        /// Read-only preview with <paramref name="replacement"/> in <paramref name="slot"/> and the other five slots
+        /// unchanged. Refuses an item of another category (e.g. gloves in the armor slot).
+        /// </summary>
+        public bool TryGetTotalsWith(EquipmentSlot slot, ItemDefinition replacement, out EquipmentTotals totals)
+        {
+            totals = default;
+            if (!EquipmentSlots.IsValid(slot)) return false;
+            if (replacement != null && (!replacement.TryGetEquipmentSlot(out EquipmentSlot own) || own != slot)) return false;
+            totals = Totals((int)slot, replacement);
+            return true;
+        }
+
+        private EquipmentTotals Totals(int replacedSlot, ItemDefinition replacement)
+        {
+            float weaponDamage = 0f, gearDamage = 0f, armorDefense = 0f, gearDefense = 0f;
+            for (int i = 0; i < equipped.Length; i++)
+            {
+                ItemDefinition item = i == replacedSlot ? replacement : equipped[i] >= 0 ? slots[equipped[i]].Definition : null;
+                if (item == null) continue;
+                if (i == (int)EquipmentSlot.Weapon) weaponDamage += item.EquipmentDamageBonus; else gearDamage += item.EquipmentDamageBonus;
+                if (i == (int)EquipmentSlot.Armor) armorDefense += item.EquipmentDefenseBonus; else gearDefense += item.EquipmentDefenseBonus;
+            }
+            return new EquipmentTotals(weaponDamage, gearDamage, armorDefense, gearDefense);
         }
 
         public bool TryConsumePotion(int index, out int healing)
@@ -139,10 +184,8 @@ namespace DungeonCrawler.Systems
             taken = new InventoryStack(item.Definition, 1, item.Potency);
             slots[index] = item.Count > 1 ? new InventoryStack(item.Definition, item.Count - 1, item.Potency) : default;
             if (slots[index].IsEmpty)
-            {
-                if (EquippedWeaponIndex == index) EquippedWeaponIndex = -1;
-                if (EquippedArmorIndex == index) EquippedArmorIndex = -1;
-            }
+                for (int i = 0; i < equipped.Length; i++)
+                    if (equipped[i] == index) equipped[i] = -1;
             Changed?.Invoke();
             return true;
         }
@@ -176,8 +219,8 @@ namespace DungeonCrawler.Systems
 
             InventoryStack[] previous = (InventoryStack[])slots.Clone();
             for (int target = 0; target < order.Length; target++) slots[target] = previous[order[target]];
-            if (EquippedWeaponIndex >= 0) EquippedWeaponIndex = newIndexOf[EquippedWeaponIndex];
-            if (EquippedArmorIndex >= 0) EquippedArmorIndex = newIndexOf[EquippedArmorIndex];
+            for (int i = 0; i < equipped.Length; i++)
+                if (equipped[i] >= 0) equipped[i] = newIndexOf[equipped[i]];
             Changed?.Invoke();
             return true;
         }
@@ -187,7 +230,7 @@ namespace DungeonCrawler.Systems
             InventoryStack a = slots[left], b = slots[right];
             if (a.IsEmpty || b.IsEmpty)
                 return a.IsEmpty == b.IsEmpty ? left.CompareTo(right) : (a.IsEmpty ? 1 : -1);
-            int result = a.Definition.Kind.CompareTo(b.Definition.Kind);
+            int result = SortRank(a.Definition.Kind).CompareTo(SortRank(b.Definition.Kind));
             if (result != 0) return result;
             result = RarityRank(b.Definition).CompareTo(RarityRank(a.Definition));
             if (result != 0) return result;
@@ -196,13 +239,37 @@ namespace DungeonCrawler.Systems
             return result != 0 ? result : left.CompareTo(right);
         }
 
+        // Equipment in slot order, then consumables; keeps the F02 order weapon < armor < potion.
+        private static int SortRank(InventoryItemKind kind)
+        {
+            switch (kind)
+            {
+                case InventoryItemKind.Weapon: return 0;
+                case InventoryItemKind.Armor: return 1;
+                case InventoryItemKind.Helmet: return 2;
+                case InventoryItemKind.Gloves: return 3;
+                case InventoryItemKind.Boots: return 4;
+                case InventoryItemKind.Accessory: return 5;
+                case InventoryItemKind.Potion: return 6;
+                default: return 7;
+            }
+        }
+
         private static int RarityRank(ItemDefinition definition) => definition.rarity != null ? definition.rarity.rank : -1;
 
         /// <summary>Restores exact slots, without add/merge/auto-equip or collection rewards.</summary>
-        public bool TryRestore(IReadOnlyList<InventoryStack> snapshot, int weaponIndex, int armorIndex)
+        public bool TryRestore(IReadOnlyList<InventoryStack> snapshot, int weaponIndex, int armorIndex) =>
+            TryRestore(snapshot, new[] { weaponIndex, armorIndex, -1, -1, -1, -1 });
+
+        /// <summary>
+        /// Restores exact slots and the six bindings (<see cref="EquipmentSlot"/> order, -1 = empty). Validates the
+        /// whole snapshot first; nothing changes on failure. Each bound slot must hold an item of that category.
+        /// </summary>
+        public bool TryRestore(IReadOnlyList<InventoryStack> snapshot, IReadOnlyList<int> equippedBySlot)
         {
-            if (snapshot == null || snapshot.Count != Capacity || weaponIndex < -1 || weaponIndex >= Capacity ||
-                armorIndex < -1 || armorIndex >= Capacity) return false;
+            if (snapshot == null || snapshot.Count != Capacity || equippedBySlot == null || equippedBySlot.Count != EquipmentSlots.Count) return false;
+            for (int s = 0; s < equippedBySlot.Count; s++)
+                if (equippedBySlot[s] < -1 || equippedBySlot[s] >= Capacity) return false;
             for (int i = 0; i < snapshot.Count; i++)
             {
                 InventoryStack slot = snapshot[i];
@@ -215,10 +282,15 @@ namespace DungeonCrawler.Systems
                     slot.Potency > RunCheckpointCatalog.MaxAmount ||
                     (slot.Definition.Kind == InventoryItemKind.Potion ? slot.Potency == 0 : slot.Potency != 0)) return false;
             }
-            if (weaponIndex >= 0 && !(snapshot[weaponIndex].Definition is WeaponData) ||
-                armorIndex >= 0 && !(snapshot[armorIndex].Definition is ArmorData)) return false;
+            for (int s = 0; s < equippedBySlot.Count; s++)
+            {
+                int index = equippedBySlot[s];
+                if (index < 0) continue;
+                ItemDefinition item = snapshot[index].Definition;
+                if (item == null || !item.TryGetEquipmentSlot(out EquipmentSlot slot) || (int)slot != s) return false;
+            }
             for (int i = 0; i < Capacity; i++) slots[i] = snapshot[i];
-            EquippedWeaponIndex = weaponIndex; EquippedArmorIndex = armorIndex;
+            for (int s = 0; s < equipped.Length; s++) equipped[s] = equippedBySlot[s];
             Changed?.Invoke(); return true;
         }
 

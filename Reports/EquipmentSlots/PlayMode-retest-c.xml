@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="5" result="Passed" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 13:32:38Z" end-time="2026-11-18 13:32:39Z" duration="0,5080927">
+  <test-suite type="TestSuite" id="1305" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="240" result="Passed" start-time="2026-11-18 13:32:38Z" end-time="2026-11-18 13:32:39Z" duration="0.508093" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1603" name="DungeonCrawler.Tests.PlayMode.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayMode.dll" runstate="Runnable" testcasecount="138" result="Passed" start-time="2026-11-18 13:32:38Z" end-time="2026-11-18 13:32:39Z" duration="0.496803" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="26660" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1604" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="138" result="Passed" start-time="2026-11-18 13:32:38Z" end-time="2026-11-18 13:32:39Z" duration="0.494098" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1605" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="138" result="Passed" start-time="2026-11-18 13:32:38Z" end-time="2026-11-18 13:32:39Z" duration="0.491581" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1606" name="PlayMode" fullname="DungeonCrawler.Tests.PlayMode" runstate="Runnable" testcasecount="138" result="Passed" start-time="2026-11-18 13:32:38Z" end-time="2026-11-18 13:32:39Z" duration="0.489789" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1460" name="EquipmentSlotsPlayModeTests" fullname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests" classname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-18 13:32:38Z" end-time="2026-11-18 13:32:39Z" duration="0.475964" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1462" name="Comparison_StaysInSlotAndHasNoSideEffects" fullname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests.Comparison_StaysInSlotAndHasNoSideEffects" methodname="Comparison_StaysInSlotAndHasNoSideEffects" classname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests" runstate="Runnable" seed="1782297319" result="Passed" start-time="2026-11-18 13:32:38Z" end-time="2026-11-18 13:32:39Z" duration="0.041073" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1463" name="DeadPlayer_CannotEquipOrUnequipAndPotionIsNotEquipment" fullname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests.DeadPlayer_CannotEquipOrUnequipAndPotionIsNotEquipment" methodname="DeadPlayer_CannotEquipOrUnequipAndPotionIsNotEquipment" classname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests" runstate="Runnable" seed="2041648330" result="Passed" start-time="2026-11-18 13:32:39Z" end-time="2026-11-18 13:32:39Z" duration="0.001748" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1465" name="DroppingEquippedGear_RemovesItsBonusAndRecollectsUnequipped" fullname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests.DroppingEquippedGear_RemovesItsBonusAndRecollectsUnequipped" methodname="DroppingEquippedGear_RemovesItsBonusAndRecollectsUnequipped" classname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests" runstate="Runnable" seed="307179329" result="Passed" start-time="2026-11-18 13:32:39Z" end-time="2026-11-18 13:32:39Z" duration="0.405562" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1464" name="FullBag_TradesEquipmentWithoutSpaceAndRefusesNewPickup" fullname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests.FullBag_TradesEquipmentWithoutSpaceAndRefusesNewPickup" methodname="FullBag_TradesEquipmentWithoutSpaceAndRefusesNewPickup" classname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests" runstate="Runnable" seed="485586749" result="Passed" start-time="2026-11-18 13:32:39Z" end-time="2026-11-18 13:32:39Z" duration="0.000889" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1461" name="SixSlots_ComposeDamageAndDefenseOnceWithoutHealingOrTouchingTalents" fullname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests.SixSlots_ComposeDamageAndDefenseOnceWithoutHealingOrTouchingTalents" methodname="SixSlots_ComposeDamageAndDefenseOnceWithoutHealingOrTouchingTalents" classname="DungeonCrawler.Tests.PlayMode.EquipmentSlotsPlayModeTests" runstate="Runnable" seed="1507063878" result="Passed" start-time="2026-11-18 13:32:39Z" end-time="2026-11-18 13:32:39Z" duration="0.001849" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,25 +1,59 @@
 namespace DungeonCrawler.Systems
 {
-    /// <summary>Read-only equipment preview. Values use the same rules as equipped stats.</summary>
+    /// <summary>
+    /// Read-only equipment preview within one slot. Values use the same rules as equipped stats, keeping the
+    /// other five slots and the talents constant. Never compares items of different categories.
+    /// </summary>
     public readonly struct EquipmentComparison
     {
-        public InventoryItemKind Kind { get; }
-        public float CurrentBonus { get; }
-        public float SelectedBonus { get; }
-        public float BonusDifference => SelectedBonus - CurrentBonus;
-        public float CurrentValue { get; }
-        public float SelectedValue { get; }
-        public float Difference => SelectedValue - CurrentValue;
+        public EquipmentSlot Slot { get; }
+        public InventoryItemKind Kind => EquipmentSlots.ToKind(Slot);
+        /// <summary>Item currently bound to the slot; null means empty (or the basic weapon).</summary>
+        public ItemDefinition CurrentItem { get; }
+        public ItemDefinition SelectedItem { get; }
+        public bool SelectedIsCurrent => CurrentItem != null && SelectedIndex == CurrentIndex;
+        public int CurrentIndex { get; }
+        public int SelectedIndex { get; }
+
+        public float CurrentDamageBonus { get; }
+        public float SelectedDamageBonus { get; }
+        public float CurrentDefenseBonus { get; }
+        public float SelectedDefenseBonus { get; }
+        /// <summary>Base hit damage at the current level (before combo/special), now and after the swap.</summary>
+        public float CurrentDamage { get; }
+        public float SelectedDamage { get; }
+        /// <summary>Total defense applied to Health, now and after the swap.</summary>
+        public float CurrentDefense { get; }
+        public float SelectedDefense { get; }
+        public float DamageDifference => SelectedDamage - CurrentDamage;
+        public float DefenseDifference => SelectedDefense - CurrentDefense;
         public int Level { get; }
 
-        public EquipmentComparison(InventoryItemKind kind, float currentBonus, float selectedBonus,
-            float currentValue, float selectedValue, int level)
+        // F01 single-stat view: damage for weapons, defense for every other slot.
+        private bool DamageIsPrimary => Slot == EquipmentSlot.Weapon;
+        public float CurrentBonus => DamageIsPrimary ? CurrentDamageBonus : CurrentDefenseBonus;
+        public float SelectedBonus => DamageIsPrimary ? SelectedDamageBonus : SelectedDefenseBonus;
+        public float BonusDifference => SelectedBonus - CurrentBonus;
+        public float CurrentValue => DamageIsPrimary ? CurrentDamage : CurrentDefense;
+        public float SelectedValue => DamageIsPrimary ? SelectedDamage : SelectedDefense;
+        public float Difference => SelectedValue - CurrentValue;
+
+        public EquipmentComparison(EquipmentSlot slot, ItemDefinition current, int currentIndex, ItemDefinition selected,
+            int selectedIndex, float currentDamage, float selectedDamage, float currentDefense, float selectedDefense, int level)
         {
-            Kind = kind;
-            CurrentBonus = currentBonus;
-            SelectedBonus = selectedBonus;
-            CurrentValue = currentValue;
-            SelectedValue = selectedValue;
+            Slot = slot;
+            CurrentItem = current;
+            CurrentIndex = current != null ? currentIndex : -1;
+            SelectedItem = selected;
+            SelectedIndex = selectedIndex;
+            CurrentDamageBonus = current != null ? current.EquipmentDamageBonus : 0f;
+            SelectedDamageBonus = selected != null ? selected.EquipmentDamageBonus : 0f;
+            CurrentDefenseBonus = current != null ? current.EquipmentDefenseBonus : 0f;
+            SelectedDefenseBonus = selected != null ? selected.EquipmentDefenseBonus : 0f;
+            CurrentDamage = currentDamage;
+            SelectedDamage = selectedDamage;
+            CurrentDefense = currentDefense;
+            SelectedDefense = selectedDefense;
             Level = level;
         }
     }
