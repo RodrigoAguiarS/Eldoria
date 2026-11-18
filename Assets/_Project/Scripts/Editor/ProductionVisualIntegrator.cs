@@ -206,18 +206,29 @@ namespace DungeonCrawler.Editor
                 var spec = JsonUtility.FromJson<PaletteEntry>(block.Substring(objOpen, objClose - objOpen + 1));
                 string path = MaterialsFolder + "/" + name + ".mat";
                 var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
-                if (mat == null) { mat = new Material(lit) { name = name }; AssetDatabase.CreateAsset(mat, path); }
-                else if (mat.shader != lit) mat.shader = lit;
+                bool changed = false;
+                if (mat == null) { mat = new Material(lit) { name = name }; AssetDatabase.CreateAsset(mat, path); changed = true; }
+                else if (mat.shader != lit) { mat.shader = lit; changed = true; }
                 ColorUtility.TryParseHtmlString(spec.color, out Color baseColor);
-                mat.SetColor("_BaseColor", baseColor); mat.SetFloat("_Metallic", spec.metallic); mat.SetFloat("_Smoothness", spec.smoothness);
-                if (!string.IsNullOrEmpty(spec.emissive) && spec.emissive != "#000000" && spec.emissiveIntensity > 0f)
+                bool emissive = !string.IsNullOrEmpty(spec.emissive) && spec.emissive != "#000000" && spec.emissiveIntensity > 0f;
+                Color emission = Color.black;
+                if (emissive) { ColorUtility.TryParseHtmlString(spec.emissive, out Color e); emission = e * spec.emissiveIntensity; }
+                // Compare before writing: an unconditional SetDirty re-serializes the .mat on every run (and flips CRLF to LF).
+                changed |= mat.GetColor("_BaseColor") != baseColor || !Mathf.Approximately(mat.GetFloat("_Metallic"), spec.metallic) ||
+                           !Mathf.Approximately(mat.GetFloat("_Smoothness"), spec.smoothness) || mat.IsKeywordEnabled("_EMISSION") != emissive ||
+                           mat.GetColor("_EmissionColor") != emission ||
+                           (emissive && mat.globalIlluminationFlags != MaterialGlobalIlluminationFlags.RealtimeEmissive);
+                if (changed)
                 {
-                    ColorUtility.TryParseHtmlString(spec.emissive, out Color e);
-                    mat.EnableKeyword("_EMISSION"); mat.SetColor("_EmissionColor", e * spec.emissiveIntensity);
-                    mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+                    mat.SetColor("_BaseColor", baseColor); mat.SetFloat("_Metallic", spec.metallic); mat.SetFloat("_Smoothness", spec.smoothness);
+                    if (emissive)
+                    {
+                        mat.EnableKeyword("_EMISSION"); mat.SetColor("_EmissionColor", emission);
+                        mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+                    }
+                    else { mat.DisableKeyword("_EMISSION"); mat.SetColor("_EmissionColor", Color.black); }
+                    EditorUtility.SetDirty(mat);
                 }
-                else { mat.DisableKeyword("_EMISSION"); mat.SetColor("_EmissionColor", Color.black); }
-                EditorUtility.SetDirty(mat);
                 result[name] = mat;
                 i = objClose + 1;
             }
@@ -312,9 +323,29 @@ namespace DungeonCrawler.Editor
             // Keep entries for items outside this batch (e.g. ITEMS-GEAR), in their original order, after this batch's items.
             var owned = new HashSet<ItemDefinition>(items.Select(e => e.item));
             var others = Enumerable.Range(0, catalog.ItemCount).Select(catalog.GetItemEntry).Where(e => e.item != null && !owned.Contains(e.item));
-            catalog.EditorSet(items.Concat(others).ToArray(), loot);
-            EditorUtility.SetDirty(catalog);
+            SetCatalogIfChanged(catalog, items.Concat(others).ToArray(), loot);
         }
+
+        /// <summary>
+        /// Writes the catalog only when an entry (or the order) differs, so re-running ITEMS-COMBAT/ITEMS-GEAR leaves its
+        /// bytes untouched. Returns whether the catalog was changed and marked dirty.
+        /// </summary>
+        internal static bool SetCatalogIfChanged(ItemVisualCatalog catalog, ItemVisualCatalog.ItemVisual[] items, ItemVisualCatalog.LootVisual[] loot)
+        {
+            bool same = catalog.ItemCount == items.Length && catalog.LootCount == loot.Length &&
+                        Enumerable.Range(0, items.Length).All(i => SameItem(catalog.GetItemEntry(i), items[i])) &&
+                        Enumerable.Range(0, loot.Length).All(i => SameLoot(catalog.GetLootEntry(i), loot[i]));
+            if (same) return false;
+            catalog.EditorSet(items, loot);
+            EditorUtility.SetDirty(catalog);
+            return true;
+        }
+
+        private static bool SameItem(ItemVisualCatalog.ItemVisual a, ItemVisualCatalog.ItemVisual b) =>
+            a.assetId == b.assetId && a.item == b.item && a.icon == b.icon && a.groundPrefab == b.groundPrefab && a.equippedPrefab == b.equippedPrefab;
+
+        private static bool SameLoot(ItemVisualCatalog.LootVisual a, ItemVisualCatalog.LootVisual b) =>
+            a.assetId == b.assetId && a.kind == b.kind && a.groundPrefab == b.groundPrefab;
 
         internal static Sprite LoadSprite(string path)
         {
