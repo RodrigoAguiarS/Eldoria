@@ -6739,7 +6739,7 @@
         "UI-TYPE"
       ],
       "technical_dependencies": [],
-      "integration_state": "Produzido em staging (A03, 17/11/2026): 16 sprites 9-slice/marcadores em ProductionStaging/UI-SKIN com mapa de estados (Source~/UI-SKIN.states.json); NÃO integrado. Integração é tarefa de código separada: builders atribuem sprites (Sliced, Image.color branco) por referência explícita, InventorySlotView troca sprite em vez de tingir, hover/foco de slot (hoje Transition.None) e FocusCorner; sem mudar targets, navegação, pilha de menus ou regras.",
+      "integration_state": "Integrado às telas em V04 (18/11/2026, branch claude/v04-ui-skin, brief A03-I): UiSkin.asset (ScriptableObjects/UI) referencia os sprites por caminho constante; UiSkinIntegrator (Tools/Dungeon Crawler/UI/Apply UI Skin (A03) e Validate UI Skin (A03)) aplica em MainMenu, MVP_Arena, Floor_01 e no andar de release. Botões: Button-Normal Sliced, Image branca, SpriteSwap Hover/Pressed/Focus/Disabled. Window de cada overlay de tela cheia: Panel-Window; leitura rolável da bolsa e PotionHud: Panel-Inset. Slots: InventorySlotView troca a base por estado (selecionado > preenchido/vazio), RarityBand com ItemRarity.color, escudo de equipado e octógono de vazio; skin nula mantém o tingimento antigo. SelectionFrame mantido (arestas antigas desligadas, Marker-Selected 24×24). TextScaleSceneBuilder.ConfigureScene reaplica a skin. Fora do escopo: Floor_02_Fixed (F14, tarefa complementar), hover/foco de slot e FocusCorner (A03-I2), trilho/alça da rolagem, dropdown/toggle/slider. Aprovação artística humana pendente.",
       "visual_specification": "Manter azul-preto/dourado; chanfros discretos e foco por cantos além da cor. Não redesenhar telas.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -6748,7 +6748,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: UiSkin.validation.json (16 PNG decodificados: tamanho exato, RGBA, alpha real, 0 pixels transparentes com RGB sujo; bordas 9-slice idênticas ao longo do eixo esticado e centro de cor única em todas as bases; contraste do texto atual 18/18 ≥ 4,5:1 (desabilitado ≥ 3:1; mínimo 4,71 Épico sobre Selected); 16/16 pares de estado distintos em tons de cinza ≥ 291 px de borda) e asset_report.py (--expect-size por grupo --require-alpha, exit 0); prancha 1080p e redução 720p aproximada (não é captura Unity). NÃO VALIDADO NO EDITOR: importação, Canvas real e PlayMode não observados.",
+        "current_session": "V04 (18/11/2026, Unity 6000.6.9f1): Validate UI Skin passou nas 4 cenas (importação conforme UI-SKIN.states.json: Sprite Single, Full Rect, PPU 100, mipmaps off, bordas 16/12/8); snapshot de geometria/raycastTarget/Navigation/onClick idêntico antes e depois (1170 linhas); integrador idempotente (2ª execução e após F10: 0 arquivos alterados); EditMode 286/286, PlayMode 203/0/17 skipped (Explicit) e captura gráfica 1/1 em 720p/1080p × 100%/150% (title, bag, bag-scrolled, options, controls, hud, pause). Evidências: Reports/Validation/V04/20261118-d058bad/README.md. Anterior: Técnica fora da Unity em 17/11/2026: UiSkin.validation.json (16 PNG decodificados: tamanho exato, RGBA, alpha real, 0 pixels transparentes com RGB sujo; bordas 9-slice idênticas ao longo do eixo esticado e centro de cor única em todas as bases; contraste do texto atual 18/18 ≥ 4,5:1 (desabilitado ≥ 3:1; mínimo 4,71 Épico sobre Selected); 16/16 pares de estado distintos em tons de cinza ≥ 291 px de borda) e asset_report.py (--expect-size por grupo --require-alpha, exit 0); prancha 1080p e redução 720p aproximada (não é captura Unity). NÃO VALIDADO NO EDITOR: importação, Canvas real e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -13446,6 +13446,55 @@
         "Parede de 1,4 m (DungeonMvpSceneBuilder.WallHeight) em vez dos 2 m do texto histórico de direção de arte; batentes de 2,1 m.",
         "Luz do render mais forte e neutra (lua #D8DFF2 4,6, hemisférica #B4BACE 2,1) para o piso sair perto de #55596B; a câmera é ortográfica, sem a perspectiva da câmera real.",
         "Personagens (herói, 2 melee, 2 ranged = composição F14) só para escala e leitura; posições não são spawn.",
+        "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "V04-UI-SKIN-INTEGRATION",
+      "date_local": "2026-11-18",
+      "branch": "claude/v04-ui-skin",
+      "main_merge": "pendente (PR para a main; sem merge sem aprovação do usuário)",
+      "produced": [],
+      "imported": [
+        "UI-SKIN"
+      ],
+      "integrated": [
+        "UI-SKIN"
+      ],
+      "validated_in_editor": [
+        "UI-SKIN"
+      ],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Scripts/UI/InventorySlotView.cs",
+        "Assets/_Project/Scripts/Editor/TextScaleSceneBuilder.cs",
+        "Assets/_Project/Scenes/MainMenu.unity",
+        "Assets/_Project/Scenes/MVP_Arena.unity",
+        "Assets/_Project/Scenes/Floor_01.unity",
+        "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity",
+        "Assets/_Project/Art/ProductionStaging/UI-SKIN/*.png.meta (reserializados pela importação, mesmos GUIDs)",
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Assets/_Project/Scripts/UI/UiSkin.cs",
+        "Assets/_Project/Scripts/Editor/UiSkinIntegrator.cs",
+        "Assets/_Project/Tests/EditMode/UiSkinTests.cs",
+        "Assets/_Project/Tests/PlayMode/PlayerInput/UiSkinSceneTests.cs"
+      ],
+      "new_assets": [
+        "Assets/_Project/ScriptableObjects/UI/UiSkin.asset"
+      ],
+      "import_settings": "Sem alteração de configuração: o integrador só confere (ImportProblems) e a importação já seguia a ficha. A Unity acrescentou spriteSheet/internalIDToNameTable às .meta.",
+      "tests": {
+        "editmode": "286/286 passed",
+        "playmode": "203 passed, 0 failed, 17 skipped ([Explicit])",
+        "technical": "Validate UI Skin (A03) ok nas 4 cenas; snapshot antes = depois; captura gráfica 1/1 (28 telas)"
+      },
+      "limitations": [
+        "Floor_02_Fixed (F14) fica sem skin: 65 pendências relatadas pelo Validate; precisa de tarefa complementar.",
+        "Foco de botão só por capas claras nos cantos (Button-Focus); sutil a 720p. FocusCorner ×4 e hover/foco de slot ficam para A03-I2.",
+        "Matriz em tamanhos emulados do Game view; sem monitor físico, ultrawide ou 125%.",
         "Aprovação artística humana pendente."
       ]
     }

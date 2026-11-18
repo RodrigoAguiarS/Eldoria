@@ -65,7 +65,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             if (longName)
             {
                 longWeapon = Object.Instantiate(Item<WeaponData>("Weapon_IronSword"));
-                longWeapon.displayName = "Espada ancestral do sentinela das ruínas esquecidas — nome extenso de diagnóstico V04 " + new string('M', 80);
+                longWeapon.displayName = "Espada ancestral do sentinela das ruínas esquecidas — nome extenso de diagnóstico V04 " + new string('M', 400);
                 Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Weapon, 0, longWeapon)));
             }
             if (inventory.EquippedArmorIndex != 1) Assert.IsTrue(inventory.TryEquip(1));
