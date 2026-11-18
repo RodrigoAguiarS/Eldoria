@@ -19,8 +19,8 @@
     "logical_resources": 134,
     "by_status": {
       "EXISTENTE": 126,
-      "AUSENTE": 4,
-      "INCOMPLETO": 2,
+      "AUSENTE": 3,
+      "INCOMPLETO": 3,
       "NÃO VERIFICADO": 2
     },
     "by_category": {
@@ -54,8 +54,7 @@
       },
       "I": {
         "EXISTENTE": 12,
-        "AUSENTE": 1,
-        "INCOMPLETO": 1
+        "INCOMPLETO": 2
       },
       "J": {
         "EXISTENTE": 15,
@@ -5108,54 +5107,65 @@
     },
     {
       "id": "MODEL-DESTRUCTIBLE",
-      "name": "Obstáculo destrutível futuro",
+      "name": "Vasos destrutíveis (vaso de barro e caixa de madeira)",
       "category": "I",
       "category_name": "Cenários e objetos interativos",
-      "functionality": "Conteúdo posterior citado no GAME_DESIGN, sem sistema atual",
-      "status": "AUSENTE",
+      "functionality": "Vaso F09 por sala: alvo de ambiente de 40 HP que quebra uma vez; estado, dano e troca intacto/destroços são do DestructibleProp/DestructiblePropPresenter",
+      "status": "INCOMPLETO",
       "priority": "P2",
-      "type": "modelo 3D",
+      "type": "modelos 3D estáticos (intacto/quebrado)",
       "scope": "planejado_futuro_condicional",
       "evidence": [
         {
-          "path": "GAME_DESIGN.md",
-          "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+          "path": "Assets/_Project/Scripts/Dungeon/DestructibleProp.cs",
+          "detail": "Autoridade de HP/quebra (IDamageable); visual não lido por ele."
         },
         {
-          "path": "Assets/_Project/Scripts/Editor/DungeonFloorSceneBuilder.cs",
-          "detail": "Arquivo/família inspecionado; existência não equivale a aceite visual individual."
+          "path": "Assets/_Project/Scripts/Dungeon/DestructiblePropPresenter.cs",
+          "detail": "Alterna os GameObjects intact/rubble pré-compostos conforme o estado; reutiliza DamageFlash."
+        },
+        {
+          "path": "Assets/_Project/Scripts/Editor/DestructiblePropSceneBuilder.cs",
+          "detail": "Vaso de primitivas (Body esfera 0,9×1×0,9 + Rim; três Shard), Mat_Vase_F09, um por sala em (−5,5; 0; −2)."
+        },
+        {
+          "path": "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/Source~/README.md",
+          "detail": "Lote A12 em staging; não integrado."
         }
       ],
       "depends_on": [
         "ENV-WALL"
       ],
-      "technical_dependencies": [],
-      "integration_state": "Produção/integração visual pendente.",
-      "visual_specification": "Proposta: alvenaria gasta coerente com paredes, sem inventar HP/drops/combate.",
+      "technical_dependencies": [
+        "F09 (DestructibleProp/DestructiblePropPresenter/DamageFlash)"
+      ],
+      "integration_state": "Produzido em staging (A12, 17/11/2026) como quatro modelos 3D estáticos reais: MODEL-DESTRUCTIBLE_Jar_Intact/_Jar_Broken/_Crate_Intact/_Crate_Broken.fbx (344/344/360/180 triângulos, um material URP/Lit com paleta 16×16, pivô na base central, +Z frente; intacto em um único nó para o DamageFlash, quebrado em nós nomeados *_Broken_Base + fragmentos); NÃO integrado. Em jogo continua o vaso de primitivas do F09. Intacto como filho de Intact, quebrado como filho de Rubble, DamageFlash.targetRenderer → nó *_Intact, renderers das primitivas desligados (colliders do domínio mantidos) e material único remapeado são tarefa Codex; proposta em Source~/MODEL-DESTRUCTIBLE.source.json.",
+      "visual_specification": "Vaso de barro baixo decagonal (#8A4A22 dessaturado → #7B4E32) com gargalo estreito, boca escura, duas rachaduras finas e musgo no pé; caixa de madeira (#7A4B2A) com montantes, tábuas, tampo e diagonais escuras, uma tábua rachada e musgo. Quebrados: casca de barro partida com vão frontal, aro caído e cacos; caixa aberta com montantes partidos, tábuas caídas e madeira clara nas quebras. ≤ 600 tris por prop, 1 material, dentro do footprint do vaso F09 (±0,45 m, 1,04 m), quebrado dentro dos bounds do intacto.",
       "acceptance_criteria": [
-        "Preservar identidade e regras atuais.",
-        "Validar no enquadramento real sem referências faltantes ou regressões.",
-        "Entregar formatos/dimensões/fonte/procedência da ficha.",
+        "Formas distintas a 128 px na câmera do jogo.",
+        "Bounds estáveis entre intacto e quebrado (mesmo pivô); sem aumentar o footprint do vaso F09.",
+        "F09 validado com primitivas antes (integrado, PR #8); colliders/layers definidos pelo domínio; colocação não bloqueia portas; não registrar como inimigo da sala.",
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
-        "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
+        "current_session": "Técnica fora da Unity em 17/11/2026: ModelDestructible.validation.json (16/16; quatro FBX e PNG relidos do disco): 344/344/360/180 tris ≤ 600 por prop; só Model/Geometry/Material/Texture/Video, nós Mesh filhos da raiz, sem Takes/deformador/pose/colisor; um material MODEL-DESTRUCTIBLE_Prop com o mesmo nome nos quatro (AllSame); UnitScaleFactor 100, +Y up, +Z front; *_Intact e *_Broken_Base na origem com fundo em y 0, fragmentos com pivô na base central da própria peça; 76 peças fechadas, convexas e com volume > 0; normais geométricas; UV no centro das células da paleta; vaso 0,780 × 0,680 × 0,743 m e caixa 0,720 × 0,620 × 0,720 m dentro do footprint F09 (±0,45/1,04 m); quebrados dentro dos bounds X/Z/altura dos intactos; 128 px pela câmera do jogo (−30…+30°): IoU de silhueta ≤ 0,756 em todas as duplas (vaso × caixa intactos 0,668), intacto×quebrado com razão de área ≤ 0,843 e diferença de aparência ≥ 0,725; interior escuro visível nos quebrados ≥ 18%; ΔE76 cor média × piso 30,2–37,5 (WCAG 1,01–1,51); asset_report.py exit 0; GLB relido (11 malhas, 1228 tris); geração determinística. NÃO VALIDADO NO EDITOR: importação, materiais, cena F09, presenter, DamageFlash e PlayMode não observados.",
+        "historical_evidence": "Reports/F09/README.md (vaso de primitivas); não confundir com execução nova."
       },
       "production": {
-        "dimensions": "Proposta 1×1×1 m; confirmar footprint antes do lote",
-        "delivery_format": "FBX + .blend; intacto + 3 fragmentos, total <=600 tris",
-        "production_gate": "Futuro previsto; integração bloqueada até tarefa de comportamento. Dimensões propostas, não requisito aprovado.",
-        "technical_requirements": "Fonte .blend + FBX real; GLB opcional para revisão, sem dependência de importador novo. Metros, Unity +Y cima/+Z frente, transforms aplicadas, pivô conforme ficha, normais facetadas, URP/Lit, sem colliders de gameplay no visual.",
-        "prompt_en": "ASSET ID: MODEL-DESTRUCTIBLE\nPURPOSE AND VISUAL BRIEF: Conditional art-only destructible stone obstacle: a chunky worn blue-grey masonry block matching current walls, restrained base moss, one broad crack and three coarse visual fracture pieces.\nART DIRECTION: Match the existing stylized low-poly dark medieval fantasy: chunky silhouettes, large faceted planes, restrained hand-painted gradients and matte surfaces. Hero blue #2F6BFF/cyan #4FD8FF, leather #7A4B2A, steel #B9C4CF, brass #E0B040; threat red #FF2A2A/orange #FF9A2E; desaturated stone #55596B/#3E4152, moss #4C5A44. Use current project models and concepts as references, with a fixed 45-degree isometric gameplay camera. Preserve identity, costume, palette and proportions. Do not copy commercial game assets, characters or logos.\nDELIVERY: An intact 1x1x1m mesh and three separate coarse debris meshes, base-centred pivots, at most 600 triangles total, one reused stone material.\nENGINE CONTRACT: Deliver editable Blender source and a real FBX mesh, optional GLB review copy. One Unity unit per metre, Unity +Y up/+Z forward, applied transforms, correct normals and named parts, URP/Lit materials. No gameplay scripts or physics changes.\nVALIDATION: No destruction logic, triggers, rewards, collision or combat. Integration waits for a separate approved gameplay brief; keep combat centre open.\nLOCKS: Work in a new isolated art staging folder. Preserve the release assets, timing and rules. Any required code integration is a separate scoped task. A still image or video cannot replace a real mesh, rig, animation clip or functional UI. Record tool/version, prompts, references, edits, licence and actual validation. Never claim in-engine approval without observing it.",
+        "dimensions": "Dentro do footprint do vaso F09 (±0,45 m em X/Z, 1,04 m); vaso ~0,78 × 0,68 m, caixa ~0,72 × 0,62 m; ≤ 600 triângulos por prop, 1 material compartilhado",
+        "delivery_format": "Quatro FBX estáticos (Jar/Crate × Intact/Broken) + fonte (gerador editável) + GLB de revisão; paleta PNG 16×16",
+        "production_gate": "Condição F09 cumprida (integrado, PR #8). Produzido no lote A12 (17/11/2026) em staging seguindo a ficha A12 do PROMPT_CATALOG (vaso + caixa), que substitui a proposta anterior desta ficha (bloco de alvenaria 1×1×1 m + 3 fragmentos, .blend); integração separada.",
+        "technical_requirements": "Unity 6000.6.9f1/URP 17.6.0, URP/Lit, ModelImporter estático (Loot_XpOrb), material remapeado para um .mat único; sem collider, física, burst, loot ou pacote novo. Fonte .blend substituída pelo gerador por código (Blender não instalado), como em A08/A11.",
+        "prompt_en": "A12 em PROMPT_CATALOG.md (Using a real 3D authoring/export tool, create two small environmental breakable prop families ...).",
         "staging_directory": "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/",
-        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE.fbx"
+        "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Jar_Intact.fbx"
       },
       "source_and_rights": {
-        "kind": "not_produced",
-        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
-        "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria própria gerada por código (Tools/Lemo3DGenerator/src/production/ModelDestructible.mjs; three.js r170 MIT, somente leitura no Lemo-Opuscar; validador Python com NumPy BSD e Pillow MIT-CMU/HPND). Sem IA generativa nem asset de terceiros."
+      },
+      "production_state": "Produzido por gerador próprio (ModelDestructible.mjs: vaso de anéis decagonais empilhados com boca escura, rachaduras em lascas e musgo; vaso quebrado com base maciça, paredes finas partidas, vão frontal, aro caído e cacos nos cantos; caixa de núcleo, montantes, tábuas, tampo, travessas e diagonais; caixa quebrada com fundo escuro, montantes partidos, tocos de tábua e tábuas caídas; um material com UV por face numa paleta 16×16): quatro FBX + .meta (ModelImporter estático de Loot_XpOrb), MODEL-DESTRUCTIBLE_Palette.png + .meta (point, sem mips, sem compressão), GLB de revisão e previews ortográficos/45°/128 px/F09 rotulados PREVIEW. Cores derivadas: barro #7B4E32/#915C3B/#593824, interior #2A1D16, rachadura #3A2519, madeira escura #53331D e partida #9B7048."
     },
     {
       "id": "MODEL-CHEST",
@@ -13061,6 +13071,55 @@
         "Achado (estático + captura Reports/F08/Visual/chest-opened.png): o presenter aplica −105° ao LidPivot de primitivas cuja frente é −Z, o que abre a tampa para baixo/trás; com o A11 integrado o mesmo valor fica correto. Não corrigido neste lote.",
         "Leitura: a pedra oficial #55596B tem a cor do piso claro (contraste médio 1,07); a leitura vem de sombreamento, plinto escuro, latão e interior. Conferir em PlayMode; ajuste preferido por célula da paleta, sem refazer a malha.",
         "Fechado 1,200 × 0,812 × 0,728 m (pega, nós e latão somam 1–3 cm à ficha ~1,2 × 0,8 × 0,7).",
+        "Previews são do rasterizador próprio (ortográfico), rotulados PREVIEW; não são captura da Unity.",
+        "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "A12-MODEL-DESTRUCTIBLE",
+      "date_local": "2026-11-17",
+      "branch": "claude/a12-model-destructible",
+      "produced": [
+        "MODEL-DESTRUCTIBLE"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/Lemo3DGenerator/src/production/ModelDestructible.mjs",
+        "Tools/Lemo3DGenerator/src/production/ModelDestructible_preview.py"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE.meta",
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Jar_Intact.fbx.meta",
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Jar_Broken.fbx.meta",
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Crate_Intact.fbx.meta",
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Crate_Broken.fbx.meta",
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Palette.png",
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Palette.png.meta",
+        "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/Source~/"
+      ],
+      "import_settings": "FBX: ModelImporter copiado de Art/Items/Models/Loot_XpOrb.fbx.meta (Unity 6000.6, serializedVersion 24600) mudando só o GUID: estático (importAnimation 0, animationType 0), escala 1, useFileUnits, sem colliders, normais importadas, materialImportMode 2 (material embutido por FBX; remapear para um .mat único na integração). Paleta: template FX_Spark com point, sem mipmaps, sem compressão, sem alpha, sRGB, max 32. GUIDs novos e estáveis (SHA256 de Eldoria/A12/<nome>).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "ModelDestructible.validation.json ok (16/16, quatro FBX/PNG relidos do disco, incluindo footprint F09, bounds estáveis e leitura a 128 px); ModelDestructible.generator.json ok; asset_report.py exit 0; GLB relido (11 malhas, 1228 tris); geração determinística (2 execuções, mesmos SHA256)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: importação estática, materiais criados pela descrição do FBX (conferir _BaseMap, metallic/smoothness), remapeamento para material único, URP, cena F09, presenter, DamageFlash e PlayMode não observados.",
+        "Sem integração: em jogo continua o vaso de primitivas. Intacto sob Intact, quebrado sob Rubble, DamageFlash.targetRenderer → nó *_Intact, renderers das primitivas desligados com colliders do domínio mantidos, escolha vaso/caixa por sala e material único são tarefa Codex; proposta em Source~/MODEL-DESTRUCTIBLE.source.json.",
+        "Divergência: a ficha anterior do manifesto propunha bloco de alvenaria 1×1×1 m + 3 fragmentos e fonte .blend; seguido o A12 do PROMPT_CATALOG (vaso + caixa, ≤ 600 tris por prop) e gerador por código (Blender não instalado).",
+        "Leitura: props menores e mais sóbrios que o vaso laranja de primitivas; WCAG de luminância com o piso 1,01–1,51 (separação por matiz, ΔE 30–37, sombreamento e interior). Conferir em PlayMode; ajuste preferido por escala ≤ 1,15× ou células da paleta, sem refazer a malha.",
+        "Vaso intacto × quebrado com razão de área 0,843 (limite 0,85); a distinção principal é a aparência (0,801).",
         "Previews são do rasterizador próprio (ortográfico), rotulados PREVIEW; não são captura da Unity.",
         "Aprovação artística humana pendente."
       ]

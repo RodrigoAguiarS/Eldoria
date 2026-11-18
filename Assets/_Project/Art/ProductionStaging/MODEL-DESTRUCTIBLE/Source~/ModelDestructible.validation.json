@@ -1,0 +1,1158 @@
+{
+  "ok": true,
+  "asset": "MODEL-DESTRUCTIBLE",
+  "batch": "A12",
+  "validator": "Tools/Lemo3DGenerator/src/production/ModelDestructible_preview.py",
+  "python": "3.11.9",
+  "numpy": "2.4.6",
+  "read_from_disk": [
+    "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+    "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+    "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+    "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/MODEL-DESTRUCTIBLE_Crate_Broken.fbx"
+  ],
+  "checks": [
+    {
+      "check": "triangulos",
+      "ok": true,
+      "detail": "por variante: Jar_Intact.fbx 344, Jar_Broken.fbx 344, Crate_Intact.fbx 360, Crate_Broken.fbx 180 (orçamento ≤ 600 por prop, todos triângulos)"
+    },
+    {
+      "check": "unidade_eixos",
+      "ok": true,
+      "detail": "UnitScaleFactor 100 (cm×100 = m), UpAxis 1 (+Y), FrontAxis 2/+1 (+Z) nos quatro arquivos"
+    },
+    {
+      "check": "objetos_nomes",
+      "ok": true,
+      "detail": "só Model/Geometry/Material/Texture/Video; nós Mesh filhos da raiz; sem Takes/AnimationStack, Deformer, Pose ou NodeAttribute (sem rig, câmera, luz, colisor, animação); nomes: Jar_Intact.fbx: ['Jar_Intact']; Jar_Broken.fbx: ['Jar_Broken_Base', 'Jar_Broken_Rim', 'Jar_Broken_Shard_0', 'Jar_Broken_Shard_1', 'Jar_Broken_Shard_2', 'Jar_Broken_Shard_3']; Crate_Intact.fbx: ['Crate_Intact']; Crate_Broken.fbx: ['Crate_Broken_Base', 'Crate_Broken_Plank_0', 'Crate_Broken_Plank_1']"
+    },
+    {
+      "check": "material_unico",
+      "ok": true,
+      "detail": "um único material \"MODEL-DESTRUCTIBLE_Prop\" em cada FBX (mesmo nome nos quatro), ligado a todos os nós, índice AllSame = 0"
+    },
+    {
+      "check": "textura",
+      "ok": true,
+      "detail": "MODEL-DESTRUCTIBLE_Palette.png ao lado dos FBX, DiffuseColor de MODEL-DESTRUCTIBLE_Prop"
+    },
+    {
+      "check": "pecas_fechadas_convexas",
+      "ok": true,
+      "detail": "76 peças; todas fechadas: True; todas convexas: True"
+    },
+    {
+      "check": "winding_para_fora",
+      "ok": true,
+      "detail": "volume com sinal > 0 em todas as peças"
+    },
+    {
+      "check": "normais",
+      "ok": true,
+      "detail": "menor cos(normal FBX, normal geométrica) = 1.00000 (flat shading, para fora)"
+    },
+    {
+      "check": "uv_paleta",
+      "ok": true,
+      "detail": "cada face com UV constante no centro de uma célula; faces por amostra (4 arquivos) {'clay': 132, 'clayLight': 120, 'clayDark': 264, 'interior': 78, 'crack': 84, 'wood': 224, 'woodDark': 226, 'woodFresh': 28, 'moss': 72}"
+    },
+    {
+      "check": "paleta_png",
+      "ok": true,
+      "detail": "MODEL-DESTRUCTIBLE_Palette.png 16×16, 9 células = paleta do gerador"
+    },
+    {
+      "check": "pivos",
+      "ok": true,
+      "detail": "intacto e *_Broken_Base na origem (base central do prop), fragmentos na base central da própria peça, sem rotação/escala: Jar_Intact @ [0.0, 0.0, 0.0], Jar_Broken_Base @ [0.0, 0.0, 0.0], Jar_Broken_Rim @ [-0.032, 0.132, -0.018], Jar_Broken_Shard_0 @ [0.301, 0.0, 0.272], Jar_Broken_Shard_1 @ [-0.296, 0.0, 0.275], Jar_Broken_Shard_2 @ [-0.304, 0.0, -0.264], Jar_Broken_Shard_3 @ [0.312, 0.0, -0.268], Crate_Intact @ [0.0, 0.0, 0.0], Crate_Broken_Base @ [0.0, 0.0, 0.0], Crate_Broken_Plank_0 @ [0.02, 0.03, -0.01], Crate_Broken_Plank_1 @ [-0.05, 0.021, 0.06]"
+    },
+    {
+      "check": "footprint_f09",
+      "ok": true,
+      "detail": "todas apoiam em y 0 e cabem no vaso F09 (±0.45 m em X/Z, 1.04 m de altura): Jar_Intact 0.780×0.680×0.743 m; Jar_Broken 0.765×0.431×0.719 m; Crate_Intact 0.720×0.620×0.720 m; Crate_Broken 0.700×0.380×0.710 m (L × A × P)"
+    },
+    {
+      "check": "bounds_estaveis",
+      "ok": true,
+      "detail": "mesmo pivô; a quebrada não aumenta o footprint nem a altura da intacta: jar: quebrado X [-0.390, 0.376] Z [-0.367, 0.351] A 0.431 ⊆ intacto X [-0.390, 0.390] Z [-0.371, 0.372] A 0.680; crate: quebrado X [-0.350, 0.350] Z [-0.360, 0.350] A 0.380 ⊆ intacto X [-0.360, 0.360] Z [-0.360, 0.360] A 0.620"
+    },
+    {
+      "check": "formas_distintas_128px",
+      "ok": true,
+      "detail": "tiles 128 px, câmera do jogo, rumos −30…+30°, silhuetas alinhadas no pivô. Todas as duplas: IoU máx ≤ 0,8 — entre famílias/estados {\"Jar_Intact × Crate_Intact\": 0.668, \"Jar_Intact × Crate_Broken\": 0.705, \"Jar_Broken × Crate_Intact\": 0.547, \"Jar_Broken × Crate_Broken\": 0.727}, intacto×quebrado {\"Jar_Intact × Jar_Broken\": 0.756, \"Crate_Intact × Crate_Broken\": 0.74}. Intacto×quebrado divide o footprint por exigência da ficha (bounds estáveis), então a silhueta sozinha não basta: razão de área máx {\"Jar_Intact × Jar_Broken\": 0.843, \"Crate_Intact × Crate_Broken\": 0.74} (≤ 0,85: o quebrado é mais baixo) e diferença de aparência mín {\"Jar_Intact × Jar_Broken\": 0.801, \"Crate_Intact × Crate_Broken\": 0.725} (≥ 0,4: fração da união em que a amostra da paleta muda — interior escuro, madeira partida, cacos)"
+    },
+    {
+      "check": "quebrado_le_aberto",
+      "ok": true,
+      "detail": "fração mínima de interior escuro visível nos quebrados {'Jar_Broken': 0.479, 'Crate_Broken': 0.1805} (≥ 0,03; boca/corte/fundo) vs. intactos {'Jar_Intact': 0.0687, 'Crate_Intact': 0.0}"
+    },
+    {
+      "check": "contraste_piso",
+      "ok": true,
+      "detail": "ΔE76 mínimo da cor média (rumo 0) contra os pisos #55596B/#3E4152: {'Jar_Intact': 36.9, 'Jar_Broken': 30.2, 'Crate_Intact': 36.3, 'Crate_Broken': 31.7} (≥ 15; barro/madeira quentes sobre pedra fria); WCAG informativo {\"Jar_Intact\": {\"#3E4152\": 1.36, \"#55596B\": 1.07}, \"Jar_Broken\": {\"#3E4152\": 1.04, \"#55596B\": 1.51}, \"Crate_Intact\": {\"#3E4152\": 1.09, \"#55596B\": 1.33}, \"Crate_Broken\": {\"#3E4152\": 1.01, \"#55596B\": 1.47}}"
+    }
+  ],
+  "bounds_m": {
+    "MODEL-DESTRUCTIBLE_Jar_Intact.fbx": {
+      "min": [
+        -0.39,
+        0.0,
+        -0.3709
+      ],
+      "max": [
+        0.39,
+        0.68,
+        0.3723
+      ],
+      "size": [
+        0.78,
+        0.68,
+        0.7432
+      ],
+      "center": [
+        0.0,
+        0.34,
+        0.0007
+      ],
+      "triangles": 344
+    },
+    "MODEL-DESTRUCTIBLE_Jar_Broken.fbx": {
+      "min": [
+        -0.39,
+        0.0,
+        -0.367
+      ],
+      "max": [
+        0.3755,
+        0.4312,
+        0.3515
+      ],
+      "size": [
+        0.7655,
+        0.4312,
+        0.7185
+      ],
+      "center": [
+        -0.0073,
+        0.2156,
+        -0.0078
+      ],
+      "triangles": 344
+    },
+    "MODEL-DESTRUCTIBLE_Crate_Intact.fbx": {
+      "min": [
+        -0.36,
+        0.0,
+        -0.36
+      ],
+      "max": [
+        0.36,
+        0.62,
+        0.36
+      ],
+      "size": [
+        0.72,
+        0.62,
+        0.72
+      ],
+      "center": [
+        0.0,
+        0.31,
+        0.0
+      ],
+      "triangles": 360
+    },
+    "MODEL-DESTRUCTIBLE_Crate_Broken.fbx": {
+      "min": [
+        -0.35,
+        0.0,
+        -0.36
+      ],
+      "max": [
+        0.35,
+        0.38,
+        0.35
+      ],
+      "size": [
+        0.7,
+        0.38,
+        0.71
+      ],
+      "center": [
+        0.0,
+        0.19,
+        -0.005
+      ],
+      "triangles": 180
+    }
+  },
+  "pieces": [
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 0,
+      "triangles": 36,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0111434
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 1,
+      "triangles": 36,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0773937
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 2,
+      "triangles": 36,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0805462
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 3,
+      "triangles": 36,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0227267
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 4,
+      "triangles": 36,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0032015
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 5,
+      "triangles": 56,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0056721
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 6,
+      "triangles": 36,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0005078
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 7,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 1.23e-05
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 8,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 1.05e-05
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 9,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 1.11e-05
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 10,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 7e-06
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 11,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 7.36e-05
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Intact.fbx",
+      "node": "Jar_Intact",
+      "piece": 12,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 7.35e-05
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 0,
+      "triangles": 36,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0111434
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 1,
+      "triangles": 36,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0268464
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 2,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0007974
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 3,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0009347
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 4,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0007861
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 5,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0006272
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 6,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0005505
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 7,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0012906
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 8,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0013424
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 9,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0006988
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 10,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0005169
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 11,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 7.36e-05
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Base",
+      "piece": 12,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 7.35e-05
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Rim",
+      "piece": 0,
+      "triangles": 76,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0094849
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Shard_0",
+      "piece": 0,
+      "triangles": 16,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0002538
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Shard_1",
+      "piece": 0,
+      "triangles": 16,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0001947
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Shard_2",
+      "piece": 0,
+      "triangles": 16,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0002339
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Jar_Broken.fbx",
+      "node": "Jar_Broken_Shard_3",
+      "piece": 0,
+      "triangles": 16,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0001407
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 0,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.2238516
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 1,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0034875
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 2,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0034875
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 3,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0034875
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 4,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0034875
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 5,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 6,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 7,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 8,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 9,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 10,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 11,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 12,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 13,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 14,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 15,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 16,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 17,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0024603
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 18,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0024603
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 19,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0024603
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 20,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0018425
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 21,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0018425
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 22,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0008962
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 23,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0008962
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 24,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0008962
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 25,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0008962
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 26,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 1.38e-05
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 27,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 9.2e-06
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 28,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 1.39e-05
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Intact.fbx",
+      "node": "Crate_Intact",
+      "piece": 29,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0001824
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 0,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.011907
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 1,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0018656
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 2,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.001725
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 3,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0011062
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 4,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0011344
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 5,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 6,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 7,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 8,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0026532
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 9,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0010422
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 10,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0003232
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 11,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0004154
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Base",
+      "piece": 12,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0001824
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Plank_0",
+      "piece": 0,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.00195
+    },
+    {
+      "file": "MODEL-DESTRUCTIBLE_Crate_Broken.fbx",
+      "node": "Crate_Broken_Plank_1",
+      "piece": 0,
+      "triangles": 12,
+      "closed": true,
+      "convex": true,
+      "signed_volume_m3": 0.0014872
+    }
+  ],
+  "game_camera": "pitch 45°, câmera em −Z (DungeonMvpSceneBuilder.CameraOffset 0,14,−14), ortográfica no preview; prop girado 180° (frente +Z para a câmera)",
+  "readability_128px": {
+    "ppm": 120.0,
+    "per_heading": [
+      {
+        "heading_offset_deg": -30,
+        "area_px": {
+          "Jar_Intact": 6400,
+          "Jar_Broken": 5192,
+          "Crate_Intact": 10489,
+          "Crate_Broken": 7198
+        },
+        "iou": {
+          "Jar_Intact × Jar_Broken": 0.72,
+          "Jar_Intact × Crate_Intact": 0.61,
+          "Jar_Intact × Crate_Broken": 0.637,
+          "Jar_Broken × Crate_Intact": 0.493,
+          "Jar_Broken × Crate_Broken": 0.695,
+          "Crate_Intact × Crate_Broken": 0.686
+        },
+        "appearance_diff": {
+          "Jar_Intact × Jar_Broken": 0.805,
+          "Jar_Intact × Crate_Intact": 1.0,
+          "Jar_Intact × Crate_Broken": 1.0,
+          "Jar_Broken × Crate_Intact": 1.0,
+          "Jar_Broken × Crate_Broken": 0.86,
+          "Crate_Intact × Crate_Broken": 0.737
+        },
+        "area_ratio": {
+          "Jar_Intact × Jar_Broken": 0.811,
+          "Jar_Intact × Crate_Intact": 0.61,
+          "Jar_Intact × Crate_Broken": 0.889,
+          "Jar_Broken × Crate_Intact": 0.495,
+          "Jar_Broken × Crate_Broken": 0.721,
+          "Crate_Intact × Crate_Broken": 0.686
+        }
+      },
+      {
+        "heading_offset_deg": -15,
+        "area_px": {
+          "Jar_Intact": 6452,
+          "Jar_Broken": 5205,
+          "Crate_Intact": 10067,
+          "Crate_Broken": 7144
+        },
+        "iou": {
+          "Jar_Intact × Jar_Broken": 0.734,
+          "Jar_Intact × Crate_Intact": 0.641,
+          "Jar_Intact × Crate_Broken": 0.67,
+          "Jar_Broken × Crate_Intact": 0.515,
+          "Jar_Broken × Crate_Broken": 0.712,
+          "Crate_Intact × Crate_Broken": 0.709
+        },
+        "appearance_diff": {
+          "Jar_Intact × Jar_Broken": 0.809,
+          "Jar_Intact × Crate_Intact": 1.0,
+          "Jar_Intact × Crate_Broken": 1.0,
+          "Jar_Broken × Crate_Intact": 1.0,
+          "Jar_Broken × Crate_Broken": 0.851,
+          "Crate_Intact × Crate_Broken": 0.725
+        },
+        "area_ratio": {
+          "Jar_Intact × Jar_Broken": 0.807,
+          "Jar_Intact × Crate_Intact": 0.641,
+          "Jar_Intact × Crate_Broken": 0.903,
+          "Jar_Broken × Crate_Intact": 0.517,
+          "Jar_Broken × Crate_Broken": 0.729,
+          "Crate_Intact × Crate_Broken": 0.71
+        }
+      },
+      {
+        "heading_offset_deg": 0,
+        "area_px": {
+          "Jar_Intact": 6380,
+          "Jar_Broken": 5177,
+          "Crate_Intact": 9300,
+          "Crate_Broken": 6884
+        },
+        "iou": {
+          "Jar_Intact × Jar_Broken": 0.748,
+          "Jar_Intact × Crate_Intact": 0.668,
+          "Jar_Intact × Crate_Broken": 0.705,
+          "Jar_Broken × Crate_Intact": 0.547,
+          "Jar_Broken × Crate_Broken": 0.727,
+          "Crate_Intact × Crate_Broken": 0.74
+        },
+        "appearance_diff": {
+          "Jar_Intact × Jar_Broken": 0.812,
+          "Jar_Intact × Crate_Intact": 1.0,
+          "Jar_Intact × Crate_Broken": 1.0,
+          "Jar_Broken × Crate_Intact": 1.0,
+          "Jar_Broken × Crate_Broken": 0.848,
+          "Crate_Intact × Crate_Broken": 0.748
+        },
+        "area_ratio": {
+          "Jar_Intact × Jar_Broken": 0.811,
+          "Jar_Intact × Crate_Intact": 0.686,
+          "Jar_Intact × Crate_Broken": 0.927,
+          "Jar_Broken × Crate_Intact": 0.557,
+          "Jar_Broken × Crate_Broken": 0.752,
+          "Crate_Intact × Crate_Broken": 0.74
+        }
+      },
+      {
+        "heading_offset_deg": 15,
+        "area_px": {
+          "Jar_Intact": 6443,
+          "Jar_Broken": 5337,
+          "Crate_Intact": 10066,
+          "Crate_Broken": 7185
+        },
+        "iou": {
+          "Jar_Intact × Jar_Broken": 0.753,
+          "Jar_Intact × Crate_Intact": 0.64,
+          "Jar_Intact × Crate_Broken": 0.681,
+          "Jar_Broken × Crate_Intact": 0.526,
+          "Jar_Broken × Crate_Broken": 0.708,
+          "Crate_Intact × Crate_Broken": 0.713
+        },
+        "appearance_diff": {
+          "Jar_Intact × Jar_Broken": 0.809,
+          "Jar_Intact × Crate_Intact": 1.0,
+          "Jar_Intact × Crate_Broken": 1.0,
+          "Jar_Broken × Crate_Intact": 1.0,
+          "Jar_Broken × Crate_Broken": 0.855,
+          "Crate_Intact × Crate_Broken": 0.758
+        },
+        "area_ratio": {
+          "Jar_Intact × Jar_Broken": 0.828,
+          "Jar_Intact × Crate_Intact": 0.64,
+          "Jar_Intact × Crate_Broken": 0.897,
+          "Jar_Broken × Crate_Intact": 0.53,
+          "Jar_Broken × Crate_Broken": 0.743,
+          "Crate_Intact × Crate_Broken": 0.714
+        }
+      },
+      {
+        "heading_offset_deg": 30,
+        "area_px": {
+          "Jar_Intact": 6388,
+          "Jar_Broken": 5383,
+          "Crate_Intact": 10488,
+          "Crate_Broken": 7294
+        },
+        "iou": {
+          "Jar_Intact × Jar_Broken": 0.756,
+          "Jar_Intact × Crate_Intact": 0.609,
+          "Jar_Intact × Crate_Broken": 0.661,
+          "Jar_Broken × Crate_Intact": 0.509,
+          "Jar_Broken × Crate_Broken": 0.695,
+          "Crate_Intact × Crate_Broken": 0.695
+        },
+        "appearance_diff": {
+          "Jar_Intact × Jar_Broken": 0.801,
+          "Jar_Intact × Crate_Intact": 1.0,
+          "Jar_Intact × Crate_Broken": 1.0,
+          "Jar_Broken × Crate_Intact": 1.0,
+          "Jar_Broken × Crate_Broken": 0.859,
+          "Crate_Intact × Crate_Broken": 0.748
+        },
+        "area_ratio": {
+          "Jar_Intact × Jar_Broken": 0.843,
+          "Jar_Intact × Crate_Intact": 0.609,
+          "Jar_Intact × Crate_Broken": 0.876,
+          "Jar_Broken × Crate_Intact": 0.513,
+          "Jar_Broken × Crate_Broken": 0.738,
+          "Crate_Intact × Crate_Broken": 0.695
+        }
+      }
+    ],
+    "iou_max": {
+      "Jar_Intact × Jar_Broken": 0.756,
+      "Jar_Intact × Crate_Intact": 0.668,
+      "Jar_Intact × Crate_Broken": 0.705,
+      "Jar_Broken × Crate_Intact": 0.547,
+      "Jar_Broken × Crate_Broken": 0.727,
+      "Crate_Intact × Crate_Broken": 0.74
+    },
+    "appearance_diff_min": {
+      "Jar_Intact × Jar_Broken": 0.801,
+      "Jar_Intact × Crate_Intact": 1.0,
+      "Jar_Intact × Crate_Broken": 1.0,
+      "Jar_Broken × Crate_Intact": 1.0,
+      "Jar_Broken × Crate_Broken": 0.848,
+      "Crate_Intact × Crate_Broken": 0.725
+    },
+    "area_ratio_max": {
+      "Jar_Intact × Jar_Broken": 0.843,
+      "Jar_Intact × Crate_Intact": 0.686,
+      "Jar_Intact × Crate_Broken": 0.927,
+      "Jar_Broken × Crate_Intact": 0.557,
+      "Jar_Broken × Crate_Broken": 0.752,
+      "Crate_Intact × Crate_Broken": 0.74
+    },
+    "color": {
+      "Jar_Intact": {
+        "interior_frac_min": 0.0687,
+        "mean_srgb": [
+          119,
+          75,
+          48
+        ],
+        "vs_floor": {
+          "#3E4152": {
+            "deltaE76": 37.5,
+            "wcag": 1.36
+          },
+          "#55596B": {
+            "deltaE76": 36.9,
+            "wcag": 1.07
+          }
+        }
+      },
+      "Jar_Broken": {
+        "interior_frac_min": 0.479,
+        "mean_srgb": [
+          88,
+          56,
+          36
+        ],
+        "vs_floor": {
+          "#3E4152": {
+            "deltaE76": 30.2,
+            "wcag": 1.04
+          },
+          "#55596B": {
+            "deltaE76": 32.5,
+            "wcag": 1.51
+          }
+        }
+      },
+      "Crate_Intact": {
+        "interior_frac_min": 0.0,
+        "mean_srgb": [
+          102,
+          62,
+          35
+        ],
+        "vs_floor": {
+          "#3E4152": {
+            "deltaE76": 36.3,
+            "wcag": 1.09
+          },
+          "#55596B": {
+            "deltaE76": 37.3,
+            "wcag": 1.33
+          }
+        }
+      },
+      "Crate_Broken": {
+        "interior_frac_min": 0.1805,
+        "mean_srgb": [
+          90,
+          58,
+          35
+        ],
+        "vs_floor": {
+          "#3E4152": {
+            "deltaE76": 31.7,
+            "wcag": 1.01
+          },
+          "#55596B": {
+            "deltaE76": 33.6,
+            "wcag": 1.47
+          }
+        }
+      }
+    }
+  },
+  "sha256": {
+    "MODEL-DESTRUCTIBLE_Jar_Intact.fbx": "06923a3a397f07ccdbde2f78a472fe35313d645ffa692d8912e159b7adaa0d4d",
+    "MODEL-DESTRUCTIBLE_Jar_Broken.fbx": "2306c40400e0c5bd5421a2cea2cdeb45f46319d6986f7ae5a81aba6a984a8217",
+    "MODEL-DESTRUCTIBLE_Crate_Intact.fbx": "c91805de3e8f7774c77f51452397db99870971187df7df9437120c929bdde245",
+    "MODEL-DESTRUCTIBLE_Crate_Broken.fbx": "88bfcaa25edf01cd06a715c2e0044ec17ff6bac083203627dab27a0bb889af68",
+    "MODEL-DESTRUCTIBLE_Jar_Intact.fbx.meta": "6e4361e5d9a86e6bd4525827cbbcf04523a3414a285ca2a2381ffcd00c8d570f",
+    "MODEL-DESTRUCTIBLE_Jar_Broken.fbx.meta": "0e99f6f2c5aadaf75f2690097888367216af881a5a5194a3ad196bdd2800f997",
+    "MODEL-DESTRUCTIBLE_Crate_Intact.fbx.meta": "90fc41c62d8f8633172f11ca0608aba856a9b477a45a6a926a541ef01d470b80",
+    "MODEL-DESTRUCTIBLE_Crate_Broken.fbx.meta": "d9844f94c98a2b18852337742d575bbdea0b5bd432d420539131dd1121a096e6",
+    "MODEL-DESTRUCTIBLE_Palette.png": "1d5a51718ca1b102e9dd2ff657ab0808aa148e9962127fb5786bf4685977d7aa",
+    "MODEL-DESTRUCTIBLE.glb": "de41f1b2815d746df0117364337c362b50ae0ae8df3069caaa325ca023dce47c"
+  },
+  "not_validated": "Importação na Unity (ModelImporter estático, material pela MaterialDescription, remapeamento para material único), URP, cena F09, presenter, DamageFlash e PlayMode NÃO observados (NÃO VALIDADO NO EDITOR)."
+}
