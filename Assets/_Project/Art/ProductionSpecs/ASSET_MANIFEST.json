@@ -7291,7 +7291,7 @@
       "technical_dependencies": [
         "Health.Changed genérico; não há PotionUsed. Distinguir consumo aceito de cura de nível."
       ],
-      "integration_state": "Produzido em staging (A04, 17/11/2026) como sheet raster 4×2 de 8 quadros; NÃO integrado. O F05 atual continua com os 7 motes procedurais (FX_Spark). Ligar a sheet ao ParticleSystem de cura do PlayerRewardFeedback (Texture Sheet Animation 4×2, 1 partícula, 0,4 s) é tarefa de código separada; proposta em Source~/FX-HEAL.timing.json.",
+      "integration_state": "Integrado em V05 (18/11/2026, branch claude/v05-reward-fx): RewardFxArtIntegrator (Tools/Dungeon Crawler/Feedback/Apply Reward FX Art (A04-A06) e Validate Reward FX Art (A04-A06)) lê grade, ordem, duração, pivô e escala de Source~ e recusa divergências; cria Materials/RewardFx/Mat_Fx*.mat (URP/Particles/Unlit, Blend Alpha) e ScriptableObjects/UI/RewardFxProfile.asset; configura os três emissores reutilizados do F05 no Player.prefab (herdados por MVP_Arena, Floor_01, release e Floor_02_Fixed). PlayerRewardFeedback emite as sheets quando o perfil existe; sem perfil, os motes F05 continuam. Gancho em RewardFeedbackSceneBuilder.ConfigurePlayer: reaplicar a F05 mantém a arte. FX-HEAL: 1 partícula, Texture Sheet 4×2 linear em 0,4 s, 1,6 m, espaço World, pivô (0, 0,2031, 0); só HealingAccepted com origem ≠ LevelUp. Aprovação artística humana pendente.",
       "visual_specification": "Brief soft ruby-to-warm-white upward motes close to the hero and a low-opacity foot ring; no poison-like effect.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7300,7 +7300,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: FxHeal.validation.json (PNG decodificado: sheet 1024×512 RGBA, célula k = quadro k, 0 pixels transparentes com RGB sujo, margem mínima 20 px sem corte, quadro 7 com alpha máx. 0, pivô coerente em todos os quadros, 0 px em matiz verde e 0 px saturados em matiz de ameaça 0–45°, cobertura alpha>50% ≤ 6%, anel/motes ≤ 0,6 m) e asset_report.py (sheet --expect-size 1024x512 e quadros 256x256, --require-alpha, exit 0); revisão sobre a captura real F05 1920×1080 na escala de gameplay. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem e PlayMode não observados.",
+        "current_session": "V05 (18/11/2026, Unity 6000.6.9f1): Apply idempotente (2ª e 3ª execução: 0 importações, 0 assets, 0 prefab/cena salvos); Validate ok no Player.prefab e nas 4 cenas; EditMode 291/291 passed; PlayMode 212 passed, 0 failed, 18 skipped ([Explicit]); captura gráfica 1/1 (720p/1080p: cura, 3 glints, flash 0, nível). Evidências: Reports/Validation/V05/20261118-2f9e9d6/README.md. Anterior: Técnica fora da Unity em 17/11/2026: FxHeal.validation.json (PNG decodificado: sheet 1024×512 RGBA, célula k = quadro k, 0 pixels transparentes com RGB sujo, margem mínima 20 px sem corte, quadro 7 com alpha máx. 0, pivô coerente em todos os quadros, 0 px em matiz verde e 0 px saturados em matiz de ameaça 0–45°, cobertura alpha>50% ≤ 6%, anel/motes ≤ 0,6 m) e asset_report.py (sheet --expect-size 1024x512 e quadros 256x256, --require-alpha, exit 0); revisão sobre a captura real F05 1920×1080 na escala de gameplay. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -7353,7 +7353,7 @@
       "technical_dependencies": [
         "PlayerProgression.Collected(LootKind) existe, sem quantidade/posição/item completo."
       ],
-      "integration_state": "Produzido em staging (A06, 17/11/2026) como atlas 2D 384×128 de três glints estáticos (XP, ouro, guardado); NÃO integrado. O F05 atual continua com o burst procedural de 4 partículas tingidas (collectionEffect). Usar o atlas no emissor existente (Texture Sheet Animation 3×1, startFrame pelo LootKind, até 5 partículas, 0,28 s, só após CollectionAccepted) é tarefa de código separada; proposta em Source~/FX-LOOT.atlas.json.",
+      "integration_state": "Integrado em V05 (18/11/2026, branch claude/v05-reward-fx): RewardFxArtIntegrator (Tools/Dungeon Crawler/Feedback/Apply Reward FX Art (A04-A06) e Validate Reward FX Art (A04-A06)) lê grade, ordem, duração, pivô e escala de Source~ e recusa divergências; cria Materials/RewardFx/Mat_Fx*.mat (URP/Particles/Unlit, Blend Alpha) e ScriptableObjects/UI/RewardFxProfile.asset; configura os três emissores reutilizados do F05 no Player.prefab (herdados por MVP_Arena, Floor_01, release e Floor_02_Fixed). PlayerRewardFeedback emite as sheets quando o perfil existe; sem perfil, os motes F05 continuam. Gancho em RewardFeedbackSceneBuilder.ConfigurePlayer: reaplicar a F05 mantém a arte. FX-LOOT: 5 glints, atlas 3×1 com célula fixa por LootKind (Xp 0, Gold 1, Potion/Weapon/Armor 2) via frameOverTime constante, 0,28 s, 0,2 m, círculo de 0,2 m a 0,15 m subindo 0,4 m/s, alpha 0→1→0; pivô Unity (0, 0, 3) = 0,6 m em direção à câmera (divergência: com o pivô 0 do contrato os glints ficavam inteiros atrás da capa na captura real); só CollectionAccepted. Aprovação artística humana pendente.",
       "visual_specification": "Small cyan glint for XP, brass for gold, neutral spark for stored gear/potions; restrained size and brightness.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7362,7 +7362,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: FxLoot.validation.json (PNG decodificado: atlas 384×128 RGBA e três glints 128×128 RGBA, célula i = glint i, canal alpha idêntico nas três variantes, 0 pixels transparentes com RGB sujo, margem mínima 14 px, centroide no centro, alpha máx. 199, cobertura alpha>50% 10,5%, 0 px verdes, 0 px saturados em matiz de ameaça 0–36°, 0 px de branco opaco, médias distintas (XP 194°, ouro 42°/sat. 0,61, marfim sat. 0,22), contraste ≥ 2,4 sobre a pedra, envelope proposto 0,30 m / 5 partículas / 0,28 s) e asset_report.py (atlas --expect-size 384x128 e glints 128x128, --require-alpha, exit 0); revisão sobre a captura real F05 de coleta 1920×1080 na escala de gameplay, ao lado dos ícones de item e de um telegraph vermelho. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem e PlayMode não observados.",
+        "current_session": "V05 (18/11/2026, Unity 6000.6.9f1): Apply idempotente (2ª e 3ª execução: 0 importações, 0 assets, 0 prefab/cena salvos); Validate ok no Player.prefab e nas 4 cenas; EditMode 291/291 passed; PlayMode 212 passed, 0 failed, 18 skipped ([Explicit]); captura gráfica 1/1 (720p/1080p: cura, 3 glints, flash 0, nível). Evidências: Reports/Validation/V05/20261118-2f9e9d6/README.md. Anterior: Técnica fora da Unity em 17/11/2026: FxLoot.validation.json (PNG decodificado: atlas 384×128 RGBA e três glints 128×128 RGBA, célula i = glint i, canal alpha idêntico nas três variantes, 0 pixels transparentes com RGB sujo, margem mínima 14 px, centroide no centro, alpha máx. 199, cobertura alpha>50% 10,5%, 0 px verdes, 0 px saturados em matiz de ameaça 0–36°, 0 px de branco opaco, médias distintas (XP 194°, ouro 42°/sat. 0,61, marfim sat. 0,22), contraste ≥ 2,4 sobre a pedra, envelope proposto 0,30 m / 5 partículas / 0,28 s) e asset_report.py (atlas --expect-size 384x128 e glints 128x128, --require-alpha, exit 0); revisão sobre a captura real F05 de coleta 1920×1080 na escala de gameplay, ao lado dos ícones de item e de um telegraph vermelho. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -7415,7 +7415,7 @@
       "technical_dependencies": [
         "PlayerProgression.LeveledUp(int), sem mudar cura ou fórmula."
       ],
-      "integration_state": "Produzido em staging (A05, 17/11/2026) como sheet raster 4×3 de 12 quadros; NÃO integrado. O F05 atual continua com o burst procedural de 12 partículas de latão (levelEffect). Ligar a sheet a PlayerProgression.LeveledUp (Texture Sheet Animation 4×3, 1 partícula, 0,7 s, billboard com pivô deslocado para a câmera) é tarefa de código separada; proposta em Source~/FX-LEVEL.timing.json.",
+      "integration_state": "Integrado em V05 (18/11/2026, branch claude/v05-reward-fx): RewardFxArtIntegrator (Tools/Dungeon Crawler/Feedback/Apply Reward FX Art (A04-A06) e Validate Reward FX Art (A04-A06)) lê grade, ordem, duração, pivô e escala de Source~ e recusa divergências; cria Materials/RewardFx/Mat_Fx*.mat (URP/Particles/Unlit, Blend Alpha) e ScriptableObjects/UI/RewardFxProfile.asset; configura os três emissores reutilizados do F05 no Player.prefab (herdados por MVP_Arena, Floor_01, release e Floor_02_Fixed). PlayerRewardFeedback emite as sheets quando o perfil existe; sem perfil, os motes F05 continuam. Gancho em RewardFeedbackSceneBuilder.ConfigurePlayer: reaplicar a F05 mantém a arte. FX-LEVEL: 1 partícula, Texture Sheet 4×3 linear em 0,7 s, 2 m, espaço Local, pivô Unity (0, 0,1953, +0,2): o contrato escreve −0,2 com a intenção de aproximar da câmera, mas na Unity z negativo afasta (medido por BakeMesh), então o sinal foi invertido; um restart por LeveledUp (nível final). Importação NPOT sem escala (1024×768). Aprovação artística humana pendente.",
       "visual_specification": "One thin cyan ring rising boots-to-waist, sparse brass motes; combat floor remains visible.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7424,7 +7424,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: FxLevel.validation.json (PNG decodificado: sheet 1024×768 RGBA, célula k = quadro k, 0 pixels transparentes com RGB sujo, margem mínima 23 px sem corte, quadro 11 com alpha máx. 0, pivô coerente, continuidade ≤ 16 px entre quadros (máx. 14), centro do anel vazio, nenhum mote na coluna do corpo, 0 px verdes, 0 px saturados em matiz de ameaça 0–36°, 0 px de branco opaco, cobertura alpha>50% ≤ 6%, alcance ≤ 0,8 m, 9 partículas ≤ 20) e asset_report.py (sheet --expect-size 1024x768 e quadros 256x256, --require-alpha, exit 0); revisão sobre a captura real F05 1920×1080 e ao lado de um telegraph vermelho. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem e PlayMode não observados.",
+        "current_session": "V05 (18/11/2026, Unity 6000.6.9f1): Apply idempotente (2ª e 3ª execução: 0 importações, 0 assets, 0 prefab/cena salvos); Validate ok no Player.prefab e nas 4 cenas; EditMode 291/291 passed; PlayMode 212 passed, 0 failed, 18 skipped ([Explicit]); captura gráfica 1/1 (720p/1080p: cura, 3 glints, flash 0, nível). Evidências: Reports/Validation/V05/20261118-2f9e9d6/README.md. Anterior: Técnica fora da Unity em 17/11/2026: FxLevel.validation.json (PNG decodificado: sheet 1024×768 RGBA, célula k = quadro k, 0 pixels transparentes com RGB sujo, margem mínima 23 px sem corte, quadro 11 com alpha máx. 0, pivô coerente, continuidade ≤ 16 px entre quadros (máx. 14), centro do anel vazio, nenhum mote na coluna do corpo, 0 px verdes, 0 px saturados em matiz de ameaça 0–36°, 0 px de branco opaco, cobertura alpha>50% ≤ 6%, alcance ≤ 0,8 m, 9 partículas ≤ 20) e asset_report.py (sheet --expect-size 1024x768 e quadros 256x256, --require-alpha, exit 0); revisão sobre a captura real F05 1920×1080 e ao lado de um telegraph vermelho. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -13496,6 +13496,64 @@
         "Foco de botão só por capas claras nos cantos (Button-Focus); sutil a 720p. FocusCorner ×4 e hover/foco de slot ficam para A03-I2.",
         "Matriz em tamanhos emulados do Game view; sem monitor físico, ultrawide ou 125%.",
         "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "V05-REWARD-FX-INTEGRATION",
+      "date_local": "2026-11-18",
+      "branch": "claude/v05-reward-fx",
+      "main_merge": "pendente (PR para a main; sem merge sem aprovação do usuário)",
+      "produced": [],
+      "imported": [
+        "FX-HEAL",
+        "FX-LEVEL",
+        "FX-LOOT"
+      ],
+      "integrated": [
+        "FX-HEAL",
+        "FX-LEVEL",
+        "FX-LOOT"
+      ],
+      "validated_in_editor": [
+        "FX-HEAL",
+        "FX-LEVEL",
+        "FX-LOOT"
+      ],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Scripts/UI/PlayerRewardFeedback.cs",
+        "Assets/_Project/Scripts/Editor/RewardFeedbackSceneBuilder.cs",
+        "Assets/_Project/Prefabs/Player/Player.prefab",
+        "Assets/_Project/Art/ProductionStaging/FX-LEVEL/FX-LEVEL-Sheet.png.meta (nPOTScale None; mesmo GUID)",
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md",
+        "MVP.md"
+      ],
+      "new_code": [
+        "Assets/_Project/Scripts/UI/RewardFxProfile.cs",
+        "Assets/_Project/Scripts/Editor/RewardFxArtIntegrator.cs",
+        "Assets/_Project/Tests/EditMode/RewardFxArtTests.cs",
+        "Assets/_Project/Tests/PlayMode/RewardFxArtPlayModeTests.cs",
+        "Assets/_Project/Tests/PlayMode/PlayerInput/RewardFxArtVisualTests.cs"
+      ],
+      "new_assets": [
+        "Assets/_Project/Materials/RewardFx/Mat_FxHeal.mat",
+        "Assets/_Project/Materials/RewardFx/Mat_FxLevel.mat",
+        "Assets/_Project/Materials/RewardFx/Mat_FxLoot.mat",
+        "Assets/_Project/ScriptableObjects/UI/RewardFxProfile.asset"
+      ],
+      "import_settings": "FX-HEAL e FX-LOOT sem alteração. FX-LEVEL (1024×768, NPOT): nPOTScale ToNearest → None, para a Unity não reamostrar a sheet e as células 256 continuarem alinhadas a pixel.",
+      "tests": {
+        "editmode": "291/291 passed",
+        "playmode": "212 passed, 0 failed, 18 skipped ([Explicit])",
+        "technical": "Validate Reward FX Art ok; Apply 3× sem mudança; captura gráfica 1/1 (720p/1080p: cura, 3 glints, flash 0, nível)"
+      },
+      "limitations": [
+        "Aprovação artística humana pendente; capturas em tamanhos emulados do Game view, sem monitor físico.",
+        "Cenas não regravadas: os emissores vêm do Player.prefab; a verificação nas cenas é por Validate e testes.",
+        "Medição de GC sintética no Editor (GC.Alloc Count, não bytes), separando partículas de texto.",
+        "Divergência FX-LOOT: pivô z aproxima 0,6 m da câmera; mesmo assim 2 dos 5 glints ficam atrás do corpo e ouro/marfim se parecem sobre o azul da capa (revisão de arte).",
+        "Divergência FX-LEVEL: sinal de z invertido em relação ao número do contrato para cumprir a intenção declarada (arco da frente diante das pernas)."
       ]
     }
   ]
