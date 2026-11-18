@@ -42,6 +42,7 @@ namespace DungeonCrawler.Editor
                 if (canvas.transform.parent != null) continue;
                 ConfigureCanvas(canvas);
             }
+            if (UiSkinIntegrator.SkinAssetExists) UiSkinIntegrator.ConfigureScene(scene); // A03-I: rebuilding keeps the skin.
         }
 
         public static void PrepareInventoryRebuild(GameObject hud)
