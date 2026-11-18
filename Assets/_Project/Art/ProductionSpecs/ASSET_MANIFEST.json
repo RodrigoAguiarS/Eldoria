@@ -18,8 +18,8 @@
   "summary": {
     "logical_resources": 133,
     "by_status": {
-      "EXISTENTE": 125,
-      "AUSENTE": 5,
+      "EXISTENTE": 126,
+      "AUSENTE": 4,
       "INCOMPLETO": 1,
       "NÃO VERIFICADO": 2
     },
@@ -57,9 +57,8 @@
         "AUSENTE": 1
       },
       "J": {
-        "EXISTENTE": 14,
-        "INCOMPLETO": 1,
-        "AUSENTE": 1
+        "EXISTENTE": 15,
+        "INCOMPLETO": 1
       }
     },
     "by_priority": {
@@ -7195,7 +7194,7 @@
       "category": "J",
       "category_name": "VFX e animações adicionais",
       "functionality": "Polimento opcional de ação existente",
-      "status": "AUSENTE",
+      "status": "EXISTENTE",
       "priority": "P2",
       "type": "VFX",
       "scope": "sugestão_polimento",
@@ -7223,7 +7222,7 @@
       "technical_dependencies": [
         "BossBrain aplica Slam, sem evento público de impacto dedicado."
       ],
-      "integration_state": "Produção/integração visual pendente.",
+      "integration_state": "Produzido em staging (A10, 17/11/2026) como spritesheet de chão 1024×512 RGBA (4×2 quadros 256×256, 0,35 s, vista ortográfica de cima): anel baixo e fino de poeira de pedra com borda laranja apagada, tufos de poeira e 6 lascas angulares; centro aberto (0,22 R), quadro final vazio. Escala ligada ao raio real: 1 R = 116 px, lado do quad = R × 2,206897 (7,724 m fase 1; 10,041 m fase 2). NÃO integrado: em jogo o Slam continua sem efeito de impacto. Evento de apresentação SlamResolved(centro, raio) no BossBrain depois do ResolveSlam e ParticleSystem de 1 partícula (Horizontal Billboard, reuso/Clear) são tarefa Codex separada; proposta em Source~/FX-SLAM.timing.json.",
       "visual_specification": "Low thin shock ring and a few angular stone chips with muted orange edge; no persistent damaging patch.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7232,7 +7231,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Inspeção estática; NÃO VALIDADO NO EDITOR nesta auditoria.",
+        "current_session": "Técnica fora da Unity em 17/11/2026: FxSlam.validation.json 27/27 (sheet 1024×512 e quadros 256×256 RGBA; células = quadros; 0 px transparentes com RGB sujo; margem 14 px; quadro 7 com alpha 0 e quadro 6 com 12% do pico; alpha 0 dentro de 0,22 R; cobertura alpha>50% máx. 6,7%; alpha médio em R máx. 0,104; centroide do anel a 0,000 px do centro em todos os quadros (sem shake embutido); anel monotônico de 0,377 a 0,985 R; lascas ≤ 0,755 R; 0 px verde, azul/ciano saturado ou vermelho de telegraph; laranja 8,6% dos px visíveis; WCAG poeira 2,47/3,53 sobre #55596B/#3E4152; 0,35 s < recoverTime 0,8 s e cooldown ≥ 1,6 s, logo nunca coexiste com o próximo aviso; aviso 1,4/1,0 s ≥ 1 s; R 3,5/4,55 m lidos de Boss_Warden_Data.asset; BossBrain/BossAttackTelegraph/BossData/asset só lidos) e asset_report.py (sheet --expect-size 1024x512 e 8 quadros 256x256, --require-alpha, exit 0); prévias a 45° sobre a captura real F08 da arena e GIF de reuso/pausa/cancelamento, rotuladas PREVIEW. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem, hook, pausa, pool e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -7245,10 +7244,11 @@
         "suggested_primary_file": "Assets/_Project/Art/ProductionStaging/FX-SLAM/FX-SLAM.prefab"
       },
       "source_and_rights": {
-        "kind": "not_produced",
-        "reference_record": "Assets/_Project/Art/Concepts/PROVENANCE.md",
-        "licence": "Não inferida; completar fonte real por recurso produzido. Hero concepts: origem não registrada."
-      }
+        "kind": "procedural_generated",
+        "reference_record": "Assets/_Project/Art/ProductionStaging/FX-SLAM/Source~/README.md",
+        "licence": "Projeto Eldoria; geometria e render próprios (Tools/FxSlamGenerator/generate.py, Pillow MIT-CMU/HPND, NumPy BSD). Sem IA generativa de imagem nem asset de terceiros."
+      },
+      "production_state": "Produzido por gerador próprio (generate.py: anel de 28 facetas com recorte simétrico em ponto e três bandas — borda #C4773D que esfria, núcleo de poeira #A2A6B4 com alpha alto no centro da faixa, rastro #6E7385 —, tufos de poeira em ~70% dos segmentos e 6 lascas alongadas de pedra #55596B com platô claro, aresta ferrugem/laranja voltada ao centro e sombra no piso; supersampling 8× com alpha pré-multiplicado): FX-SLAM-Sheet.png 1024×512 + frames/F0–F7; parâmetros em Source~/FX-SLAM.source.json e proposta de ParticleSystem/hook/reset em Source~/FX-SLAM.timing.json. Prefab sugerido pela ficha não criado (integração em tarefa separada)."
     },
     {
       "id": "FX-DASH",
@@ -12916,6 +12916,46 @@
         "Comprimento depende da velocidade (0,60 m a 12 m/s, 0,55 m a 11 m/s); velocidade futura > 12 m/s exige reduzir time.",
         "review_floor_preview.png, review_vs_current_sphere.png e preview_projectile.gif são PRÉVIAS: faixa projetada sobre a captura F05 com a esfera como disco sombreado, sem luz real/bloom/ordenação com o Hero; o núcleo A08 não foi rasterizado nelas. Não são captura da Unity.",
         "FX-PROJECTILE-TRAIL.prefab sugerido pela ficha não criado: prefab exige coordenação.",
+        "Aprovação artística humana pendente."
+      ]
+    },
+    {
+      "id": "A10-FX-SLAM",
+      "date_local": "2026-11-17",
+      "branch": "claude/a10-fx-slam",
+      "produced": [
+        "FX-SLAM"
+      ],
+      "imported": [],
+      "integrated": [],
+      "validated_in_editor": [],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md"
+      ],
+      "new_code": [
+        "Tools/FxSlamGenerator/generate.py",
+        "Tools/FxSlamGenerator/texture.meta.template"
+      ],
+      "new_assets": [
+        "Assets/_Project/Art/ProductionStaging/FX-SLAM.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-SLAM/FX-SLAM-Sheet.png",
+        "Assets/_Project/Art/ProductionStaging/FX-SLAM/FX-SLAM-Sheet.png.meta",
+        "Assets/_Project/Art/ProductionStaging/FX-SLAM/Source~/"
+      ],
+      "import_settings": "Template de FX_Spark/FX-HEAL (cópia de Tools/FxHealGenerator/texture.meta.template) sem mudanças: Default, sRGB, alphaIsTransparency, bilinear, clamp, mipmaps on; 1024×512 é potência de 2; GUID novo e estável (SHA256 de Eldoria/A10/<nome>).",
+      "tests": {
+        "editmode": "não executado",
+        "playmode": "não executado",
+        "technical": "FxSlam.validation.json ok (27/27); asset_report.py exit 0 (sheet e 8 quadros); geração determinística (2 execuções, mesmos SHA256 de PNG/GIF)"
+      },
+      "limitations": [
+        "NÃO VALIDADO NO EDITOR: .meta derivada do template de FX_Spark; a Unity pode reserializá-la. Conferir orientação +Z no Horizontal Billboard e o anel fino nos mips.",
+        "Sem integração: o Slam continua sem efeito de impacto. Evento SlamResolved(centro, SlamRadius) no BossBrain depois do ResolveSlam (nunca em cancelamento/morte/EnterIdle), ParticleSystem único com startSize = R × 2,206897, Clear()+Emit(1) no retrigger e Clear na morte/reset/pool são tarefa Codex separada; proposta em Source~/FX-SLAM.timing.json, sem alterar dano, raio, tempos ou telegraph.",
+        "Escala única para os dois raios: lascas e espessura do anel ficam 30% maiores na fase 2 (lascas 0,47–0,75 m na fase 1, 0,61–0,97 m na fase 2).",
+        "review_floor_preview.png, review_floor_zoom.png e preview_slam.gif são PRÉVIAS: projeção ortográfica local sobre a captura F08 (Guardião ausente, centro posto 2 m à frente do Hero), aviso aproximado em 2D, sem luz real, perspectiva ou ordenação de transparências. Não são captura da Unity.",
+        "FX-SLAM.prefab sugerido pela ficha não criado: prefab exige coordenação.",
         "Aprovação artística humana pendente."
       ]
     }

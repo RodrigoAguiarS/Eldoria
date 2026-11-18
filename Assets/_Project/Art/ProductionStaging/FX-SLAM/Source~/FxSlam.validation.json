@@ -1,0 +1,366 @@
+{
+  "checks": [
+    {
+      "name": "sheet_size_mode",
+      "ok": true,
+      "detail": "(1024, 512) RGBA"
+    },
+    {
+      "name": "frames_256_rgba",
+      "ok": true,
+      "detail": "8 quadros"
+    },
+    {
+      "name": "sheet_cells_equal_frames",
+      "ok": true,
+      "detail": "célula k = quadro k"
+    },
+    {
+      "name": "no_dirty_transparent_px",
+      "ok": true,
+      "detail": "0 px com alpha 0 e RGB != 0"
+    },
+    {
+      "name": "edge_margin_ge_8px",
+      "ok": true,
+      "detail": "margem mínima 14 px"
+    },
+    {
+      "name": "final_frame_transparent",
+      "ok": true,
+      "detail": "alpha máx. do quadro 7 = 0"
+    },
+    {
+      "name": "frames_0_to_6_visible",
+      "ok": true,
+      "detail": "quadros 0–6 não vazios"
+    },
+    {
+      "name": "dissipates",
+      "ok": true,
+      "detail": "quadro 6 = 12% do pico; sem área persistente"
+    },
+    {
+      "name": "centre_open",
+      "ok": true,
+      "detail": "alpha 0 dentro de 0.22 R em todos os quadros"
+    },
+    {
+      "name": "floor_readable_cover",
+      "ok": true,
+      "detail": "alpha>50% ≤ 10% da célula (máx. 6.7%)"
+    },
+    {
+      "name": "floor_readable_mean_alpha",
+      "ok": true,
+      "detail": "alpha médio dentro de R ≤ 0.16 (máx. 0.104)"
+    },
+    {
+      "name": "fixed_centre_no_baked_shake",
+      "ok": true,
+      "detail": "centroide do anel a ≤ 0.000 px de (128.0, 128.0)"
+    },
+    {
+      "name": "ring_expands_monotonic",
+      "ok": true,
+      "detail": "raio externo por quadro [0.377, 0.6018, 0.7564, 0.8596, 0.9229, 0.9645, 0.9853]"
+    },
+    {
+      "name": "ring_reaches_real_radius",
+      "ok": true,
+      "detail": "anel termina em 0.9853 R; nada passa de 1,0 R"
+    },
+    {
+      "name": "chips_inside_radius",
+      "ok": true,
+      "detail": "lascas ≤ 0,85 R (máx. 0.7546)"
+    },
+    {
+      "name": "few_chips",
+      "ok": true,
+      "detail": "6 lascas"
+    },
+    {
+      "name": "no_green",
+      "ok": true,
+      "detail": "0 px verdes (veneno)"
+    },
+    {
+      "name": "no_hero_blue",
+      "ok": true,
+      "detail": "0 px azul/ciano saturado (magia do Hero)"
+    },
+    {
+      "name": "no_telegraph_red",
+      "ok": true,
+      "detail": "0 px vermelho saturado (aviso #FF2A2A/Mat_TelegraphFill)"
+    },
+    {
+      "name": "orange_is_subtle",
+      "ok": true,
+      "detail": "laranja 8.6% dos px visíveis (≤ 25%)"
+    },
+    {
+      "name": "dust_readable_on_stone",
+      "ok": true,
+      "detail": "WCAG poeira/piso {'#55596B': 2.47, '#3E4152': 3.53} (≥ 1,8)"
+    },
+    {
+      "name": "duration_in_envelope",
+      "ok": true,
+      "detail": "0.35 s (ficha 0,25–0,45 s)"
+    },
+    {
+      "name": "never_overlaps_telegraph",
+      "ok": true,
+      "detail": "efeito 0.35 s < recoverTime 0.8 s e cooldown ≥ 1.6 s; BossBrain.ResolveAttack chama telegraph.Hide() antes do ResolveSlam"
+    },
+    {
+      "name": "telegraph_min_1s_intact",
+      "ok": true,
+      "detail": "slamTelegraph 1.4 s / fase 2 1.0 s ≥ 1 s (só lidos)"
+    },
+    {
+      "name": "radius_from_real_data",
+      "ok": true,
+      "detail": "R = 3.5 m / 4.55 m lidos de Boss_Warden_Data.asset; quad 7.724 m / 10.041 m"
+    },
+    {
+      "name": "particle_budget_le_24",
+      "ok": true,
+      "detail": "1 partícula (quad com flipbook); lascas desenhadas na sheet"
+    },
+    {
+      "name": "boss_code_and_data_read_only",
+      "ok": true,
+      "detail": "sem alterações"
+    }
+  ],
+  "frames": [
+    {
+      "frame": 0,
+      "start_s": 0.0,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 480404,
+      "alpha_max": 255,
+      "cover_over_50pct": 0.02863,
+      "mean_alpha_inside_R": 0.04457,
+      "max_alpha_inside_centre_open": 0,
+      "bbox": [
+        81,
+        82,
+        179,
+        177
+      ],
+      "edge_margin_px": 77,
+      "max_radius_R": 0.4733,
+      "ring_centroid": [
+        128.0,
+        128.0
+      ],
+      "ring_outer_R": 0.377,
+      "chips_max_radius_R": 0.4733,
+      "green_px": 0,
+      "hero_blue_px": 0,
+      "telegraph_red_px": 0,
+      "orange_px": 370
+    },
+    {
+      "frame": 1,
+      "start_s": 0.0437,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 956962,
+      "alpha_max": 255,
+      "cover_over_50pct": 0.05852,
+      "mean_alpha_inside_R": 0.08878,
+      "max_alpha_inside_centre_open": 0,
+      "bbox": [
+        58,
+        58,
+        198,
+        198
+      ],
+      "edge_margin_px": 58,
+      "max_radius_R": 0.6029,
+      "ring_centroid": [
+        128.0,
+        128.0
+      ],
+      "ring_outer_R": 0.6018,
+      "chips_max_radius_R": 0.599,
+      "green_px": 0,
+      "hero_blue_px": 0,
+      "telegraph_red_px": 0,
+      "orange_px": 900
+    },
+    {
+      "frame": 2,
+      "start_s": 0.0875,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 1117679,
+      "alpha_max": 255,
+      "cover_over_50pct": 0.06735,
+      "mean_alpha_inside_R": 0.10369,
+      "max_alpha_inside_centre_open": 0,
+      "bbox": [
+        40,
+        40,
+        216,
+        216
+      ],
+      "edge_margin_px": 40,
+      "max_radius_R": 0.7564,
+      "ring_centroid": [
+        128.0,
+        128.0
+      ],
+      "ring_outer_R": 0.7564,
+      "chips_max_radius_R": 0.6639,
+      "green_px": 0,
+      "hero_blue_px": 0,
+      "telegraph_red_px": 0,
+      "orange_px": 1091
+    },
+    {
+      "frame": 3,
+      "start_s": 0.1312,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 978571,
+      "alpha_max": 248,
+      "cover_over_50pct": 0.05936,
+      "mean_alpha_inside_R": 0.09078,
+      "max_alpha_inside_centre_open": 0,
+      "bbox": [
+        28,
+        28,
+        228,
+        228
+      ],
+      "edge_margin_px": 28,
+      "max_radius_R": 0.8602,
+      "ring_centroid": [
+        128.0,
+        128.0
+      ],
+      "ring_outer_R": 0.8596,
+      "chips_max_radius_R": 0.6978,
+      "green_px": 0,
+      "hero_blue_px": 0,
+      "telegraph_red_px": 0,
+      "orange_px": 936
+    },
+    {
+      "frame": 4,
+      "start_s": 0.175,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 689276,
+      "alpha_max": 217,
+      "cover_over_50pct": 0.0323,
+      "mean_alpha_inside_R": 0.06394,
+      "max_alpha_inside_centre_open": 0,
+      "bbox": [
+        21,
+        21,
+        235,
+        235
+      ],
+      "edge_margin_px": 21,
+      "max_radius_R": 0.9229,
+      "ring_centroid": [
+        128.0,
+        128.0
+      ],
+      "ring_outer_R": 0.9229,
+      "chips_max_radius_R": 0.7291,
+      "green_px": 0,
+      "hero_blue_px": 0,
+      "telegraph_red_px": 0,
+      "orange_px": 76
+    },
+    {
+      "frame": 5,
+      "start_s": 0.2188,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 368338,
+      "alpha_max": 146,
+      "cover_over_50pct": 0.00032,
+      "mean_alpha_inside_R": 0.03417,
+      "max_alpha_inside_centre_open": 0,
+      "bbox": [
+        16,
+        16,
+        240,
+        240
+      ],
+      "edge_margin_px": 16,
+      "max_radius_R": 0.9662,
+      "ring_centroid": [
+        128.0,
+        128.0
+      ],
+      "ring_outer_R": 0.9645,
+      "chips_max_radius_R": 0.7467,
+      "green_px": 0,
+      "hero_blue_px": 0,
+      "telegraph_red_px": 0,
+      "orange_px": 21
+    },
+    {
+      "frame": 6,
+      "start_s": 0.2625,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 132333,
+      "alpha_max": 50,
+      "cover_over_50pct": 0.0,
+      "mean_alpha_inside_R": 0.01228,
+      "max_alpha_inside_centre_open": 0,
+      "bbox": [
+        14,
+        14,
+        242,
+        242
+      ],
+      "edge_margin_px": 14,
+      "max_radius_R": 0.9885,
+      "ring_centroid": [
+        128.0,
+        128.0
+      ],
+      "ring_outer_R": 0.9853,
+      "chips_max_radius_R": 0.7546,
+      "green_px": 0,
+      "hero_blue_px": 0,
+      "telegraph_red_px": 0,
+      "orange_px": 0
+    },
+    {
+      "frame": 7,
+      "start_s": 0.3062,
+      "sheet_cell_equals_frame": true,
+      "alpha_sum": 0,
+      "alpha_max": 0,
+      "cover_over_50pct": 0.0,
+      "mean_alpha_inside_R": 0.0,
+      "max_alpha_inside_centre_open": 0,
+      "green_px": 0,
+      "hero_blue_px": 0,
+      "telegraph_red_px": 0,
+      "orange_px": 0
+    }
+  ],
+  "ok": true,
+  "sha256": {
+    "FX-SLAM-Sheet.png": "5bf1ab83b35a270d9ae22c6913421fd66d128e08bc0e6ce1265845a6a3c2653a",
+    "frames/FX-SLAM-F0.png": "cd58ce47290d749b944fe44ad689d5ed7ecf82b89e5d10570de522df60fc65ce",
+    "frames/FX-SLAM-F1.png": "ff4b69d01ffccd82f7ba564df5664acdf94b46c91e3166eeeb5f0e1c8e3773e3",
+    "frames/FX-SLAM-F2.png": "1fa72d4e2e88eed1ecc47ba201b398098da4f91ef9bdac87f37993851a78d6f2",
+    "frames/FX-SLAM-F3.png": "24d96a131a708bd84b93ea458644a54012f1c913e25cd059ca37ba52705133fd",
+    "frames/FX-SLAM-F4.png": "c2feaf4432e31bfe8e5e249b5f4f61b85b665286384cb8ebcec05dd1c27ddcc5",
+    "frames/FX-SLAM-F5.png": "71ed22007952ef19e67f478629e1cc5907f4fe9a62a5331cf5097ab227010990",
+    "frames/FX-SLAM-F6.png": "4fabf31de5a6a875e2d87a55160ee03937917771a8d499f070707d8ba0e1362e",
+    "frames/FX-SLAM-F7.png": "aebc86755d7beb8b01bcd992ab44e1133afcb473511b7832eb82228be275473f",
+    "preview_slam.gif": "34f4109f7f10407520fec859344420f787d34c9a2263f1f0362e8c312c194bef"
+  },
+  "meta_created": false,
+  "folder_meta_created": false
+}
