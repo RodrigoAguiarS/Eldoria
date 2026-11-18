@@ -1,6 +1,6 @@
 # Catálogo de prompts — Eldoria
 
-Base auditada: `5873d7a`, atualizada após o handoff `aff1895` em 14/11/2026. **Nenhum prompt foi executado nesta missão.** F01–F15 são sugestões novas ou complementos identificados; A01–A15 são briefs artísticos. Escolher um ID por entrega. P1 = próximo incremento útil; P2 = expansão/polimento; P3 = mudança ampla. Complexidade B/M/A = baixa/média/alta relativa a este projeto, sem promessa de prazo.
+O catálogo original F01–F15/A01–A15 foi preparado em 14/11/2026 sobre `5873d7a`/`aff1895`; seus blocos preservam os briefs de implementação e arte. Várias entregas já ocorreram: verificar MVP/NEXT_STEPS, código e commits antes de reutilizá-los. Para o próximo ciclo, começar na [V01](#v01), da fila de integração/validação **V01–V21**, planejada em 17/11/2026. Nenhuma tarefa V foi executada ao escrever este plano. Escolher um ID por entrega. P0 = gate do candidato; P1 = próximo incremento útil; P2 = expansão/polimento; P3 = mudança ampla. Complexidade B/M/A = baixa/média/alta relativa ao projeto, sem promessa de prazo.
 
 O jogo já tem combo de três golpes, dash, especial/estamina/defesa, inventário de 16 slots, três raridades, equipamento manual, poções/Q, ouro/XP, quatro salas + Boss de duas fases, menus/opções, áudio, arte de itens, chama animada e VFX de combate. Não encomendar esses sistemas como novidade. Evidências/limites: [PROJECT_AUDIT](PROJECT_AUDIT.md); ordem: [NEXT_STEPS](NEXT_STEPS.md).
 
@@ -363,3 +363,532 @@ Pasta exclusiva sugerida: `Assets/_Project/Art/ProductionStaging/<ID>/`; não so
 - **Negative prompt:** `photorealism, deep opaque water covering combat, cluttered centre, giant fog, text, copyrighted environment, cinematic camera tilt, watermark`.
 - **Aceite:** rotas claras e espaço de combate preservado; distinguir ambiente proposto de nível aprovado; sem prometer água interativa.
 - **Unity:** Default/sRGB como referência. F14 constrói primeiro geometria jogável por builder; malhas, água, materiais, colliders e NavMesh ficam em integração posterior. Não substituir o andar atual por imagem.
+
+
+## Integração e validação — tarefas V01–V21
+
+Plano de **17/11/2026**, base documental `origin/main@79f0968`. Esta seção prepara trabalho para outro modelo: **nenhuma integração, teste Unity, produção artística ou aprovação humana foi executada ao escrever estas tarefas**. Revalidar a base em V01; os resultados históricos de F/A não aprovam automaticamente um candidato integrado.
+
+F01–F15 e A01–A15 acima preservam os briefs originais. Começar por V01 e não repetir sua produção em lote. Na fotografia consultada, A01–A12 têm entregas em staging; A13/A14 são conceitos; A15 tinha trabalho local não versionado na pasta de outro agente. F06 não teve implementação/relatório localizado no levantamento: V01 deve conferir branches/PRs e composição antes de concluir que falta.
+
+### Como executar e comprovar
+
+- Copiar **somente o prompt completo do ID escolhido**. Cada prompt inclui o fluxo Git, entradas, escopo e aceite; se o código atual já atender, comprovar e registrar, sem recriar o sistema.
+- Uma tarefa e um dono por branch, criada da main atualizada, com PR para main. Não fazer merge sem aprovação do usuário. V03–V10 compartilham cenas, Player, builders ou manifesto: executar/integrar sequencialmente; cada tarefa começa na main que recebeu seu pré-requisito.
+- Caminhos de scripts, arte e dados citados sem raiz pertencem a `Assets/_Project`; `docs`, `Tools` e `Reports` são da raiz. Confirmar os caminhos reais antes de editar. A tarefa artística só produz arquivos em sua pasta exclusiva; código pertence ao integrador.
+- Criar diretório novo `Reports/Validation/<ID>/<execucao>/` por execução: base/commit, comandos, ambiente, plano e arquivos, resultados/totais/skips, capturas/observações e limites. Um README de evidência e resultados estruturados úteis bastam; não criar evidências vazias ou sobrescrever históricos.
+- Isolar benchmarks com `DUNGEON_CRAWLER_TEST_REPORT_DIR`, auditoria com `DUNGEON_CRAWLER_AUDIT_REPORT` e saves com `DUNGEON_CRAWLER_CHECKPOINT_DIR`. Auditar wrappers que escrevam destinos fixos. Preferências/bindings reais exigem backup/restauração verificados; não abrir outro Editor no projeto já aberto.
+- Distinguir análise estática, asserts automatizados, PlayMode gráfico, WindowsPlayer e julgamento humano. Explicit ignorado não conta como captura aprovada, e log sem erro não prova vitória. Sem Editor, registrar `NÃO VALIDADO NO EDITOR`; etapa humana não observada permanece pendente.
+- Cenas/prefabs pelas APIs e integradores idempotentes; snapshots devem preservar dados/GUIDs. Não descartar alterações desconhecidas com checkout/reset/stash. Expansão de arquivos exige registrar a divergência e delimitar novo escopo antes de editar a parte afetada.
+- **V12–V15 são condicionais.** A base pode ser validada mantendo lanceiro/Sentinela isolados e uma sala em F14, se esse for o escopo escolhido. Aprovação de conceito/conteúdo e ferramenta capaz de modelar são gates reais; não bloquear a base esperando expansão opcional não escolhida.
+
+### Índice e dependências
+
+| ID | Entrega | Prioridade / complexidade | Depende de |
+| --- | --- | --- | --- |
+| [V01](#v01) | Inventário de entregas e escopo do candidato | P0 / M | Nenhuma; primeira tarefa |
+| [V02](#v02) | Regressão global e idempotência após F10 | P0 / A | V01 e baseline integrado definido |
+| [V03](#v03) | Integrar ícones de dash e giro — A01/A02 | P1 / B | V01/V02 aprovados e lotes A01/A02 na main |
+| [V04](#v04) | Aplicar UI-SKIN — A03-I | P1 / M | V03 integrado; A03 na main |
+| [V05](#v05) | Integrar arte de cura, nível e coleta — A04/A05/A06 | P1 / M | V04 integrado; F05 e lotes A04–A06 presentes |
+| [V06](#v06) | Integrar rastro de dash — A07 | P1 / M | V05 integrado e A07 disponível |
+| [V07](#v07) | Integrar núcleo e cauda de projétil — A08/A09 | P1 / M | V06 integrado; A08/A09 disponíveis |
+| [V08](#v08) | Integrar impacto do Slam — A10 | P1 / M | V07 integrado e A10 presente |
+| [V09](#v09) | Integrar modelo e tampa do baú — A11 | P1 / M | V08 integrado; A11 disponível e F08 das cinco salas integrado |
+| [V10](#v10) | Integrar modelos de props destrutíveis — A12 | P1 / M | V09 integrado; A12 e F09 presentes |
+| [V11](#v11) | Playtest de protótipos e aprovação do conteúdo | P1 / M | V01/V02; pode anteceder V03–V10 sem editar os mesmos arquivos |
+| [V12](#v12) | Produzir visual 3D do lanceiro aprovado | P2 / A | V11 aprova A13; somente escopo ampliado |
+| [V13](#v13) | Produzir visual 3D da Sentinela aprovada | P2 / A | V11 aprova A14 e protótipo F15; somente escopo ampliado |
+| [V14](#v14) | Produzir kit da cripta para layout aprovado | P2 / A | V11 aprova A15 entregue e layout de uma sala; somente escopo ampliado |
+| [V15](#v15) | Integrar conteúdo ampliado ao percurso aprovado | P2 / A | V11 decide destino/escopo; V12–V14 aplicáveis aprovados; V03–V10 integrados |
+| [V16](#v16) | Validar todos os sistemas em conjunto no Editor | P0 / A | V02–V10 integrados; V15 integrado ou não aplicável; V01 sem lacuna bloqueante |
+| [V17](#v17) | Validar Windows e persistência entre processos | P0 / A | V16 aprovado e build isolada do mesmo commit |
+| [V18](#v18) | Playtest de dificuldade, progressão e legibilidade | P1 / M | V17 aprovado em build identificada |
+| [V19](#v19) | Medir desempenho do fluxo real e pior encontro | P1 / M | V17; hardware/carga/build fixados durante comparação |
+| [V20](#v20) | Empacotar candidato rastreável para revisão | P0 / M | V16/V17/V19 sem bloqueios; V18 classificado; versão/escopo definidos pelo usuário |
+| [V21](#v21) | Teste externo e decisão de lançamento | P1 / M | V20 identificado; usuário decide distribuição/participantes |
+
+Ordem principal: V01 → V02 → V03…V10 → V16 → V17 → V18/V19 → V20 → V21. V11 avalia protótipos/conceitos; V12–V14 só após sua aprovação, depois V15 e validação integrada. Conteúdo alterado depois de V16 exige repetir verificações afetadas. V18/V19 podem usar o mesmo candidato, mas a captura de desempenho não disputa hardware com outro ensaio.
+
+<a id="v01"></a>
+
+### V01 — Inventário de entregas e escopo do candidato
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex/revisor. **Prioridade/complexidade:** P0/M.
+- **Dependências:** Nenhuma; primeira tarefa.
+- **Entradas:** MVP.md, NEXT_STEPS.md, commits/PRs atuais, relatórios F01–F15, manifesto e fontes dos lotes A01–A15.
+- **Arquivos permitidos:** Reports/Validation/V01/<execucao>/ e linhas de estado em NEXT_STEPS/MVP/manifesto; sem código, cenas, prefabs ou Packages.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Os 30 IDs têm origem e estado separados; lacunas ficam NÃO COMPROVADO com motivo.
+- Cenas, destino das entregas, schemas de checkpoint/opções/bindings e PRs pendentes identificados.
+- Há baseline reproduzível e plano de correções existentes separado de expansão condicional.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V01 — Inventário de entregas e escopo do candidato, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Monte uma matriz dos 30 IDs com commit/PR, merge na main, caminho, nível da entrega (conceito, produzido, importado, integrado, validado) e evidência. Revalide PRs atuais, pois textos antigos ainda dizem merge pendente. Confira F06: não localizamos implementação/relatório na fotografia inicial, mas ausência de grep não prova ausência; investigue branches, testes e composição. A15 tinha trabalho local não versionado de outro agente: não o inclua ou descarte. Defina o candidato base com protótipos isolados ou proponha escopo ampliado para V11 decidir. Não faça merge/cherry-pick sem aprovação nem reimplemente F/A já entregues. Escopo autorizado: Reports/Validation/V01/<execucao>/ e linhas de estado em NEXT_STEPS/MVP/manifesto; sem código, cenas, prefabs ou Packages. Pré-requisitos: Nenhuma; primeira tarefa. Fontes: MVP.md, NEXT_STEPS.md, commits/PRs atuais, relatórios F01–F15, manifesto e fontes dos lotes A01–A15. Aceite: Os 30 IDs têm origem e estado separados; lacunas ficam NÃO COMPROVADO com motivo.; Cenas, destino das entregas, schemas de checkpoint/opções/bindings e PRs pendentes identificados.; Há baseline reproduzível e plano de correções existentes separado de expansão condicional.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v02"></a>
+
+### V02 — Regressão global e idempotência após F10
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P0/A.
+- **Dependências:** V01 e baseline integrado definido.
+- **Entradas:** Reports/F10, F12 e F13; ItemsCombatAssetTests; TextScaleSceneBuilder, InventorySceneBuilder e ProductionVisualIntegrator atuais.
+- **Arquivos permitidos:** Teste que reproduzir falha e helper/integrador mínimo identificado; testes pertinentes; Reports/Validation/V02/<execucao>/. Preservar layout, regras e arte.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Compilação e suítes atuais sem falhas; Explicit/skip discriminados.
+- Falha histórica resolvida ou comprovadamente ausente no baseline atual, com causa/evidência.
+- Segunda integração sem perda de dados, duplicação ou alterações fora do escopo.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V02 — Regressão global e idempotência após F10, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Reexecute compilação e suítes completas na instalação real. Investigue ItemsCombatAssetTests.IntegrateTwice_IsIdempotentAndPreservesPickupIdentity, registrado com Inventory slot missing: 0 após F10; diferencie fixture desatualizada de defeito de composição. Se já corrigido, comprove no commit atual. Antes de reparar liste os arquivos exatos; exija reprodução antes/depois, sem ignorar teste, reduzir assert ou aprovar porque a falha é antiga. Rode os integradores afetados duas vezes com hashes e verifique slots, dados, GUIDs e cenas não relacionadas. Registre efeitos colaterais de testes sem descartar mudanças desconhecidas. Escopo autorizado: Teste que reproduzir falha e helper/integrador mínimo identificado; testes pertinentes; Reports/Validation/V02/<execucao>/. Preservar layout, regras e arte. Pré-requisitos: V01 e baseline integrado definido. Fontes: Reports/F10, F12 e F13; ItemsCombatAssetTests; TextScaleSceneBuilder, InventorySceneBuilder e ProductionVisualIntegrator atuais. Aceite: Compilação e suítes atuais sem falhas; Explicit/skip discriminados.; Falha histórica resolvida ou comprovadamente ausente no baseline atual, com causa/evidência.; Segunda integração sem perda de dados, duplicação ou alterações fora do escopo.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v03"></a>
+
+### V03 — Integrar ícones de dash e giro — A01/A02
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P1/B.
+- **Dependências:** V01/V02 aprovados e lotes A01/A02 na main.
+- **Entradas:** Staging ICON-ACTION-DASH/ICON-ACTION-SPECIAL; DashCooldownPresenter, PlayerResourcePresenter, BindingHintPresenter e builders de HUD.
+- **Arquivos permitidos:** Presenters de HUD citados se necessário; integrador dedicado em Scripts/Editor, referências de UI e cenas necessárias via APIs; testes e estados A01/A02 no manifesto.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Ícones legíveis a 32/48 px, distinguíveis em cinza e sem halo.
+- Rótulos e estados corretos; cliques de UI não geram ataques.
+- PlayMode observado em 720p/1080p × 100%/150%; integração idempotente.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V03 — Integrar ícones de dash e giro — A01/A02, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Aplique os PNGs existentes sem regeneração ou nova habilidade. Mantenha segundos, custo, estamina e rótulos derivados dos bindings como UI nativa. Preserve geometria/alvos e referências explícitas. Confira importação alpha/sRGB/mipmaps e composição após reaplicar F10. Cubra pronto/recarga/sem estamina/pausa/morto e remapeamento; inclua a cena F14 se ela usar o mesmo HUD. Não alterar cooldown, custo, alcance ou movimento. Escopo autorizado: Presenters de HUD citados se necessário; integrador dedicado em Scripts/Editor, referências de UI e cenas necessárias via APIs; testes e estados A01/A02 no manifesto. Pré-requisitos: V01/V02 aprovados e lotes A01/A02 na main. Fontes: Staging ICON-ACTION-DASH/ICON-ACTION-SPECIAL; DashCooldownPresenter, PlayerResourcePresenter, BindingHintPresenter e builders de HUD. Aceite: Ícones legíveis a 32/48 px, distinguíveis em cinza e sem halo.; Rótulos e estados corretos; cliques de UI não geram ataques.; PlayMode observado em 720p/1080p × 100%/150%; integração idempotente.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v04"></a>
+
+### V04 — Aplicar UI-SKIN — A03-I
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P1/M.
+- **Dependências:** V03 integrado; A03 na main.
+- **Entradas:** docs/A03-UI-SKIN-INTEGRATION.md e UI-SKIN/Source~/UI-SKIN.states.json; builders atuais e InventorySlotView.
+- **Arquivos permitidos:** Somente o escopo explícito do brief A03-I, testes e Reports/Validation/V04/<execucao>/. Ampliação deve ser relatada antes de editar a parte afetada.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Snapshot comprova geometria e targets preservados.
+- Estados de botão, vazio/seleção/equipado/raridade visíveis.
+- Title/bolsa rolada/opções/controles/HUD legíveis a 720p/1080p × 100%/150%; reaplicação estável.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V04 — Aplicar UI-SKIN — A03-I, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Execute o brief A03-I existente, sem criar outro sistema de skin. Releia os pontos atuais dos builders, não trate números de linha antigos como contrato. Preserve RectTransform, Navigation, raycastTarget, callbacks, foco, pausa, SelectionFrame e fallback quando skin for nula. Aplique Sliced/SpriteSwap/cores conforme os estados. Respeite a restrição desse brief para Images em prefabs: pare nessa parte e relate em vez de editar fora do escopo. Não adicionar gamepad completo; validar navegação atualmente suportada. Identifique se F14 precisa de tarefa complementar, pois o brief cobre quatro cenas específicas. Escopo autorizado: Somente o escopo explícito do brief A03-I, testes e Reports/Validation/V04/<execucao>/. Ampliação deve ser relatada antes de editar a parte afetada. Pré-requisitos: V03 integrado; A03 na main. Fontes: docs/A03-UI-SKIN-INTEGRATION.md e UI-SKIN/Source~/UI-SKIN.states.json; builders atuais e InventorySlotView. Aceite: Snapshot comprova geometria e targets preservados.; Estados de botão, vazio/seleção/equipado/raridade visíveis.; Title/bolsa rolada/opções/controles/HUD legíveis a 720p/1080p × 100%/150%; reaplicação estável.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v05"></a>
+
+### V05 — Integrar arte de cura, nível e coleta — A04/A05/A06
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P1/M.
+- **Dependências:** V04 integrado; F05 e lotes A04–A06 presentes.
+- **Entradas:** Scripts/UI/PlayerRewardFeedback.cs; RewardFeedbackSceneBuilder; contratos timing/atlas em FX-HEAL, FX-LEVEL e FX-LOOT.
+- **Arquivos permitidos:** Presenter visual F05, integrador/configuração/material dedicados, testes e manifesto; não mudar Health/Inventory/Progression para reaplicar regras.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Rejeições por HP cheio/morto/bolsa cheia não geram falso sucesso.
+- Frames/variantes corretos, sem grade vazando ou estado antigo; flash zero mantém mensagens.
+- Eventos próximos/múltiplos níveis/pausa/reset cobertos; GC das partículas separado de strings.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V05 — Integrar arte de cura, nível e coleta — A04/A05/A06, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Use sheets/atlas produzidos nos efeitos temporários do F05. Leia grade, ordem, duração, orientação e bounds reais. Preserve confirmações de operação aceita, nível final, fila limitada, RNG do loot e a distinção entre cura de nível e poção. Não duplicar XP/cura/consumo/eventos ou som. Respeite pausa inclusive Q na bolsa, flash zero, morte/reset/desativação e reentrada. Reutilize componentes aquecidos, limpe frame/seed/alpha ao reativar e configure por builder idempotente. Escopo autorizado: Presenter visual F05, integrador/configuração/material dedicados, testes e manifesto; não mudar Health/Inventory/Progression para reaplicar regras. Pré-requisitos: V04 integrado; F05 e lotes A04–A06 presentes. Fontes: Scripts/UI/PlayerRewardFeedback.cs; RewardFeedbackSceneBuilder; contratos timing/atlas em FX-HEAL, FX-LEVEL e FX-LOOT. Aceite: Rejeições por HP cheio/morto/bolsa cheia não geram falso sucesso.; Frames/variantes corretos, sem grade vazando ou estado antigo; flash zero mantém mensagens.; Eventos próximos/múltiplos níveis/pausa/reset cobertos; GC das partículas separado de strings.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v06"></a>
+
+### V06 — Integrar rastro de dash — A07
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P1/M.
+- **Dependências:** V05 integrado e A07 disponível.
+- **Entradas:** PlayerDash, ponte de animação e FX-DASH/Source~/FX-DASH.trail.json.
+- **Arquivos permitidos:** Presenter visual dedicado, gancho C# mínimo em PlayerDash se faltar, integrador e testes; sem alterar movimento, custo, cooldown ou invulnerabilidade.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Um efeito por dash aceito; tentativa em cooldown sem rastro.
+- Sem segmentos antigos, piso e perigos legíveis.
+- Regressões de dash/invulnerabilidade preservadas; sem criar efeito por uso aquecido.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V06 — Integrar rastro de dash — A07, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Ligue a textura A07 ao dash existente por eventos; se faltarem, adicione somente notificações sem controlar o movimento. Não duplicar personagem/Animator. Respeite direção, duração/envelope do contrato, pausa, morte, desativação e opções visuais aplicáveis. Limpe trails em cancelamento e reativação; mantenha VFX do combo/giro. Não aplicar dano, usar Rigidbody ou trocar CharacterController.Move. Escopo autorizado: Presenter visual dedicado, gancho C# mínimo em PlayerDash se faltar, integrador e testes; sem alterar movimento, custo, cooldown ou invulnerabilidade. Pré-requisitos: V05 integrado e A07 disponível. Fontes: PlayerDash, ponte de animação e FX-DASH/Source~/FX-DASH.trail.json. Aceite: Um efeito por dash aceito; tentativa em cooldown sem rastro.; Sem segmentos antigos, piso e perigos legíveis.; Regressões de dash/invulnerabilidade preservadas; sem criar efeito por uso aquecido.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v07"></a>
+
+### V07 — Integrar núcleo e cauda de projétil — A08/A09
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P1/M.
+- **Dependências:** V06 integrado; A08/A09 disponíveis.
+- **Entradas:** Projectile, ProjectilePool e prefab atual; contratos Source~ de FX-PROJECTILE e FX-PROJECTILE-TRAIL.
+- **Arquivos permitidos:** Filho/material visual, presenter e integrador, callback mínimo de reset e testes; collider, dano, velocidade, máscara e lifetime preservados.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Rajada de 16 usa instâncias aquecidas distintas; nenhum rastro de tiro anterior.
+- Dano, colisão e lifetime iguais ao baseline; pausa/reinício limpam ativos.
+- Visual observado no Editor/Windows e custo registrado sem promessa de FPS.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V07 — Integrar núcleo e cauda de projétil — A08/A09, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Instale FBX real e textura da cauda, preservando envelope de 0,4 m e pool existente. Leia escala/pivô no contrato, não no preview. Limpe trail/partículas antes do relançamento e ao retornar por colisão/timeout/desativação. Não criar outro pool ou Instantiate/Destroy por tiro. Teste visão F07, parede/porta/jogador e rajada dentro da capacidade; crescimento acima dela deve ser explicitamente medido, não mascarado. Escopo autorizado: Filho/material visual, presenter e integrador, callback mínimo de reset e testes; collider, dano, velocidade, máscara e lifetime preservados. Pré-requisitos: V06 integrado; A08/A09 disponíveis. Fontes: Projectile, ProjectilePool e prefab atual; contratos Source~ de FX-PROJECTILE e FX-PROJECTILE-TRAIL. Aceite: Rajada de 16 usa instâncias aquecidas distintas; nenhum rastro de tiro anterior.; Dano, colisão e lifetime iguais ao baseline; pausa/reinício limpam ativos.; Visual observado no Editor/Windows e custo registrado sem promessa de FPS.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v08"></a>
+
+### V08 — Integrar impacto do Slam — A10
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P1/M.
+- **Dependências:** V07 integrado e A10 presente.
+- **Entradas:** BossBrain.ResolveSlam, BossAttackTelegraph, dados das duas fases e FX-SLAM.timing.json.
+- **Arquivos permitidos:** Evento de apresentação após resolução se ausente, presenter reutilizado, integrador e testes; sem mudar BossData/fases/telegraph/dano.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Ataque cancelado antes da resolução não emite impacto tardio.
+- Efeito não esconde aviso/player nem muda alcance ou número de danos.
+- Duração/frames/reset corretos e instância reutilizada.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V08 — Integrar impacto do Slam — A10, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Ligue a sheet ao impacto autoritativo do Slam. Separe aviso e aftermath cosmético: VFX nunca causa dano. Use raio real capturado do ataque e fator visual do contrato, cujo quad inclui transparência fora do círculo; diâmetro do quad não é área danosa. Uma apresentação por resolução e nenhuma atrasada após cancelar windup. Preserve transição única a 50%, 3 s invulnerável e aviso mínimo de 1 s. Cubra fases, dentro/fora/dash, pausa, morte e flash reduzido. Escopo autorizado: Evento de apresentação após resolução se ausente, presenter reutilizado, integrador e testes; sem mudar BossData/fases/telegraph/dano. Pré-requisitos: V07 integrado e A10 presente. Fontes: BossBrain.ResolveSlam, BossAttackTelegraph, dados das duas fases e FX-SLAM.timing.json. Aceite: Ataque cancelado antes da resolução não emite impacto tardio.; Efeito não esconde aviso/player nem muda alcance ou número de danos.; Duração/frames/reset corretos e instância reutilizada.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v09"></a>
+
+### V09 — Integrar modelo e tampa do baú — A11
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P1/M.
+- **Dependências:** V08 integrado; A11 disponível e F08 das cinco salas integrado.
+- **Entradas:** MODEL-CHEST.source.json; RoomRewardChest, RoomRewardPresenter e RoomRewardSceneBuilder; checkpoint atual.
+- **Arquivos permitidos:** Filho visual/referência Lid, integrador dedicado, presenter apenas se necessário para pivô e testes; sem mudar recompensas, interação ou tabelas.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Tampa abre corretamente sem atravessar base ou duplicar animação.
+- Uma recompensa independente por sala/run; toggle/retomada não renovam loot.
+- Visual reflete IsOpened inclusive em checkpoint; cinco salas observadas e builder idempotente.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V09 — Integrar modelo e tampa do baú — A11, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Instale Base/Lid nos cinco baús com lógica F08 intacta. Confira pivô, orientação e sinal de rotação: o staging apontou tampa placeholder abrindo para baixo/trás. Observe o novo modelo aberto/fechado antes de aceitar. Escolha um dono da animação, presenter ou take mecânico, sem aplicar ambos. Preserve collider separado, footprint e navegação. Confira baú aberto restaurado sem sortear novamente, F remapeado, última morte, bolsa cheia e acesso à recompensa depois da vitória. Escopo autorizado: Filho visual/referência Lid, integrador dedicado, presenter apenas se necessário para pivô e testes; sem mudar recompensas, interação ou tabelas. Pré-requisitos: V08 integrado; A11 disponível e F08 das cinco salas integrado. Fontes: MODEL-CHEST.source.json; RoomRewardChest, RoomRewardPresenter e RoomRewardSceneBuilder; checkpoint atual. Aceite: Tampa abre corretamente sem atravessar base ou duplicar animação.; Uma recompensa independente por sala/run; toggle/retomada não renovam loot.; Visual reflete IsOpened inclusive em checkpoint; cinco salas observadas e builder idempotente.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v10"></a>
+
+### V10 — Integrar modelos de props destrutíveis — A12
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P1/M.
+- **Dependências:** V09 integrado; A12 e F09 presentes.
+- **Entradas:** MODEL-DESTRUCTIBLE.source.json; DestructibleProp/Presenter/SceneBuilder e layer Destructible.
+- **Arquivos permitidos:** Visuais Intact/Rubble e material/flash, integrador e testes; preservar definição/HP/colisores lógicos. Não introduzir outra regra para a caixa.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Uma quebra e um dano por impacto básico/giro com múltiplos colliders.
+- Toggle não cura; reinício cria run nova e apresentação acompanha estado.
+- Não interfere em EnemyTracker, portas/projéteis ou limpeza; referências e layout preservados.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V10 — Integrar modelos de props destrutíveis — A12, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Aplique primeiro o vaso intacto/quebrado ao alvo F09. A caixa é variante artística disponível, não autorização para novo tipo de gameplay/recompensa. Preserve bounds/footprint, layer sem bloqueio, colliders deduplicados e centro/portas/spawns/NavMesh. Presenter reconcilia quebrado ao reativar e DamageFlash usa renderer intacto correto. Sem Rigidbody de estilhaços ou XP/loot. Preserve a política atual de checkpoint: não inventar persistência de vasos só porque o novo visual existe. Escopo autorizado: Visuais Intact/Rubble e material/flash, integrador e testes; preservar definição/HP/colisores lógicos. Não introduzir outra regra para a caixa. Pré-requisitos: V09 integrado; A12 e F09 presentes. Fontes: MODEL-DESTRUCTIBLE.source.json; DestructibleProp/Presenter/SceneBuilder e layer Destructible. Aceite: Uma quebra e um dano por impacto básico/giro com múltiplos colliders.; Toggle não cura; reinício cria run nova e apresentação acompanha estado.; Não interfere em EnemyTracker, portas/projéteis ou limpeza; referências e layout preservados.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v11"></a>
+
+### V11 — Playtest de protótipos e aprovação do conteúdo
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex prepara; usuário decide arte/escopo. **Prioridade/complexidade:** P1/M.
+- **Dependências:** V01/V02; pode anteceder V03–V10 sem editar os mesmos arquivos.
+- **Entradas:** Arenas F13/F15 e sala F14; LANCER-F13, STONE-SENTINEL-F15; conceitos A13/A14 e A15 quando entregue.
+- **Arquivos permitidos:** Somente Reports/Validation/V11/<execucao>/ e registro de decisão no documento essencial; nenhum modelo, script ou ajuste de balanço.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Participante/versão/condições e resultados humanos/técnicos separados.
+- Aprovação/rejeição de cada conceito e escopo ampliado registrada explicitamente.
+- Sem novo padrão/fase/bioma obrigatório criado por este plano; valores continuam propostas até playtest.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V11 — Playtest de protótipos e aprovação do conteúdo, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Prepare material revisável e teste movimento/combate contra lanceiro/Sentinela, mais transição F14. Capture aviso, compromisso, esquiva, acerto, morte, vitória e reinício; avaliação humana não deve ser atribuída à automação. Apresente os conceitos reais e alternativas concretas: manter protótipos isolados, ou incluir atores/quantidade de salas explicitamente escolhidos. Peça aprovação artística/de escopo somente depois do material pronto. Não interpretar tempo decorrido como aceite. A13/A14/A15 são imagens, não 3D pronto. Se faltar aprovação, bloqueie só V12–V15; a base atual pode seguir V16. Escopo autorizado: Somente Reports/Validation/V11/<execucao>/ e registro de decisão no documento essencial; nenhum modelo, script ou ajuste de balanço. Pré-requisitos: V01/V02; pode anteceder V03–V10 sem editar os mesmos arquivos. Fontes: Arenas F13/F15 e sala F14; LANCER-F13, STONE-SENTINEL-F15; conceitos A13/A14 e A15 quando entregue. Aceite: Participante/versão/condições e resultados humanos/técnicos separados.; Aprovação/rejeição de cada conceito e escopo ampliado registrada explicitamente.; Sem novo padrão/fase/bioma obrigatório criado por este plano; valores continuam propostas até playtest.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v12"></a>
+
+### V12 — Produzir visual 3D do lanceiro aprovado
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Agente artístico/DCC; revisão técnica Codex. **Prioridade/complexidade:** P2/A.
+- **Dependências:** V11 aprova A13; somente escopo ampliado.
+- **Entradas:** Conceito A13 aprovado; medidas, rig/sockets Skeleton e tempos reais de F13.
+- **Arquivos permitidos:** Somente Art/ProductionStaging/CHAR-LANCER/ com fonte, FBX, materiais/texturas/takes e procedência; estado no manifesto. Sem gameplay.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- FBX importa na Unity fixada, Generic válido e raiz estável; fonte/procedência reais.
+- Aviso/contato legíveis a 45°; arma e pés não atravessam chão nas poses verificadas.
+- Produzido/importado não marcado integrado/aprovado sem a evidência correspondente.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V12 — Produzir visual 3D do lanceiro aprovado, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Produza mesh, rig Generic e animações reais mantendo família visual e envelope de colisão. Liste takes para Idle/Chase, aviso, investida, recuperação e morte; aviso é controlado pelo domínio, não duração arbitrária do take. Preserve root in-place, pivô e sockets e valide pesos/bind poses/normais/deformação. Use DCC/gerador capaz e fonte editável; ferramenta só de imagem deve declarar limitação, nunca simular FBX/rig. Meça triângulos/materiais/bounds/takes e leia silhueta a 128 px sobre piso real. Entregue para integração V15 sem substituir esqueletos existentes. Escopo autorizado: Somente Art/ProductionStaging/CHAR-LANCER/ com fonte, FBX, materiais/texturas/takes e procedência; estado no manifesto. Sem gameplay. Pré-requisitos: V11 aprova A13; somente escopo ampliado. Fontes: Conceito A13 aprovado; medidas, rig/sockets Skeleton e tempos reais de F13. Aceite: FBX importa na Unity fixada, Generic válido e raiz estável; fonte/procedência reais.; Aviso/contato legíveis a 45°; arma e pés não atravessam chão nas poses verificadas.; Produzido/importado não marcado integrado/aprovado sem a evidência correspondente.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v13"></a>
+
+### V13 — Produzir visual 3D da Sentinela aprovada
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Agente artístico/DCC; revisão técnica Codex. **Prioridade/complexidade:** P2/A.
+- **Dependências:** V11 aprova A14 e protótipo F15; somente escopo ampliado.
+- **Entradas:** Conceito A14, StoneSentinelData/Brain, leque real e arena/Hero para escala.
+- **Arquivos permitidos:** Somente Art/ProductionStaging/CHAR-STONE-SENTINEL/ com fonte, FBX/materiais/texturas/takes e manifesto/procedência; sem Guardião/loot.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Importação/rig/takes reais, raiz estável e Guardião preservado.
+- Visual não sugere leque/alcance diferente do domínio; antecipação legível.
+- Fonte/métricas/direitos conhecidos e QA registrados; aprovação humana separada.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V13 — Produzir visual 3D da Sentinela aprovada, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Converta o conceito aprovado em modelo/takes reais da fase única atual: antecipação, impacto, recuperação, locomoção e morte. Rig Generic/in-place e envelope compatível com agent/collider. Não criar segunda fase nem retimar dano para caber na animação. Documente sockets e pontos visuais, meça deformação/custo e preserve silhueta distinta do Guardião. Ferramenta incapaz de modelar/rigar deve declarar bloqueio, não entregar render como modelo. Amostre os takes sobre o piso; somente V15 integra no destino aprovado. Escopo autorizado: Somente Art/ProductionStaging/CHAR-STONE-SENTINEL/ com fonte, FBX/materiais/texturas/takes e manifesto/procedência; sem Guardião/loot. Pré-requisitos: V11 aprova A14 e protótipo F15; somente escopo ampliado. Fontes: Conceito A14, StoneSentinelData/Brain, leque real e arena/Hero para escala. Aceite: Importação/rig/takes reais, raiz estável e Guardião preservado.; Visual não sugere leque/alcance diferente do domínio; antecipação legível.; Fonte/métricas/direitos conhecidos e QA registrados; aprovação humana separada.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v14"></a>
+
+### V14 — Produzir kit da cripta para layout aprovado
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Agente artístico/DCC; revisão técnica Codex. **Prioridade/complexidade:** P2/A.
+- **Dependências:** V11 aprova A15 entregue e layout de uma sala; somente escopo ampliado.
+- **Entradas:** Conceito A15, sala F14 real, _GameArt e medidas de portas/piso/pilares/câmera.
+- **Arquivos permitidos:** Somente Art/ProductionStaging/ENV-FLOODED-CRYPT/ com fonte/FBX modular/materiais/texturas e mapa de encaixe; sem cenas/colisão/NavMesh/pacote.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Medidas/encaixes/pivôs conferidos, sem frestas ou escalas residuais.
+- Materiais/iluminação propostos preservam leitura com custo medido e sem collider acidental.
+- Fonte/procedência e mapa peça→uso entregues; aprovação do conceito rastreável.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V14 — Produzir kit da cripta para layout aprovado, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Produza kit mínimo para vestir a sala F14 escolhida: piso seco, paredes/portas/pilares e decoração periférica. A15 referencia sala normal de 16 m, F14 usa 20 m; preserve o layout aprovado ou obtenha decisão antes de mudar métricas. Mantenha módulos/pivôs/transforms aplicadas, centro livre e leitura a 45°. Água começa cosmética periférica: não criar nado/dano/travessia, shader/pacote ou novas luzes implicitamente. Entregue montagem e bounds reais; uma imagem não é kit navegável. Escopo autorizado: Somente Art/ProductionStaging/ENV-FLOODED-CRYPT/ com fonte/FBX modular/materiais/texturas e mapa de encaixe; sem cenas/colisão/NavMesh/pacote. Pré-requisitos: V11 aprova A15 entregue e layout de uma sala; somente escopo ampliado. Fontes: Conceito A15, sala F14 real, _GameArt e medidas de portas/piso/pilares/câmera. Aceite: Medidas/encaixes/pivôs conferidos, sem frestas ou escalas residuais.; Materiais/iluminação propostos preservam leitura com custo medido e sem collider acidental.; Fonte/procedência e mapa peça→uso entregues; aprovação do conceito rastreável.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v15"></a>
+
+### V15 — Integrar conteúdo ampliado ao percurso aprovado
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P2/A.
+- **Dependências:** V11 decide destino/escopo; V12–V14 aplicáveis aprovados; V03–V10 integrados.
+- **Entradas:** Arte V12–V14; LancerTestSceneBuilder, StoneSentinelSceneBuilder, SecondFloorSceneBuilder, FixedFloorSequence e checkpoint v3.
+- **Arquivos permitidos:** Variantes/presenters/bridges e builder do destino aprovado, encounters/SOs explícitos e testes; docs de regra só se decisão mudar escopo.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Cenas/atores coincidem com a decisão V11 e referências carregam sem falhas.
+- Sem softlock de porta/última morte; tempos/dano/cancelamentos e clips alinhados.
+- Transição/retomada/run nova/reinício e idempotência preservam dados; testes e visual observados.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V15 — Integrar conteúdo ampliado ao percurso aprovado, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Implemente o menor percurso aprovado em V11 mantendo primeiro andar e arenas isoladas. Não inserir atores na release nem aumentar para cinco salas por conta própria; um visual pode ir somente à arena de teste se assim decidido. Use eventos/timers autoritativos e referências serializadas; ponte não causa dano. Preserve carving de portas, visão ranged e IDs/checkpoint v3; cena nova exige IDs exclusivos e migração se necessária. Reaplique builders duas vezes com hashes, teste derrota/vitória e transferência de HP/XP/bolsa/talentos/estamina/RNG sem cura/recompensa extra. Se escopo ampliado não foi escolhido, registre NÃO APLICÁVEL e siga validando a base atual. Escopo autorizado: Variantes/presenters/bridges e builder do destino aprovado, encounters/SOs explícitos e testes; docs de regra só se decisão mudar escopo. Pré-requisitos: V11 decide destino/escopo; V12–V14 aplicáveis aprovados; V03–V10 integrados. Fontes: Arte V12–V14; LancerTestSceneBuilder, StoneSentinelSceneBuilder, SecondFloorSceneBuilder, FixedFloorSequence e checkpoint v3. Aceite: Cenas/atores coincidem com a decisão V11 e referências carregam sem falhas.; Sem softlock de porta/última morte; tempos/dano/cancelamentos e clips alinhados.; Transição/retomada/run nova/reinício e idempotência preservam dados; testes e visual observados.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v16"></a>
+
+### V16 — Validar todos os sistemas em conjunto no Editor
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P0/A.
+- **Dependências:** V02–V10 integrados; V15 integrado ou não aplicável; V01 sem lacuna bloqueante.
+- **Entradas:** MainMenu/cenas do candidato, suites atuais, contratos F01–F15 e docs/BUILD-WINDOWS.md; schemas F11/F12/F14.
+- **Arquivos permitidos:** Testes integrados pertinentes e Reports/Validation/V16/<execucao>/. Correções de runtime em tarefa/PR mínima própria, com baseline atualizado.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Mesmo commit compila e passa suites sem falhas; skip/Explicit não contados como aprovação visual.
+- Percurso normal menu→final disponível observado sem softlock/erro/Missing Script.
+- Cada critério tem assert ou observação/artefato; etapas não vistas são pendências.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V16 — Validar todos os sistemas em conjunto no Editor, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Congele o commit e execute suites completas e percurso normal em PlayMode. Combine comparação/ordenação/política Q, remapear/cancelar, feedback aceito, tutorial F06 se comprovado, visão/portas, cinco baús/coleta após vitória, quebra, escala de texto, save, talentos e transição F14. F13/F15 permanecem em arenas próprias se fora da release. Cubra bolsa cheia, duplicatas/potências, vários níveis, reentrada, morte/dash/desativação/pausa antes do impacto e clique que não ataca. Ensaie checkpoint v1/v2/v3, backup/corrompido/futuro/ID ausente em diretórios isolados. Observe matriz 720p/1080p × 100%/150% e ultrawide emulado identificado. Não chamar preview/cheats de partida normal. Escopo autorizado: Testes integrados pertinentes e Reports/Validation/V16/<execucao>/. Correções de runtime em tarefa/PR mínima própria, com baseline atualizado. Pré-requisitos: V02–V10 integrados; V15 integrado ou não aplicável; V01 sem lacuna bloqueante. Fontes: MainMenu/cenas do candidato, suites atuais, contratos F01–F15 e docs/BUILD-WINDOWS.md; schemas F11/F12/F14. Aceite: Mesmo commit compila e passa suites sem falhas; skip/Explicit não contados como aprovação visual.; Percurso normal menu→final disponível observado sem softlock/erro/Missing Script.; Cada critério tem assert ou observação/artefato; etapas não vistas são pendências.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v17"></a>
+
+### V17 — Validar Windows e persistência entre processos
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex; jogador dá aceite humano. **Prioridade/complexidade:** P0/A.
+- **Dependências:** V16 aprovado e build isolada do mesmo commit.
+- **Entradas:** MvpReleaseBuild/GameIdentity/FixedFloorSequence, opções/bindings/checkpoints e roteiro de regressão.
+- **Arquivos permitidos:** Builds/Validation/V17/<execucao>/, Reports/Validation/V17/<execucao>/ e helper de build isolado somente se faltar saída segura. Preservar saves/preferências reais.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Build/commit identificados e percurso observado sem erros runtime/Missing Script.
+- Retomada entre processos, morte/Nova run/Reiniciar seguem contrato sem tocar no save real.
+- 720p/1080p × 100%/150%, áudio/flash/tremor e equipamento observados; lacunas declaradas.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V17 — Validar Windows e persistência entre processos, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Gere Eldoria.exe x64 com as cenas do candidato sem sobrescrever build/ZIP alheios. Jogue menu→run→quatro salas/Guardião→recompensas→descida F14→final disponível, mais morte/reinício. Em outra run, salve em fronteira segura, saia normalmente e abra outro processo por Continuar; repita nos dois andares, conferindo HP/XP/ouro/slots/potências/equipamento/talentos/estamina/cooldowns, baús/pickups e ausência de duplicação. Ensaie dados corrompidos/futuros só no diretório de teste. Confira remapeamento/opções, resolução/janela/escala e restaure preferências anteriores verificadas. Não usar -dcc-items/-dcc-stress para provar progressão normal. Triar log e distinguir automação de aceite humano. Escopo autorizado: Builds/Validation/V17/<execucao>/, Reports/Validation/V17/<execucao>/ e helper de build isolado somente se faltar saída segura. Preservar saves/preferências reais. Pré-requisitos: V16 aprovado e build isolada do mesmo commit. Fontes: MvpReleaseBuild/GameIdentity/FixedFloorSequence, opções/bindings/checkpoints e roteiro de regressão. Aceite: Build/commit identificados e percurso observado sem erros runtime/Missing Script.; Retomada entre processos, morte/Nova run/Reiniciar seguem contrato sem tocar no save real.; 720p/1080p × 100%/150%, áudio/flash/tremor e equipamento observados; lacunas declaradas.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v18"></a>
+
+### V18 — Playtest de dificuldade, progressão e legibilidade
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex prepara; jogadores avaliam. **Prioridade/complexidade:** P1/M.
+- **Dependências:** V17 aprovado em build identificada.
+- **Entradas:** Build candidata; baseline histórico de balanço; SOs atuais e relatórios F12/F13/F15.
+- **Arquivos permitidos:** Protocolo/observações/recomendações em Reports/Validation/V18/<execucao>/. Ajustes em SO só em entrega posterior aprovada.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Dados observados com build/condições/amostra, sem dificuldade média inventada.
+- Cada ajuste proposto tem evidência, efeito esperado e reavaliação.
+- Clareza/conforto/áudio/arte recebem aceite humano identificado ou pendência explícita.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V18 — Playtest de dificuldade, progressão e legibilidade, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Prepare sessões com pessoas reais, registrando amostra efetiva, familiaridade e condições. Três runs por perfil escolhido é proposta de amostra inicial, não garantia estatística. Observe controles/onboarding, tempo por sala, mortes/causa, acertos recebidos, dash/giro/poções, talentos, trocas de itens, excesso/falta de loot e leitura dos perigos. Separe iniciante/experiente e sessões opcionais de protótipos. Não invente participantes ou aprovação. Recomende ajustes pequenos com efeito esperado e critério de reavaliação, sem alterar +10%/nível, fórmulas ou regras aprovadas. Sem jogadores, entregue protocolo e mantenha a parte humana pendente; mudança fundamental requer decisão do usuário. Escopo autorizado: Protocolo/observações/recomendações em Reports/Validation/V18/<execucao>/. Ajustes em SO só em entrega posterior aprovada. Pré-requisitos: V17 aprovado em build identificada. Fontes: Build candidata; baseline histórico de balanço; SOs atuais e relatórios F12/F13/F15. Aceite: Dados observados com build/condições/amostra, sem dificuldade média inventada.; Cada ajuste proposto tem evidência, efeito esperado e reavaliação.; Clareza/conforto/áudio/arte recebem aceite humano identificado ou pendência explícita.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v19"></a>
+
+### V19 — Medir desempenho do fluxo real e pior encontro
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P1/M.
+- **Dependências:** V17; hardware/carga/build fixados durante comparação.
+- **Entradas:** Tools/AudioGenerator/DIAGNOSTICS.md, coletores e cenas atuais; medições antigas apenas como histórico.
+- **Arquivos permitidos:** Reports/Validation/V19/<execucao>/ e build diagnóstico isolada; coletor só se medida necessária faltar, sem alteração de gameplay.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Amostras ausentes e cargas/builds diferentes identificadas; metadados reproduzíveis.
+- Crescimento/vazamento ou ausência deles descritos só no alcance observado; custo visual quantificado.
+- Orçamento aceito ou exceção conhecida registrada; ganho só com comparação equivalente.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V19 — Medir desempenho do fluxo real e pior encontro, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Defina carga repetível com IA/travessia real e pior encontro, separada do stress sintético. Meça frame time médio/p95/p99, CPU/GPU, memória/GC e contagens de materiais/partículas/projéteis. Registre build/backend, resolução/qualidade/vSync/foco, hardware e aquecimento. Proponha três capturas de 30 s depois de aquecer por comparação; registre quantas realmente ocorreram. Separe release e Development, dados indisponíveis e controles positivos; zero de contador quebrado não é zero GC. Verifique reuso/crescimento dos pools. Apresente orçamento ao usuário antes de impor FPS. Gargalo exige tarefa medida e reteste do trecho; não apagar assets/pacotes para esconder custo ou warning. Escopo autorizado: Reports/Validation/V19/<execucao>/ e build diagnóstico isolada; coletor só se medida necessária faltar, sem alteração de gameplay. Pré-requisitos: V17; hardware/carga/build fixados durante comparação. Fontes: Tools/AudioGenerator/DIAGNOSTICS.md, coletores e cenas atuais; medições antigas apenas como histórico. Aceite: Amostras ausentes e cargas/builds diferentes identificadas; metadados reproduzíveis.; Crescimento/vazamento ou ausência deles descritos só no alcance observado; custo visual quantificado.; Orçamento aceito ou exceção conhecida registrada; ganho só com comparação equivalente.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v20"></a>
+
+### V20 — Empacotar candidato rastreável para revisão
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex. **Prioridade/complexidade:** P0/M.
+- **Dependências:** V16/V17/V19 sem bloqueios; V18 classificado; versão/escopo definidos pelo usuário.
+- **Entradas:** Tools/Release/package_windows.py, MvpReleaseBuild/GameIdentity, resultados atuais V16–V19 e README Windows.
+- **Arquivos permitidos:** Helper de build/empacotamento e testes pertinentes se necessários; Builds/Validation/V20/<versao>/ e Reports/Validation/V20/<execucao>/; instruções do candidato. Sem publicação.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Versão/commit, cenas, hashes do player e evidências atuais ligados ao mesmo candidato.
+- Pacote novo sem sobrescrita, CRC/hashes e extração verificados.
+- Smoke do extraído/instruções corretos; avisos/limitações classificados e aprovação pendente explícita.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V20 — Empacotar candidato rastreável para revisão, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Prepare build e pacote novos do commit aprovado com identidade Eldoria, versão decidida e cenas deliberadas. Audite o empacotador: na base consultada ele exige 1.0.0 e aceita XMLs históricos de Reports/Leadership; isso não comprova este candidato. Adapte se necessário para exigir versão/commit/hashes/resultados atuais e mesma revisão de conteúdo, nunca correlação só por data. Qualquer rebuild muda identidade binária e exige revalidação do artefato final. Inicie sem flags de diagnóstico, exclua backups/debug e preserve ZIPs antigos. Confira SHA256 de todos os arquivos, CRC, extraia e teste menu→run/save/retomar. Não reaproveitar aceite de 1.0 ou inventar assinatura. Entregue candidato para aprovação, sem publicar ou mesclar. Escopo autorizado: Helper de build/empacotamento e testes pertinentes se necessários; Builds/Validation/V20/<versao>/ e Reports/Validation/V20/<execucao>/; instruções do candidato. Sem publicação. Pré-requisitos: V16/V17/V19 sem bloqueios; V18 classificado; versão/escopo definidos pelo usuário. Fontes: Tools/Release/package_windows.py, MvpReleaseBuild/GameIdentity, resultados atuais V16–V19 e README Windows. Aceite: Versão/commit, cenas, hashes do player e evidências atuais ligados ao mesmo candidato.; Pacote novo sem sobrescrita, CRC/hashes e extração verificados.; Smoke do extraído/instruções corretos; avisos/limitações classificados e aprovação pendente explícita.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```
+
+<a id="v21"></a>
+
+### V21 — Teste externo e decisão de lançamento
+
+- **Estado inicial:** planejada; nenhum critério executado por este plano.
+- **Executor:** Codex organiza; usuário escolhe participantes e aprova. **Prioridade/complexidade:** P1/M.
+- **Dependências:** V20 identificado; usuário decide distribuição/participantes.
+- **Entradas:** Pacote/hash V20, roteiro V17/V18, defeitos reproduzidos e matriz V01 atualizada.
+- **Arquivos permitidos:** Roteiro/relato/decisão em Reports/Validation/V21/<execucao>/ e atualização enxuta de NEXT_STEPS/MVP/CHANGELOG. Sem envios, uploads ou publicação automáticos.
+- **Entregável:** evidências novas dos critérios, atualização de estado e handoff com branch/PR; implementação somente no escopo descrito.
+
+**Critérios de aceite:**
+
+- Build/hash dos relatos conhecido; participantes reais e distribuição autorizada.
+- Nenhum bloqueio crítico/perda de dados aberto no candidato proposto, ou candidato explicitamente rejeitado.
+- Usuário recebe pacote, limites e resultados para decidir; publicação/merge não executados automaticamente.
+
+**Prompt completo para copiar:**
+
+```text
+Execute apenas V21 — Teste externo e decisão de lançamento, no Eldoria. Leia AGENTS.md e as seções pertinentes de GAME_DESIGN.md, ARCHITECTURE.md e MVP.md; confira Git, Unity/manifest/lock e os arquivos envolvidos. Preserve Eldoria como nome e DungeonCrawler como identificador técnico. Em árvore limpa, atualize main e crie branch própria a partir dela. Mudanças desconhecidas exigem parar na pasta afetada, preservar e relatar, sem trocar sua branch. Objetivo e limites: Prepare roteiro para quem não conhece Eldoria usando o ZIP exato V20: extrair/iniciar, aprender controles, terminar o percurso disponível, morrer/reiniciar, sair/retomar e ajustar opções. Usuário escolhe destinatários; não enviar mensagens/arquivos por conta própria. Colete relatos reais, hardware/resolução, tempo, travas/erros e clareza. Priorize perda/duplicação de save, softlock e input/UI. Correção exige novo candidato ou aviso explícito de pacote antigo. Apresente decisão concreta: aprovar, corrigir lista mínima ou ampliar por nova tarefa. Atualize os 30 IDs e V01–V21 por evidência; condicional não escolhido é NÃO APLICÁVEL, não concluído. Sem participantes/aceite, decisão humana fica pendente. Escopo autorizado: Roteiro/relato/decisão em Reports/Validation/V21/<execucao>/ e atualização enxuta de NEXT_STEPS/MVP/CHANGELOG. Sem envios, uploads ou publicação automáticos. Pré-requisitos: V20 identificado; usuário decide distribuição/participantes. Fontes: Pacote/hash V20, roteiro V17/V18, defeitos reproduzidos e matriz V01 atualizada. Aceite: Build/hash dos relatos conhecido; participantes reais e distribuição autorizada.; Nenhum bloqueio crítico/perda de dados aberto no candidato proposto, ou candidato explicitamente rejeitado.; Usuário recebe pacote, limites e resultados para decidir; publicação/merge não executados automaticamente.. Liste os caminhos exatos antes de editar e limite-se ao escopo delimitado; ampliação exige registrar a divergência. Use somente skills locais relevantes, referências explícitas e APIs do Editor para assets. Guarde comandos/resultados reais/limites em uma pasta nova Reports/Validation; não atribua testes antigos a esta execução. Sem Editor registre NÃO VALIDADO NO EDITOR, sem inventar aceite humano. Atualize somente o estado/documento essencial afetado. Commit na branch, push e PR para main com objetivo, arquivos, testes e limitações; não faça merge sem aprovação do usuário. Sem remoto/CLI, deixe commit revisável e informe o impedimento.
+```

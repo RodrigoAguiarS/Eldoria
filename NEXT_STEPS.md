@@ -1,8 +1,28 @@
 # Próximas entregas
 
-Fila única após a auditoria de 14/11/2026. Escopo existente em [MVP](MVP.md), achados em [PROJECT_AUDIT](PROJECT_AUDIT.md), prompts em [PROMPT_CATALOG](PROMPT_CATALOG.md). Prioridades expressam ordem sugerida, não autorização para executar todas as sugestões.
+Fila atualizada em **17/11/2026**: fechar integração e validação das entregas F01–F15/A01–A15. Escopo existente em [MVP](MVP.md); prompts executáveis por tarefa em [PROMPT_CATALOG](PROMPT_CATALOG.md#v01). Este documento organiza a ordem; critérios, arquivos e prompt completo têm uma única fonte no catálogo. Esta atualização só planejou as tarefas, sem executar testes Unity, integração ou produção artística.
 
-## Ordem recomendada
+## Fila de execução V01–V21
+
+| Etapa | Tarefas / ordem | Resultado exigido |
+| --- | --- | --- |
+| 1 — Baseline e regressão | [V01](PROMPT_CATALOG.md#v01) → [V02](PROMPT_CATALOG.md#v02) | Matriz dos 30 IDs, PRs atuais, escopo/cenas escolhidos e suites sem falhas; confirmar lacunas como F06/A15, sem presumir ausência |
+| 2 — Integrar a arte entregue | [V03](PROMPT_CATALOG.md#v03) → [V04](PROMPT_CATALOG.md#v04) → [V05](PROMPT_CATALOG.md#v05) → [V06](PROMPT_CATALOG.md#v06) → [V07](PROMPT_CATALOG.md#v07) → [V08](PROMPT_CATALOG.md#v08) → [V09](PROMPT_CATALOG.md#v09) → [V10](PROMPT_CATALOG.md#v10) | Ícones, UI-SKIN, feedback, dash, projétil, Slam, baús e props ligados às regras existentes, sem refazer os assets |
+| 3 — Conteúdo opcional | [V11](PROMPT_CATALOG.md#v11) avalia protótipos/conceitos; se aprovados, [V12](PROMPT_CATALOG.md#v12)/[V13](PROMPT_CATALOG.md#v13)/[V14](PROMPT_CATALOG.md#v14) → [V15](PROMPT_CATALOG.md#v15) | Arte 3D e percurso somente no escopo escolhido; conceitos não contam como mesh/rig/takes; alternativa válida é manter protótipos isolados |
+| 4 — Validar o conjunto | [V16](PROMPT_CATALOG.md#v16) → [V17](PROMPT_CATALOG.md#v17), depois [V18](PROMPT_CATALOG.md#v18) e [V19](PROMPT_CATALOG.md#v19) | Editor, Windows/retomada entre processos, avaliação humana e desempenho do mesmo candidato, com evidências separadas |
+| 5 — Candidato e decisão | [V20](PROMPT_CATALOG.md#v20) → [V21](PROMPT_CATALOG.md#v21) | Build/ZIP/hash e resultados atuais rastreáveis; teste externo autorizado e decisão de lançamento do usuário |
+
+Começar com o prompt V01. Cada tarefa é uma branch nova da main atualizada e um PR; próximo pré-requisito só conta depois de integrado com aprovação. Executar V03–V10 sequencialmente, pois compartilham cenas, Player, builders e manifesto. Não rodar capturas de desempenho simultâneas a outras cargas.
+
+V12–V15 são condicionais: ausência de aprovação humana/conceito/modelagem não bloqueia validar a base atual, cujo segundo andar tem uma sala e cujos F13/F15 podem continuar isolados. Não há autorização implícita para mais salas, fases, biomas ou geração procedural. Qualquer conteúdo incluído depois de V16 exige nova validação dos trechos afetados.
+
+Estados futuros: Planejada → Em execução → Implementada/medida, validação pendente → Validada → PR aprovado/integrado. Quando o usuário não escolher conteúdo condicional, registrar Não aplicável ao candidato, com motivo; não marcar como concluído. Cada evidência deve identificar commit, cena, build, condições e teste/observação real.
+
+**Achados para a primeira tarefa:** na main `79f0968`, a busca inicial não localizou implementação/relatório F06 e A15 tinha arquivos de outro agente não versionados na pasta original. Isso exige conferência, não conclusão automática de ausência. O empacotador ainda fixa versão 1.0.0 e XMLs históricos de Leadership: V20 precisa validar/adaptar a rastreabilidade antes de usá-lo. A falha de idempotência registrada após F10 deve ser reexecutada em V02; não se afirma que ainda falha hoje.
+
+## Histórico F/A — fotografia das entregas
+
+Os registros abaixo conservam contexto das entregas. Menções antigas de merge/integração pendentes devem ser confrontadas com main/PRs em V01; não constituem a fila atual nem autorizam reexecutar F/A. O estado por ID será atualizado pelo executor com evidência real.
 
 | Ordem | Entrega | Dependências | Critério de saída |
 | --- | --- | --- | --- |
@@ -17,7 +37,7 @@ Fila única após a auditoria de 14/11/2026. Escopo existente em [MVP](MVP.md), 
 | 9 / P2 | Acessibilidade/input e legibilidade | F03 entregue em 15/11/2026; F04 implementado em 16/11/2026; F10; A01–A03 | F03: Primeira/Menor/Maior potência no Q, HUD consistente e JSON v3; [evidências](Reports/F03/README.md). F04: fonte runtime unificada, captura/cancelamento/conflitos/reset, JSON v1 separado e rótulos dinâmicos; 153 EditMode, 35 PlayMode e captura real em 720p/1080p aprovados; [evidências e limites](Reports/F04/README.md). F10: 100/125/150%, JSON v4/fallback, bolsa rolável e targets preservados; 41 EditMode + 13 de reteste, 23 PlayMode e matriz gráfica 1/1 em 720p/1080p/ultrawide emulado. [Evidências/limites](Reports/F10/README.md). Merge depende da revisão do usuário; A01, A02 e A03 produzidos em staging em 17/11/2026 (`ProductionStaging/ICON-ACTION-DASH`, `ProductionStaging/ICON-ACTION-SPECIAL`, `ProductionStaging/UI-SKIN`; integração no HUD/telas pendente, A03 por builder conforme `UI-SKIN/Source~/UI-SKIN.states.json`; tarefa delimitada em [A03-UI-SKIN-INTEGRATION](docs/A03-UI-SKIN-INTEGRATION.md)); A07 produzido em staging em 17/11/2026 (`ProductionStaging/FX-DASH`, textura 256×64 do rastro do dash); ponte de início/fim do dash é tarefa Codex pendente, proposta em `FX-DASH/Source~/FX-DASH.trail.json` |
 | 10 / P2–P3 | Conteúdo/progressão de longo prazo | F11–F15 conforme escolha; A13–A15 | Especificação curta aprovada, primeiro incremento isolado; sem geração procedural ou migração Humanoid implícita |
 
-As cinco primeiras funcionalidades sugeridas para escolha são **F01 comparação**, **F02 ordenação**, **F05 feedback**, **F06 onboarding** e **F07 linha de visão**. Dash/giro já existem; seus ícones A01/A02 são polimento. Cinco assets iniciais: A01, A02, A03, A04 e A05. Arte de baú/inimigo/Boss/área depende primeiro da funcionalidade correspondente.
+A priorização original de novas F/A foi substituída pela fila V acima. Não encomendar novamente comparação, ordenação, feedback ou arte já entregue; primeiro verificar e integrar o que existe.
 
 F09 implementado em 16/11/2026: vasos destrutíveis simples, sem drops, um por sala
 de release, quebra única e sem interferir na limpeza/NavMesh. 163 EditMode e
