@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="4" result="Failed(Child)" total="4" passed="1" failed="2" inconclusive="0" skipped="1" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-18 20:58:37Z" end-time="2026-11-18 20:58:43Z" duration="6,5790339">
+  <test-suite type="TestSuite" id="1317" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="250" result="Failed" site="Child" start-time="2026-11-18 20:58:37Z" end-time="2026-11-18 20:58:43Z" duration="6.579034" total="4" passed="1" failed="2" inconclusive="0" skipped="1" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1452" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/.claude/worktrees/priceless-cray-892229/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="110" result="Failed" site="Child" start-time="2026-11-18 20:58:37Z" end-time="2026-11-18 20:58:43Z" duration="6.550367" total="4" passed="1" failed="2" inconclusive="0" skipped="1" asserts="0">
+      <properties>
+        <property name="_PID" value="22624" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1453" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="110" result="Failed" site="Child" start-time="2026-11-18 20:58:37Z" end-time="2026-11-18 20:58:43Z" duration="6.545816" total="4" passed="1" failed="2" inconclusive="0" skipped="1" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1454" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="110" result="Failed" site="Child" start-time="2026-11-18 20:58:37Z" end-time="2026-11-18 20:58:43Z" duration="6.541555" total="4" passed="1" failed="2" inconclusive="0" skipped="1" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1455" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="110" result="Failed" site="Child" start-time="2026-11-18 20:58:37Z" end-time="2026-11-18 20:58:43Z" duration="6.536672" total="4" passed="1" failed="2" inconclusive="0" skipped="1" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1430" name="SlashTrailSceneTests" fullname="DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests" classname="DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests" runstate="Runnable" testcasecount="4" result="Failed" site="Child" start-time="2026-11-18 20:58:37Z" end-time="2026-11-18 20:58:43Z" duration="6.530484" total="4" passed="1" failed="2" inconclusive="0" skipped="1" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1434" name="Capture_SwingThenWalk" fullname="DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests.Capture_SwingThenWalk" methodname="Capture_SwingThenWalk" classname="DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests" runstate="Explicit" seed="2002011774" result="Skipped" label="Ignored" start-time="2026-11-18 20:58:37Z" end-time="2026-11-18 20:58:37Z" duration="0.166369" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Opens the release scene in graphical PlayMode and writes screenshots." />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Requires graphical Editor.]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1433" name="ChainedSwings_EachStartsClean_ComboTimingUnchanged" fullname="DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests.ChainedSwings_EachStartsClean_ComboTimingUnchanged" methodname="ChainedSwings_EachStartsClean_ComboTimingUnchanged" classname="DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests" runstate="Runnable" seed="1675660142" result="Passed" start-time="2026-11-18 20:58:37Z" end-time="2026-11-18 20:58:39Z" duration="2.462391" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1432" name="SwingEnd_FreezesTail_WalkingAddsNoPoints_TailClearsAfterTrailTime" fullname="DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests.SwingEnd_FreezesTail_WalkingAddsNoPoints_TailClearsAfterTrailTime" methodname="SwingEnd_FreezesTail_WalkingAddsNoPoints_TailClearsAfterTrailTime" classname="DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests" runstate="Runnable" seed="2031216469" result="Failed" start-time="2026-11-18 20:58:39Z" end-time="2026-11-18 20:58:40Z" duration="0.856875" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  A cauda some em trail.time mesmo andando.
+  Expected: 0
+  But was:  73
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests+<SwingEnd_FreezesTail_WalkingAddsNoPoints_TailClearsAfterTrailTime>d__15.MoveNext () [0x00229] in G:\DungeonCrawler\My project\.claude\worktrees\priceless-cray-892229\Assets\_Project\Tests\PlayMode\PlayerInput\SlashTrailSceneTests.cs:161
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1431" name="SwingOnce_ThenIdleAndWalk_DrawsNoSwordTrailBetweenSwings" fullname="DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests.SwingOnce_ThenIdleAndWalk_DrawsNoSwordTrailBetweenSwings" methodname="SwingOnce_ThenIdleAndWalk_DrawsNoSwordTrailBetweenSwings" classname="DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests" runstate="Runnable" seed="350034285" result="Failed" start-time="2026-11-18 20:58:40Z" end-time="2026-11-18 20:58:43Z" duration="3.018897" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Andar antes do primeiro golpe não desenha rastro. pré-golpe 37 pts/148 vts; pico do golpe 101 pts; idle 3 pts/12 vts; andando 1 s (5,00 m) 37 pts/148 vts; enabled=True emitting=False
+  Expected: 0
+  But was:  185
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.PlayerInput.SlashTrailSceneTests+<SwingOnce_ThenIdleAndWalk_DrawsNoSwordTrailBetweenSwings>d__14.MoveNext () [0x0033c] in G:\DungeonCrawler\My project\.claude\worktrees\priceless-cray-892229\Assets\_Project\Tests\PlayMode\PlayerInput\SlashTrailSceneTests.cs:137
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[The referenced script on this Behaviour (Game Object '<null>') is missing!
+The referenced script on this Behaviour (Game Object 'SkeletonMelee_Model') is missing!
+The referenced script on this Behaviour (Game Object '<null>') is missing!
+The referenced script on this Behaviour (Game Object 'SkeletonMelee_Model') is missing!
+[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+[SLASH-TRAIL] pré-golpe 37 pts/148 vts; pico do golpe 101 pts; idle 3 pts/12 vts; andando 1 s (5,00 m) 37 pts/148 vts; enabled=True emitting=False
+Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,104 @@
+diff --git a/Assets/_Project/Scripts/Player/PlayerAttackVfxPresenter.cs b/Assets/_Project/Scripts/Player/PlayerAttackVfxPresenter.cs
+index 01ae05f..15e7d04 100644
+--- a/Assets/_Project/Scripts/Player/PlayerAttackVfxPresenter.cs
++++ b/Assets/_Project/Scripts/Player/PlayerAttackVfxPresenter.cs
+@@ -7,9 +7,15 @@ namespace DungeonCrawler.Player
+     /// FX-SLASH / FX-SPECIAL / FX-HIT. Observes PlayerCombat/PlayerSpecial C# events only: it never queries targets
+     /// or applies damage. The sword trail follows the real blade (child of the hand socket); the hit burst only plays
+     /// for hits that TakeDamage accepted (PlayerCombat.TargetHit). Cancel, death, dash and pause clear pending effects.
++    /// <para>Measured on Unity 6000.6 (V06 probes, Reports/Validation/SLASH-TRAIL): <c>emitting = false</c> alone keeps
++    /// recording points whenever the blade moves, and still points only age on the next movement. So the presenter owns
++    /// the trail lifecycle: the renderer stays disabled outside the swing window, opens clean at the window start, freezes
++    /// the short tail (no new points) when the window closes and clears it after <c>trail.time</c>.</para>
+     /// </summary>
+     public sealed class PlayerAttackVfxPresenter : MonoBehaviour
+     {
++        /// <summary>Minimum vertex distance while the tail is frozen: no new points.</summary>
++        public const float FrozenVertexDistance = 10000f;
+         private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+ 
+         [SerializeField] private PlayerCombat combat;
+@@ -40,8 +46,11 @@ namespace DungeonCrawler.Player
+         private float emitStart, emitStop, baseWidth = -1f;
+         private float sweepFrom, sweepTo;
+         private float ringStart = -1f, ringRange;
++        private float vertexDistance = -1f, tailEndsAt = -1f;
+ 
+         public bool TrailEmitting => slashTrail != null && slashTrail.emitting;
++        /// <summary>Trail drawn: emitting, or frozen tail still inside trail.time.</summary>
++        public bool TrailVisible => slashTrail != null && slashTrail.enabled;
+         public bool TrailScheduled => scheduled;
+         public bool RingVisible => specialRing != null && specialRing.enabled;
+         public int HitBursts { get; private set; }
+@@ -55,7 +64,7 @@ namespace DungeonCrawler.Player
+             finisherGradient = Fade(finisherColor);
+             specialGradient = Fade(specialColor);
+             block = new MaterialPropertyBlock();
+-            if (slashTrail != null) baseWidth = slashTrail.widthMultiplier;
++            if (slashTrail != null) { baseWidth = slashTrail.widthMultiplier; vertexDistance = slashTrail.minVertexDistance; }
+         }
+ 
+         private void OnEnable()
+@@ -114,9 +123,9 @@ namespace DungeonCrawler.Player
+ 
+         private void OnEnded()
+         {
+-            // Normal end: stop emitting and let the short trail fade with the follow-through.
++            // Normal end: freeze the short tail where it is and clear it after trail.time (walking or idle).
+             scheduled = false;
+-            if (slashTrail != null) slashTrail.emitting = false;
++            FreezeTail();
+         }
+ 
+         private void OnCancelled() => ResetVisuals(false);
+@@ -169,12 +178,39 @@ namespace DungeonCrawler.Player
+                     float t = Mathf.InverseLerp(emitStart, emitStop, now);
+                     sweepPivot.localRotation = Quaternion.Euler(0f, Mathf.Lerp(sweepFrom, sweepTo, t), 0f);
+                 }
+-                if (slashTrail != null && slashTrail.emitting != emit) slashTrail.emitting = emit;
+-                if (now >= emitStop) scheduled = false;
++                if (emit && slashTrail != null && !slashTrail.emitting && tailEndsAt < 0f) StartTrail();
++                if (now >= emitStop) { scheduled = false; FreezeTail(); }
+             }
++            if (tailEndsAt >= 0f && now >= tailEndsAt) ClearTrail();
+             if (ringStart >= 0f) UpdateRing((now - ringStart) / ringSeconds);
+         }
+ 
++        private void StartTrail()
++        {
++            if (vertexDistance > 0f) slashTrail.minVertexDistance = vertexDistance;
++            slashTrail.enabled = true;
++            slashTrail.Clear();
++            slashTrail.emitting = true;
++        }
++
++        private void FreezeTail()
++        {
++            if (slashTrail == null || !slashTrail.enabled || tailEndsAt >= 0f) return;
++            slashTrail.emitting = false;
++            slashTrail.minVertexDistance = FrozenVertexDistance;
++            tailEndsAt = Time.time + slashTrail.time;
++        }
++
++        private void ClearTrail()
++        {
++            tailEndsAt = -1f;
++            if (slashTrail == null) return;
++            slashTrail.emitting = false;
++            slashTrail.Clear();
++            slashTrail.enabled = false;
++            if (vertexDistance > 0f) slashTrail.minVertexDistance = vertexDistance;
++        }
++
+         private void UpdateRing(float u)
+         {
+             if (u >= 1f) { HideRing(); return; }
+@@ -194,7 +230,7 @@ namespace DungeonCrawler.Player
+         private void ResetVisuals(bool includeRing)
+         {
+             scheduled = false;
+-            if (slashTrail != null) { slashTrail.emitting = false; slashTrail.Clear(); }
++            ClearTrail();
+             if (sweepPivot != null) sweepPivot.localRotation = Quaternion.identity;
+             if (includeRing || ringStart < 0f) HideRing();
+         }

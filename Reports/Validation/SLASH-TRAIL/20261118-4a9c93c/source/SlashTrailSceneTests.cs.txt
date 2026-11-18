@@ -1,0 +1,329 @@
+#if UNITY_EDITOR
+using System.Collections;
+using System.IO;
+using System.Reflection;
+using DungeonCrawler.Core;
+using DungeonCrawler.Enemies;
+using DungeonCrawler.Player;
+using DungeonCrawler.Systems;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
+using Object = UnityEngine.Object;
+
+namespace DungeonCrawler.Tests.PlayerInput
+{
+    /// <summary>
+    /// SlashTrail (ITEMS-COMBAT) na cena de release: o rastro da espada só existe durante a janela de golpe e a
+    /// cauda curta depois dela. Na Unity 6000.6 <c>emitting = false</c> sozinho continua gravando pontos quando a
+    /// espada se move (sondas da V06), então andar ou ficar em idle entre golpes não pode desenhar rastro.
+    /// </summary>
+    public sealed class SlashTrailSceneTests : InputTestFixture
+    {
+        private const string Release = "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity";
+        private const BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
+        private Keyboard keyboard;
+        private PlayerCombat combat;
+        private PlayerAttackVfxPresenter vfx;
+        private TrailRenderer trail;
+        private Mesh baked;
+
+        public override void Setup()
+        {
+            base.Setup();
+            keyboard = InputSystem.AddDevice<Keyboard>();
+            InputSystem.AddDevice<Mouse>();
+        }
+
+        public override void TearDown()
+        {
+            Time.timeScale = 1f;
+            if (baked != null) Object.DestroyImmediate(baked);
+            foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
+                if (root.GetComponentInChildren<PlayerInputReader>(true) != null || root.GetComponent<GameRestarter>() != null)
+                    Object.DestroyImmediate(root);
+            base.TearDown();
+        }
+
+        private IEnumerator Load()
+        {
+            Time.timeScale = 1f;
+            yield return SceneManager.LoadSceneAsync(Release);
+            yield return null;
+            foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                foreach (var brain in root.GetComponentsInChildren<EnemyBrain>(true))
+                {
+                    typeof(EnemyBrain).GetField("nextThinkAt", Private).SetValue(brain, float.MaxValue);
+                    var enemyCombat = brain.GetComponent<EnemyCombat>();
+                    if (enemyCombat != null) { enemyCombat.CancelAttack(); enemyCombat.enabled = false; }
+                    var agent = brain.GetComponent<NavMeshAgent>();
+                    if (agent != null && agent.isOnNavMesh) agent.isStopped = true;
+                }
+                if (combat == null) combat = root.GetComponentInChildren<PlayerCombat>(true);
+            }
+            Assert.IsNotNull(combat);
+            combat.GetComponent<Health>().SetInvulnerableFor(600f);
+            // Só no teste: o Hero usa CullUpdateTransforms e o batchmode não renderiza a Game view, o que congelaria
+            // os ossos (e a espada). AlwaysAnimate reproduz o jogo real, onde o Hero está sempre na câmera.
+            foreach (var animator in combat.GetComponentsInChildren<Animator>(true)) animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            vfx = combat.GetComponentInChildren<PlayerAttackVfxPresenter>(true);
+            Assert.IsNotNull(vfx); trail = vfx.SlashTrail; Assert.IsNotNull(trail);
+            baked = new Mesh();
+            yield return new WaitForSeconds(.2f);
+        }
+
+        /// <summary>Vértices que o TrailRenderer desenharia neste quadro (0 quando desligado ou vazio).</summary>
+        private int BakedVertices()
+        {
+            if (!trail.enabled || trail.positionCount < 2) return 0;
+            Camera camera = Camera.main;
+            if (camera == null) return trail.positionCount;
+            trail.BakeMesh(baked, camera, true);
+            return baked.vertexCount;
+        }
+
+        private IEnumerator Swing()
+        {
+            bool finished = false; System.Action onFinished = () => finished = true;
+            combat.AttackFinished += onFinished;
+            combat.RequestAttack();
+            for (float t = 0f; !finished && t < 2f; t += Time.deltaTime) { yield return null; swingPeak = Mathf.Max(swingPeak, trail.positionCount); }
+            combat.AttackFinished -= onFinished;
+            Assert.IsTrue(finished, "Attack_01 terminou.");
+        }
+
+        private int swingPeak;
+
+        private IEnumerator Hold(Key key, float seconds, System.Action<int, int> sample)
+        {
+            if (key != Key.None) { Press(keyboard[key]); InputSystem.Update(); }
+            for (float t = 0f; t < seconds; t += Time.deltaTime) { yield return null; sample(trail.positionCount, BakedVertices()); }
+            if (key != Key.None) { Release(keyboard[key]); InputSystem.Update(); }
+        }
+
+        [UnityTest]
+        public IEnumerator SwingOnce_ThenIdleAndWalk_DrawsNoSwordTrailBetweenSwings()
+        {
+            yield return Load();
+            int points = 0, vertices = 0;
+            void Sample(int p, int v) { points = Mathf.Max(points, p); vertices = Mathf.Max(vertices, v); }
+
+            yield return Hold(Key.W, .4f, Sample);
+            int prePoints = points, preVertices = vertices;
+            yield return new WaitForSeconds(.2f);
+
+            swingPeak = 0;
+            yield return Swing();
+            // A cauda congelada some em trail.time (.13 s); depois disso nada mais pode aparecer.
+            yield return new WaitForSeconds(trail.time + .05f);
+
+            points = vertices = 0;
+            yield return Hold(Key.None, .4f, Sample);
+            int idlePoints = points, idleVertices = vertices;
+            points = vertices = 0;
+            Vector3 from = combat.transform.position;
+            yield return Hold(Key.W, 1f, Sample);
+            float walked = Vector3.Distance(from, combat.transform.position);
+            string measured = $"pré-golpe {prePoints} pts/{preVertices} vts; pico do golpe {swingPeak} pts; idle {idlePoints} pts/{idleVertices} vts; " +
+                              $"andando 1 s ({walked:F2} m) {points} pts/{vertices} vts; enabled={trail.enabled} emitting={trail.emitting}";
+            Debug.Log("[SLASH-TRAIL] " + measured);
+
+            Assert.Greater(walked, .5f, "O Hero andou de fato. " + measured);
+            Assert.Greater(swingPeak, 1, "O golpe desenha o rastro na janela do impacto. " + measured);
+            Assert.AreEqual(0, prePoints + preVertices, "Andar antes do primeiro golpe não desenha rastro. " + measured);
+            Assert.AreEqual(0, idlePoints + idleVertices, "Idle depois do golpe: nenhum rastro. " + measured);
+            Assert.AreEqual(0, points + vertices, "Andar ~1 s depois do golpe: nenhum rastro. " + measured);
+            Assert.IsFalse(combat.IsBusy);
+        }
+
+        [UnityTest]
+        public IEnumerator SwingEnd_FreezesTail_WalkingAddsNoPoints_TailClearsAfterTrailTime()
+        {
+            yield return Load();
+            combat.RequestAttack();
+            bool emitted = false;
+            for (float t = 0f; t < 1f && !(emitted && !vfx.TrailEmitting); t += Time.deltaTime) { yield return null; emitted |= vfx.TrailEmitting; }
+            Assert.IsTrue(emitted && !vfx.TrailEmitting, "Janela de emissão abriu e fechou.");
+            int tail = trail.positionCount;
+            Assert.Greater(tail, 1, "Cauda curta preservada no fim da janela.");
+            float frozenAt = Time.time;
+
+            Press(keyboard.wKey); InputSystem.Update();
+            int peak = 0;
+            while (Time.time - frozenAt < trail.time * .8f) { yield return null; peak = Mathf.Max(peak, trail.positionCount); }
+            Assert.LessOrEqual(peak, tail, "Cauda congelada: nenhum ponto novo enquanto o Hero anda.");
+            while (Time.time - frozenAt < trail.time + .1f) yield return null;
+            Release(keyboard.wKey); InputSystem.Update();
+            Assert.AreEqual(0, trail.positionCount, "A cauda some em trail.time mesmo andando.");
+            Assert.AreEqual(0, BakedVertices());
+        }
+
+        [UnityTest]
+        public IEnumerator ChainedSwings_EachStartsClean_ComboTimingUnchanged()
+        {
+            yield return Load();
+            int started = 0; float firstAt = -1f, secondAt = -1f;
+            combat.AttackStarted += (i, _) => { started++; if (i == 0) firstAt = Time.time; if (i == 1) secondAt = Time.time; };
+            combat.RequestAttack();
+            float impact = combat.CurrentStep.ImpactSeconds;
+            // Pressiona o segundo golpe dentro da janela de encadeamento, como o jogador.
+            for (float t = 0f; secondAt < 0f && t < 2f; t += Time.deltaTime) { yield return null; if (Time.time - firstAt > impact) combat.RequestAttack(); }
+            Assert.AreEqual(2, started, "Combo encadeado.");
+            Assert.AreEqual(0, trail.positionCount, "O segundo golpe começa sem a cauda do primeiro.");
+            bool emitted = false;
+            for (float t = 0f; t < 1f; t += Time.deltaTime) { yield return null; emitted |= vfx.TrailEmitting && trail.positionCount > 1; }
+            Assert.IsTrue(emitted, "Segundo golpe também desenha o rastro.");
+        }
+
+        /// <summary>Evidência visual (Game view). Rodar no Editor gráfico: -runTests sem -batchmode.</summary>
+        [UnityTest, Explicit("Opens the release scene in graphical PlayMode and writes screenshots.")]
+        public IEnumerator Capture_SwingThenWalk()
+        {
+            if (Application.isBatchMode) Assert.Ignore("Requires graphical Editor.");
+            string directory = System.Environment.GetEnvironmentVariable("DUNGEON_CRAWLER_TEST_REPORT_DIR") ?? "Reports/Validation/SlashTrail/Visual";
+            Directory.CreateDirectory(directory);
+            bool asyncShaders = UnityEditor.EditorSettings.asyncShaderCompilation;
+            UnityEditor.EditorSettings.asyncShaderCompilation = false;
+            try
+            {
+                yield return Load();
+                yield return new WaitForSecondsRealtime(.4f);
+                combat.GetComponent<PlayerAim>().FaceDirection(Vector3.right);
+                yield return null;
+                Time.timeScale = .35f;
+                combat.RequestAttack();
+                float startedAt = Time.time, impact = combat.CurrentStep.ImpactSeconds;
+                while (Time.time - startedAt < impact + .02f) yield return null;
+                yield return Capture(directory, "1-swing-impact.png", "swing impact");
+                Time.timeScale = 1f;
+                for (float t = 0f; combat.IsBusy && t < 2f; t += Time.deltaTime) yield return null;
+                yield return new WaitForSeconds(trail.time + .05f);
+                Press(keyboard.wKey); Press(keyboard.dKey); InputSystem.Update();
+                yield return new WaitForSeconds(.6f);
+                yield return Capture(directory, "2-walk-after-swing.png", "walk .6s after swing");
+                yield return new WaitForSeconds(.4f);
+                yield return Capture(directory, "3-walk-1s-after-swing.png", "walk 1s after swing");
+                Release(keyboard.wKey); Release(keyboard.dKey); InputSystem.Update();
+
+                // Outras direções: a faixa fica do lado da câmera, não escondida atrás do corpo.
+                Key[][] walks = { new[] { Key.A }, new[] { Key.S }, new[] { Key.S, Key.A } };
+                string[] names = { "4-walk-left-1s-after-swing.png", "5-walk-down-1s-after-swing.png", "6-walk-downleft-1s-after-swing.png" };
+                for (int i = 0; i < walks.Length; i++)
+                {
+                    yield return new WaitForSeconds(.3f);
+                    combat.RequestAttack();
+                    for (float t = 0f; t < 2f && (t < .05f || combat.IsBusy); t += Time.deltaTime) yield return null;
+                    yield return new WaitForSeconds(trail.time + .05f);
+                    foreach (Key key in walks[i]) Press(keyboard[key]);
+                    InputSystem.Update();
+                    yield return new WaitForSeconds(1f);
+                    yield return Capture(directory, names[i], "walk " + string.Join("+", walks[i]) + " 1s after swing");
+                    foreach (Key key in walks[i]) Release(keyboard[key]);
+                    InputSystem.Update();
+                }
+            }
+            finally { UnityEditor.EditorSettings.asyncShaderCompilation = asyncShaders; Time.timeScale = 1f; }
+        }
+
+        /// <summary>
+        /// Sonda: quanto o SlashTrail contribui na imagem. Renderiza a câmera principal duas vezes no mesmo quadro,
+        /// com o TrailRenderer ligado e desligado, e conta os pixels que mudam; registra também o alfa das cores do
+        /// mesh gerado por BakeMesh. Mede no golpe e andando 1 s depois dele.
+        /// </summary>
+        [UnityTest, Explicit("Diagnostic probe; writes trail-pixels.txt.")]
+        public IEnumerator Probe_TrailPixelContribution()
+        {
+            string directory = System.Environment.GetEnvironmentVariable("DUNGEON_CRAWLER_TEST_REPORT_DIR") ?? "Reports/Validation/SlashTrail/Probe";
+            Directory.CreateDirectory(directory);
+            yield return Load();
+            combat.RequestAttack();
+            float startedAt = Time.time, impact = combat.CurrentStep.ImpactSeconds;
+            while (Time.time - startedAt < impact + .02f) yield return null;
+            Contribution(directory, "swing impact");
+            for (float t = 0f; combat.IsBusy && t < 2f; t += Time.deltaTime) yield return null;
+            Contribution(directory, "idle right after AttackFinished");
+            yield return new WaitForSeconds(trail.time + .05f);
+            Contribution(directory, "idle trail.time+.05s after AttackFinished");
+            yield return new WaitForSeconds(.5f);
+            Contribution(directory, "idle .7s after AttackFinished");
+            foreach (Key[] keys in new[] { new[] { Key.A }, new[] { Key.S }, new[] { Key.W, Key.D } })
+            {
+                foreach (Key key in keys) Press(keyboard[key]);
+                InputSystem.Update();
+                yield return new WaitForSeconds(1f);
+                Contribution(directory, "walk " + string.Join("+", keys) + " 1s after swing");
+                foreach (Key key in keys) Release(keyboard[key]);
+                InputSystem.Update();
+                yield return new WaitForSeconds(.2f);
+            }
+        }
+
+        private void Contribution(string directory, string label)
+        {
+            Camera camera = Camera.main;
+            const int width = 1280, height = 720;
+            var target = new RenderTexture(width, height, 24);
+            var read = new Texture2D(width, height, TextureFormat.RGBA32, false);
+            Color32[] Render()
+            {
+                RenderTexture previousActive = RenderTexture.active, previousTarget = camera.targetTexture;
+                camera.targetTexture = target; camera.Render();
+                RenderTexture.active = target; read.ReadPixels(new Rect(0, 0, width, height), 0, 0, false); read.Apply(false);
+                camera.targetTexture = previousTarget; RenderTexture.active = previousActive;
+                return read.GetPixels32();
+            }
+            bool wasEnabled = trail.enabled;
+            int points = trail.positionCount, vertices = BakedVertices();
+            float minAlpha = 1f, maxAlpha = 0f;
+            if (vertices > 0) foreach (Color c in baked.colors) { minAlpha = Mathf.Min(minAlpha, c.a); maxAlpha = Mathf.Max(maxAlpha, c.a); }
+            Color32[] with = Render();
+            trail.enabled = false;
+            Color32[] without = Render();
+            trail.enabled = wasEnabled;
+            int changed = 0, strong = 0, peak = 0;
+            for (int i = 0; i < with.Length; i++)
+            {
+                int d = Mathf.Abs(with[i].r - without[i].r) + Mathf.Abs(with[i].g - without[i].g) + Mathf.Abs(with[i].b - without[i].b);
+                if (d > 6) changed++;
+                if (d > 30) strong++;
+                peak = Mathf.Max(peak, d);
+            }
+            Object.DestroyImmediate(read); target.Release(); Object.DestroyImmediate(target);
+            File.AppendAllText(Path.Combine(directory, "trail-pixels.txt"),
+                $"{label}: enabled={wasEnabled} emitting={trail.emitting} points={points} bakedVertices={vertices} bakedAlpha={(vertices > 0 ? $"{minAlpha:F2}-{maxAlpha:F2}" : "-")} " +
+                $"pixelsChanged(>6)={changed} pixelsStrong(>30)={strong} peakRgbDelta={peak} at {width}x{height} gfx={SystemInfo.graphicsDeviceType} batch={Application.isBatchMode}\n");
+        }
+
+        private IEnumerator Capture(string directory, string name, string label)
+        {
+            string path = Path.Combine(directory, name);
+            Assert.IsFalse(File.Exists(path), "Preserve visual evidence.");
+            yield return new WaitForEndOfFrame();
+            // Retângulo da faixa na tela (pixels, origem no canto superior esquerdo) para localizar o rastro na imagem.
+            string rect = "-";
+            Camera camera = Camera.main;
+            if (camera != null && trail.enabled && trail.positionCount > 0)
+            {
+                var points = new Vector3[trail.positionCount]; trail.GetPositions(points);
+                float minX = float.MaxValue, minY = float.MaxValue, maxX = float.MinValue, maxY = float.MinValue, length = 0f;
+                for (int i = 0; i < points.Length; i++)
+                {
+                    Vector3 s = camera.WorldToScreenPoint(points[i]); float y = Screen.height - s.y;
+                    minX = Mathf.Min(minX, s.x); maxX = Mathf.Max(maxX, s.x); minY = Mathf.Min(minY, y); maxY = Mathf.Max(maxY, y);
+                    if (i > 0) length += Vector3.Distance(points[i - 1], points[i]);
+                }
+                rect = $"x{minX:F0}-{maxX:F0} y{minY:F0}-{maxY:F0} length={length:F2}m";
+            }
+            File.AppendAllText(Path.Combine(directory, "diagnostics.txt"),
+                $"{name} ({label}): enabled={trail.enabled} emitting={trail.emitting} points={trail.positionCount} bakedVertices={BakedVertices()} " +
+                $"screenRect={rect} busy={combat.IsBusy} screen={Screen.width}x{Screen.height} gfx={SystemInfo.graphicsDeviceType}\n");
+            ScreenCapture.CaptureScreenshot(path);
+            yield return null;
+        }
+    }
+}
+#endif
