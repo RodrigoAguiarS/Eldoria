@@ -43,7 +43,7 @@ namespace DungeonCrawler.Tests.EditMode
             Assert.AreEqual(3, model.GetPotionIndex(QuickPotionPolicy.HighestPotency));
             Assert.AreEqual(1, model.GetPotionIndex((QuickPotionPolicy)99));
             Assert.AreEqual(0, changes, "Queries must not change the inventory or publish events.");
-            Assert.AreEqual(0, model.EquippedWeaponIndex);
+            Assert.IsNull(model.EquippedWeapon, "Collected weapons stay in the bag (D-007).");
             model.TryConsumePotion(4, out _);
             Assert.AreEqual(5, model.GetPotionIndex(QuickPotionPolicy.LowestPotency));
             model.TryConsumePotion(3, out _);
@@ -103,27 +103,28 @@ namespace DungeonCrawler.Tests.EditMode
         }
 
         [Test]
-        public void GearCollection_DoesNotReplaceEquippedWeaponAndManualSwapKeepsItems()
+        public void GearCollection_NeverEquipsAndManualSwapKeepsItems()
         {
             var iron = Asset<WeaponData>(); iron.damageBonus = 6f;
             var warden = Asset<WeaponData>(); warden.damageBonus = 12f;
             var armor = Asset<ArmorData>();
             var model = new InventoryModel();
             model.TryAdd(iron);
-            Assert.AreSame(iron, model.EquippedWeapon);
+            Assert.IsNull(model.EquippedWeapon, "Collection never equips (D-007).");
+            Assert.IsTrue(model.TryEquip(0));
+            Assert.AreSame(iron, model.EquippedWeapon); Assert.IsTrue(model.Slots[0].IsEmpty);
             model.TryAdd(warden);
-            Assert.AreSame(iron, model.EquippedWeapon);
-            Assert.IsTrue(model.TryEquip(1));
+            Assert.AreSame(iron, model.EquippedWeapon, "A better weapon collected later does not replace the equipped one.");
+            Assert.IsTrue(model.TryEquip(0));
             Assert.AreSame(warden, model.EquippedWeapon);
+            Assert.AreSame(iron, model.Slots[0].Definition, "The previous weapon returns to the freed slot.");
             Assert.IsTrue(model.TryUnequip(InventoryItemKind.Weapon));
             Assert.IsNull(model.EquippedWeapon);
-            Assert.AreSame(iron, model.Slots[0].Definition);
             Assert.AreSame(warden, model.Slots[1].Definition);
             model.TryAdd(armor);
             Assert.IsTrue(model.TryEquip(2));
             Assert.AreSame(armor, model.EquippedArmor);
-            Assert.AreEqual(1, model.Slots[0].Count);
-            Assert.AreEqual(1, model.Slots[1].Count);
+            Assert.AreEqual(2, model.OccupiedCount);
         }
 
         [Test]
@@ -137,11 +138,12 @@ namespace DungeonCrawler.Tests.EditMode
             Assert.AreEqual(1, model.Slots[1].Count);
             Assert.IsTrue(model.TryEquip(1));
             Assert.IsTrue(model.TryAdd(potion));
-            Assert.IsTrue(model.TryConsumePotion(2, out int healing));
+            Assert.AreSame(potion, model.Slots[1].Definition, "The equipped sword freed its bag slot.");
+            Assert.IsTrue(model.TryConsumePotion(1, out int healing));
             Assert.AreEqual(15, healing);
-            Assert.AreEqual(1, model.EquippedWeaponIndex);
-            Assert.IsTrue(model.Slots[2].IsEmpty);
+            Assert.IsTrue(model.Slots[1].IsEmpty);
             Assert.AreSame(sword, model.EquippedWeapon);
+            Assert.AreSame(sword, model.Slots[0].Definition, "The other sword stays a separate unit in the bag.");
         }
 
         [Test]
@@ -162,11 +164,11 @@ namespace DungeonCrawler.Tests.EditMode
         }
 
         [Test]
-        public void InvalidCommands_AreNoOpsAndAutoEquipCanBeDisabled()
+        public void InvalidCommands_AreNoOpsAndCollectedWeaponsStayInTheBag()
         {
             var sword = Asset<WeaponData>();
             var potion = Asset<PotionData>();
-            var model = new InventoryModel(2, false);
+            var model = new InventoryModel(2);
             int changes = 0; model.Changed += () => changes++;
             Assert.IsFalse(model.TryAdd(null));
             Assert.IsFalse(model.TryAdd(potion, 0));
@@ -179,10 +181,11 @@ namespace DungeonCrawler.Tests.EditMode
             Assert.IsNull(model.EquippedWeapon);
             Assert.IsTrue(model.TryEquip(0));
             Assert.AreSame(sword, model.EquippedWeapon);
+            Assert.IsTrue(model.Slots[0].IsEmpty);
         }
 
         [Test]
-        public void TakingOneItem_PreservesDefinitionPowerAndClearsOnlyItsEquipmentReference()
+        public void TakingOneItem_PreservesDefinitionPowerAndNeverTouchesEquipment()
         {
             var sword = Asset<WeaponData>();
             var potion = Asset<PotionData>();
@@ -193,10 +196,13 @@ namespace DungeonCrawler.Tests.EditMode
             Assert.AreEqual(30, dose.Potency);
             Assert.AreEqual(1, dose.Count);
             Assert.AreEqual(1, model.Slots[1].Count);
+            Assert.IsTrue(model.TryEquip(0));
             Assert.AreSame(sword, model.EquippedWeapon);
+            Assert.IsFalse(model.TryTakeOne(0, out _), "The equipped sword is no longer in the bag.");
+            Assert.IsTrue(model.TryAdd(sword));
             Assert.IsTrue(model.TryTakeOne(0, out var weapon));
             Assert.AreSame(sword, weapon.Definition);
-            Assert.IsNull(model.EquippedWeapon);
+            Assert.AreSame(sword, model.EquippedWeapon, "Dropping the bag unit keeps the equipped unit.");
             Assert.IsTrue(model.Slots[0].IsEmpty);
         }
 
@@ -221,10 +227,8 @@ namespace DungeonCrawler.Tests.EditMode
                 }
                 foreach (InventoryStack slot in model.Slots)
                     if (!slot.IsEmpty) Assert.That(slot.Count, Is.InRange(1, slot.Definition.StackLimit));
-                if (model.EquippedWeaponIndex >= 0)
-                    Assert.AreSame(model.EquippedWeapon, model.Slots[model.EquippedWeaponIndex].Definition);
-                if (model.EquippedArmorIndex >= 0)
-                    Assert.AreSame(model.EquippedArmor, model.Slots[model.EquippedArmorIndex].Definition);
+                Assert.AreSame(model.Equipment[(int)EquipmentSlot.Weapon], model.EquippedWeapon);
+                Assert.IsTrue(model.Equipment[(int)EquipmentSlot.Armor] == null || model.EquippedArmor != null);
             }
         }
     }

@@ -91,7 +91,7 @@ namespace DungeonCrawler.Tests.PlayMode
             var weapon = Asset<WeaponData>(); weapon.damageBonus = 6f;
             Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Weapon, 0, weapon)));
             int index = -1; for (int i = 0; i < inventory.Capacity; i++) if (inventory.Slots[i].Definition == weapon) index = i;
-            if (inventory.EquippedWeaponIndex != index) Assert.IsTrue(inventory.TryEquip(index));
+            Assert.IsTrue(inventory.TryEquip(index), "Collected weapons are equipped manually (D-007).");
             float expected = (20f + 6f) * 1.1f * 1.05f;
             Assert.AreEqual(expected, combat.CurrentDamage, 1e-4f);
             for (int i = 0; i < 5; i++)
@@ -129,7 +129,7 @@ namespace DungeonCrawler.Tests.PlayMode
             var armor = Asset<ArmorData>(); armor.defense = 10f;
             Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Armor, 0, armor: armor)));
             int index = -1; for (int i = 0; i < inventory.Capacity; i++) if (inventory.Slots[i].Definition == armor) index = i;
-            if (inventory.EquippedArmorIndex != index) Assert.IsTrue(inventory.TryEquip(index));
+            Assert.IsTrue(inventory.TryEquip(index));
             Assert.AreEqual(10f, health.Defense);
             GainLevels(1); Assert.IsTrue(talents.TryChoose(Guard));
             Assert.AreEqual(15f, health.Defense); Assert.AreEqual(10f, armor.defense);

@@ -104,27 +104,28 @@ namespace DungeonCrawler.Tests.PlayerInput
             var equipment = player.GetComponent<PlayerEquipmentVisualPresenter>();
             Assert.IsNotNull(equipment);
             GameObject heroSword = equipment.DefaultWeapon;
-            Assert.IsTrue(heroSword.activeInHierarchy, "Base sword visible without an equipped weapon.");
             Transform socket = heroSword.transform.parent;
             int ActiveSwords() => socket.Cast<Transform>().Count(t => t.gameObject.activeSelf && t.GetComponentInChildren<MeshRenderer>() != null);
 
             var iron = Asset<WeaponData>("Weapon_IronSword"); var warden = Asset<WeaponData>("Weapon_WardenBlade");
             var armor = Asset<ArmorData>("Armor_Leather");
-            progression.TryCollect(new LootDrop(LootKind.Weapon, 0, iron));   // first weapon auto-equips (existing rule)
+            // D-007: the new run starts with the Iron Sword equipped (no pickup involved).
             Assert.AreSame(iron, equipment.ShownWeapon);
             Assert.IsFalse(heroSword.activeSelf, "Fixed Hero sword hidden while an item sword is equipped.");
             Assert.AreEqual(1, ActiveSwords());
             Assert.AreEqual(26f, combat.CurrentDamage, .001f);
 
             progression.TryCollect(new LootDrop(LootKind.Weapon, 0, warden));
-            Assert.IsTrue(inventory.TryEquip(1));
+            Assert.AreSame(iron, equipment.ShownWeapon, "Collection never equips.");
+            Assert.IsTrue(inventory.TryEquip(0));
             Assert.AreSame(warden, equipment.ShownWeapon);
+            Assert.AreSame(iron, inventory.Slots[0].Definition, "The Iron Sword returns to the freed bag slot.");
             Assert.AreEqual(1, ActiveSwords());
             Assert.AreEqual(32f, combat.CurrentDamage, .001f);
 
             Assert.IsTrue(inventory.TryUnequip(InventoryItemKind.Weapon));
             Assert.IsNull(equipment.ShownWeapon);
-            Assert.IsTrue(heroSword.activeSelf);
+            Assert.IsTrue(heroSword.activeSelf, "Base sword visible without an equipped weapon.");
             Assert.AreEqual(1, ActiveSwords());
             Assert.AreEqual(20f, combat.CurrentDamage, .001f);
 
@@ -141,7 +142,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.IsTrue(body.Intersects(vestBounds) && Vector3.Distance(vestBounds.center, player.transform.position + Vector3.up) < .6f, "Vest fitted to the torso, not floating.");
             Assert.IsTrue(inventory.TryUnequip(InventoryItemKind.Armor));
             Assert.IsFalse(vest.gameObject.activeSelf);
-            Assert.AreSame(armor, inventory.Slots[2].Definition, "Unequip keeps the item.");
+            Assert.AreSame(armor, inventory.Slots[2].Definition, "Unequip returns the item to the bag.");
         }
 
         [UnityTest]
@@ -252,7 +253,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.AreEqual("×2", views[1].Quantity.text);
             StringAssert.Contains("Cura 30", views[1].Label.text);
             StringAssert.Contains("Cura 20", views[2].Label.text);
-            StringAssert.Contains("Equipado", views[0].Label.text);
+            StringAssert.DoesNotContain("Equipado", views[0].Label.text, "D-007: collected weapons stay unequipped in the bag.");
             menu.ToggleInventory();
             yield return null;
             Assert.AreEqual(1f, Time.timeScale);
@@ -273,7 +274,9 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.AreSame(Asset<ArmorData>("Armor_Leather"), equipment.ShownArmor);
             // D-006: the shortcut also equips helmet/gloves/boots/amulet; gloves +2 and amulet +1 join the flat sum.
             var inventory = player.GetComponent<PlayerInventory>();
-            foreach (EquipmentSlot slot in System.Enum.GetValues(typeof(EquipmentSlot))) Assert.GreaterOrEqual(inventory.GetEquippedIndex(slot), 0, slot.ToString());
+            foreach (EquipmentSlot slot in System.Enum.GetValues(typeof(EquipmentSlot))) Assert.IsNotNull(inventory.GetEquipped(slot), slot.ToString());
+            Assert.AreEqual(2, inventory.Slots.Count(s => s.Definition == Asset<WeaponData>("Weapon_IronSword")),
+                "The starter and the showcase Iron Sword are both in the bag; nothing duplicated or lost.");
             Assert.AreEqual(41f, combat.CurrentDamage, .001f, "Shortcut uses the normal rules (20 + 18 + 2 + 1).");
             Assert.AreEqual(10f + 4f + 3f + 2f, player.GetComponent<Health>().Defense, .001f);
             Assert.AreEqual(3, InScene<PotionHudPresenter>().Total);

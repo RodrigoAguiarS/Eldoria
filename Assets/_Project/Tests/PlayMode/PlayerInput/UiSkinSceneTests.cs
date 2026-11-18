@@ -68,7 +68,7 @@ namespace DungeonCrawler.Tests.PlayerInput
                 longWeapon.displayName = "Espada ancestral do sentinela das ruínas esquecidas — nome extenso de diagnóstico V04 " + new string('M', 400);
                 Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Weapon, 0, longWeapon)));
             }
-            if (inventory.EquippedArmorIndex != 1) Assert.IsTrue(inventory.TryEquip(1));
+            Assert.IsTrue(inventory.TryEquip(1)); // D-007: the vest leaves bag slot 1 for its equipment slot
             return inventory;
         }
 
@@ -77,7 +77,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             for (int i = 0; i < views.Length; i++)
             {
                 var stack = inventory.Slots[i]; var view = views[i]; string name = "slot " + i;
-                bool equipped = i == inventory.EquippedArmorIndex || i == inventory.EquippedWeaponIndex;
+                const bool equipped = false; // D-007: equipped items never occupy a bag slot
                 Assert.AreSame(skin, view.Skin, name);
                 Assert.AreSame(skin.SlotBase(i == selected, stack.IsEmpty), view.Background.sprite, name);
                 Assert.AreEqual(Color.white, view.Background.color, name);
@@ -139,7 +139,9 @@ namespace DungeonCrawler.Tests.PlayerInput
             var bag = InScene<InventoryPresenter>(); var views = bag.GetComponentsInChildren<InventorySlotView>(true);
             Assert.AreEqual(16, views.Length); Assert.AreSame(views[0].Button.gameObject, Focused, "Initial bag focus unchanged.");
             AssertSlots(views, inventory, 0, skin);
-            Assert.IsTrue(views[1].EquippedMarker.gameObject.activeSelf, "Armor equipped shows the shield.");
+            Assert.IsTrue(views[1].EmptyMarker.gameObject.activeSelf, "The equipped vest left its bag slot.");
+            var armorSlot = bag.GetComponentsInChildren<EquipmentSlotView>(true).Single(v => v.Slot == EquipmentSlot.Armor);
+            Assert.IsTrue(armorSlot.EquippedMarker.gameObject.activeSelf, "The equipment slot shows the shield.");
             Assert.AreEqual(Item<WeaponData>("Weapon_AncientEdge").rarity.color, views[0].RarityBand.color, "Epic band.");
             Assert.IsTrue(views[15].EmptyMarker.gameObject.activeSelf);
 
@@ -148,7 +150,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             AssertSlots(views, inventory, 1, skin);
             var equip = bag.transform.Find("Window/Equip").GetComponent<Button>();
             var unequip = bag.transform.Find("Window/Unequip").GetComponent<Button>();
-            Assert.AreSame(skin.ButtonDisabled, Shown(equip), "Selected item already equipped."); Assert.AreSame(skin.ButtonNormal, Shown(unequip));
+            Assert.AreSame(skin.ButtonDisabled, Shown(equip), "Empty bag slot."); Assert.AreSame(skin.ButtonDisabled, Shown(unequip), "Unequip acts on equipment slots only.");
 
             yield return Tap(keyboard.downArrowKey); yield return Tap(keyboard.downArrowKey);
             int selected = Array.FindIndex(views, v => v.Button.gameObject == Focused);

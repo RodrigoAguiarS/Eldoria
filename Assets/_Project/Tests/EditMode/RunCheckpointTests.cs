@@ -54,7 +54,7 @@ namespace DungeonCrawler.Tests.EditMode
         private static CheckpointTalent Talent(string id, int rank) => new CheckpointTalent { id = id, rank = rank };
         [Test] public void V2_RoundTripPreservesTalentRanks_AndV1MigratesWithoutTalents()
         {
-            var data = Valid(); data.version = RunCheckpointData.CurrentVersion; data.gearIndices = new[] { -1, -1, -1, -1 };
+            var data = Valid(); data.version = 2; // the F12 schema (bag-index equipment, no gear field)
             data.talents = new[] { Talent("talent.guard", 1), Talent("talent.blade", 1) }; // level 3: two earned choices
             Assert.IsTrue(store.TrySave(data, catalog, out string error), error);
             Assert.IsTrue(store.TryLoad(catalog, out var loaded, out error), error);
@@ -70,12 +70,13 @@ namespace DungeonCrawler.Tests.EditMode
             var data = Valid(); Assert.IsTrue(store.TrySave(data, catalog, out string error), error);
             Assert.IsTrue(store.TryLoad(catalog, out var loaded, out error), error);
             Assert.AreEqual(JsonUtility.ToJson(data), JsonUtility.ToJson(loaded));
+            // v1 bound the second sword (slot 1) and the vest (slot 2): they migrate into the slots, nothing else moves.
+            Assert.IsTrue(catalog.TryGetLoadout(loaded, out var stacks, out var equipped));
             var bag = new InventoryModel(6);
-            // Exercise production restoration through a fresh model without merging duplicate definitions.
-            Assert.IsTrue(bag.TryAdd(weapon, 2)); Assert.IsTrue(bag.TryAdd(armor)); Assert.IsTrue(bag.TryAdd(potion, 5, 15)); Assert.IsTrue(bag.TryAdd(potion, 2, 37));
-            bag.TryEquip(1); bag.TryEquip(2); bag.TryTakeOne(5, out _);
-            var exact = bag.Slots.ToArray(); Assert.IsTrue(bag.TryRestore(exact, 1, 2));
-            Assert.AreSame(weapon, bag.Slots[1].Definition); Assert.AreEqual(1, bag.EquippedWeaponIndex);
+            Assert.IsTrue(bag.TryRestore(stacks, equipped));
+            Assert.AreSame(weapon, bag.EquippedWeapon); Assert.AreSame(armor, bag.EquippedArmor);
+            Assert.AreSame(weapon, bag.Slots[0].Definition, "The unequipped duplicate sword stays in slot 0.");
+            Assert.IsTrue(bag.Slots[1].IsEmpty && bag.Slots[2].IsEmpty, "Only the bound slots are emptied.");
             Assert.AreEqual(37, bag.Slots[4].Potency); Assert.AreEqual(5, bag.Slots[3].Count);
         }
         [Test] public void RepeatedSave_RotatesUsableBackupAndIgnoresAbandonedTemporary()

@@ -322,12 +322,15 @@ namespace DungeonCrawler.Tests.PlayerInput
             var weaponPickup = Object.Instantiate(prefab, combat.transform.position + Vector3.up * .6f, Quaternion.identity);
             weaponPickup.Setup(new LootDrop(LootKind.Weapon, 0, iron));
             Physics.SyncTransforms();
-            float timeout = Time.time + 1f;
-            while (progression.Weapon == null && Time.time < timeout) yield return null;
+            // D-007: the new run already holds the starting Iron Sword; the collected one goes to the bag.
             Assert.AreSame(iron, progression.Weapon);
-            Assert.AreEqual(26f, combat.CurrentDamage);
-            yield return null;
+            var inventory = combat.GetComponent<PlayerInventory>();
+            float timeout = Time.time + 1f;
+            while (weaponPickup != null && Time.time < timeout) yield return null;
             Assert.IsTrue(weaponPickup == null, "Collected pickup is removed exactly once.");
+            Assert.AreSame(iron, inventory.Slots[0].Definition, "Collected into the bag, never auto-equipped.");
+            Assert.AreSame(iron, progression.Weapon);
+            Assert.AreEqual(26f, combat.CurrentDamage, "One weapon term: the equipped starter only.");
             var xpPickup = Object.Instantiate(prefab, combat.transform.position + Vector3.up * .6f, Quaternion.identity);
             xpPickup.Setup(new LootDrop(LootKind.Xp, 71));
             Physics.SyncTransforms();

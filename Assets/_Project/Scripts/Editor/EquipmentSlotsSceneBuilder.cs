@@ -84,8 +84,8 @@ namespace DungeonCrawler.Editor
             var presenter = windowTransform.parent.GetComponent<InventoryPresenter>();
             Label(windowTransform, HeaderName, "EQUIPAMENTOS", new Vector2(1300f, -106f), new Vector2(488f, 38f), 22).fontStyle = FontStyle.Bold;
             var note = Label(windowTransform, NoteName,
-                "Equipamentos continuam na bolsa: equipar ou trocar não ocupa espaço extra. Clique num slot de equipamento para ver o item; " +
-                "use Desequipar para remover.", new Vector2(32f, -800f), new Vector2(1240f, 102f), 20);
+                "Equipar move o item da bolsa para o slot de equipamento; a peça trocada volta para o espaço liberado. " +
+                "Desequipar devolve o item à bolsa e precisa de um espaço livre. Clique num slot de equipamento para ver o item.", new Vector2(32f, -800f), new Vector2(1240f, 102f), 20);
             note.alignment = TextAnchor.UpperLeft; note.horizontalOverflow = HorizontalWrapMode.Wrap; note.verticalOverflow = VerticalWrapMode.Truncate;
             note.color = new Color(.78f, .84f, .9f);
             RectTransform grid = Node(windowTransform, GridName);

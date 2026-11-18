@@ -72,23 +72,7 @@ namespace DungeonCrawler.Systems
             var experience = new ExperienceModel(baseXp, xpGrowth, maxLevel);
             if (!experience.TryRestore(data.level, data.xp)) return false;
             if (!ValidTalents(data, out string talentError)) { if (talentError != null) error = talentError; return false; }
-            if (data.slots == null || data.slots.Length != capacity || capacity < 1 || capacity > 256) return false;
-            var stacks = new InventoryStack[capacity];
-            for (int i = 0; i < capacity; i++)
-            {
-                var slot = data.slots[i];
-                if (slot == null) return false;
-                if (string.IsNullOrEmpty(slot.itemId))
-                {
-                    if (slot.count != 0 || slot.potency != 0) return false;
-                    continue;
-                }
-                ItemDefinition definition = Resolve(slot.itemId);
-                if (definition == null) { error = "Definição de item ausente: " + slot.itemId; return false; }
-                stacks[i] = new InventoryStack(definition, slot.count, slot.potency);
-            }
-            if (!TryGetEquipment(data, out int[] equipped)) { error = "Equipamentos do checkpoint inválidos."; return false; }
-            if (!new InventoryModel(capacity).TryRestore(stacks, equipped)) return false;
+            if (!TryGetLoadout(data, out _, out _, out string loadoutError)) { if (loadoutError != null) error = loadoutError; return false; }
             ids.Clear();
             if (data.pickups == null || data.pickups.Length > MaxPickups) return false;
             foreach (var pickup in data.pickups)
@@ -121,15 +105,63 @@ namespace DungeonCrawler.Systems
             return true;
         }
 
+        public bool TryGetLoadout(RunCheckpointData data, out InventoryStack[] bag, out ItemDefinition[] equipped) =>
+            TryGetLoadout(data, out bag, out equipped, out _);
+
         /// <summary>
-        /// The six bindings in EquipmentSlot order. Before v4 the four new slots are unequipped (-1) and a document
-        /// that carries gear indices is malformed; from v4 exactly four indices are required, so an absent field is
-        /// never read as index zero.
+        /// The bag and the six equipment slots as separate storage (D-007), fully validated before anything is
+        /// restored. v5 reads <see cref="RunCheckpointData.equipment"/> and requires the legacy bag-index fields to be
+        /// -1/empty. v1-v4 bindings migrate: each referenced unit moves to its slot and only its own bag slot is emptied.
         /// </summary>
-        public static bool TryGetEquipment(RunCheckpointData data, out int[] equipped)
+        public bool TryGetLoadout(RunCheckpointData data, out InventoryStack[] bag, out ItemDefinition[] equipped, out string error)
+        {
+            bag = null; equipped = null; error = null;
+            if (data?.slots == null || data.slots.Length != capacity || capacity < 1 || capacity > 256) return false;
+            var stacks = new InventoryStack[capacity];
+            for (int i = 0; i < capacity; i++)
+            {
+                var slot = data.slots[i];
+                if (slot == null) return false;
+                if (string.IsNullOrEmpty(slot.itemId))
+                {
+                    if (slot.count != 0 || slot.potency != 0) return false;
+                    continue;
+                }
+                ItemDefinition definition = Resolve(slot.itemId);
+                if (definition == null) { error = "Definição de item ausente: " + slot.itemId; return false; }
+                stacks[i] = new InventoryStack(definition, slot.count, slot.potency);
+            }
+            error = "Equipamentos do checkpoint inválidos.";
+            if (data.version >= RunCheckpointData.StorageVersion)
+            {
+                if (data.weaponIndex != -1 || data.armorIndex != -1 || (data.gearIndices != null && data.gearIndices.Length != 0) ||
+                    data.equipment == null || data.equipment.Length != EquipmentSlots.Count) return false;
+                var items = new ItemDefinition[EquipmentSlots.Count];
+                for (int s = 0; s < items.Length; s++)
+                {
+                    string id = data.equipment[s];
+                    if (string.IsNullOrEmpty(id)) continue;
+                    items[s] = Resolve(id);
+                    if (items[s] == null) { error = "Definição de item ausente: " + id; return false; }
+                }
+                if (!InventoryModel.IsValidLoadout(stacks, items, capacity)) return false;
+                bag = stacks; equipped = items; error = null; return true;
+            }
+            if (data.equipment != null && data.equipment.Length != 0) return false;
+            if (!TryGetLegacyBindings(data, out int[] bindings) ||
+                !InventoryModel.TryMigrateBindings(stacks, bindings, capacity, out bag, out equipped)) return false;
+            error = null; return true;
+        }
+
+        /// <summary>
+        /// v1-v4 only: the six bag-index bindings in EquipmentSlot order. Before v4 the four gear slots are unequipped
+        /// (-1) and a document that carries gear indices is malformed; v4 requires exactly four indices, so an absent
+        /// field is never read as index zero. v5 has no bindings (false).
+        /// </summary>
+        public static bool TryGetLegacyBindings(RunCheckpointData data, out int[] equipped)
         {
             equipped = null;
-            if (data == null) return false;
+            if (data == null || data.version >= RunCheckpointData.StorageVersion) return false;
             int[] gear = data.gearIndices;
             if (data.version < RunCheckpointData.GearVersion)
             {

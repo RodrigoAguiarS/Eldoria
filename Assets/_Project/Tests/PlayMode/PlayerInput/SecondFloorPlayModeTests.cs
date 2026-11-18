@@ -70,7 +70,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.IsTrue(transition.TryAdvance(), transition.Status); Assert.IsFalse(Checkpoint.SaveNow());
             Assert.IsFalse(Player.TakeDamage(100000, Vector3.zero)); Assert.IsFalse(transition.TryAdvance()); yield return null; yield return null;
             var after = Checkpoint.Capture(); Assert.AreEqual(before.health, after.health); Assert.AreEqual(before.level, after.level);
-            Assert.AreEqual(before.xp, after.xp); Assert.AreEqual(before.gold, after.gold); Assert.AreEqual(1, after.weaponIndex); Assert.AreEqual(2, after.armorIndex);
+            Assert.AreEqual(before.xp, after.xp); Assert.AreEqual(before.gold, after.gold); CollectionAssert.AreEqual(before.equipment, after.equipment);
             for (int i = 0; i < before.slots.Length; i++) Assert.AreEqual(JsonUtility.ToJson(before.slots[i]), JsonUtility.ToJson(after.slots[i]));
             Assert.AreEqual(before.talents.Length, after.talents.Length);
             for (int i = 0; i < before.talents.Length; i++) Assert.AreEqual(JsonUtility.ToJson(before.talents[i]), JsonUtility.ToJson(after.talents[i]));
@@ -218,7 +218,10 @@ namespace DungeonCrawler.Tests.PlayerInput
                         if (inventory.Slots[slot].Definition is WeaponData w && (weapon < 0 || w.damageBonus > ((WeaponData)inventory.Slots[weapon].Definition).damageBonus)) weapon = slot;
                         if (inventory.Slots[slot].Definition is ArmorData) armor = slot;
                     }
-                    if (weapon >= 0) inventory.TryEquip(weapon); if (armor >= 0) inventory.TryEquip(armor);
+                    // D-007: only upgrade the equipped weapon (the starter stays when the bag holds nothing better).
+                    if (weapon >= 0 && (inventory.EquippedWeapon == null || ((WeaponData)inventory.Slots[weapon].Definition).damageBonus > inventory.EquippedWeapon.damageBonus))
+                        inventory.TryEquip(weapon);
+                    if (armor >= 0 && inventory.EquippedArmor == null) inventory.TryEquip(armor);
                     var talents = Player.GetComponent<PlayerTalents>();
                     for (int talent = 0; talent < talents.Count; talent++) while (talents.TryChoose(talent)) { }
                     File.AppendAllText(Path.Combine(dir, "traversal.txt"), "Floor " + (stage + 1) + " room " + (index + 1) + " cleared; HP " + Player.Current + "; level " + InScene<PlayerProgression>().Level + "; gold " + InScene<PlayerProgression>().Gold + "\n");

@@ -48,7 +48,7 @@ namespace DungeonCrawler.Tests.EditMode
             var edge = Weapon("Fio Antigo", epic, 18f);
             var warden = Weapon("Lâmina do Guardião", rare, 12f);
             var leather = Armor("Colete de couro", common);
-            var model = new InventoryModel(8, autoEquipFirstWeapon: false);
+            var model = new InventoryModel(8);
             Assert.IsTrue(model.TryAdd(potion, 3, 30));
             Assert.IsTrue(model.TryAdd(iron));
             Assert.IsTrue(model.TryAdd(leather));
@@ -84,32 +84,31 @@ namespace DungeonCrawler.Tests.EditMode
         }
 
         [Test]
-        public void Sort_EquipmentFollowsItsSlotInstanceEvenWithDuplicateDefinitions()
+        public void Sort_NeverTouchesEquipmentEvenWithDuplicateDefinitionsInTheBag()
         {
             var iron = Weapon("Espada de ferro", common);
             var leather = Armor("Colete de couro", common);
             var potion = Potion(common);
-            var model = new InventoryModel(6, autoEquipFirstWeapon: false);
+            var model = new InventoryModel(6);
             model.TryAdd(potion, 1, 15);
             model.TryAdd(leather);
             model.TryAdd(iron);
             model.TryAdd(leather);
             model.TryAdd(iron);
-            Assert.IsTrue(model.TryEquip(4)); // second iron sword
-            Assert.IsTrue(model.TryEquip(3)); // second leather vest
+            Assert.IsTrue(model.TryEquip(4)); // second iron sword leaves the bag
+            Assert.IsTrue(model.TryEquip(3)); // second leather vest leaves the bag
 
             Assert.IsTrue(model.TrySort(out int[] map));
 
-            Assert.AreEqual(map[4], model.EquippedWeaponIndex);
-            Assert.AreEqual(map[3], model.EquippedArmorIndex);
-            Assert.AreEqual(1, model.EquippedWeaponIndex, "Stable tie-break keeps the equipped duplicate second.");
-            Assert.AreEqual(3, model.EquippedArmorIndex);
             Assert.AreSame(iron, model.EquippedWeapon);
             Assert.AreSame(leather, model.EquippedArmor);
+            CollectionAssert.AreEqual(new ItemDefinition[] { iron, leather, potion },
+                model.Slots.Where(s => !s.IsEmpty).Select(s => s.Definition).ToArray(), "The bag keeps the other units, sorted.");
+            Assert.AreEqual(3, model.OccupiedCount);
         }
 
         [Test]
-        public void Sort_DoesNotChangeCapacityStacksOrAutoEquip()
+        public void Sort_DoesNotChangeCapacityStacksOrEquipment()
         {
             var potion = Potion(common);
             var model = new InventoryModel(4);
@@ -119,12 +118,15 @@ namespace DungeonCrawler.Tests.EditMode
             Assert.IsFalse(model.TrySort(out _), "4 + 3 already ordered.");
             var sword = Weapon("Espada", common);
             model.TryAdd(sword);
-            Assert.AreEqual(2, model.EquippedWeaponIndex, "Auto-equip unchanged by sorting.");
+            Assert.IsNull(model.EquippedWeapon, "Collected weapons stay in the bag.");
             Assert.IsTrue(model.TrySort(out _));
             Assert.AreEqual(4, model.Capacity);
-            Assert.AreEqual(0, model.EquippedWeaponIndex);
+            Assert.AreSame(sword, model.Slots[0].Definition);
             Assert.AreEqual(4, model.Slots[1].Count);
             Assert.AreEqual(3, model.Slots[2].Count);
+            Assert.IsTrue(model.TryEquip(0));
+            Assert.IsFalse(model.TrySort(out _), "Potions already ordered; the equipped sword is not in the bag.");
+            Assert.AreSame(sword, model.EquippedWeapon);
         }
 
         [Test]
@@ -133,7 +135,7 @@ namespace DungeonCrawler.Tests.EditMode
             var unranked = Weapon("a", null);
             var lower = Weapon("beta", common);
             var upper = Weapon("Alfa", common);
-            var model = new InventoryModel(3, autoEquipFirstWeapon: false);
+            var model = new InventoryModel(3);
             model.TryAdd(unranked); model.TryAdd(lower); model.TryAdd(upper);
             Assert.IsTrue(model.TrySort(out _));
             Assert.AreSame(upper, model.Slots[0].Definition);
@@ -142,7 +144,7 @@ namespace DungeonCrawler.Tests.EditMode
         }
 
         [Test]
-        public void FiveHundredRandomCommands_ConserveQuantitiesAndEquipmentIdentity()
+        public void FiveHundredRandomCommands_ConserveQuantitiesAndKeepEquipmentOutOfSort()
         {
             var weapons = new[] { Weapon("Espada", common), Weapon("Espada", common), Weapon("Lâmina", rare, 12f) };
             var armors = new[] { Armor("Colete", common), Armor("Colete", epic) };
@@ -155,8 +157,7 @@ namespace DungeonCrawler.Tests.EditMode
             {
                 int index = random.Next(model.Capacity);
                 var before = Multiset(model);
-                InventoryStack weaponSlot = model.EquippedWeaponIndex >= 0 ? model.Slots[model.EquippedWeaponIndex] : default;
-                InventoryStack armorSlot = model.EquippedArmorIndex >= 0 ? model.Slots[model.EquippedArmorIndex] : default;
+                var equipmentBefore = model.Equipment.ToArray();
                 int eventsBefore = events;
                 switch (random.Next(6))
                 {
@@ -166,29 +167,18 @@ namespace DungeonCrawler.Tests.EditMode
                     case 3: model.TryTakeOne(index, out _); break;
                     case 4: model.TryEquip(index); break;
                     default:
-                        int weaponBefore = model.EquippedWeaponIndex, armorBefore = model.EquippedArmorIndex;
-                        bool sorted = model.TrySort(out int[] map);
+                        bool sorted = model.TrySort(out _);
                         Assert.AreEqual(sorted ? 1 : 0, events - eventsBefore, $"step {step}: one event per effective sort");
                         CollectionAssert.AreEquivalent(before, Multiset(model), $"step {step}: no loss or duplication");
-                        Assert.AreEqual(weaponBefore < 0 ? -1 : map[weaponBefore], model.EquippedWeaponIndex, $"step {step}");
-                        Assert.AreEqual(armorBefore < 0 ? -1 : map[armorBefore], model.EquippedArmorIndex, $"step {step}");
-                        AssertSameStack(weaponSlot, model.EquippedWeaponIndex, model, step);
-                        AssertSameStack(armorSlot, model.EquippedArmorIndex, model, step);
+                        CollectionAssert.AreEqual(equipmentBefore, model.Equipment.ToArray(), $"step {step}: sort never touches equipment");
                         AssertOrdered(model, step);
                         break;
                 }
-                Assert.IsTrue(model.EquippedWeaponIndex < 0 || model.Slots[model.EquippedWeaponIndex].Definition is WeaponData, $"step {step}");
-                Assert.IsTrue(model.EquippedArmorIndex < 0 || model.Slots[model.EquippedArmorIndex].Definition is ArmorData, $"step {step}");
+                Assert.IsTrue(model.EquippedWeapon == model.Equipment[(int)EquipmentSlot.Weapon], $"step {step}");
+                Assert.IsTrue(model.Equipment[(int)EquipmentSlot.Armor] == null || model.EquippedArmor != null, $"step {step}");
                 foreach (var slot in model.Slots)
                     Assert.IsTrue(slot.IsEmpty || slot.Count <= Math.Max(1, slot.Definition.StackLimit), $"step {step}: stack limit");
             }
-        }
-
-        private static void AssertSameStack(InventoryStack expected, int index, InventoryModel model, int step)
-        {
-            if (expected.IsEmpty) { Assert.AreEqual(-1, index, $"step {step}"); return; }
-            Assert.AreSame(expected.Definition, model.Slots[index].Definition, $"step {step}");
-            Assert.AreEqual(expected.Count, model.Slots[index].Count, $"step {step}");
         }
 
         private static void AssertOrdered(InventoryModel model, int step)

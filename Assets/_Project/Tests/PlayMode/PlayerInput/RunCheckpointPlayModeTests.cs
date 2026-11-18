@@ -102,7 +102,9 @@ namespace DungeonCrawler.Tests.PlayerInput
             var actual = checkpoint.Capture(); Assert.AreEqual(expected.level, actual.level); Assert.AreEqual(expected.xp, actual.xp);
             Assert.AreEqual(expected.gold, actual.gold); Assert.AreEqual(expected.health, actual.health);
             Assert.AreEqual(JsonUtility.ToJson(new Bag { slots = expected.slots }), JsonUtility.ToJson(new Bag { slots = actual.slots }));
-            Assert.AreEqual(1, actual.weaponIndex); Assert.AreEqual(2, actual.armorIndex); Assert.AreEqual(1, floor.ClearedCount);
+            // D-007 (v5): equipment is saved apart from the bag; the legacy bag-index fields stay -1.
+            CollectionAssert.AreEqual(expected.equipment, actual.equipment); Assert.IsNotEmpty(actual.equipment[0]); Assert.IsNotEmpty(actual.equipment[1]);
+            Assert.AreEqual(-1, actual.weaponIndex); Assert.AreEqual(-1, actual.armorIndex); Assert.AreEqual(1, floor.ClearedCount);
             // Anchor sits 0.1 above the floor; gravity may settle the CharacterController before Bind disables movement.
             var position = health.transform.position; var anchor = Catalog.rooms[0].anchor;
             Assert.Less(Vector2.Distance(new Vector2(position.x, position.z), new Vector2(anchor.x, anchor.z)), .01f);

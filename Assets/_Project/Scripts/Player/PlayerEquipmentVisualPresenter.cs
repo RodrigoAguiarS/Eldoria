@@ -41,8 +41,8 @@ namespace DungeonCrawler.Player
 
         public void Refresh()
         {
-            ItemDefinition weapon = Equipped(inventory != null ? inventory.EquippedWeaponIndex : -1);
-            ItemDefinition armor = Equipped(inventory != null ? inventory.EquippedArmorIndex : -1);
+            ItemDefinition weapon = inventory != null ? inventory.GetEquipped(EquipmentSlot.Weapon) : null;
+            ItemDefinition armor = inventory != null ? inventory.GetEquipped(EquipmentSlot.Armor) : null;
             ShownWeapon = Show(weapons, weapon);
             ShownArmor = Show(armors, armor);
             if (defaultWeapon != null && defaultWeapon.activeSelf != (ShownWeapon == null)) defaultWeapon.SetActive(ShownWeapon == null);
@@ -58,13 +58,6 @@ namespace DungeonCrawler.Player
                     if (weapons[i].visual != null && weapons[i].visual.activeSelf) return weapons[i].visual;
                 return defaultWeapon;
             }
-        }
-
-        private ItemDefinition Equipped(int index)
-        {
-            if (inventory == null || index < 0 || index >= inventory.Slots.Count) return null;
-            InventoryStack stack = inventory.Slots[index];
-            return stack.IsEmpty ? null : stack.Definition;
         }
 
         private static ItemDefinition Show(EquipmentVisual[] visuals, ItemDefinition equipped)

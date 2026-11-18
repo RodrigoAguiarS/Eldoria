@@ -74,20 +74,34 @@ namespace DungeonCrawler.Tests.PlayerInput
             Press(mouse.leftButton); yield return null; Release(mouse.leftButton); yield return null;
         }
 
-        private static ItemDefinition[] SixItems(GearData gloves = null) => new ItemDefinition[]
+        /// <summary>The five non-weapon pieces; the weapon slot already holds the new-run Iron Sword (D-007).</summary>
+        private static ItemDefinition[] FiveItems(GearData gloves = null) => new ItemDefinition[]
         {
-            Load<WeaponData>("Weapon_IronSword"), Load<ArmorData>("Armor_Leather"), Load<GearData>("Gear_IronHelmet"),
+            Load<ArmorData>("Armor_Leather"), Load<GearData>("Gear_IronHelmet"),
             gloves != null ? gloves : Load<GearData>("Gear_LeatherGloves"), Load<GearData>("Gear_LeatherBoots"), Load<GearData>("Gear_CopperAmulet"),
         };
         private static void Collect(PlayerProgression progression, ItemDefinition item) => Assert.IsTrue(progression.TryCollect(
             item is WeaponData w ? new LootDrop(LootKind.Weapon, 0, w) : item is ArmorData a ? new LootDrop(LootKind.Armor, 0, armor: a)
                 : new LootDrop(LootKind.Gear, 0, gear: (GearData)item)), item.name);
+        /// <summary>Collects and equips each piece in turn: equipped pieces leave the bag, which ends as it started.</summary>
         private static void CollectAndEquipSix(PlayerInventory inventory, GearData gloves = null)
         {
             var progression = inventory.GetComponent<PlayerProgression>();
-            foreach (var item in SixItems(gloves)) Collect(progression, item);
-            for (int i = 1; i < 6; i++) Assert.IsTrue(inventory.TryEquip(i));
-            foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot))) Assert.GreaterOrEqual(inventory.GetEquippedIndex(slot), 0, slot.ToString());
+            Assert.AreSame(Load<WeaponData>("Weapon_IronSword"), inventory.EquippedWeapon, "New run starts with the Iron Sword equipped.");
+            int occupied = inventory.OccupiedCount;
+            foreach (var item in FiveItems(gloves))
+            {
+                Collect(progression, item);
+                int index = Enumerable.Range(0, inventory.Capacity).Last(i => inventory.Slots[i].Definition == item);
+                Assert.IsTrue(inventory.TryEquip(index), item.name);
+            }
+            foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot))) Assert.IsNotNull(inventory.GetEquipped(slot), slot.ToString());
+            Assert.AreEqual(occupied, inventory.OccupiedCount, "Equipped pieces occupy no bag slot.");
+        }
+        private static int IronUnits(PlayerInventory inventory)
+        {
+            var iron = Load<WeaponData>("Weapon_IronSword");
+            return inventory.Slots.Count(s => s.Definition == iron) + (inventory.EquippedWeapon == iron ? 1 : 0);
         }
         private static EquipmentSlotView View(InventoryPresenter presenter, EquipmentSlot slot) =>
             presenter.GetComponentsInChildren<EquipmentSlotView>(true).Single(view => view.Slot == slot);
@@ -98,7 +112,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             yield return SceneManager.LoadSceneAsync(ReleaseFloor); yield return null;
             var inventory = InScene<PlayerInventory>(); var progression = inventory.GetComponent<PlayerProgression>();
             var health = inventory.GetComponent<Health>(); var combat = inventory.GetComponent<PlayerCombat>();
-            foreach (var item in SixItems()) Collect(progression, item);
+            foreach (var item in FiveItems()) Collect(progression, item);
             int attacks = 0; combat.AttackStarted += (_, __) => attacks++;
             yield return Key(keyboard.iKey);
             var menu = InScene<GameMenuController>(); Assert.IsTrue(menu.InventoryOpen); Assert.AreEqual(0f, Time.timeScale);
@@ -107,38 +121,47 @@ namespace DungeonCrawler.Tests.PlayerInput
             var equip = window.Find("Equip").GetComponent<Button>(); var unequip = window.Find("Unequip").GetComponent<Button>();
             var details = window.Find("ItemReading/Viewport/Content/Details").GetComponent<Text>();
             var comparison = window.Find("ItemReading/Viewport/Content/Comparison").GetComponent<Text>();
+            var title = window.Find("Title").GetComponent<Text>();
             Assert.AreEqual(6, presenter.GetComponentsInChildren<EquipmentSlotView>(true).Length);
             StringAssert.Contains("Vazio", View(presenter, EquipmentSlot.Helmet).ItemName.text);
             Assert.IsTrue(View(presenter, EquipmentSlot.Helmet).EmptyMarker.gameObject.activeSelf);
+            StringAssert.Contains("Espada de Ferro", View(presenter, EquipmentSlot.Weapon).ItemName.text, "Starting weapon shown in its slot.");
+            StringAssert.Contains("5/16", title.text, "The counter covers the bag only.");
 
-            for (int i = 1; i < 6; i++) { yield return Click(bag[i].Button); yield return Click(equip); }
+            for (int i = 0; i < 5; i++) { yield return Click(bag[i].Button); yield return Click(equip); }
+            StringAssert.Contains("0/16", title.text, "Equipped items left the bag.");
+            Assert.IsTrue(bag.All(slot => slot.Label.text.Contains("Vazio")), "Bag slots never show transferred equipment.");
             foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot)))
             {
-                var view = View(presenter, slot); int index = inventory.GetEquippedIndex(slot);
-                Assert.GreaterOrEqual(index, 0, slot.ToString());
+                var view = View(presenter, slot); var item = inventory.GetEquipped(slot);
+                Assert.IsNotNull(item, slot.ToString());
                 Assert.IsTrue(view.EquippedMarker.gameObject.activeSelf, slot + " equipped cue");
                 Assert.IsFalse(view.EmptyMarker.gameObject.activeSelf, slot + " empty cue");
-                StringAssert.Contains(inventory.Slots[index].Definition.DisplayName.Substring(0, 5), view.ItemName.text, slot.ToString());
+                StringAssert.Contains(item.DisplayName.Substring(0, 5), view.ItemName.text, slot.ToString());
             }
             // (20 + iron 6 + gloves 2 + amulet 1) at level 1; defense = vest 10 + helmet 4 + boots 3 + amulet 2.
             Assert.AreEqual(29f, combat.CurrentDamage, 1e-3f); Assert.AreEqual(19f, health.Defense, 1e-3f);
             StringAssert.Contains("Dano base efetivo 29", window.Find("ItemReading/Viewport/Content/Equipment").GetComponent<Text>().text);
             StringAssert.Contains("Defesa total 19", window.Find("ItemReading/Viewport/Content/Equipment").GetComponent<Text>().text);
 
-            yield return Click(bag[0].Button);
             var helmetView = View(presenter, EquipmentSlot.Helmet);
+            var helmet = Load<GearData>("Gear_IronHelmet");
             yield return Click(helmetView.Button);
-            Assert.AreEqual(2, presenter.SelectedIndex, "Consulting the slot selects its bag item.");
-            Assert.AreEqual(2, inventory.GetEquippedIndex(EquipmentSlot.Helmet), "Consulting never unequips.");
-            Assert.IsTrue(helmetView.SelectionFrame.activeSelf); Assert.IsTrue(bag[2].SelectionFrame.activeSelf);
+            Assert.AreEqual(EquipmentSlot.Helmet, presenter.SelectedEquipment, "The equipped item itself is selected, not a bag index.");
+            Assert.AreSame(helmet, inventory.GetEquipped(EquipmentSlot.Helmet), "Selecting never unequips.");
+            Assert.IsTrue(helmetView.SelectionFrame.activeSelf); Assert.IsFalse(bag.Any(slot => slot.SelectionFrame.activeSelf));
             StringAssert.Contains("Elmo de ferro", details.text); StringAssert.Contains("Capacete", details.text); StringAssert.Contains("Equipado", details.text);
-            StringAssert.Contains("COMPARAÇÃO · Capacete", comparison.text); StringAssert.Contains("(este item)", comparison.text);
+            StringAssert.Contains("Fora da bolsa", details.text);
+            Assert.IsFalse(comparison.gameObject.activeSelf, "No comparison for the item already in the slot.");
             Assert.IsTrue(unequip.interactable); Assert.IsFalse(equip.interactable);
+            Assert.IsFalse(window.Find("Drop").GetComponent<Button>().interactable, "Equipped items are unequipped before dropping.");
 
             yield return Click(unequip);
-            Assert.AreEqual(-1, inventory.GetEquippedIndex(EquipmentSlot.Helmet));
+            Assert.IsNull(inventory.GetEquipped(EquipmentSlot.Helmet));
             Assert.AreEqual(15f, health.Defense, 1e-3f); Assert.AreEqual(29f, combat.CurrentDamage, 1e-3f);
-            Assert.AreSame(Load<GearData>("Gear_IronHelmet"), inventory.Slots[2].Definition, "Unequipped helmet stays in its bag slot.");
+            Assert.AreSame(helmet, inventory.Slots[0].Definition, "Unequip moves the helmet to the first free bag slot.");
+            Assert.IsNull(presenter.SelectedEquipment); Assert.AreEqual(0, presenter.SelectedIndex, "Selection follows the item into the bag.");
+            StringAssert.Contains("1/16", title.text);
             StringAssert.Contains("Vazio", helmetView.ItemName.text);
             StringAssert.Contains("Defesa: 15 → 19 (+4)", comparison.text);
 
@@ -148,13 +171,25 @@ namespace DungeonCrawler.Tests.PlayerInput
             Assert.IsFalse(equip.interactable || unequip.interactable || window.Find("Use").GetComponent<Button>().interactable ||
                            window.Find("Drop").GetComponent<Button>().interactable, "Item commands are off for an empty slot.");
             Assert.IsFalse(comparison.gameObject.activeSelf);
-            yield return Click(bag[2].Button); yield return Click(equip);
-            Assert.AreEqual(2, inventory.GetEquippedIndex(EquipmentSlot.Helmet)); Assert.AreEqual(19f, health.Defense, 1e-3f);
+            yield return Click(bag[0].Button); yield return Click(equip);
+            Assert.AreSame(helmet, inventory.GetEquipped(EquipmentSlot.Helmet)); Assert.AreEqual(19f, health.Defense, 1e-3f);
+            Assert.AreEqual(EquipmentSlot.Helmet, presenter.SelectedEquipment, "Selection follows the item into its slot.");
+            Assert.IsTrue(inventory.Slots[0].IsEmpty);
 
             // Potion: never equippable from the bag.
             Assert.IsTrue(progression.TryCollect(new LootDrop(LootKind.Potion, 15)));
-            yield return Click(bag[6].Button);
+            yield return Click(bag[0].Button);
             Assert.IsFalse(equip.interactable); Assert.IsFalse(unequip.interactable);
+
+            // Full bag: unequip is refused with a clear message and nothing changes.
+            while (progression.TryCollect(new LootDrop(LootKind.Gear, 0, gear: Load<GearData>("Gear_LeatherBoots")))) { }
+            Assert.IsFalse(inventory.Slots.Any(s => s.IsEmpty));
+            var bagBefore = inventory.Slots.ToArray();
+            yield return Click(helmetView.Button); yield return Click(unequip);
+            Assert.AreEqual(InventoryPresenter.BagFullNotice, presenter.Notice);
+            StringAssert.Contains("Bolsa cheia", details.text);
+            Assert.AreSame(helmet, inventory.GetEquipped(EquipmentSlot.Helmet)); Assert.AreEqual(19f, health.Defense, 1e-3f);
+            CollectionAssert.AreEqual(bagBefore, inventory.Slots.ToArray(), "Bag untouched; nothing dropped.");
             yield return Key(keyboard.iKey);
             Assert.IsFalse(menu.InventoryOpen); Assert.AreEqual(1f, Time.timeScale);
             Assert.AreEqual(0, attacks, "Bag clicks never start attacks.");
@@ -182,7 +217,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             var weapon = View(presenter, EquipmentSlot.Weapon); var boots = View(presenter, EquipmentSlot.Boots);
             events.SetSelectedGameObject(weapon.Button.gameObject); yield return null;
             Assert.IsTrue(weapon.IsFocused); Assert.IsTrue(weapon.FocusFrame.activeSelf, "Focus cue visible.");
-            Assert.AreEqual(inventory.EquippedWeaponIndex, presenter.SelectedIndex, "Focus consults the bound item.");
+            Assert.AreEqual(EquipmentSlot.Weapon, presenter.SelectedEquipment, "Focus selects the equipped weapon.");
             Set(mouse.position, RectTransformUtility.WorldToScreenPoint(null, boots.transform.position)); InputSystem.Update(); yield return null; yield return null;
             Assert.IsTrue(boots.IsHovered, "Hover is tracked separately."); Assert.IsFalse(boots.FocusFrame.activeSelf, "Hover alone shows no focus cue.");
             Assert.IsTrue(weapon.FocusFrame.activeSelf);
@@ -191,7 +226,7 @@ namespace DungeonCrawler.Tests.PlayerInput
             events.SetSelectedGameObject(bag[3].Button.gameObject); yield return null;
             yield return Key(keyboard.rightArrowKey);
             Assert.IsNotNull(events.currentSelectedGameObject.GetComponent<EquipmentSlotView>(), "Right from the bag focuses an equipment slot.");
-            foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot))) Assert.GreaterOrEqual(inventory.GetEquippedIndex(slot), 0, "Focus never unequips.");
+            foreach (EquipmentSlot slot in Enum.GetValues(typeof(EquipmentSlot))) Assert.IsNotNull(inventory.GetEquipped(slot), "Focus never unequips.");
             yield return Key(keyboard.iKey);
             Assert.AreEqual(0, attacks);
         }
@@ -216,9 +251,11 @@ namespace DungeonCrawler.Tests.PlayerInput
             AssertFits(window);
             yield return Click(View(presenter, EquipmentSlot.Gloves).Button);
             StringAssert.Contains(longGloves.DisplayName, window.Find("ItemReading/Viewport/Content/Details").GetComponent<Text>().text, "Full name in the details.");
-            // Swap boots with the bag full: no free space required.
+            // Swap boots with the bag full: the replaced pair takes the freed slot; unequip is refused.
             int spare = inventory.Slots.Count - 1;
-            Assert.IsTrue(inventory.TryEquip(spare)); Assert.AreEqual(spare, inventory.GetEquippedIndex(EquipmentSlot.Boots));
+            Assert.IsTrue(inventory.TryEquip(spare)); Assert.AreSame(Load<GearData>("Gear_LeatherBoots"), inventory.Slots[spare].Definition);
+            Assert.IsFalse(inventory.Slots.Any(s => s.IsEmpty), "Still full after the swap.");
+            Assert.IsFalse(inventory.TryUnequip(EquipmentSlot.Gloves, out _, out UnequipFailure failure)); Assert.AreEqual(UnequipFailure.BagFull, failure);
             AssertFits(window);
         }
 
@@ -254,16 +291,21 @@ namespace DungeonCrawler.Tests.PlayerInput
             var floor = InScene<FloorController>();
             foreach (var room in floor.Rooms) typeof(RoomController).GetMethod("Complete", Private).Invoke(room, null);
             var inventory = InScene<PlayerInventory>(); CollectAndEquipSix(inventory);
+            Collect(inventory.GetComponent<PlayerProgression>(), Load<GearData>("Gear_IronHelmet")); // a second helmet stays in the bag
             var health = inventory.GetComponent<Health>(); health.TakeDamage(20f, Vector3.zero);
-            int[] before = inventory.CaptureEquipment(); float damage = inventory.GetComponent<PlayerCombat>().CurrentDamage, defense = health.Defense, hp = health.Current;
+            string[] before = inventory.CaptureEquipment(); float damage = inventory.GetComponent<PlayerCombat>().CurrentDamage, defense = health.Defense, hp = health.Current;
             var checkpoint = InScene<RunCheckpointController>();
             var captured = checkpoint.Capture();
             Assert.AreEqual(RunCheckpointData.CurrentVersion, captured.version);
-            CollectionAssert.AreEqual(before.Skip(2).ToArray(), captured.gearIndices);
+            CollectionAssert.AreEqual(before, captured.equipment);
+            Assert.AreEqual(-1, captured.weaponIndex); Assert.AreEqual(-1, captured.armorIndex); Assert.IsEmpty(captured.gearIndices);
+            Assert.AreEqual(1, captured.slots.Count(s => !string.IsNullOrEmpty(s.itemId)), "The bag is saved without the equipped items.");
             var transition = InScene<FloorTransitionController>(); Assert.IsTrue(transition.TryAdvance(), transition.Status);
             yield return null; yield return null;
             Assert.AreEqual(Second, SceneManager.GetActiveScene().path);
             AssertSame(before, damage, defense, hp);
+            Assert.AreEqual(1, IronUnits(InScene<PlayerInventory>()), "The starting weapon is not recreated on arrival.");
+            Assert.AreSame(Load<GearData>("Gear_IronHelmet"), InScene<PlayerInventory>().Slots[0].Definition);
             Assert.AreEqual(6, InScene<InventoryPresenter>().GetComponentsInChildren<EquipmentSlotView>(true).Length, "Second floor bag has the six slots.");
             Assert.IsTrue(InScene<RunCheckpointController>().SaveNow());
             InScene<GameSceneFlow>().ReturnToMenu(); yield return null; yield return null;
@@ -271,12 +313,57 @@ namespace DungeonCrawler.Tests.PlayerInput
             InScene<GameSceneFlow>().ContinueGame(); yield return null; yield return null;
             Assert.AreEqual(Second, SceneManager.GetActiveScene().path);
             AssertSame(before, damage, defense, hp);
+            Assert.AreEqual(1, IronUnits(InScene<PlayerInventory>()), "Continue never grants another weapon.");
         }
 
-        private static void AssertSame(int[] bindings, float damage, float defense, float hp)
+        [UnityTest]
+        public IEnumerator NewRun_StartsWithOneCommonIronSwordEquippedAndNothingElse()
+        {
+            yield return SceneManager.LoadSceneAsync(ReleaseFloor); yield return null;
+            var inventory = InScene<PlayerInventory>(); var iron = Load<WeaponData>("Weapon_IronSword");
+            Assert.AreSame(iron, inventory.EquippedWeapon);
+            Assert.AreEqual("Comum", iron.rarity.displayName);
+            Assert.AreEqual(0, inventory.OccupiedCount, "No copy in the bag.");
+            Assert.IsFalse(Object.FindObjectsByType<Pickup>(FindObjectsSortMode.None).Any(p => p.Drop.Weapon == iron), "No copy on the ground.");
+            foreach (EquipmentSlot slot in new[] { EquipmentSlot.Armor, EquipmentSlot.Helmet, EquipmentSlot.Gloves, EquipmentSlot.Boots, EquipmentSlot.Accessory })
+                Assert.IsNull(inventory.GetEquipped(slot), "Only the weapon is equipped at the start: " + slot);
+            var combat = inventory.GetComponent<PlayerCombat>();
+            Assert.AreEqual(26f, combat.CurrentDamage, 1e-3f, "Base 20 + one Iron Sword (+6): no hidden second weapon.");
+            var menu = InScene<GameMenuController>();
+            for (int i = 0; i < 3; i++) { menu.ToggleInventory(); yield return null; menu.ToggleInventory(); yield return null; }
+            inventory.enabled = false; inventory.enabled = true;
+            Assert.AreEqual(1, IronUnits(inventory), "Opening/closing or re-enabling never grants another weapon.");
+            Assert.AreEqual(26f, combat.CurrentDamage, 1e-3f);
+        }
+
+        [UnityTest]
+        public IEnumerator EmptyWeaponSlot_TransferAndContinue_NeverGrantTheStartingWeapon()
+        {
+            yield return SceneManager.LoadSceneAsync(ReleaseFloor); yield return null;
+            var floor = InScene<FloorController>();
+            foreach (var room in floor.Rooms) typeof(RoomController).GetMethod("Complete", Private).Invoke(room, null);
+            var inventory = InScene<PlayerInventory>();
+            Assert.IsTrue(inventory.TryUnequip(EquipmentSlot.Weapon, out int index, out _));
+            Assert.IsTrue(inventory.TryDrop(index), "Drop the starting sword: no weapon at all.");
+            Assert.AreEqual(0, IronUnits(inventory));
+            var transition = InScene<FloorTransitionController>(); Assert.IsTrue(transition.TryAdvance(), transition.Status);
+            yield return null; yield return null;
+            Assert.AreEqual(Second, SceneManager.GetActiveScene().path);
+            Assert.IsNull(InScene<PlayerInventory>().EquippedWeapon, "Arrival restores the empty weapon slot.");
+            Assert.AreEqual(0, IronUnits(InScene<PlayerInventory>()));
+            Assert.AreEqual(20f, InScene<PlayerInventory>().GetComponent<PlayerCombat>().CurrentDamage, 1e-3f, "Unarmed: base damage only.");
+            Assert.IsTrue(InScene<RunCheckpointController>().SaveNow());
+            InScene<GameSceneFlow>().ReturnToMenu(); yield return null; yield return null;
+            InScene<GameSceneFlow>().ContinueGame(); yield return null; yield return null;
+            Assert.AreEqual(Second, SceneManager.GetActiveScene().path);
+            Assert.IsNull(InScene<PlayerInventory>().EquippedWeapon, "Continue keeps the weapon slot empty.");
+            Assert.AreEqual(0, IronUnits(InScene<PlayerInventory>()));
+        }
+
+        private static void AssertSame(string[] equipment, float damage, float defense, float hp)
         {
             var inventory = InScene<PlayerInventory>();
-            CollectionAssert.AreEqual(bindings, inventory.CaptureEquipment());
+            CollectionAssert.AreEqual(equipment, inventory.CaptureEquipment());
             Assert.AreEqual(damage, inventory.GetComponent<PlayerCombat>().CurrentDamage, 1e-3f, "Bonuses restored once.");
             Assert.AreEqual(defense, inventory.GetComponent<Health>().Defense, 1e-3f);
             Assert.AreEqual(hp, inventory.GetComponent<Health>().Current, 1e-3f, "No healing on transfer/restore.");
