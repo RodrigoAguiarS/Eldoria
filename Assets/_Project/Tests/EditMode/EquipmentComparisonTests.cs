@@ -61,9 +61,10 @@ namespace DungeonCrawler.Tests.EditMode
                     var comparison = new SerializedObject(presenter).FindProperty("comparison").objectReferenceValue as Component;
                     Assert.IsNotNull(comparison, path);
                     Assert.AreEqual("Comparison", comparison.name);
-                    Assert.AreEqual(presenter.transform.Find("Window/Comparison"), comparison.transform);
+                    // Since the six-slot layout the comparison is part of DETALHES DO ITEM in the reading column.
+                    Assert.AreEqual(presenter.transform.Find("Window/ItemReading/Viewport/Content/Comparison"), comparison.transform);
                     Assert.AreEqual(16, presenter.GetComponentsInChildren<InventorySlotView>(true).Length);
-                    Assert.AreEqual(1, presenter.transform.Find("Window").Cast<Transform>().Count(child => child.name == "Comparison"));
+                    Assert.AreEqual(1, presenter.GetComponentsInChildren<Transform>(true).Count(child => child.name == "Comparison"));
                 }
                 finally { EditorSceneManager.CloseScene(scene, true); }
             }

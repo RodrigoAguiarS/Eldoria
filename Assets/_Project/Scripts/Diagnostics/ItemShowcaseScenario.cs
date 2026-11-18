@@ -19,6 +19,8 @@ namespace DungeonCrawler.Diagnostics
         [SerializeField] private Pickup pickupPrefab;
         [SerializeField] private WeaponData[] weapons = new WeaponData[0];
         [SerializeField] private ArmorData armor;
+        [Tooltip("Helmet, gloves, boots and accessory: one of each new category, equipped by the normal commands.")]
+        [SerializeField] private GearData[] gear = new GearData[0];
         public bool HasRun { get; private set; }
 
         private void Start()
@@ -33,11 +35,14 @@ namespace DungeonCrawler.Diagnostics
             foreach (WeaponData weapon in weapons)
                 if (weapon != null) progression.TryCollect(new LootDrop(LootKind.Weapon, 0, weapon));
             if (armor != null) progression.TryCollect(new LootDrop(LootKind.Armor, 0, armor: armor));
+            foreach (GearData item in gear)
+                if (item != null) progression.TryCollect(new LootDrop(LootKind.Gear, 0, gear: item));
             progression.TryCollect(new LootDrop(LootKind.Potion, 15));
             progression.TryCollect(new LootDrop(LootKind.Potion, 15));
             progression.TryCollect(new LootDrop(LootKind.Potion, 30));
             Equip(weapons.Length > 0 ? weapons[weapons.Length - 1] : null);
             Equip(armor);
+            foreach (GearData item in gear) Equip(item);
             if (health != null) health.TakeDamage(25f, transform.position);   // wounded so the potion HUD shows "Pronto"
 
             if (pickupPrefab == null) return;
@@ -55,6 +60,13 @@ namespace DungeonCrawler.Diagnostics
                 if (drops[i].Kind == LootKind.Weapon && drops[i].Weapon == null) continue;
                 Pickup pickup = Instantiate(pickupPrefab, origin + new Vector3(-4.5f + i * 1.5f, .6f, 3.4f), Quaternion.identity);
                 pickup.Setup(drops[i]);
+            }
+            // Second row: one pickup of each new equipment category (collection/drop paths without random loot).
+            for (int i = 0; i < gear.Length; i++)
+            {
+                if (gear[i] == null) continue;
+                Pickup pickup = Instantiate(pickupPrefab, origin + new Vector3(-2.25f + i * 1.5f, .6f, 5.2f), Quaternion.identity);
+                pickup.Setup(new LootDrop(LootKind.Gear, 0, gear: gear[i]));
             }
             Debug.Log("[Showcase] Itens de teste entregues e um pickup de cada tipo à frente (atalho de teste, não é loot normal).");
         }

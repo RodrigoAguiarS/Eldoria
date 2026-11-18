@@ -30,6 +30,8 @@ namespace DungeonCrawler.Player
         public float Stamina => model?.Stamina ?? 0f;
         public float MaxStamina => model?.MaxStamina ?? 1f;
         public float StaminaCost => definition != null ? Mathf.Max(0f, definition.staminaCost) : 0f;
+        /// <summary>Multiplier applied to the combat base damage by the spin impact.</summary>
+        public float DamageMultiplier => definition != null ? definition.Motion.DamageMultiplier : 0f;
         public float CooldownRemaining => model?.CooldownRemaining(Time.time) ?? 0f;
         /// <summary>Talent reduction (F12) applied when a cast starts; the shared definition is never edited.</summary>
         public float CooldownReduction => cooldownReduction;

@@ -64,11 +64,25 @@ namespace DungeonCrawler.Player
         /// <summary>Fator próprio dos talentos (F12); 1 sem talentos. Não altera o multiplicador de nível.</summary>
         public float TalentDamageMultiplier { get; set; } = 1f;
 
-        public float CurrentDamage => CalculateBaseDamage(WeaponDamageBonus);
+        /// <summary>Flat damage of the other equipped slots (gloves, accessory...), summed with the weapon bonus.</summary>
+        public float EquipmentDamageBonus { get; set; }
 
-        /// <summary>Base hit damage with a candidate flat bonus, before combo/special multipliers.</summary>
-        public float CalculateBaseDamage(float weaponDamageBonus) =>
-            (damage + weaponDamageBonus) * DamageMultiplier * TalentDamageMultiplier;
+        /// <summary>Configured base hit damage, before any equipment, level or talent term.</summary>
+        public float BaseDamage => damage;
+
+        public float CurrentDamage => CalculateBaseDamage(WeaponDamageBonus, EquipmentDamageBonus);
+
+        /// <summary>Base hit damage with a candidate weapon bonus and the current equipment bonus, before combo/special.</summary>
+        public float CalculateBaseDamage(float weaponDamageBonus) => CalculateBaseDamage(weaponDamageBonus, EquipmentDamageBonus);
+
+        /// <summary>(base + weapon + equipment) × level × talent; combo/special multiply this value afterwards.</summary>
+        public float CalculateBaseDamage(float weaponDamageBonus, float equipmentDamageBonus) =>
+            (damage + weaponDamageBonus + equipmentDamageBonus) * DamageMultiplier * TalentDamageMultiplier;
+
+        /// <summary>Number of combo steps and their per-hit multipliers, read from the configured definition.</summary>
+        public int ComboStepCount => comboDefinition != null ? comboDefinition.Count : 0;
+        public float GetComboMultiplier(int index) =>
+            comboDefinition != null && index >= 0 && index < comboDefinition.Count ? comboDefinition.GetStep(index).DamageMultiplier : 1f;
 
         private void OnEnable()
         {

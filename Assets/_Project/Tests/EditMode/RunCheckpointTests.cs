@@ -54,7 +54,7 @@ namespace DungeonCrawler.Tests.EditMode
         private static CheckpointTalent Talent(string id, int rank) => new CheckpointTalent { id = id, rank = rank };
         [Test] public void V2_RoundTripPreservesTalentRanks_AndV1MigratesWithoutTalents()
         {
-            var data = Valid(); data.version = RunCheckpointData.CurrentVersion;
+            var data = Valid(); data.version = RunCheckpointData.CurrentVersion; data.gearIndices = new[] { -1, -1, -1, -1 };
             data.talents = new[] { Talent("talent.guard", 1), Talent("talent.blade", 1) }; // level 3: two earned choices
             Assert.IsTrue(store.TrySave(data, catalog, out string error), error);
             Assert.IsTrue(store.TryLoad(catalog, out var loaded, out error), error);

@@ -7,8 +7,13 @@ namespace DungeonCrawler.Systems
     [Serializable]
     public sealed class RunCheckpointData
     {
-        /// <summary>v3 (F14) admits an authored entry boundary; v1/v2 remain readable.</summary>
-        public const int CurrentVersion = 3;
+        /// <summary>
+        /// v4 adds <see cref="gearIndices"/> (helmet, gloves, boots, accessory). v3 (F14) admits an authored entry
+        /// boundary; v1/v2/v3 remain readable with the four new slots unequipped.
+        /// </summary>
+        public const int CurrentVersion = 4;
+        /// <summary>First version whose document must carry <see cref="gearIndices"/>.</summary>
+        public const int GearVersion = 4;
         public int version;
         public string floorId;
         public string randomState;
@@ -19,6 +24,8 @@ namespace DungeonCrawler.Systems
         public int level, xp, gold;
         public CheckpointSlot[] slots;
         public int weaponIndex, armorIndex;
+        /// <summary>v4: exactly four bag indices (-1 = empty) in GearSlot order. Absent or empty before v4.</summary>
+        public int[] gearIndices;
         public CheckpointPickup[] pickups;
         public CheckpointTalent[] talents;
     }

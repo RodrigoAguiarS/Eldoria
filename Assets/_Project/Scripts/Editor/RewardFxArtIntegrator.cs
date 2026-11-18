@@ -73,7 +73,7 @@ namespace DungeonCrawler.Editor
         }
         [Serializable] public sealed class AtlasRectContract { public int index; public string id; public string[] loot_kinds; public PixelRect rect_px_top_left; }
         [Serializable] public sealed class PixelRect { public int x, y, w, h; }
-        [Serializable] public sealed class LootKindMap { public int Xp = -1, Gold = -1, Potion = -1, Weapon = -1, Armor = -1; }
+        [Serializable] public sealed class LootKindMap { public int Xp = -1, Gold = -1, Potion = -1, Weapon = -1, Armor = -1, Gear = -1; }
 #pragma warning restore 0649
         #endregion
 
@@ -189,6 +189,8 @@ namespace DungeonCrawler.Editor
                 case LootKind.Potion: return map.Potion;
                 case LootKind.Weapon: return map.Weapon;
                 case LootKind.Armor: return map.Armor;
+                // D-006: the A06 contract predates gear; a stored equipment item uses the same "guardado" cell as armor.
+                case LootKind.Gear: return map.Gear >= 0 ? map.Gear : map.Armor;
                 default: return -1;
             }
         }

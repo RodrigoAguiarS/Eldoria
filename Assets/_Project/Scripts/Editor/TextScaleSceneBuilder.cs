@@ -45,6 +45,26 @@ namespace DungeonCrawler.Editor
             if (UiSkinIntegrator.SkinAssetExists) UiSkinIntegrator.ConfigureScene(scene); // A03-I: rebuilding keeps the skin.
         }
 
+        /// <summary>
+        /// Inventory layout plus text registration only, for scenes outside the A03-I list (second floor, F14): it does
+        /// not re-place the rest of the HUD nor apply the skin there.
+        /// </summary>
+        public static void ConfigureInventoryOnly(Scene scene)
+        {
+            foreach (var root in scene.GetRootGameObjects())
+            foreach (var canvas in root.GetComponentsInChildren<Canvas>(true))
+            {
+                if (canvas.transform.parent != null) continue;
+                var presenters = canvas.GetComponentsInChildren<InventoryPresenter>(true);
+                if (presenters.Length == 0) continue;
+                foreach (var presenter in presenters) Inventory(presenter);
+                RegisterTexts(canvas);
+            }
+        }
+
+        /// <summary>Text children of the reading column, top to bottom: ATRIBUTOS, item icon, DETALHES, COMPARAÇÃO.</summary>
+        internal static readonly string[] ReadingColumn = { "Equipment", "DetailsIcon", "Details", "Comparison" };
+
         public static void PrepareInventoryRebuild(GameObject hud)
         {
             var window = hud.transform.Find("InventoryUI/InventoryPanel/Window");
@@ -54,7 +74,7 @@ namespace DungeonCrawler.Editor
                 foreach (var slot in grid.GetComponentsInChildren<InventorySlotView>(true)) slot.transform.SetParent(window, false);
             var content = window.Find("ItemReading/Viewport/Content");
             if (content != null)
-                foreach (string name in new[] { "Equipment", "Details" })
+                foreach (string name in ReadingColumn)
                 {
                     var text = content.Find(name); if (text != null) text.SetParent(window, false);
                 }
@@ -88,6 +108,12 @@ namespace DungeonCrawler.Editor
                 dropdown.captionText.horizontalOverflow = HorizontalWrapMode.Wrap;
                 Place(dropdown.transform.Find("Arrow"), "Glyph", -8, -8, 36, 44);
             }
+            RegisterTexts(canvas);
+        }
+
+        private static void RegisterTexts(Canvas canvas)
+        {
+            var root = canvas.transform;
             var scaling = Get<UiTextScale>(canvas.gameObject);
             Set(scaling, "options", GameShellSceneBuilder.EnsureOptions());
             var serialized = new SerializedObject(scaling); var entries = serialized.FindProperty("entries");
@@ -158,21 +184,34 @@ namespace DungeonCrawler.Editor
                 Place(slot, "Label", 74, 4, 220, 141);
                 Place(slot, "Icon", 6, 24, 60, 60); Place(slot, "Quantity", 4, 100, 62, 40);
             }
-            Place(window, "Comparison", 32, 800, 1240, 102);
+            // Bag note under the slots (the comparison moved into DETALHES DO ITEM in the reading column).
+            Place(window, EquipmentSlotsSceneBuilder.NoteName, 32, 800, 1240, 102);
             string[] commands = { "Equip", "Unequip", "Use", "Drop" };
             for (int i = 0; i < commands.Length; i++) Place(window, commands[i], 32 + i * 313, 922, 301, 64);
             Place(window, "Close", 1300, 922, 488, 64);
-            Place(window, "EquippedWeaponIcon", 1300, 112, 52, 52);
-            Place(window, "EquippedArmorIcon", 1364, 112, 52, 52);
-            Place(window, "DetailsIcon", 1430, 112, 52, 52);
-            // Full equipment and selected-item names can be arbitrarily long; one scrollable column.
+            // EQUIPAMENTOS: 3×2 grid at the top of the right column (helmet | weapon | accessory / armor | gloves | boots).
+            Place(window, EquipmentSlotsSceneBuilder.HeaderName, 1300, 108, 488, 34);
+            var equipment = window.Find(EquipmentSlotsSceneBuilder.GridName) as RectTransform;
+            if (equipment != null)
+            {
+                Place(window, EquipmentSlotsSceneBuilder.GridName, 1300, 146, 488, 280);
+                var cells = Get<GridLayoutGroup>(equipment.gameObject); cells.cellSize = new Vector2(152, 134);
+                cells.spacing = new Vector2(16, 12); cells.constraint = GridLayoutGroup.Constraint.FixedColumnCount; cells.constraintCount = 3;
+                cells.startCorner = GridLayoutGroup.Corner.UpperLeft; cells.startAxis = GridLayoutGroup.Axis.Horizontal;
+                cells.childAlignment = TextAnchor.UpperLeft;
+                foreach (Transform cell in equipment)
+                {
+                    Place(cell, "Category", 6, 4, 140, 30); Place(cell, "Icon", 52, 34, 48, 48); Place(cell, "Name", 6, 84, 140, 48);
+                }
+            }
+            // ATRIBUTOS and DETALHES DO ITEM (with the same-slot comparison) share one scrollable column below.
             var scrollRoot = window.Find("ItemReading");
             if (scrollRoot == null)
             {
                 var go = DefaultControls.CreateScrollView(new DefaultControls.Resources()); go.name = "ItemReading";
                 go.transform.SetParent(window, false); scrollRoot = go.transform;
             }
-            Place(window, "ItemReading", 1300, 182, 488, 716);
+            Place(window, "ItemReading", 1300, equipment != null ? 438 : 182, 488, equipment != null ? 460 : 716);
             var scroll = scrollRoot.GetComponent<ScrollRect>(); scroll.horizontal = false; scroll.movementType = ScrollRect.MovementType.Clamped;
             Set(presenter, "readingScroll", scroll);
             scroll.scrollSensitivity = 48; scroll.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.Permanent;
@@ -190,10 +229,19 @@ namespace DungeonCrawler.Editor
             var column = Get<VerticalLayoutGroup>(content.gameObject); column.spacing = 30; column.childControlWidth = column.childControlHeight = true;
             column.childForceExpandWidth = true; column.childForceExpandHeight = false;
             Get<ContentSizeFitter>(content.gameObject).verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-            foreach (string name in new[] { "Equipment", "Details" })
+            int order = 0;
+            foreach (string name in ReadingColumn)
             {
-                var text = window.Find(name) ?? content.Find(name); text.SetParent(content, false);
-                text.GetComponent<Text>().verticalOverflow = VerticalWrapMode.Truncate;
+                var child = window.Find(name) ?? content.Find(name);
+                if (child == null) continue;
+                child.SetParent(content, false); child.SetSiblingIndex(order++);
+                var text = child.GetComponent<Text>();
+                if (text != null) { text.verticalOverflow = VerticalWrapMode.Truncate; text.horizontalOverflow = HorizontalWrapMode.Wrap; text.alignment = TextAnchor.UpperLeft; }
+                else
+                {
+                    // Item icon row: fixed height, centred by preserveAspect inside the column width.
+                    var row = Get<LayoutElement>(child.gameObject); row.minHeight = row.preferredHeight = 72; row.flexibleHeight = 0;
+                }
             }
         }
 

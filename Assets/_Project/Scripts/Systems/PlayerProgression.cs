@@ -27,10 +27,16 @@ namespace DungeonCrawler.Systems
         public int XpToNext => Model.XpToNext;
         public int Gold { get; private set; }
         public WeaponData Weapon { get; private set; }
+        /// <summary>Flat damage of the equipped non-weapon slots, assigned absolutely by the inventory.</summary>
+        public float EquipmentDamageBonus { get; private set; }
 
         /// <summary>Previews a weapon with the combat configuration and current level, without equipping it.</summary>
         public float GetBaseDamage(WeaponData weapon) => combat != null
             ? combat.CalculateBaseDamage(weapon != null ? weapon.damageBonus : 0f) : 0f;
+
+        /// <summary>Previews complete equipment totals with the shared combat formula, without equipping anything.</summary>
+        public float GetBaseDamage(in EquipmentTotals totals) => combat != null
+            ? combat.CalculateBaseDamage(totals.WeaponDamage, totals.GearDamage) : 0f;
 
         /// <summary>Qualquer mudança de estado (XP, nível, ouro, arma) para o HUD.</summary>
         public event Action Changed;
@@ -66,7 +72,8 @@ namespace DungeonCrawler.Systems
 
         private bool CollectAccepted(LootDrop drop, bool notifyRejection)
         {
-            if (inventory != null && (drop.Kind == LootKind.Weapon || drop.Kind == LootKind.Potion || drop.Kind == LootKind.Armor))
+            if (inventory != null && (drop.Kind == LootKind.Weapon || drop.Kind == LootKind.Potion || drop.Kind == LootKind.Armor ||
+                                      drop.Kind == LootKind.Gear))
             {
                 bool stored = inventory.TryStore(drop, notifyRejection);
                 if (stored) NotifyCollected(drop);
@@ -95,10 +102,15 @@ namespace DungeonCrawler.Systems
             CollectionAccepted?.Invoke(drop);
         }
 
-        public void SetEquippedWeapon(WeaponData weapon)
+        public void SetEquippedWeapon(WeaponData weapon) => SetEquipment(weapon, EquipmentDamageBonus);
+
+        /// <summary>Absolute assignment of the weapon and the other slots' flat damage; repeated calls never accumulate.</summary>
+        public void SetEquipment(WeaponData weapon, float equipmentDamageBonus)
         {
-            if (Weapon == weapon) return;
+            equipmentDamageBonus = float.IsNaN(equipmentDamageBonus) || float.IsInfinity(equipmentDamageBonus) ? 0f : Mathf.Max(0f, equipmentDamageBonus);
+            if (Weapon == weapon && EquipmentDamageBonus == equipmentDamageBonus) return;
             Weapon = weapon;
+            EquipmentDamageBonus = equipmentDamageBonus;
             ApplyCombatStats();
             Changed?.Invoke();
         }
@@ -131,6 +143,7 @@ namespace DungeonCrawler.Systems
             if (combat == null) return;
             combat.DamageMultiplier = Model.DamageMultiplier;
             combat.WeaponDamageBonus = Weapon != null ? Weapon.damageBonus : 0f;
+            combat.EquipmentDamageBonus = EquipmentDamageBonus;
         }
     }
 }

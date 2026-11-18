@@ -54,7 +54,7 @@ namespace DungeonCrawler.Systems
         /// <summary>Ground model for a drop. Weapons/armor resolve by definition; XP, gold and potions by kind.</summary>
         public GameObject GetGroundPrefab(in LootDrop drop)
         {
-            ItemDefinition item = drop.Kind == LootKind.Weapon ? drop.Weapon : drop.Kind == LootKind.Armor ? drop.Armor : null;
+            ItemDefinition item = drop.Item;
             if (item != null && TryGetItem(item, out ItemVisual visual) && visual.groundPrefab != null) return visual.groundPrefab;
             return GetLootPrefab(drop.Kind);
         }

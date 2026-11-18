@@ -114,6 +114,7 @@ namespace DungeonCrawler.Editor
             foreach (var window in targets.Windows) changes += SkinImage(window, skin.PanelWindow);
             foreach (var inset in targets.Insets) changes += SkinImage(inset, skin.PanelInset);
             foreach (var slot in targets.Slots) changes += SkinSlot(slot, skin);
+            foreach (var slot in targets.EquipmentSlots) changes += SkinEquipmentSlot(slot, skin);
             return changes;
         }
 
@@ -149,6 +150,19 @@ namespace DungeonCrawler.Editor
                 if (markerImage.sprite != skin.MarkerSelected || marker.localEulerAngles != Vector3.zero || markerImage.raycastTarget)
                     problems.Add("Selection marker wrong: " + Path(slot));
             }
+            foreach (var slot in targets.EquipmentSlots)
+            {
+                if (slot.Skin != skin || slot.RarityBand == null || slot.EquippedMarker == null || slot.EmptyMarker == null || slot.Button == null)
+                    { problems.Add("Equipment slot view not wired: " + Path(slot)); continue; }
+                if (slot.Button.transition != Selectable.Transition.None) problems.Add("Equipment slot transition changed: " + Path(slot));
+                if (!Skinned(slot.RarityBand, skin.SlotRarityBand) || slot.RarityBand.raycastTarget) problems.Add("Rarity band wrong: " + Path(slot));
+                if (slot.EquippedMarker.sprite != skin.MarkerEquipped || slot.EquippedMarker.raycastTarget) problems.Add("Equipped marker wrong: " + Path(slot));
+                if (slot.EmptyMarker.sprite != skin.MarkerEmpty || slot.EmptyMarker.raycastTarget) problems.Add("Empty marker wrong: " + Path(slot));
+                var marker = slot.SelectionFrame != null ? slot.SelectionFrame.transform.Find("Marker") : null;
+                if (marker == null || marker.GetComponent<Image>().sprite != skin.MarkerSelected || marker.localEulerAngles != Vector3.zero)
+                    problems.Add("Selection marker wrong: " + Path(slot));
+                if (slot.FocusFrame == null) problems.Add("Focus frame missing: " + Path(slot));
+            }
             return problems;
         }
 
@@ -176,8 +190,10 @@ namespace DungeonCrawler.Editor
             public readonly List<Image> Windows = new List<Image>();
             public readonly List<Image> Insets = new List<Image>();
             public readonly List<InventorySlotView> Slots = new List<InventorySlotView>();
+            public readonly List<EquipmentSlotView> EquipmentSlots = new List<EquipmentSlotView>();
             public IEnumerable<GameObject> All => Buttons.Select(b => b.gameObject).Concat(Windows.Select(w => w.gameObject))
-                .Concat(Insets.Select(i => i.gameObject)).Concat(Slots.Select(s => s.gameObject));
+                .Concat(Insets.Select(i => i.gameObject)).Concat(Slots.Select(s => s.gameObject))
+                .Concat(EquipmentSlots.Select(s => s.gameObject));
         }
 
         public static Targets Collect(Scene scene)
@@ -190,7 +206,7 @@ namespace DungeonCrawler.Editor
                 // Image target on the same object plus a Text "Label". Slots, dropdowns, toggles, sliders and scrollbars are excluded.
                 foreach (var button in root.GetComponentsInChildren<Button>(true))
                 {
-                    if (button.GetComponent<InventorySlotView>() != null) continue;
+                    if (button.GetComponent<InventorySlotView>() != null || button.GetComponent<EquipmentSlotView>() != null) continue;
                     if (!(button.targetGraphic is Image image) || image.gameObject != button.gameObject) continue;
                     if (button.transform.Find("Label")?.GetComponent<Text>() == null) continue;
                     targets.Buttons.Add(button);
@@ -209,6 +225,7 @@ namespace DungeonCrawler.Editor
                 var potion = root.Find("PotionHud")?.GetComponent<Image>();
                 if (potion != null) targets.Insets.Add(potion);
                 targets.Slots.AddRange(root.GetComponentsInChildren<InventorySlotView>(true));
+                targets.EquipmentSlots.AddRange(root.GetComponentsInChildren<EquipmentSlotView>(true));
             }
             return targets;
         }
@@ -286,6 +303,44 @@ namespace DungeonCrawler.Editor
                 }
             }
 
+            var data = new SerializedObject(view);
+            data.FindProperty("skin").objectReferenceValue = skin;
+            data.FindProperty("rarityBand").objectReferenceValue = band.GetComponent<Image>();
+            data.FindProperty("equippedMarker").objectReferenceValue = equipped.GetComponent<Image>();
+            data.FindProperty("emptyMarker").objectReferenceValue = empty.GetComponent<Image>();
+            if (data.ApplyModifiedPropertiesWithoutUndo()) { EditorUtility.SetDirty(view); changes++; }
+            return changes;
+        }
+
+        /// <summary>
+        /// Equipment slot: same base/state sprites as the bag slots. Rarity band behind the content, empty marker on
+        /// the icon, equipped marker in the top-right corner, selection marker top-left; the focus edges are kept.
+        /// </summary>
+        private static int SkinEquipmentSlot(EquipmentSlotView view, UiSkin skin)
+        {
+            var slot = (RectTransform)view.transform;
+            int changes = view.Background != null ? SkinImage(view.Background, skin.SlotEmpty) : 0;
+            var band = Decor(slot, RarityBandName, out bool created); changes += created ? 1 : 0;
+            changes += Shape(band, Vector2.zero, Vector2.one, new Vector2(.5f, .5f), Vector2.zero, Vector2.zero);
+            changes += SkinImage(band.GetComponent<Image>(), skin.SlotRarityBand);
+            if (band.GetSiblingIndex() != 0) { band.SetSiblingIndex(0); changes++; }
+            var icon = slot.Find("Icon") as RectTransform;
+            Vector2 iconCentre = icon != null ? icon.anchoredPosition + new Vector2(icon.sizeDelta.x, -icon.sizeDelta.y) * .5f : new Vector2(76f, -58f);
+            var empty = Decor(slot, EmptyMarkerName, out created); changes += created ? 1 : 0;
+            changes += Shape(empty, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(0f, 1f), iconCentre + new Vector2(-12f, 12f), Vector2.one * 24f);
+            changes += SkinImage(empty.GetComponent<Image>(), skin.MarkerEmpty, Image.Type.Simple);
+            var equipped = Decor(slot, EquippedMarkerName, out created); changes += created ? 1 : 0;
+            changes += Shape(equipped, Vector2.one, Vector2.one, Vector2.one, new Vector2(-6f, -6f), Vector2.one * 22f);
+            changes += SkinImage(equipped.GetComponent<Image>(), skin.MarkerEquipped, Image.Type.Simple);
+            changes += KeepAtEnd(equipped, 1) + KeepAtEnd(empty, 0);
+            if (view.SelectionFrame != null && view.SelectionFrame.transform.Find("Marker") is RectTransform marker)
+            {
+                changes += Shape(marker, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(.5f, .5f), new Vector2(-2f, 2f), Vector2.one * 24f);
+                if (marker.localRotation != Quaternion.identity) { marker.localRotation = Quaternion.identity; changes++; }
+                var markerImage = marker.GetComponent<Image>();
+                changes += SkinImage(markerImage, skin.MarkerSelected, Image.Type.Simple);
+                if (!markerImage.preserveAspect) { markerImage.preserveAspect = true; changes++; }
+            }
             var data = new SerializedObject(view);
             data.FindProperty("skin").objectReferenceValue = skin;
             data.FindProperty("rarityBand").objectReferenceValue = band.GetComponent<Image>();
@@ -373,7 +428,8 @@ namespace DungeonCrawler.Editor
         internal static bool IsDecor(Transform transform)
         {
             for (var t = transform; t != null; t = t.parent)
-                if (SkinDecor.Contains(t.name) && t.parent != null && t.parent.GetComponent<InventorySlotView>() != null) return true;
+                if (SkinDecor.Contains(t.name) && t.parent != null &&
+                    (t.parent.GetComponent<InventorySlotView>() != null || t.parent.GetComponent<EquipmentSlotView>() != null)) return true;
             return false;
         }
 

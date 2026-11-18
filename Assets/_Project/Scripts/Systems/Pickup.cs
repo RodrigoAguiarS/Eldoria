@@ -39,7 +39,7 @@ namespace DungeonCrawler.Systems
             expireAt = persistUntilCollected ? float.PositiveInfinity : Time.time + lifetime;
             if (registry != null) registry.Register(this);
             if (presenter != null && presenter.Present(lootDrop)) return;
-            ItemDefinition item = lootDrop.Kind == LootKind.Weapon ? lootDrop.Weapon : lootDrop.Armor;
+            ItemDefinition item = lootDrop.Item;
             Tint(item != null && item.rarity != null ? item.rarity.color : ColorFor(lootDrop.Kind));
         }
 
@@ -92,10 +92,10 @@ namespace DungeonCrawler.Systems
         {
             snapshot = null;
             if (collected || !isActiveAndEnabled || Time.time >= expireAt) return false;
-            ItemDefinition item = drop.Kind == LootKind.Potion ? potion :
-                drop.Kind == LootKind.Weapon ? (ItemDefinition)drop.Weapon : drop.Armor;
+            ItemDefinition item = drop.Kind == LootKind.Potion ? potion : drop.Item;
+            bool equipment = drop.Kind == LootKind.Weapon || drop.Kind == LootKind.Armor || drop.Kind == LootKind.Gear;
             snapshot = new CheckpointPickup { id = checkpointId, itemId = item != null ? item.PersistentId : "",
-                kind = drop.Kind, amount = drop.Kind == LootKind.Weapon || drop.Kind == LootKind.Armor ? 0 : drop.Amount,
+                kind = drop.Kind, amount = equipment ? 0 : drop.Amount,
                 position = new Vector3(transform.position.x, baseY, transform.position.z),
                 persistent = float.IsPositiveInfinity(expireAt),
                 remainingLifetime = float.IsPositiveInfinity(expireAt) ? 0f : Mathf.Max(0f, expireAt - Time.time) };
@@ -105,7 +105,7 @@ namespace DungeonCrawler.Systems
         public void RestoreCheckpoint(CheckpointPickup data, RunCheckpointCatalog catalog, RunLootRegistry loot)
         {
             var item = catalog.Resolve(data.itemId);
-            Setup(new LootDrop(data.kind, data.amount, item as WeaponData, item as ArmorData), data.persistent, loot);
+            Setup(new LootDrop(data.kind, data.amount, item as WeaponData, item as ArmorData, item as GearData), data.persistent, loot);
             checkpointId = data.id;
             expireAt = data.persistent ? float.PositiveInfinity : Time.time + data.remainingLifetime;
         }
@@ -128,6 +128,7 @@ namespace DungeonCrawler.Systems
                 case LootKind.Gold: return new Color(1f, 0.85f, 0.2f);
                 case LootKind.Potion: return new Color(0.9f, 0.2f, 0.4f);
                 case LootKind.Armor: return new Color(0.6f, 0.75f, 0.9f);
+                case LootKind.Gear: return new Color(0.75f, 0.7f, 0.9f);
                 default: return new Color(0.95f, 0.95f, 0.95f);
             }
         }

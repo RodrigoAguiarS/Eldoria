@@ -58,8 +58,12 @@ namespace DungeonCrawler.Systems
         public static RunCheckpointData PrepareArrival(RunCheckpointData source, RunCheckpointCatalog target)
         {
             if (source == null || target == null || !target.allowEntryCheckpoint || target.rooms == null || target.rooms.Length == 0 || target.rooms[0] == null) return null;
+            // Older sources carry no gear field: normalize to the four new slots unequipped before upgrading the version.
+            if (!RunCheckpointCatalog.TryGetEquipment(source, out int[] equipped)) return null;
             var data = JsonUtility.FromJson<RunCheckpointData>(JsonUtility.ToJson(source));
             data.version = RunCheckpointData.CurrentVersion; data.floorId = target.floorId;
+            data.gearIndices = new int[EquipmentSlots.GearCount];
+            for (int i = 0; i < data.gearIndices.Length; i++) data.gearIndices[i] = equipped[(int)EquipmentSlots.FromGearIndex(i)];
             data.clearedRooms = Array.Empty<string>(); data.openedChests = Array.Empty<string>();
             data.pickups = Array.Empty<CheckpointPickup>(); data.resumeRoom = target.rooms[0].id;
             return target.Validate(data, out _) ? data : null;
