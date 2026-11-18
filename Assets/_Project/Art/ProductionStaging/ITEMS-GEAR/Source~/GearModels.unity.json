@@ -1,0 +1,207 @@
+{
+  "batch": "ITEMS-GEAR",
+  "generator": "Tools/Lemo3DGenerator/src/production/GearModels.mjs",
+  "three": "0.170.0",
+  "lemoRoot": "G:/lemo-opuscar/lemo-opuscar",
+  "units": "metros, Y para cima, +Z frente (convenção do export-fbx.mjs)",
+  "reusedMaterials": [
+    "Item_steel",
+    "Item_steelDark",
+    "Item_brass",
+    "Item_leatherDark",
+    "Item_vestLeather",
+    "Item_vestSeam"
+  ],
+  "materials": {
+    "Item_steel": {
+      "color": "#B9C4CF",
+      "metallic": 0.6,
+      "smoothness": 0.55,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_steelDark": {
+      "color": "#6F7B88",
+      "metallic": 0.6,
+      "smoothness": 0.45,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_brass": {
+      "color": "#E0B040",
+      "metallic": 0.7,
+      "smoothness": 0.5,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_leatherDark": {
+      "color": "#4E3020",
+      "metallic": 0,
+      "smoothness": 0.25,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_vestLeather": {
+      "color": "#9A6234",
+      "metallic": 0,
+      "smoothness": 0.28,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_vestSeam": {
+      "color": "#3A2418",
+      "metallic": 0,
+      "smoothness": 0.2,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_copper": {
+      "color": "#C27A45",
+      "metallic": 0.7,
+      "smoothness": 0.46,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    },
+    "Item_copperDark": {
+      "color": "#6E3F22",
+      "metallic": 0.55,
+      "smoothness": 0.32,
+      "emissive": "#000000",
+      "emissiveIntensity": 0
+    }
+  },
+  "models": [
+    {
+      "id": "MODEL-ITEM-HELMET",
+      "name": "Item_IronHelmet",
+      "kind": "helmet",
+      "item": "Gear_IronHelmet",
+      "fbx": "Models/Item_IronHelmet.fbx",
+      "submeshMaterials": [
+        "Item_steel",
+        "Item_brass",
+        "Item_leatherDark",
+        "Item_steelDark"
+      ],
+      "triangles": 632,
+      "pivot": "base",
+      "pairIsOneUnit": false,
+      "bounds": {
+        "min": [
+          -0.2002,
+          0,
+          -0.2072
+        ],
+        "max": [
+          0.2002,
+          0.3501,
+          0.2072
+        ],
+        "size": [
+          0.4004,
+          0.3501,
+          0.4144
+        ]
+      }
+    },
+    {
+      "id": "MODEL-ITEM-GLOVES",
+      "name": "Item_LeatherGloves",
+      "kind": "gloves",
+      "item": "Gear_LeatherGloves",
+      "fbx": "Models/Item_LeatherGloves.fbx",
+      "submeshMaterials": [
+        "Item_vestLeather",
+        "Item_vestSeam",
+        "Item_leatherDark",
+        "Item_brass"
+      ],
+      "triangles": 836,
+      "pivot": "base",
+      "pairIsOneUnit": true,
+      "bounds": {
+        "min": [
+          -0.1517,
+          0,
+          -0.1357
+        ],
+        "max": [
+          0.1517,
+          0.1131,
+          0.1357
+        ],
+        "size": [
+          0.3034,
+          0.1131,
+          0.2713
+        ]
+      }
+    },
+    {
+      "id": "MODEL-ITEM-BOOTS",
+      "name": "Item_LeatherBoots",
+      "kind": "boots",
+      "item": "Gear_LeatherBoots",
+      "fbx": "Models/Item_LeatherBoots.fbx",
+      "submeshMaterials": [
+        "Item_leatherDark",
+        "Item_vestLeather",
+        "Item_vestSeam",
+        "Item_brass"
+      ],
+      "triangles": 632,
+      "pivot": "base",
+      "pairIsOneUnit": true,
+      "bounds": {
+        "min": [
+          -0.1431,
+          0,
+          -0.1521
+        ],
+        "max": [
+          0.1431,
+          0.317,
+          0.1521
+        ],
+        "size": [
+          0.2863,
+          0.317,
+          0.3041
+        ]
+      }
+    },
+    {
+      "id": "MODEL-ITEM-AMULET",
+      "name": "Item_CopperAmulet",
+      "kind": "amulet",
+      "item": "Gear_CopperAmulet",
+      "fbx": "Models/Item_CopperAmulet.fbx",
+      "submeshMaterials": [
+        "Item_copper",
+        "Item_copperDark",
+        "Item_brass",
+        "Item_leatherDark"
+      ],
+      "triangles": 332,
+      "pivot": "base",
+      "pairIsOneUnit": false,
+      "bounds": {
+        "min": [
+          -0.1015,
+          0,
+          -0.0233
+        ],
+        "max": [
+          0.1015,
+          0.3731,
+          0.0233
+        ],
+        "size": [
+          0.203,
+          0.3731,
+          0.0467
+        ]
+      }
+    }
+  ]
+}

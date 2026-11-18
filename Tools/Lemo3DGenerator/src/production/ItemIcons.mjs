@@ -100,7 +100,7 @@ export const FX = {
 };
 
 // ———————————————————————— página do renderizador ————————————————————————
-const PAGE = String.raw`<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}</style></head><body>
+export const PAGE = String.raw`<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}</style></head><body>
 <script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
 <script type="module">
 import * as THREE from 'three';

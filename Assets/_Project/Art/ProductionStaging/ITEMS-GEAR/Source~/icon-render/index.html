@@ -1,0 +1,73 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}</style></head><body>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const SIZE = 512, CONTENT = 416, OUTLINE = 9, SS = 2;
+const data = await (await fetch('./data.json')).json();
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true, premultipliedAlpha: false });
+renderer.setPixelRatio(1); renderer.setSize(SIZE * SS, SIZE * SS); renderer.setClearColor(0x000000, 0);
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.NoToneMapping;
+document.body.appendChild(renderer.domElement);
+const pmrem = new THREE.PMREMGenerator(renderer), env = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+function scene() {
+  const s = new THREE.Scene(); s.environment = env;
+  s.add(new THREE.HemisphereLight(0xe6eeff, 0x3a3040, 1.25));
+  const key = new THREE.DirectionalLight(0xfff4e0, 2.4); key.position.set(-1.4, 2.2, 2.2); s.add(key);
+  const rim = new THREE.DirectionalLight(0x9fe6ff, 1.1); rim.position.set(1.8, 1.2, -1.6); s.add(rim);
+  return s;
+}
+function model(name) {
+  const g = new THREE.Group();
+  for (const grp of data.models[name].groups) {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(grp.positions, 3));
+    geo.setAttribute('normal', new THREE.Float32BufferAttribute(grp.normals, 3));
+    const mat = new THREE.MeshStandardMaterial({ color: grp.color, emissive: grp.emissive, emissiveIntensity: grp.emissiveIntensity,
+      metalness: Math.min(grp.metallic, .5), roughness: Math.max(grp.roughness, .35), flatShading: true, envMapIntensity: .9 });
+    g.add(new THREE.Mesh(geo, mat));
+  }
+  return g;
+}
+const D = Math.PI / 180;
+function shot(name, pose, elev, bg) {
+  const s = scene(), m = model(name);
+  const inner = new THREE.Group(); inner.add(m); m.rotation.set(...pose.pre.map(v => v * D));
+  inner.rotation.set(...pose.rot.map(v => v * D)); s.add(inner);
+  inner.updateMatrixWorld(true);
+  const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -10, 10);
+  cam.position.set(0, Math.sin(elev * D), Math.cos(elev * D)); cam.lookAt(0, 0, 0); cam.updateMatrixWorld(true);
+  // enquadra pelos vértices projetados (caixa exata da silhueta)
+  const v = new THREE.Vector3(); let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  m.traverse(o => { if (!o.isMesh) return; const p = o.geometry.attributes.position; for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i).applyMatrix4(o.matrixWorld).applyMatrix4(cam.matrixWorldInverse); x0 = Math.min(x0, v.x); x1 = Math.max(x1, v.x); y0 = Math.min(y0, v.y); y1 = Math.max(y1, v.y); } });
+  const fit = (CONTENT - 2 * OUTLINE) / SIZE, half = Math.max(x1 - x0, y1 - y0) / fit / 2, cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+  cam.left = cx - half; cam.right = cx + half; cam.top = cy + half; cam.bottom = cy - half; cam.updateProjectionMatrix();
+  renderer.setClearColor(bg ?? 0x000000, bg === undefined ? 0 : 1);
+  renderer.render(s, cam);
+  // reduz 2× e compõe o contorno (dilatação do alpha) atrás do item
+  const c = document.createElement('canvas'); c.width = c.height = SIZE; const x = c.getContext('2d', { willReadFrequently: true });
+  x.imageSmoothingEnabled = true; x.imageSmoothingQuality = 'high'; x.drawImage(renderer.domElement, 0, 0, SIZE, SIZE);
+  if (bg !== undefined) return c.toDataURL('image/png');
+  const img = x.getImageData(0, 0, SIZE, SIZE), a = new Float32Array(SIZE * SIZE);
+  for (let i = 0; i < a.length; i++) a[i] = img.data[i * 4 + 3] / 255;
+  const dil = new Float32Array(a.length), r = OUTLINE, offs = [];
+  for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) { const d = Math.hypot(dx, dy); if (d <= r + .5) offs.push([dx, dy, Math.min(1, r + .5 - d)]); }
+  for (let y = 0; y < SIZE; y++) for (let xx = 0; xx < SIZE; xx++) {
+    let m2 = 0; for (const [dx, dy, w] of offs) { const X = xx + dx, Y = y + dy; if (X < 0 || Y < 0 || X >= SIZE || Y >= SIZE) continue; const val = a[Y * SIZE + X] * w; if (val > m2) { m2 = val; if (m2 >= 1) break; } }
+    dil[y * SIZE + xx] = m2;
+  }
+  const OC = [16, 12, 22], OA = .94;
+  for (let i = 0; i < a.length; i++) {
+    const fa = a[i], oa = dil[i] * OA, outA = fa + oa * (1 - fa);
+    if (outA <= 0) { img.data[i * 4 + 3] = 0; continue; }
+    for (let k = 0; k < 3; k++) img.data[i * 4 + k] = Math.round((img.data[i * 4 + k] * fa + OC[k] * oa * (1 - fa)) / outA);
+    img.data[i * 4 + 3] = Math.round(outA * 255);
+  }
+  x.putImageData(img, 0, 0);
+  return c.toDataURL('image/png');
+}
+window.icon = (name, pose, elev) => shot(name, pose, elev);
+window.still = (name, pose, elev, bg) => shot(name, pose, elev, bg);
+window.render = () => {};
+window.READY = true;
+</script></body></html>
