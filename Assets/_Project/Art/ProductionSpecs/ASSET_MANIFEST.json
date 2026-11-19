@@ -7477,7 +7477,7 @@
       "technical_dependencies": [
         "BossBrain aplica Slam, sem evento público de impacto dedicado."
       ],
-      "integration_state": "Produzido em staging (A10, 17/11/2026) como spritesheet de chão 1024×512 RGBA (4×2 quadros 256×256, 0,35 s, vista ortográfica de cima): anel baixo e fino de poeira de pedra com borda laranja apagada, tufos de poeira e 6 lascas angulares; centro aberto (0,22 R), quadro final vazio. Escala ligada ao raio real: 1 R = 116 px, lado do quad = R × 2,206897 (7,724 m fase 1; 10,041 m fase 2). NÃO integrado: em jogo o Slam continua sem efeito de impacto. Evento de apresentação SlamResolved(centro, raio) no BossBrain depois do ResolveSlam e ParticleSystem de 1 partícula (Horizontal Billboard, reuso/Clear) são tarefa Codex separada; proposta em Source~/FX-SLAM.timing.json.",
+      "integration_state": "Integrado em V08 (18/11/2026, branch claude/v08-slam-impact): SlamImpactArtIntegrator (Tools/Dungeon Crawler/Feedback/Apply Slam Impact Art (A10) e Validate Slam Impact Art (A10)) lê Source~/FX-SLAM.timing.json, confere grade 4×2, quadros uniformes de 0,04375 s, vida 0,35 s, partícula única, World/Local, Horizontal Billboard e raios 3,5/4,55 m × Boss_Warden_Data.asset, e recusa divergências. Filho SlamImpactFx direto na raiz do Boss_Warden.prefab (herdado pela variante Boss_Warden_Generated da release) com um ParticleSystem reutilizado (1 partícula, sem loop/playOnAwake, emissão desligada, semente fixa, tempo escalado, Texture Sheet Whole Sheet linear 0→1, sem sombras) e Materials/SlamFx/Mat_FxSlam.mat (URP/Particles/Unlit, Blend Alpha, branco, sem ZWrite nem emissão). BossBrain ganhou só o evento SlamResolved(centro, raio), disparado uma vez por Slam resolvido depois do dano e do estado; nunca em windup cancelado. BossSlamImpactPresenter emite no centro (y 0,04 m) com lado = raio × 2,206897 e startSize = lado × √2 (medido: no Horizontal Billboard da 6000.6 o startSize é a diagonal); alpha × opção de flash; apaga em morte do Boss, desativação e flash 0; pausa congela. BossData, fases, telegraph e dano inalterados. Aprovação artística humana pendente.",
       "visual_specification": "Low thin shock ring and a few angular stone chips with muted orange edge; no persistent damaging patch.",
       "acceptance_criteria": [
         "Preservar identidade e regras atuais.",
@@ -7486,7 +7486,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: FxSlam.validation.json 27/27 (sheet 1024×512 e quadros 256×256 RGBA; células = quadros; 0 px transparentes com RGB sujo; margem 14 px; quadro 7 com alpha 0 e quadro 6 com 12% do pico; alpha 0 dentro de 0,22 R; cobertura alpha>50% máx. 6,7%; alpha médio em R máx. 0,104; centroide do anel a 0,000 px do centro em todos os quadros (sem shake embutido); anel monotônico de 0,377 a 0,985 R; lascas ≤ 0,755 R; 0 px verde, azul/ciano saturado ou vermelho de telegraph; laranja 8,6% dos px visíveis; WCAG poeira 2,47/3,53 sobre #55596B/#3E4152; 0,35 s < recoverTime 0,8 s e cooldown ≥ 1,6 s, logo nunca coexiste com o próximo aviso; aviso 1,4/1,0 s ≥ 1 s; R 3,5/4,55 m lidos de Boss_Warden_Data.asset; BossBrain/BossAttackTelegraph/BossData/asset só lidos) e asset_report.py (sheet --expect-size 1024x512 e 8 quadros 256x256, --require-alpha, exit 0); prévias a 45° sobre a captura real F08 da arena e GIF de reuso/pausa/cancelamento, rotuladas PREVIEW. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem, hook, pausa, pool e PlayMode não observados.",
+        "current_session": "V08 (18/11/2026, Unity 6000.6.9f1): Apply idempotente (2ª execução sem gravar, hashes iguais); Validate ok nos 2 prefabs do Boss; EditMode 362/362; PlayMode 247 passed, 0 failed, 26 skipped ([Explicit]/GPU); alvo V08 EditMode 6/6, PlayMode 7/7 + 1 Explicit com GPU e 6/6 + 2 sem GPU; cancelamento por transição, morte do Boss e morte do alvo sem impacto tardio (0 resoluções 1,5 s depois do fim original do windup); dano e alcance iguais ao baseline sem presenter (dentro 1/1, borda 3,45 m 1/1, fora 3,6 m 0/0, invulnerável 0/0); dash real com resolução nos i-frames dentro do raio: 0 dano e 1 impacto; quadros 0→7 nas janelas do contrato, +Z topo/+X direita, lado assado 7,7241/10,0414 m; aviso e impacto nunca no mesmo quadro; com GPU 0 de 3.371 pixels do Hero alterados; GC 0 em 1.000 apresentações; transição única, 3 s invulnerável, avisos 1,4/1,0 s; captura 720p/1080p no Editor gráfico (MVP_Arena). Evidências: Reports/Validation/V08/20261118-a30a30b/README.md. Anterior: Técnica fora da Unity em 17/11/2026: FxSlam.validation.json 27/27 (sheet 1024×512 e quadros 256×256 RGBA; células = quadros; 0 px transparentes com RGB sujo; margem 14 px; quadro 7 com alpha 0 e quadro 6 com 12% do pico; alpha 0 dentro de 0,22 R; cobertura alpha>50% máx. 6,7%; alpha médio em R máx. 0,104; centroide do anel a 0,000 px do centro em todos os quadros (sem shake embutido); anel monotônico de 0,377 a 0,985 R; lascas ≤ 0,755 R; 0 px verde, azul/ciano saturado ou vermelho de telegraph; laranja 8,6% dos px visíveis; WCAG poeira 2,47/3,53 sobre #55596B/#3E4152; 0,35 s < recoverTime 0,8 s e cooldown ≥ 1,6 s, logo nunca coexiste com o próximo aviso; aviso 1,4/1,0 s ≥ 1 s; R 3,5/4,55 m lidos de Boss_Warden_Data.asset; BossBrain/BossAttackTelegraph/BossData/asset só lidos) e asset_report.py (sheet --expect-size 1024x512 e 8 quadros 256x256, --require-alpha, exit 0); prévias a 45° sobre a captura real F08 da arena e GIF de reuso/pausa/cancelamento, rotuladas PREVIEW. NÃO VALIDADO NO EDITOR: importação, material URP, ParticleSystem, hook, pausa, pool e PlayMode não observados.",
         "historical_evidence": "docs/RELEASE-1.0-VALIDATION.md; não confundir com execução nova."
       },
       "production": {
@@ -14294,6 +14294,53 @@
         "Cauda visível maior que 0,6 m quando o FPS cai (0,64–1,24 m medidos no Editor gráfico).",
         "DungeonFloorSceneBuilder.BuildProjectilePrefab recria o prefab do zero: rodar o builder exige reaplicar Apply Projectile Art (A08-A09).",
         "+15,5 draw calls com 16 projéteis (uma por TrailRenderer); medido, sem conclusão de FPS."
+      ]
+    },
+    {
+      "id": "V08-SLAM-INTEGRATION",
+      "date_local": "2026-11-18",
+      "branch": "claude/v08-slam-impact",
+      "main_merge": "pendente (PR para a main; sem merge sem aprovação do usuário)",
+      "produced": [],
+      "imported": [
+        "FX-SLAM"
+      ],
+      "integrated": [
+        "FX-SLAM"
+      ],
+      "validated_in_editor": [
+        "FX-SLAM"
+      ],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Scripts/Boss/BossBrain.cs (só o evento SlamResolved)",
+        "Assets/_Project/Prefabs/Boss/Boss_Warden.prefab (filho SlamImpactFx com ParticleSystem e presenter)",
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md",
+        "MVP.md"
+      ],
+      "new_code": [
+        "Assets/_Project/Scripts/Boss/BossSlamImpactPresenter.cs",
+        "Assets/_Project/Scripts/Editor/SlamImpactArtIntegrator.cs",
+        "Assets/_Project/Tests/EditMode/SlamImpactArtTests.cs",
+        "Assets/_Project/Tests/PlayMode/SlamImpactPlayModeTests.cs",
+        "Assets/_Project/Tests/PlayMode/PlayerInput/SlamImpactSceneTests.cs"
+      ],
+      "new_assets": [
+        "Assets/_Project/Materials/SlamFx/Mat_FxSlam.mat"
+      ],
+      "import_settings": "Sem alteração: FX-SLAM-Sheet.png já no template do V05 (Default, sRGB, alpha como transparência, clamp, bilinear, mipmaps).",
+      "tests": {
+        "editmode": "362/362",
+        "playmode": "247 passed, 0 failed, 26 skipped ([Explicit]/GPU)",
+        "technical": "Validate Slam Impact Art ok; Apply idempotente; alvo V08 EditMode 6/6, PlayMode 7/7 com GPU (+1 Explicit) e 6/6 sem GPU (+2); captura gráfica 1/1 (720p/1080p: aviso, impacto t 0,05/0,13/0,22/0,31 s e depois, nas duas fases)"
+      },
+      "limitations": [
+        "Aprovação artística humana pendente; capturas na MVP_Arena com tamanhos emulados do Game view; build Windows não executado.",
+        "Horizontal Billboard da 6000.6 usa o startSize como diagonal (medido): o presenter emite lado × √2; o Billboard comum não é afetado.",
+        "DungeonFloorSceneBuilder.BuildBossPrefab recria o prefab do zero: rodar o builder exige reaplicar Apply Slam Impact Art (A10).",
+        "Opção de flash multiplica o alpha (flash 0 não mostra o impacto); decisão de produto registrada no relatório.",
+        "Tempo de GPU e overdraw do quad de até 10 m não medidos."
       ]
     }
   ]
