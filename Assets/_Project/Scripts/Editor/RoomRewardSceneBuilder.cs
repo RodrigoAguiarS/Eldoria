@@ -113,7 +113,9 @@ namespace DungeonCrawler.Editor
             var presenter = Get<RoomRewardPresenter>(root);
             Set(presenter, "chest", chest); Set(presenter, "bindings", player.GetComponent<RuntimeInputBindings>());
             Set(presenter, "menu", hud.GetComponentInChildren<GameMenuController>(true));
-            Set(presenter, "hint", hint); Set(presenter, "lid", lid);
+            // V09: com o modelo A11 instalado, Visual/Lid continua sendo a tampa apresentada (as primitivas ficam desligadas).
+            var modelLid = root.transform.Find(ChestModelArtIntegrator.VisualName + "/" + ChestModelArtIntegrator.LidName);
+            Set(presenter, "hint", hint); Set(presenter, "lid", modelLid != null ? modelLid : lid);
             var overlay = hud.transform.Find("InventoryUI"); if (overlay != null) overlay.SetAsLastSibling();
         }
 
