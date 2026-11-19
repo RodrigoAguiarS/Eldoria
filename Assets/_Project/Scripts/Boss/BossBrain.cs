@@ -1,3 +1,4 @@
+using System;
 using DungeonCrawler.Core;
 using DungeonCrawler.Enemies;
 using DungeonCrawler.Systems;
@@ -36,6 +37,13 @@ namespace DungeonCrawler.Boss
         private float volleyAngleOffset;
 
         public BossState State { get; private set; } = BossState.Idle;
+
+        /// <summary>
+        /// V08: só apresentação. Disparado uma vez por Slam resolvido, depois do dano autoritativo, com o centro e o raio
+        /// que <see cref="ResolveSlam"/> usou, acerte ou não o alvo. Nunca em cancelamento (transição, morte, alvo morto).
+        /// Ouvintes não devem chamar dano nem mudar estado do Boss.
+        /// </summary>
+        public event Action<Vector3, float> SlamResolved;
 
         private bool InPhase2 => phase.Phase == BossPhase.Phase2;
 
@@ -159,12 +167,18 @@ namespace DungeonCrawler.Boss
         {
             telegraph.Hide();
 
-            if (currentAttack == Attack.Slam) ResolveSlam();
+            bool slam = currentAttack == Attack.Slam;
+            Vector3 slamCentre = transform.position;
+            float slamRadius = SlamRadius;
+            if (slam) ResolveSlam();
             else FireVolley();
 
             attackCooldown.Start(now, InPhase2 ? data.cooldownPhase2 : data.cooldownPhase1);
             recoverEndsAt = now + data.recoverTime;
             State = BossState.Recovering;
+
+            // Depois do estado: a apresentação não consegue adiar nem repetir a resolução.
+            if (slam) SlamResolved?.Invoke(slamCentre, slamRadius);
         }
 
         private void ResolveSlam()
