@@ -23,6 +23,12 @@ namespace DungeonCrawler.Systems
 
         public bool IsFlying => !released;
 
+        /// <summary>
+        /// V07: notificação de apresentação depois do teleporte do Launch (posição e rotação já aplicadas), para que
+        /// rastros limpem a faixa do tiro anterior. Não altera voo, dano, colisão nem lifetime.
+        /// </summary>
+        public event Action<Projectile> Launched;
+
         public void Launch(Vector3 position, Vector3 flightDirection, float flightSpeed, float damageAmount, Action<Projectile> release)
         {
             transform.position = position;
@@ -33,6 +39,7 @@ namespace DungeonCrawler.Systems
             releaseCallback = release;
             expireAt = Time.time + lifetime;
             released = false;
+            Launched?.Invoke(this);
         }
 
         public void OnSpawned() { }
