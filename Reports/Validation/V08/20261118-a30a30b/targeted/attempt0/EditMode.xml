@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="6" result="Passed" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-19 01:47:31Z" end-time="2026-11-19 01:47:32Z" duration="0,5806448">
+  <test-suite type="TestSuite" id="1000" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="362" result="Passed" start-time="2026-11-19 01:47:31Z" end-time="2026-11-19 01:47:32Z" duration="0.580645" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1440" name="DungeonCrawler.Tests.EditMode.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.EditMode.dll" runstate="Runnable" testcasecount="362" result="Passed" start-time="2026-11-19 01:47:31Z" end-time="2026-11-19 01:47:32Z" duration="0.555942" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="22024" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1441" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="362" result="Passed" start-time="2026-11-19 01:47:31Z" end-time="2026-11-19 01:47:32Z" duration="0.533604" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1442" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="362" result="Passed" start-time="2026-11-19 01:47:31Z" end-time="2026-11-19 01:47:32Z" duration="0.525860" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1443" name="EditMode" fullname="DungeonCrawler.Tests.EditMode" runstate="Runnable" testcasecount="362" result="Passed" start-time="2026-11-19 01:47:31Z" end-time="2026-11-19 01:47:32Z" duration="0.517930" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1369" name="SlamImpactArtTests" fullname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests" classname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-19 01:47:31Z" end-time="2026-11-19 01:47:32Z" duration="0.511191" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1374" name="Apply_IsIdempotent_AndValidatePasses" fullname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests.Apply_IsIdempotent_AndValidatePasses" methodname="Apply_IsIdempotent_AndValidatePasses" classname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests" runstate="Runnable" seed="2065197790" result="Passed" start-time="2026-11-19 01:47:31Z" end-time="2026-11-19 01:47:32Z" duration="0.351657" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[V08] Impacto do Slam: importação inalterada, 0 asset(s) gravado(s).
+[V08] Impacto do Slam válido em 2 prefab(s) do Boss.
+]]></output>
+              </test-case>
+              <test-case id="1373" name="BossPrefabs_OneWiredEffectOutsidePhaseVisual_NoColliderAndRulesUntouched" fullname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests.BossPrefabs_OneWiredEffectOutsidePhaseVisual_NoColliderAndRulesUntouched" methodname="BossPrefabs_OneWiredEffectOutsidePhaseVisual_NoColliderAndRulesUntouched" classname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests" runstate="Runnable" seed="931200984" result="Passed" start-time="2026-11-19 01:47:32Z" end-time="2026-11-19 01:47:32Z" duration="0.009915" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1375" name="ConfigureBoss_InstallsOnFreshBossAndSecondPassChangesNothing" fullname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests.ConfigureBoss_InstallsOnFreshBossAndSecondPassChangesNothing" methodname="ConfigureBoss_InstallsOnFreshBossAndSecondPassChangesNothing" classname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests" runstate="Runnable" seed="834792905" result="Passed" start-time="2026-11-19 01:47:32Z" end-time="2026-11-19 01:47:32Z" duration="0.024077" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1370" name="Contract_RadiiAndQuadSideFollowRealBossData_TimingFitsBeforeNextWarning" fullname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests.Contract_RadiiAndQuadSideFollowRealBossData_TimingFitsBeforeNextWarning" methodname="Contract_RadiiAndQuadSideFollowRealBossData_TimingFitsBeforeNextWarning" classname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests" runstate="Runnable" seed="846540367" result="Passed" start-time="2026-11-19 01:47:32Z" end-time="2026-11-19 01:47:32Z" duration="0.008367" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1372" name="Material_IsSharedUnlitAlphaBlend_NoDepthWriteNoEmission" fullname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests.Material_IsSharedUnlitAlphaBlend_NoDepthWriteNoEmission" methodname="Material_IsSharedUnlitAlphaBlend_NoDepthWriteNoEmission" classname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests" runstate="Runnable" seed="477364803" result="Passed" start-time="2026-11-19 01:47:32Z" end-time="2026-11-19 01:47:32Z" duration="0.004986" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1371" name="Sheet_FinalFrameEmpty_OutsideUnitRadiusTransparent_CentreOpen" fullname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests.Sheet_FinalFrameEmpty_OutsideUnitRadiusTransparent_CentreOpen" methodname="Sheet_FinalFrameEmpty_OutsideUnitRadiusTransparent_CentreOpen" classname="DungeonCrawler.Tests.EditMode.SlamImpactArtTests" runstate="Runnable" seed="1724962056" result="Passed" start-time="2026-11-19 01:47:32Z" end-time="2026-11-19 01:47:32Z" duration="0.080315" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
