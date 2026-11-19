@@ -107,7 +107,9 @@ namespace DungeonCrawler.Editor
                     Primitive(rubble.transform, "Shard_" + n, PrimitiveType.Cube,
                         new Vector3((n - 1) * .22f, .09f, n % 2 * .25f), new Vector3(.28f, .12f, .22f), material, false);
                 rubble.SetActive(false); intact.SetActive(true);
-                var flash = Get<DamageFlash>(body); Set(flash, "targetRenderer", body.GetComponent<Renderer>());
+                // V10: com o vaso A12 instalado, o flash continua no renderer A12 intacto (as primitivas ficam sem renderer ligado).
+                var modelRenderer = DestructiblePropModelArtIntegrator.InstalledFlashTarget(intact.transform);
+                var flash = Get<DamageFlash>(body); Set(flash, "targetRenderer", modelRenderer != null ? modelRenderer : body.GetComponent<Renderer>());
                 Set(flash, "options", roots.SelectMany(r => r.GetComponentsInChildren<DungeonCrawler.Systems.GameOptionsApplier>(true))
                     .Select(c => new SerializedObject(c).FindProperty("options").objectReferenceValue).FirstOrDefault(v => v != null));
                 var presenter = Get<DestructiblePropPresenter>(root);
