@@ -5312,7 +5312,11 @@
         },
         {
           "path": "Assets/_Project/Art/ProductionStaging/MODEL-DESTRUCTIBLE/Source~/README.md",
-          "detail": "Lote A12 em staging; não integrado."
+          "detail": "Lote A12 (staging); vaso integrado na cena de release em V10 por DestructiblePropModelArtIntegrator; caixa não instalada."
+        },
+        {
+          "path": "Assets/_Project/Scripts/Editor/DestructiblePropModelArtIntegrator.cs",
+          "detail": "V10: Intact/Visual (Jar_Intact) e Rubble/Visual (base, aro, quatro cacos), Y 180°, Mat_PropA12; renderers das primitivas desligados, colliders F09 mantidos; DamageFlash → Jar_Intact."
         }
       ],
       "depends_on": [
@@ -5321,7 +5325,7 @@
       "technical_dependencies": [
         "F09 (DestructibleProp/DestructiblePropPresenter/DamageFlash)"
       ],
-      "integration_state": "Produzido em staging (A12, 17/11/2026) como quatro modelos 3D estáticos reais: MODEL-DESTRUCTIBLE_Jar_Intact/_Jar_Broken/_Crate_Intact/_Crate_Broken.fbx (344/344/360/180 triângulos, um material URP/Lit com paleta 16×16, pivô na base central, +Z frente; intacto em um único nó para o DamageFlash, quebrado em nós nomeados *_Broken_Base + fragmentos); NÃO integrado. Em jogo continua o vaso de primitivas do F09. Intacto como filho de Intact, quebrado como filho de Rubble, DamageFlash.targetRenderer → nó *_Intact, renderers das primitivas desligados (colliders do domínio mantidos) e material único remapeado são tarefa Codex; proposta em Source~/MODEL-DESTRUCTIBLE.source.json.",
+      "integration_state": "Integrado em V10 (19/11/2026, branch claude/v10-destructible-model) nos cinco vasos F09 da cena de release (Floor_01_GeneratedCharacters), só o vaso de barro: DestructiblePropModelArtIntegrator (Tools/Dungeon Crawler/Environment/Apply Destructible Model Art (A12) e Validate Destructible Model Art (A12)) lê Source~/MODEL-DESTRUCTIBLE.source.json, confere os quatro FBX importados (nós, 344/344/360/180 tris ≤ 600, pivôs e limites com o espelho de X da importação, um material, importação estática sem colisor/take, footprint F09 e quebrado dentro do intacto) e monta Intact/Visual (Jar_Intact) e Rubble/Visual (Jar_Broken_Base, _Rim, _Shard_0–3) a partir das malhas importadas, com Y 180° para a frente rachada encarar a câmera, e Materials/DestructibleArt/Mat_PropA12 (URP/Lit, paleta 16×16, metallic 0, smoothness 0,15, compartilhado). Só os MeshRenderer das primitivas Body/Rim/Shard_* foram desligados: os dois colliders lógicos (esfera do Body, cápsula do Rim), layer Destructible, definição de 40 HP e posição continuam do F09. DamageFlash.targetRenderer → Intact/Visual/Jar_Intact. DestructibleProp, presenter, definição, máscaras e checkpoint inalterados; DestructiblePropSceneBuilder mantém o flash no renderer A12 quando instalado. A caixa (Crate_Intact/Broken) é validada pelo contrato e não instalada: não há regra de gameplay para ela. Sem Rigidbody, burst, XP ou loot. Aprovação artística humana pendente.",
       "visual_specification": "Vaso de barro baixo decagonal (#8A4A22 dessaturado → #7B4E32) com gargalo estreito, boca escura, duas rachaduras finas e musgo no pé; caixa de madeira (#7A4B2A) com montantes, tábuas, tampo e diagonais escuras, uma tábua rachada e musgo. Quebrados: casca de barro partida com vão frontal, aro caído e cacos; caixa aberta com montantes partidos, tábuas caídas e madeira clara nas quebras. ≤ 600 tris por prop, 1 material, dentro do footprint do vaso F09 (±0,45 m, 1,04 m), quebrado dentro dos bounds do intacto.",
       "acceptance_criteria": [
         "Formas distintas a 128 px na câmera do jogo.",
@@ -5330,7 +5334,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: ModelDestructible.validation.json (16/16; quatro FBX e PNG relidos do disco): 344/344/360/180 tris ≤ 600 por prop; só Model/Geometry/Material/Texture/Video, nós Mesh filhos da raiz, sem Takes/deformador/pose/colisor; um material MODEL-DESTRUCTIBLE_Prop com o mesmo nome nos quatro (AllSame); UnitScaleFactor 100, +Y up, +Z front; *_Intact e *_Broken_Base na origem com fundo em y 0, fragmentos com pivô na base central da própria peça; 76 peças fechadas, convexas e com volume > 0; normais geométricas; UV no centro das células da paleta; vaso 0,780 × 0,680 × 0,743 m e caixa 0,720 × 0,620 × 0,720 m dentro do footprint F09 (±0,45/1,04 m); quebrados dentro dos bounds X/Z/altura dos intactos; 128 px pela câmera do jogo (−30…+30°): IoU de silhueta ≤ 0,756 em todas as duplas (vaso × caixa intactos 0,668), intacto×quebrado com razão de área ≤ 0,843 e diferença de aparência ≥ 0,725; interior escuro visível nos quebrados ≥ 18%; ΔE76 cor média × piso 30,2–37,5 (WCAG 1,01–1,51); asset_report.py exit 0; GLB relido (11 malhas, 1228 tris); geração determinística. NÃO VALIDADO NO EDITOR: importação, materiais, cena F09, presenter, DamageFlash e PlayMode não observados.",
+        "current_session": "V10 (19/11/2026, Unity 6000.6.9f1): Apply idempotente (terceira execução sem gravar; a segunda só reacomodou o material recém-criado) e Validate ok nos cinco vasos, inclusive depois dos builders da suíte EditMode; EditMode 374/374; PlayMode 255 passed, 0 failed, 28 skipped ([Explicit]/GPU); alvo V10 EditMode 6/6 (contrato × importação, material, cinco vasos com definição/HP/colliders/posição, só as destructibleMask de básico/giro alcançam a layer, builder F09 + Apply idempotentes, instalação num vaso de primitivas) e PlayMode 4/4 + 1 Explicit (básico e giro reais nos cinco vasos: um dano por impacto com dois colliders, uma quebra, flash no renderer A12, destroços A12, toggle sem cura, EnemyTracker/limpeza/portas inalterados; R cria run nova com vasos intactos; checkpoint retomado com vasos inteiros, política F11); render com GPU das cinco salas intacto/quebrado e quadro do flash (câmera do jogo e lateral). Dump da cena: diferenças só nos cinco vasos. Evidências: Reports/Validation/V10/20261119-ea56b20/README.md. Anterior: Técnica fora da Unity em 17/11/2026: ModelDestructible.validation.json (16/16; quatro FBX e PNG relidos do disco): 344/344/360/180 tris ≤ 600 por prop; só Model/Geometry/Material/Texture/Video, nós Mesh filhos da raiz, sem Takes/deformador/pose/colisor; um material MODEL-DESTRUCTIBLE_Prop com o mesmo nome nos quatro (AllSame); UnitScaleFactor 100, +Y up, +Z front; *_Intact e *_Broken_Base na origem com fundo em y 0, fragmentos com pivô na base central da própria peça; 76 peças fechadas, convexas e com volume > 0; normais geométricas; UV no centro das células da paleta; vaso 0,780 × 0,680 × 0,743 m e caixa 0,720 × 0,620 × 0,720 m dentro do footprint F09 (±0,45/1,04 m); quebrados dentro dos bounds X/Z/altura dos intactos; 128 px pela câmera do jogo (−30…+30°): IoU de silhueta ≤ 0,756 em todas as duplas (vaso × caixa intactos 0,668), intacto×quebrado com razão de área ≤ 0,843 e diferença de aparência ≥ 0,725; interior escuro visível nos quebrados ≥ 18%; ΔE76 cor média × piso 30,2–37,5 (WCAG 1,01–1,51); asset_report.py exit 0; GLB relido (11 malhas, 1228 tris); geração determinística. NÃO VALIDADO NO EDITOR: importação, materiais, cena F09, presenter, DamageFlash e PlayMode não observados.",
         "historical_evidence": "Reports/F09/README.md (vaso de primitivas); não confundir com execução nova."
       },
       "production": {
@@ -14390,6 +14394,50 @@
         "Abertura instantânea: o take Open importado não é usado (presenter é o dono único).",
         "Baú do andar 2 (Floor_02_Fixed, F14) continua de primitivas, com a tampa girando para baixo/trás.",
         "FBX sem Read/Write: em PlayMode a tampa é conferida pelos limites; a prova por vértice fica no EditMode."
+      ]
+    },
+    {
+      "id": "V10-DESTRUCTIBLE-INTEGRATION",
+      "date_local": "2026-11-19",
+      "branch": "claude/v10-destructible-model",
+      "main_merge": "pendente (PR para a main; sem merge sem aprovação do usuário)",
+      "produced": [],
+      "imported": [
+        "MODEL-DESTRUCTIBLE"
+      ],
+      "integrated": [
+        "MODEL-DESTRUCTIBLE"
+      ],
+      "validated_in_editor": [
+        "MODEL-DESTRUCTIBLE"
+      ],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity (só os cinco DestructibleVase_F09: Intact/Visual e Rubble/Visual, renderers das primitivas desligados, DamageFlash.targetRenderer)",
+        "Assets/_Project/Scripts/Editor/DestructiblePropSceneBuilder.cs (mantém o renderer A12 como alvo do flash quando instalado)",
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md",
+        "MVP.md"
+      ],
+      "new_code": [
+        "Assets/_Project/Scripts/Editor/DestructiblePropModelArtIntegrator.cs",
+        "Assets/_Project/Tests/EditMode/DestructiblePropModelArtTests.cs",
+        "Assets/_Project/Tests/PlayMode/PlayerInput/DestructiblePropModelArtSceneTests.cs"
+      ],
+      "new_assets": [
+        "Assets/_Project/Materials/DestructibleArt/Mat_PropA12.mat"
+      ],
+      "import_settings": "Sem alteração: os quatro FBX (estáticos, sem Read/Write, materialImportMode 2) e MODEL-DESTRUCTIBLE_Palette.png (point, sem mips, sem compressão, máx. 32) já conformes; o material embutido não é remapeado no .meta (o integrador atribui Mat_PropA12 aos renderers).",
+      "tests": {
+        "editmode": "374/374",
+        "playmode": "255 passed, 0 failed, 28 skipped ([Explicit]/GPU)",
+        "technical": "Validate Destructible Model Art ok (também após a suíte EditMode); Apply idempotente; alvo V10 EditMode 6/6 e PlayMode 4/4 sem GPU (+1 Explicit); render com GPU 1/1 (cinco salas intacto/quebrado, flash na sala 1)"
+      },
+      "limitations": [
+        "Aprovação artística humana pendente: o flash laranja sobre o barro é sutil; o aro caído do vaso quebrado lê como um disco escuro; renders fora da tela, não o Game view; build Windows não executado.",
+        "Caixa (Crate) não instalada: variante artística disponível, sem regra de gameplay.",
+        "Vasos continuam fora do checkpoint (F11): reaparecem inteiros ao retomar.",
+        "FBX sem Read/Write: provas de footprint pelos limites das malhas."
       ]
     }
   ]
