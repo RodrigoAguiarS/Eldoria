@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="5" result="Failed(Child)" total="5" passed="2" failed="2" inconclusive="0" skipped="1" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-19 04:03:35Z" end-time="2026-11-19 04:03:54Z" duration="19,3141614">
+  <test-suite type="TestSuite" id="1357" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="283" result="Failed" site="Child" start-time="2026-11-19 04:03:35Z" end-time="2026-11-19 04:03:54Z" duration="19.314161" total="5" passed="2" failed="2" inconclusive="0" skipped="1" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1517" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="130" result="Failed" site="Child" start-time="2026-11-19 04:03:35Z" end-time="2026-11-19 04:03:54Z" duration="19.302821" total="5" passed="2" failed="2" inconclusive="0" skipped="1" asserts="0">
+      <properties>
+        <property name="_PID" value="24032" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1518" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="130" result="Failed" site="Child" start-time="2026-11-19 04:03:35Z" end-time="2026-11-19 04:03:54Z" duration="19.300762" total="5" passed="2" failed="2" inconclusive="0" skipped="1" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1519" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="130" result="Failed" site="Child" start-time="2026-11-19 04:03:35Z" end-time="2026-11-19 04:03:54Z" duration="19.299099" total="5" passed="2" failed="2" inconclusive="0" skipped="1" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1520" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="130" result="Failed" site="Child" start-time="2026-11-19 04:03:35Z" end-time="2026-11-19 04:03:54Z" duration="19.297492" total="5" passed="2" failed="2" inconclusive="0" skipped="1" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1389" name="DestructiblePropModelArtSceneTests" fullname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests" classname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2026-11-19 04:03:35Z" end-time="2026-11-19 04:03:54Z" duration="19.284375" total="5" passed="2" failed="2" inconclusive="0" skipped="1" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1391" name="BreakDuringWave_DoesNotRegisterClearOrOpenDoors_NormalClearStillWorks" fullname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests.BreakDuringWave_DoesNotRegisterClearOrOpenDoors_NormalClearStillWorks" methodname="BreakDuringWave_DoesNotRegisterClearOrOpenDoors_NormalClearStillWorks" classname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests" runstate="Runnable" seed="180310093" result="Passed" start-time="2026-11-19 04:03:35Z" end-time="2026-11-19 04:03:37Z" duration="2.046303" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1394" name="Capture_FiveVasesIntactFlashAndBroken_GameCameraAndSide" fullname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests.Capture_FiveVasesIntactFlashAndBroken_GameCameraAndSide" methodname="Capture_FiveVasesIntactFlashAndBroken_GameCameraAndSide" classname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests" runstate="Explicit" seed="1440332081" result="Skipped" label="Ignored" start-time="2026-11-19 04:03:37Z" end-time="2026-11-19 04:03:37Z" duration="0.123848" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Captura de revisão visual; requer GPU (batchmode sem -nographics ou Editor gráfico)." />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Requer GPU.]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1393" name="CheckpointResume_KeepsF11Policy_VasesReappearIntact" fullname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests.CheckpointResume_KeepsF11Policy_VasesReappearIntact" methodname="CheckpointResume_KeepsF11Policy_VasesReappearIntact" classname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests" runstate="Runnable" seed="1833917665" result="Passed" start-time="2026-11-19 04:03:37Z" end-time="2026-11-19 04:03:38Z" duration="0.403067" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1390" name="FiveVases_RealBasicThenSpin_OneDamagePerImpact_OneBreak_FlashOnModel_ToggleKeepsRubble" fullname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests.FiveVases_RealBasicThenSpin_OneDamagePerImpact_OneBreak_FlashOnModel_ToggleKeepsRubble" methodname="FiveVases_RealBasicThenSpin_OneDamagePerImpact_OneBreak_FlashOnModel_ToggleKeepsRubble" classname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests" runstate="Runnable" seed="963711868" result="Failed" start-time="2026-11-19 04:03:38Z" end-time="2026-11-19 04:03:44Z" duration="6.576340" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Vaso 2: um dano pelo giro com dois colliders.
+  Expected: 2
+  But was:  1
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests+<FiveVases_RealBasicThenSpin_OneDamagePerImpact_OneBreak_FlashOnModel_ToggleKeepsRubble>d__33.MoveNext () [0x00528] in G:\DungeonCrawler\My project\Assets\_Project\Tests\PlayMode\PlayerInput\DestructiblePropModelArtSceneTests.cs:172
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+[RoomController] 'Room_2': 3 inimigo(s) instanciado(s) do encounter 'Encounter_Room2_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1392" name="RestartKey_CreatesNewRun_WithFiveIntactInstalledVases" fullname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests.RestartKey_CreatesNewRun_WithFiveIntactInstalledVases" methodname="RestartKey_CreatesNewRun_WithFiveIntactInstalledVases" classname="DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests" runstate="Runnable" seed="1119678759" result="Failed" start-time="2026-11-19 04:03:44Z" end-time="2026-11-19 04:03:54Z" duration="10.116471" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  R carrega uma run nova.
+  Expected: not equal to UnityEngine.SceneManagement.Scene
+  But was:  UnityEngine.SceneManagement.Scene
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.PlayerInput.DestructiblePropModelArtSceneTests+<RestartKey_CreatesNewRun_WithFiveIntactInstalledVases>d__37.MoveNext () [0x00159] in G:\DungeonCrawler\My project\Assets\_Project\Tests\PlayMode\PlayerInput\DestructiblePropModelArtSceneTests.cs:253
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
