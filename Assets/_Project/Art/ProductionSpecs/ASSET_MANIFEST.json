@@ -5374,7 +5374,11 @@
         },
         {
           "path": "Assets/_Project/Art/ProductionStaging/MODEL-CHEST/Source~/README.md",
-          "detail": "Lote A11 em staging; não integrado."
+          "detail": "Lote A11 (staging); integrado na cena de release em V09 por ChestModelArtIntegrator."
+        },
+        {
+          "path": "Assets/_Project/Scripts/Editor/ChestModelArtIntegrator.cs",
+          "detail": "V09: Visual (Y 180°) com Base/Lid do FBX nos cinco baús; RoomRewardPresenter.lid → Visual/Lid; primitivas desligadas."
         }
       ],
       "depends_on": [
@@ -5383,7 +5387,7 @@
       "technical_dependencies": [
         "F08 (RoomRewardChest/RoomRewardPresenter)"
       ],
-      "integration_state": "Produzido em staging (A11, 17/11/2026) como modelo 3D real com tampa separada: MODEL-CHEST.fbx (828 triângulos, nós Base e Lid, dois materiais URP/Lit pedra/latão com paleta 16×16, pivô na base central, pivô da tampa no eixo da dobradiça traseira, +Z frente) e take Open de 0,6 s in-place (0° → −105°); NÃO integrado. Em jogo continua o baú de primitivas do F08. Filho Visual com Y 180° (o baú F08 tem a frente em −Z), RoomRewardPresenter.lid → nó Lid, primitivas desligadas e collider simples separado são tarefa Codex; proposta em Source~/MODEL-CHEST.source.json. Achado: o presenter atual gira a tampa de primitivas para baixo/trás (ver README).",
+      "integration_state": "Integrado em V09 (18/11/2026, branch claude/v09-chest-model) nos cinco baús F08 da cena de release (Floor_01_GeneratedCharacters): ChestModelArtIntegrator (Tools/Dungeon Crawler/Rewards/Apply Chest Model Art (A11) e Validate Chest Model Art (A11)) lê Source~/MODEL-CHEST.source.json, confere o FBX importado (624/204 tris, duas submalhas por nó, limites, Base na origem, Lid no eixo da dobradiça com repouso 0, take Open de 0,6 s terminando em Euler(−105, 0, 0)) e monta o filho Visual (Y 180°, porque o F08 tem a frente em −Z) com Base e Lid a partir das malhas importadas, Materials/ChestArt/Mat_ChestA11_Stone e Mat_ChestA11_Brass (URP/Lit, paleta 16×16, compartilhados). RoomRewardPresenter.lid → Visual/Lid; Body/LidPivot/Latch desligados, não removidos. Dono único da tampa: o presenter existente (pose binária −105°, igual ao fim do take); o take não é tocado e não há Animator. Sem colisor (F08 não bloqueante); footprint dentro do Body antigo. RoomRewardSceneBuilder mantém Visual/Lid quando o A11 está instalado. RoomRewardChest, presenter, recompensas, interação e tabelas inalterados. O baú do andar 2 (Floor_02_Fixed, F14) continua de primitivas. Aprovação artística humana pendente.",
       "visual_specification": "Caixa baixa de pedra azul (#55596B/#3E4152) em blocos chanfrados, cintas e aro de latão gasto (#E0B040), espelho de fechadura, tampa de quatro águas com pega larga e dobradiça traseira; aberto mostra interior escuro. ~1,2 × 0,8 × 0,7 m, ≤ 1200 tris, ≤ 2 materiais.",
       "acceptance_criteria": [
         "Tampa não corta a base ao longo do take; pivôs, escala e take conferidos.",
@@ -5392,7 +5396,7 @@
         "Concluir QA técnico e PlayMode em contexto antes de marcar aprovado."
       ],
       "validation": {
-        "current_session": "Técnica fora da Unity em 17/11/2026: ModelChest.validation.json (17/17; FBX e PNG relidos do disco): 828 tris ≤ 1200; 2 materiais (Stone/Brass) por polígono nos dois nós; só Model/Geometry/Material/Texture/Video/Animation* (sem rig/deformador/pose/colisor); UnitScaleFactor 100, +Y up, +Z front, TimeMode 30 fps; Base na origem com fundo em y 0; Lid no eixo (0; 0,54; −0,342) com rotação 0 e toda a geometria fora dos nós à frente do eixo; fechado 1,200 × 0,812 × 0,728 m; 37 peças fechadas, convexas e com volume > 0; normais geométricas; UV no centro das células da paleta; take Open 0,6 s, 19 chaves, só Lcl Rotation X do Lid, 0 → −105° (pico −111°), Base sem curvas; SAT tampa × base em 73 instantes: sobreposição máx. 0,000 mm; câmera do jogo (−30…+30°): IoU fechado×aberto ≤ 0,641, interior aberto ≥ 54% vs. fechado ≤ 0,3%, latão 18% da silhueta, WCAG latão × piso (mesma luz) 5,02/3,45; cor média do baú × piso claro 1,07; asset_report.py exit 0; GLB relido; geração determinística. NÃO VALIDADO NO EDITOR: importação Generic/clip, materiais, cena, presenter, collider e PlayMode não observados.",
+        "current_session": "V09 (18/11/2026, Unity 6000.6.9f1): Apply idempotente (reexecução sem gravar, hashes iguais) e Validate ok nos cinco baús; EditMode 368/368; PlayMode 251 passed, 0 failed, 27 skipped ([Explicit]/GPU); alvo V09 EditMode 6/6 (contrato × importação, take termina a < 0,5° de −105°, poses vértice a vértice sem entrar na base, materiais, cinco baús e footprint, builder F08 + Apply idempotentes) e PlayMode 4/4 + 1 Explicit (cinco salas: F só depois de limpar, 2 pickups por sala, toggle sem loot novo, pose constante, tampa aberta sem tocar parede/porta/pickups; checkpoint retomado com o baú aberto no primeiro quadro, mesmos IDs e RNG; F remapeado para G; última morte; bolsa cheia; recompensa do Boss depois da vitória); render com GPU das cinco salas fechadas/abertas (câmera do jogo 720p/1080p e lateral). Dump da cena: diferenças só nos cinco baús. Evidências: Reports/Validation/V09/20261118-a14a1e0/README.md. Anterior: Técnica fora da Unity em 17/11/2026: ModelChest.validation.json (17/17; FBX e PNG relidos do disco): 828 tris ≤ 1200; 2 materiais (Stone/Brass) por polígono nos dois nós; só Model/Geometry/Material/Texture/Video/Animation* (sem rig/deformador/pose/colisor); UnitScaleFactor 100, +Y up, +Z front, TimeMode 30 fps; Base na origem com fundo em y 0; Lid no eixo (0; 0,54; −0,342) com rotação 0 e toda a geometria fora dos nós à frente do eixo; fechado 1,200 × 0,812 × 0,728 m; 37 peças fechadas, convexas e com volume > 0; normais geométricas; UV no centro das células da paleta; take Open 0,6 s, 19 chaves, só Lcl Rotation X do Lid, 0 → −105° (pico −111°), Base sem curvas; SAT tampa × base em 73 instantes: sobreposição máx. 0,000 mm; câmera do jogo (−30…+30°): IoU fechado×aberto ≤ 0,641, interior aberto ≥ 54% vs. fechado ≤ 0,3%, latão 18% da silhueta, WCAG latão × piso (mesma luz) 5,02/3,45; cor média do baú × piso claro 1,07; asset_report.py exit 0; GLB relido; geração determinística. NÃO VALIDADO NO EDITOR: importação Generic/clip, materiais, cena, presenter, collider e PlayMode não observados.",
         "historical_evidence": "Reports/F08/README.md e Reports/F08-AllRooms/README.md (baú de primitivas); não confundir com execução nova."
       },
       "production": {
@@ -14341,6 +14345,51 @@
         "DungeonFloorSceneBuilder.BuildBossPrefab recria o prefab do zero: rodar o builder exige reaplicar Apply Slam Impact Art (A10).",
         "Opção de flash multiplica o alpha (flash 0 não mostra o impacto); decisão de produto registrada no relatório.",
         "Tempo de GPU e overdraw do quad de até 10 m não medidos."
+      ]
+    },
+    {
+      "id": "V09-CHEST-INTEGRATION",
+      "date_local": "2026-11-18",
+      "branch": "claude/v09-chest-model",
+      "main_merge": "pendente (PR para a main; sem merge sem aprovação do usuário)",
+      "produced": [],
+      "imported": [
+        "MODEL-CHEST"
+      ],
+      "integrated": [
+        "MODEL-CHEST"
+      ],
+      "validated_in_editor": [
+        "MODEL-CHEST"
+      ],
+      "approved": [],
+      "changed_existing_files": [
+        "Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity (só os cinco RoomRewardChest_F08*: Visual/Base/Lid, lid do presenter, primitivas desligadas)",
+        "Assets/_Project/Scripts/Editor/RoomRewardSceneBuilder.cs (mantém Visual/Lid como tampa quando o A11 está instalado)",
+        "Assets/_Project/Art/ProductionSpecs/ASSET_MANIFEST.json",
+        "NEXT_STEPS.md",
+        "MVP.md"
+      ],
+      "new_code": [
+        "Assets/_Project/Scripts/Editor/ChestModelArtIntegrator.cs",
+        "Assets/_Project/Tests/EditMode/ChestModelArtTests.cs",
+        "Assets/_Project/Tests/PlayMode/PlayerInput/ChestModelArtSceneTests.cs"
+      ],
+      "new_assets": [
+        "Assets/_Project/Materials/ChestArt/Mat_ChestA11_Stone.mat",
+        "Assets/_Project/Materials/ChestArt/Mat_ChestA11_Brass.mat"
+      ],
+      "import_settings": "Sem alteração: MODEL-CHEST.fbx (Generic, sem Read/Write) e MODEL-CHEST_Palette.png (point, sem mips, sem compressão, máx. 32) já conformes ao contrato.",
+      "tests": {
+        "editmode": "368/368",
+        "playmode": "251 passed, 0 failed, 27 skipped ([Explicit]/GPU)",
+        "technical": "Validate Chest Model Art ok; Apply idempotente; alvo V09 EditMode 6/6 e PlayMode 4/4 sem GPU (+1 Explicit); render com GPU 1/1 (cinco salas fechadas/abertas, câmera do jogo 720p/1080p e lateral)"
+      },
+      "limitations": [
+        "Aprovação artística humana pendente: fechado, a pedra #55596B se confunde com o piso na câmera do jogo; renders fora da tela, não o Game view; build Windows não executado.",
+        "Abertura instantânea: o take Open importado não é usado (presenter é o dono único).",
+        "Baú do andar 2 (Floor_02_Fixed, F14) continua de primitivas, com a tampa girando para baixo/trás.",
+        "FBX sem Read/Write: em PlayMode a tampa é conferida pelos limites; a prova por vértice fica no EditMode."
       ]
     }
   ]

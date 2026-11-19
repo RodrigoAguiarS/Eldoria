@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="5" result="Failed(Child)" total="5" passed="3" failed="1" inconclusive="0" skipped="1" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-19 02:22:03Z" end-time="2026-11-19 02:22:11Z" duration="7,7693152">
+  <test-suite type="TestSuite" id="1351" name="Eldoria" fullname="Eldoria" runstate="Runnable" testcasecount="278" result="Failed" site="Child" start-time="2026-11-19 02:22:03Z" end-time="2026-11-19 02:22:11Z" duration="7.769315" total="5" passed="3" failed="1" inconclusive="0" skipped="1" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1505" name="DungeonCrawler.Tests.PlayerInput.dll" fullname="G:/DungeonCrawler/My project/Library/ScriptAssemblies/DungeonCrawler.Tests.PlayerInput.dll" runstate="Runnable" testcasecount="125" result="Failed" site="Child" start-time="2026-11-19 02:22:03Z" end-time="2026-11-19 02:22:11Z" duration="7.759575" total="5" passed="3" failed="1" inconclusive="0" skipped="1" asserts="0">
+      <properties>
+        <property name="_PID" value="18052" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1506" name="DungeonCrawler" fullname="DungeonCrawler" runstate="Runnable" testcasecount="125" result="Failed" site="Child" start-time="2026-11-19 02:22:03Z" end-time="2026-11-19 02:22:11Z" duration="7.758048" total="5" passed="3" failed="1" inconclusive="0" skipped="1" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1507" name="Tests" fullname="DungeonCrawler.Tests" runstate="Runnable" testcasecount="125" result="Failed" site="Child" start-time="2026-11-19 02:22:03Z" end-time="2026-11-19 02:22:11Z" duration="7.756689" total="5" passed="3" failed="1" inconclusive="0" skipped="1" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1508" name="PlayerInput" fullname="DungeonCrawler.Tests.PlayerInput" runstate="Runnable" testcasecount="125" result="Failed" site="Child" start-time="2026-11-19 02:22:03Z" end-time="2026-11-19 02:22:11Z" duration="7.755413" total="5" passed="3" failed="1" inconclusive="0" skipped="1" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1356" name="ChestModelArtSceneTests" fullname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests" classname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2026-11-19 02:22:03Z" end-time="2026-11-19 02:22:11Z" duration="7.752011" total="5" passed="3" failed="1" inconclusive="0" skipped="1" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1361" name="Capture_FiveRoomsClosedAndOpen_GameCameraAndSide" fullname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests.Capture_FiveRoomsClosedAndOpen_GameCameraAndSide" methodname="Capture_FiveRoomsClosedAndOpen_GameCameraAndSide" classname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests" runstate="Explicit" seed="58451670" result="Skipped" label="Ignored" start-time="2026-11-19 02:22:03Z" end-time="2026-11-19 02:22:04Z" duration="0.621721" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="_SKIPREASON" value="Captura de revisão visual; requer GPU (batchmode sem -nographics ou Editor gráfico)." />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Requer GPU.]]></message>
+                </reason>
+              </test-case>
+              <test-case id="1358" name="Checkpoint_OpenedChestResumesOpen_WithoutReroll_OthersClosed" fullname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests.Checkpoint_OpenedChestResumesOpen_WithoutReroll_OthersClosed" methodname="Checkpoint_OpenedChestResumesOpen_WithoutReroll_OthersClosed" classname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests" runstate="Runnable" seed="352789910" result="Passed" start-time="2026-11-19 02:22:04Z" end-time="2026-11-19 02:22:04Z" duration="0.386044" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1357" name="FiveRooms_ClosedUntilF_OpenPoseIsTakeEnd_OneIndependentRewardEach_ToggleKeepsPose" fullname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests.FiveRooms_ClosedUntilF_OpenPoseIsTakeEnd_OneIndependentRewardEach_ToggleKeepsPose" methodname="FiveRooms_ClosedUntilF_OpenPoseIsTakeEnd_OneIndependentRewardEach_ToggleKeepsPose" classname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests" runstate="Runnable" seed="2127794450" result="Failed" start-time="2026-11-19 02:22:04Z" end-time="2026-11-19 02:22:08Z" duration="3.520837" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Uma recompensa (ouro + espada) por sala.
+  Expected: 2
+  But was:  0
+]]></message>
+                  <stack-trace><![CDATA[at DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests+<FiveRooms_ClosedUntilF_OpenPoseIsTakeEnd_OneIndependentRewardEach_ToggleKeepsPose>d__32.MoveNext () [0x00279] in G:\DungeonCrawler\My project\Assets\_Project\Tests\PlayMode\PlayerInput\ChestModelArtSceneTests.cs:192
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@01a8b42f9cf6\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+[RoomController] 'Room_2': 3 inimigo(s) instanciado(s) do encounter 'Encounter_Room2_Generated'.
+[RoomController] 'Room_3': 3 inimigo(s) instanciado(s) do encounter 'Encounter_Room3_Generated'.
+[RoomController] 'Room_4': 4 inimigo(s) instanciado(s) do encounter 'Encounter_Room4_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1360" name="LastDeath_KeepsLidClosed_AndFullBagRewardWaitsWithLidOpen" fullname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests.LastDeath_KeepsLidClosed_AndFullBagRewardWaitsWithLidOpen" methodname="LastDeath_KeepsLidClosed_AndFullBagRewardWaitsWithLidOpen" classname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests" runstate="Runnable" seed="1205994378" result="Passed" start-time="2026-11-19 02:22:08Z" end-time="2026-11-19 02:22:10Z" duration="2.266640" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+]]></output>
+              </test-case>
+              <test-case id="1359" name="RemappedInteract_OnlyNewKeyOpens_AndPoseFollows" fullname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests.RemappedInteract_OnlyNewKeyOpens_AndPoseFollows" methodname="RemappedInteract_OnlyNewKeyOpens_AndPoseFollows" classname="DungeonCrawler.Tests.PlayerInput.ChestModelArtSceneTests" runstate="Runnable" seed="1721475100" result="Passed" start-time="2026-11-19 02:22:10Z" end-time="2026-11-19 02:22:11Z" duration="0.936887" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[RoomController] 'Room_1': 2 inimigo(s) instanciado(s) do encounter 'Encounter_Room1_Generated'.
+Saving results to: C:/Users/Rodri/AppData/LocalLow/DefaultCompany/Eldoria\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

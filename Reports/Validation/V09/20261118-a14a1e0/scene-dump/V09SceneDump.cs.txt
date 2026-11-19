@@ -1,0 +1,63 @@
+using System.IO;
+using System.Linq;
+using System.Text;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+
+namespace DungeonCrawler.Editor.V09Temp
+{
+    /// <summary>Temporário (não commitado): dump textual de hierarquia, transforms, atividade e propriedades serializadas.</summary>
+    public static class V09SceneDump
+    {
+        public static void Run()
+        {
+            string output = System.Environment.GetEnvironmentVariable("V09_DUMP_DIR");
+            Dump("Assets/_V09Tmp/main.unity", Path.Combine(output, "scene-main.txt"));
+            Dump("Assets/_Project/Art/Models/Generated/_GameTest/Floor_01_GeneratedCharacters.unity", Path.Combine(output, "scene-v09.txt"));
+        }
+
+        private static string PathOf(Transform t) => t.parent != null ? PathOf(t.parent) + "/" + t.name : t.name;
+
+        private static void Dump(string scenePath, string outPath)
+        {
+            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+            var text = new StringBuilder();
+            foreach (var root in scene.GetRootGameObjects().OrderBy(r => r.name))
+            foreach (var t in root.GetComponentsInChildren<Transform>(true))
+            {
+                text.Append(PathOf(t)).Append(" active=").Append(t.gameObject.activeSelf).Append(" layer=").Append(t.gameObject.layer)
+                    .Append(" pos=").Append(t.localPosition.ToString("F4")).Append(" rot=").Append(t.localRotation.ToString("F4"))
+                    .Append(" scale=").Append(t.localScale.ToString("F4")).Append('\n');
+                foreach (var component in t.GetComponents<Component>())
+                {
+                    if (component == null) { text.Append("  <missing>\n"); continue; }
+                    text.Append("  ").Append(component.GetType().FullName).Append('\n');
+                    var property = new SerializedObject(component).GetIterator();
+                    while (property.NextVisible(true))
+                    {
+                        if (property.propertyPath == "m_Script") continue;
+                        string value = property.propertyType switch
+                        {
+                            SerializedPropertyType.ObjectReference => property.objectReferenceValue == null ? "null"
+                                : property.objectReferenceValue is Component c ? PathOf(c.transform) + ":" + c.GetType().Name
+                                : property.objectReferenceValue is GameObject g ? PathOf(g.transform)
+                                : AssetDatabase.GetAssetPath(property.objectReferenceValue) + "#" + property.objectReferenceValue.name,
+                            SerializedPropertyType.Float => property.floatValue.ToString("R"),
+                            SerializedPropertyType.Integer => property.longValue.ToString(),
+                            SerializedPropertyType.Boolean => property.boolValue.ToString(),
+                            SerializedPropertyType.String => property.stringValue,
+                            SerializedPropertyType.Enum => property.enumValueIndex.ToString(),
+                            SerializedPropertyType.Vector3 => property.vector3Value.ToString("F5"),
+                            SerializedPropertyType.Quaternion => property.quaternionValue.ToString("F5"),
+                            SerializedPropertyType.Color => property.colorValue.ToString(),
+                            _ => null
+                        };
+                        if (value != null) text.Append("    ").Append(property.propertyPath).Append('=').Append(value).Append('\n');
+                    }
+                }
+            }
+            File.WriteAllText(outPath, text.ToString());
+        }
+    }
+}
